@@ -1,10 +1,21 @@
 <nav class="flex justify-center">
   <div class="flex justify-between items-center p-2 w-[91rem]">
     <a>
-      <img class="h-[5rem]" src="assets/icons/logo.png" alt="" />
+      <img class="h-[5rem]" src="assets/icons/logo.png" alt="logo" />
     </a>
     <div>
-      <div class="flex gap-x-5">
+      <div class="flex">
+        <app-nav-button
+          iconName="language"
+          label="{{ 'nav-component.language' | translate }}"
+          (mouseenter)="setDropdownLanguageVisible()"
+          (mouseleave)="setDropdownLanguageVisible()">
+          <app-drop-down-list
+            [isVisible]="isDropdownLanguageVisible"
+            [items]="langItems"
+            (onItemClick)="changeLang($event)"></app-drop-down-list>
+        </app-nav-button>
+
         <app-nav-button iconName="shopping_cart" label="{{ 'nav-component.basket' | translate }}"></app-nav-button>
         <app-nav-button iconName="favorite" label="{{ 'nav-component.favourite' | translate }}"></app-nav-button>
         <app-nav-button iconName="account_circle" label="{{ 'nav-component.account' | translate }}"></app-nav-button>

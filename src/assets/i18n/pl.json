@@ -1,7 +1,14 @@
 {
+  "common": {
+    "languages": {
+      "en": "Angielski",
+      "pl": "Polski"
+    }
+  },
   "nav-component": {
     "account": "Konto",
     "basket": "Koszyk",
-    "favourite": "Ulubione"
+    "favourite": "Ulubione",
+    "language": "Język"
   }
 }

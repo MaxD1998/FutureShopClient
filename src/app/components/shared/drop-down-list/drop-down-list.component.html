@@ -1,0 +1,11 @@
+@if (isVisible) {
+<div class="bg-white absolute border p-2 rounded-md min-w-32">
+  <div class="flex flex-col gap-2">
+    @for (item of items; track item.Id) {
+    <a class="w-full cursor-pointer" (click)="action(item.Id)">
+      {{ item.Value }}
+    </a>
+    }
+  </div>
+</div>
+}

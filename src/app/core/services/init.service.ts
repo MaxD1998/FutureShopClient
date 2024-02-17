@@ -34,15 +34,14 @@ export function provideTranslation(): (Provider | EnvironmentProviders)[] {
       provide: APP_INITIALIZER,
       useFactory(service: TranslateService) {
         return () => {
-          let lang =
-            localStorage.getItem(LocalStorageConst.currentLang) ?? localStorage.getItem(LocalStorageConst.defaultLang);
+          let lang = localStorage.getItem(LocalStorageConst.currentLang);
 
           if (!lang) {
-            localStorage.setItem(LocalStorageConst.defaultLang, environment.defaultLang);
-            lang = localStorage.getItem(LocalStorageConst.defaultLang);
+            localStorage.setItem(LocalStorageConst.currentLang, environment.defaultLang);
+            lang = environment.defaultLang;
           }
 
-          service.setDefaultLang(lang as string);
+          service.use(lang as string);
         };
       },
       deps: [TranslateService],

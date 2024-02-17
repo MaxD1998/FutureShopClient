@@ -25,12 +25,14 @@ export class AuthService {
   }
 
   async refreshToken(): Promise<void> {
-    await firstValueFrom(this._authDataService.RefreshToken()).then(response => {
-      if (!response) {
-        return;
-      }
+    await firstValueFrom(this._authDataService.RefreshToken())
+      .then(response => {
+        if (!response) {
+          return;
+        }
 
-      this._user = response;
-    });
+        this._user = response;
+      })
+      .catch(response => console.log(response));
   }
 }
