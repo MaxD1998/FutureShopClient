@@ -1,12 +1,12 @@
 <nav class="flex justify-center">
   <div class="flex justify-between items-center p-2 w-[91rem]">
-    <a>
-      <img class="h-[5rem]" src="assets/icons/logo.png" alt="logo" />
+    <a [routerLink]="ClientRoute.main">
+      <img class="h-[5rem]" src="assets/logo.png" alt="logo" />
     </a>
     <div>
       <div class="flex">
         <app-nav-button
-          iconName="language"
+          [iconName]="IconType.globeAlt"
           label="{{ 'nav-component.language' | translate }}"
           (mouseenter)="setDropdownLanguageVisible()"
           (mouseleave)="setDropdownLanguageVisible()">
@@ -16,9 +16,16 @@
             (onItemClick)="changeLang($event)"></app-drop-down-list>
         </app-nav-button>
 
-        <app-nav-button iconName="shopping_cart" label="{{ 'nav-component.basket' | translate }}"></app-nav-button>
-        <app-nav-button iconName="favorite" label="{{ 'nav-component.favourite' | translate }}"></app-nav-button>
-        <app-nav-button iconName="account_circle" label="{{ 'nav-component.account' | translate }}"></app-nav-button>
+        <app-nav-button
+          [iconName]="IconType.shoppingBag"
+          label="{{ 'nav-component.basket' | translate }}"></app-nav-button>
+        <app-nav-button
+          [iconName]="IconType.heart"
+          label="{{ 'nav-component.favourite' | translate }}"></app-nav-button>
+        <app-nav-button
+          [iconName]="IconType.userCircle"
+          label="{{ 'nav-component.account' | translate }}"
+          [routeLink]="ClientRoute.login"></app-nav-button>
       </div>
     </div>
   </div>

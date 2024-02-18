@@ -1,6 +1,8 @@
-<div class="p-2">
-  <a class="grid">
-    <span class="material-symbols-outlined flex justify-center">{{ iconName }}</span>
+<div class="p-2 cursor-pointer">
+  <a class="grid" [routerLink]="routeLink">
+    <div class="flex justify-center">
+      <app-icon [iconName]="iconName"></app-icon>
+    </div>
     <p class="text-center">{{ label }}</p>
   </a>
 </div>

@@ -5,6 +5,21 @@
       "pl": "Polski"
     }
   },
+  "login-component": {
+    "access-to-order-status-and-purchase-history": "Dostęp do statusu zamówień oraz historii zakupów",
+    "dont-you-have-an-account": "Nie masz konta?",
+    "dont-worry-and-do this-right-now": "Nie martw się i zrób to już teraz!",
+    "email": "Email",
+    "enter-your-email": "Wprowadź swój email",
+    "enter-your-password": "Wprowadź swoje hasło",
+    "newsletter-with-current-information": "Newsletter with current information",
+    "our-users-have": "Nasi użytkownicy posiadają:",
+    "password": "Hasło",
+    "possibilities-of-faster-shopping": "Możliwości szybszych zakupów",
+    "sharing-product-reviews": "Udostępnianie recenzji produktów",
+    "sign-in": "Zaloguj się",
+    "sign-up": "Zarejestruj się"
+  },
   "nav-component": {
     "account": "Konto",
     "basket": "Koszyk",

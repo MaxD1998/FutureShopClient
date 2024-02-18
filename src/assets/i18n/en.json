@@ -5,6 +5,21 @@
       "pl": "Polish"
     }
   },
+  "login-component": {
+    "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
+    "dont-you-have-an-account": "Don't you have an account?",
+    "dont-worry-and-do this-right-now": "Don't worry and do this right now!",
+    "email": "Email",
+    "enter-your-email": "Enter your email",
+    "enter-your-password": "Enter your password",
+    "newsletter-with-current-information": "Newsletter with current information",
+    "our-users-have": "Our users have:",
+    "password": "Password",
+    "possibilities-of-faster-shopping": "Possibilities of faster shopping",
+    "sharing-product-reviews": "Sharing product reviews",
+    "sign-in": "Sign in",
+    "sign-up": "Sign up"
+  },
   "nav-component": {
     "account": "Account",
     "basket": "Basket",

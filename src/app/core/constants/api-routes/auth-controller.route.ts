@@ -1,4 +1,4 @@
-export class AuthRoute {
+export class AuthControllerRoute {
   private static readonly _base = 'Auth/';
 
   public static readonly login = this._base + 'Login';
