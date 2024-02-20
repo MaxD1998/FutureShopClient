@@ -10,7 +10,7 @@ import { IconType } from '../../../core/enums/icon-type';
 })
 export class IconComponent {
   @Input() iconName: IconType;
-  @Input() iconStyle: string = '';
+  @Input() iconStyle: string = 'w-6 h-6';
 
   IconType: typeof IconType = IconType;
 }

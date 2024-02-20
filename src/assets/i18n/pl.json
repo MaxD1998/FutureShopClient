@@ -24,6 +24,12 @@
     "account": "Konto",
     "basket": "Koszyk",
     "favourite": "Ulubione",
-    "language": "Język"
+    "language": "Język",
+    "logout": "Wyloguj",
+    "sign-in": "Zaloguj się"
+  },
+  "validation-errors": {
+    "email": "Nieprawidłowy format adresu e-mail",
+    "required": "Pole jest wymagane"
   }
 }

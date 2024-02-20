@@ -1,35 +1,62 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { map } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { ClientRoute } from '../../core/constants/client-routes/client.route';
 import { LocalStorageConst } from '../../core/constants/localstorage/localstorage.const';
+import { DropDownListOrientation } from '../../core/enums/drop-down-list-orientation';
 import { IconType } from '../../core/enums/icon-type';
-import { DropDownListModel } from '../../core/models/drop-down-list-model';
+import { DropDownListItemModel } from '../../core/models/drop-down-list-item.model';
+import { AuthService } from '../../core/services/auth.service';
+import { DropDownListItemComponent } from '../shared/drop-down-list/drop-down-list-item/drop-down-list-item.component';
 import { DropDownListComponent } from '../shared/drop-down-list/drop-down-list.component';
-import { NavButtonComponent } from '../shared/nav-button/nav-button.component';
+import { NavButtonComponent } from './nav-button/nav-button.component';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css',
-  imports: [NavButtonComponent, TranslateModule, DropDownListComponent, RouterModule],
+  imports: [NavButtonComponent, TranslateModule, DropDownListComponent, RouterModule, DropDownListItemComponent],
 })
 export class NavComponent {
-  ClientRoute: typeof ClientRoute = ClientRoute;
-  isDropdownLanguageVisible = false;
-  langItems: DropDownListModel[] = [];
-  IconType: typeof IconType = IconType;
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+  private _translateService = inject(TranslateService);
 
-  constructor(private _translateService: TranslateService) {
+  ClientRoute: typeof ClientRoute = ClientRoute;
+  DropDownListOrientation: typeof DropDownListOrientation = DropDownListOrientation;
+  IconType: typeof IconType = IconType;
+  isDropdownAccountVisible = false;
+  isDropdownLanguageVisible = false;
+  langItems: DropDownListItemModel[] = [];
+
+  constructor() {
     this.initLangItems();
   }
 
-  changeLang(item: DropDownListModel): void {
-    localStorage.setItem(LocalStorageConst.currentLang, item.Id);
-    this._translateService.use(item.Id);
+  get isSignedIn(): boolean {
+    return this._authService.isSignedIn;
+  }
+
+  changeLang(item: DropDownListItemModel): void {
+    localStorage.setItem(LocalStorageConst.currentLang, item.id);
+    this._translateService.use(item.id);
     this.initLangItems();
+  }
+
+  login(): void {
+    this.isDropdownAccountVisible = false;
+    this._router.navigateByUrl(ClientRoute.login);
+  }
+
+  logout(): void {
+    this.isDropdownAccountVisible = false;
+    this._authService.logout();
+  }
+
+  setDropdownAccountVisible(isVisible: boolean): void {
+    this.isDropdownAccountVisible = isVisible;
   }
 
   setDropdownLanguageVisible(): void {
@@ -37,13 +64,13 @@ export class NavComponent {
   }
 
   private initLangItems(): void {
-    this._translateService
-      .get('common.languages')
-      .pipe(
-        map(values =>
-          Object.entries(values).map<DropDownListModel>(([id, value]) => ({ Id: id as string, Value: value as string }))
-        )
-      )
-      .subscribe(response => (this.langItems = response));
+    this.isDropdownLanguageVisible = false;
+    this.langItems = environment.availableLangs.map<DropDownListItemModel>(x => {
+      const result: DropDownListItemModel = {
+        id: x,
+        value: `common.languages.${x}`,
+      };
+      return result;
+    });
   }
 }

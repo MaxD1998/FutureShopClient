@@ -1,4 +1,15 @@
-<div>
+<div class="relative pb-6">
   <label class="block my-1">{{ label }}</label>
-  <input class="block border rounded-md p-2 w-full" [placeholder]="placeholder" [type]="type" />
+  <input
+    #input
+    class="block border rounded-md p-2 w-full"
+    [ngClass]="{ 'border-red-600': errorCode }"
+    [placeholder]="placeholder"
+    [type]="type"
+    [value]="value"
+    (change)="onValueChange(input)"
+    (blur)="onValueChange(input)" />
+  @if (errorCode) {
+  <span class="absolute text-red-600">{{ errorCode | translate }}</span>
+  }
 </div>

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IconType } from '../../../core/enums/icon-type';
-import { IconComponent } from '../icon/icon.component';
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-nav-button',

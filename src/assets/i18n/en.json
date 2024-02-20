@@ -24,6 +24,12 @@
     "account": "Account",
     "basket": "Basket",
     "favourite": "Favourite",
-    "language": "Language"
+    "language": "Language",
+    "logout": "Logout",
+    "sign-in": "Sign in"
+  },
+  "validation-errors": {
+    "email": "Invalid email format",
+    "required": "Field is required"
   }
 }

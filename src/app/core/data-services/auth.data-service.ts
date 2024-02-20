@@ -14,11 +14,15 @@ export class AuthDataService extends BaseDataService {
     super(httpClient);
   }
 
-  Login(dto: LoginDto): Observable<AuthorizeDto> {
+  login(dto: LoginDto): Observable<AuthorizeDto> {
     return this.post(AuthControllerRoute.login, dto, true);
   }
 
-  RefreshToken(): Observable<AuthorizeDto> {
+  logout(): Observable<void> {
+    return this.get(AuthControllerRoute.logout, true);
+  }
+
+  refreshToken(): Observable<AuthorizeDto> {
     return this.get(AuthControllerRoute.refreshToken, true);
   }
 }

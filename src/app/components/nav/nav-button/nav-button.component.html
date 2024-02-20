@@ -1,0 +1,11 @@
+<div class="relative">
+  <div class="p-2 cursor-pointer hover:bg-neutral-100">
+    <a class="grid" [routerLink]="routeLink">
+      <div class="flex justify-center">
+        <app-icon [iconName]="iconName"></app-icon>
+      </div>
+      <p class="text-center">{{ label }}</p>
+    </a>
+  </div>
+  <ng-content></ng-content>
+</div>

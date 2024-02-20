@@ -1,5 +1,5 @@
 export interface AuthorizeDto {
-  Id: string;
-  Token: string;
-  Username: string;
+  id: string;
+  token: string;
+  username: string;
 }

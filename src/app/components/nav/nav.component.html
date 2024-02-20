@@ -13,9 +13,9 @@
           <app-drop-down-list
             [isVisible]="isDropdownLanguageVisible"
             [items]="langItems"
-            (onItemClick)="changeLang($event)"></app-drop-down-list>
+            (onItemClick)="changeLang($event)">
+          </app-drop-down-list>
         </app-nav-button>
-
         <app-nav-button
           [iconName]="IconType.shoppingBag"
           label="{{ 'nav-component.basket' | translate }}"></app-nav-button>
@@ -25,7 +25,21 @@
         <app-nav-button
           [iconName]="IconType.userCircle"
           label="{{ 'nav-component.account' | translate }}"
-          [routeLink]="ClientRoute.login"></app-nav-button>
+          (click)="login()"
+          (mouseenter)="setDropdownAccountVisible(true)"
+          (mouseleave)="setDropdownAccountVisible(false)">
+          <app-drop-down-list [isVisible]="isDropdownAccountVisible" [orientation]="DropDownListOrientation.right">
+            @if (isSignedIn) {
+            <app-drop-down-list-item
+              [item]="{ id: '1', value: 'nav-component.logout' }"
+              (onItemClick)="logout()"></app-drop-down-list-item>
+            } @else {
+            <app-drop-down-list-item
+              [item]="{ id: '1', value: 'nav-component.sign-in' }"
+              (onItemClick)="login()"></app-drop-down-list-item>
+            }
+          </app-drop-down-list>
+        </app-nav-button>
       </div>
     </div>
   </div>

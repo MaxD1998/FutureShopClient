@@ -1,10 +1,10 @@
 @if (isVisible) {
-<div class="bg-white absolute border p-2 rounded-md min-w-32">
+<div [class]="styles">
   <div class="flex flex-col gap-2">
-    @for (item of items; track item.Id) {
-    <a class="w-full cursor-pointer" (click)="action(item.Id)">
-      {{ item.Value }}
-    </a>
+    @if (items) { @for (item of items; track item.id) {
+    <app-drop-down-list-item [item]="item" (onItemClick)="action($event)"></app-drop-down-list-item>
+    } } @else {
+    <ng-content></ng-content>
     }
   </div>
 </div>

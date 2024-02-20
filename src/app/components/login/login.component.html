@@ -1,46 +1,52 @@
-<div class="flex justify-between">
-  <div class="px-2 w-2/5">
-    <div class="max-w-[35rem] border py-2 px-4 rounded-md">
-      <h1 class="text-2xl text-center">{{ 'login-component.sign-in' | translate }}</h1>
-      <form>
-        <app-input
-          label="{{ 'login-component.email' | translate }}"
-          placeholder="{{ 'login-component.enter-your-email' | translate }}"
-          type="email"></app-input>
-        <app-input
-          label="{{ 'login-component.password' | translate }}"
-          placeholder="{{ 'login-component.enter-your-password' | translate }}"
-          type="password"></app-input>
-        <app-button label="{{ 'login-component.sign-in' | translate }}" width="w-60"></app-button>
-      </form>
+<div class="flex justify-center lg:block">
+  <div class="flex flex-col lg:flex-row lg:justify-between">
+    <div class="px-2 py-8 w-2/5 min-w-96">
+      <div class="max-w-[35rem] border py-2 px-4 rounded-md">
+        <h1 class="text-2xl text-center">{{ 'login-component.sign-in' | translate }}</h1>
+        <form [formGroup]="form" (ngSubmit)="login()">
+          <app-input
+            [errorCode]="errorCode('email')"
+            label="{{ 'login-component.email' | translate }}"
+            formControlName="email"
+            placeholder="{{ 'login-component.enter-your-email' | translate }}"
+            type="email"></app-input>
+          <app-input
+            [errorCode]="errorCode('password')"
+            label="{{ 'login-component.password' | translate }}"
+            formControlName="password"
+            placeholder="{{ 'login-component.enter-your-password' | translate }}"
+            type="password"></app-input>
+          <app-button label="{{ 'login-component.sign-in' | translate }}" width="w-60"></app-button>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="px-2 w-2/5">
-    <h1 class="text-2xl font-semibold mb-4">{{ 'login-component.dont-you-have-an-account' | translate }}</h1>
-    <h2 class="text-xl mb-4">{{ 'login-component.dont-worry-and-do this-right-now' | translate }}</h2>
-    <div class="flex py-1">
-      <app-icon [iconName]="IconType.userGroup"></app-icon>
-      <h3 class="text-l ml-2">{{ 'login-component.our-users-have' | translate }}</h3>
+    <div class="px-2 py-8 w-2/5 min-w-96">
+      <h1 class="text-2xl font-semibold mb-4">{{ 'login-component.dont-you-have-an-account' | translate }}</h1>
+      <h2 class="text-xl mb-4">{{ 'login-component.dont-worry-and-do this-right-now' | translate }}</h2>
+      <div class="flex py-1">
+        <app-icon [iconName]="IconType.userGroup"></app-icon>
+        <h3 class="text-l ml-2">{{ 'login-component.our-users-have' | translate }}</h3>
+      </div>
+      <div class="flex py-1">
+        <app-icon [iconName]="IconType.envelope"></app-icon>
+        <p class="ml-2">{{ 'login-component.newsletter-with-current-information' | translate }}</p>
+      </div>
+      <div class="flex py-1">
+        <app-icon [iconName]="IconType.rocketLaunch"></app-icon>
+        <p class="ml-2">{{ 'login-component.possibilities-of-faster-shopping' | translate }}</p>
+      </div>
+      <div class="flex py-1">
+        <app-icon [iconName]="IconType.eye"></app-icon>
+        <p class="ml-2">{{ 'login-component.access-to-order-status-and-purchase-history' | translate }}</p>
+      </div>
+      <div class="flex py-1">
+        <app-icon [iconName]="IconType.share"></app-icon>
+        <p class="ml-2">{{ 'login-component.sharing-product-reviews' | translate }}</p>
+      </div>
+      <div class="flex justify-center mt-2 py-2">
+        <app-icon [iconName]="IconType.arrowDownCircle" iconStyle="w-10 h-10 animate-bounce stroke-1"></app-icon>
+      </div>
+      <app-button label="{{ 'login-component.sign-up' | translate }}!" [layout]="ButtonLayout.greenLayout"></app-button>
     </div>
-    <div class="flex py-1">
-      <app-icon [iconName]="IconType.envelope"></app-icon>
-      <p class="ml-2">{{ 'login-component.newsletter-with-current-information' | translate }}</p>
-    </div>
-    <div class="flex py-1">
-      <app-icon [iconName]="IconType.rocketLaunch"></app-icon>
-      <p class="ml-2">{{ 'login-component.possibilities-of-faster-shopping' | translate }}</p>
-    </div>
-    <div class="flex py-1">
-      <app-icon [iconName]="IconType.eye"></app-icon>
-      <p class="ml-2">{{ 'login-component.access-to-order-status-and-purchase-history' | translate }}</p>
-    </div>
-    <div class="flex py-1">
-      <app-icon [iconName]="IconType.share"></app-icon>
-      <p class="ml-2">{{ 'login-component.sharing-product-reviews' | translate }}</p>
-    </div>
-    <div class="flex justify-center mt-2 py-2">
-      <app-icon [iconName]="IconType.arrowDownCircle" iconStyle="w-10 h-10 animate-bounce stroke-1"></app-icon>
-    </div>
-    <app-button label="{{ 'login-component.sign-up' | translate }}!" [layout]="ButtonLayout.greenLayout"></app-button>
   </div>
 </div>
