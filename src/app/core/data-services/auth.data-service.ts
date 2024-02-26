@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseDataService } from '../bases/base.data-service';
 import { AuthControllerRoute } from '../constants/api-routes/auth-controller.route';
-import { AuthorizeDto } from '../dtos/authorize-dto';
-import { LoginDto } from '../dtos/login-dto';
+import { AuthorizeDto } from '../dtos/authorize.dto';
+import { LoginDto } from '../dtos/login.dto';
+import { UserInputDto } from '../dtos/user-input.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,9 @@ export class AuthDataService extends BaseDataService {
 
   refreshToken(): Observable<AuthorizeDto> {
     return this.get(AuthControllerRoute.refreshToken, true);
+  }
+
+  register(dto: UserInputDto): Observable<AuthorizeDto> {
+    return this.post(AuthControllerRoute.register, dto, true);
   }
 }

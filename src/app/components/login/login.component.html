@@ -1,7 +1,7 @@
 <div class="flex justify-center lg:block">
   <div class="flex flex-col lg:flex-row lg:justify-between">
     <div class="px-2 py-8 w-2/5 min-w-96">
-      <div class="max-w-[35rem] border py-2 px-4 rounded-md">
+      <div class="border py-2 px-4 rounded-md">
         <h1 class="text-2xl text-center">{{ 'login-component.sign-in' | translate }}</h1>
         <form [formGroup]="form" (ngSubmit)="login()">
           <app-input
@@ -9,13 +9,13 @@
             label="{{ 'login-component.email' | translate }}"
             formControlName="email"
             placeholder="{{ 'login-component.enter-your-email' | translate }}"
-            type="email"></app-input>
+            [type]="InputType.email"></app-input>
           <app-input
             [errorCode]="errorCode('password')"
             label="{{ 'login-component.password' | translate }}"
             formControlName="password"
             placeholder="{{ 'login-component.enter-your-password' | translate }}"
-            type="password"></app-input>
+            [type]="InputType.password"></app-input>
           <app-button label="{{ 'login-component.sign-in' | translate }}" width="w-60"></app-button>
         </form>
       </div>
@@ -46,7 +46,10 @@
       <div class="flex justify-center mt-2 py-2">
         <app-icon [iconName]="IconType.arrowDownCircle" iconStyle="w-10 h-10 animate-bounce stroke-1"></app-icon>
       </div>
-      <app-button label="{{ 'login-component.sign-up' | translate }}!" [layout]="ButtonLayout.greenLayout"></app-button>
+      <app-button
+        label="{{ 'login-component.sign-up' | translate }}!"
+        [layout]="ButtonLayout.greenLayout"
+        (click)="navigateToRegister()"></app-button>
     </div>
   </div>
 </div>

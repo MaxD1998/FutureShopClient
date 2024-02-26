@@ -5,6 +5,12 @@
       "pl": "Polish"
     }
   },
+  "validation-errors": {
+    "email": "Invalid email format",
+    "equal": "Values are not equal",
+    "not-white-charackters": "White charackters are forbidden",
+    "required": "Field is required"
+  },
   "login-component": {
     "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
     "dont-you-have-an-account": "Don't you have an account?",
@@ -28,8 +34,15 @@
     "logout": "Logout",
     "sign-in": "Sign in"
   },
-  "validation-errors": {
-    "email": "Invalid email format",
-    "required": "Field is required"
+  "register-component": {
+    "date-of-birth": "Date of birth",
+    "email": "E-mail",
+    "last-name": "Last name",
+    "first-name": "First name",
+    "password": "Password",
+    "phone-number": "Phone number",
+    "registration": "Registration",
+    "repeat-password": "Repeat password",
+    "sign-up": "Sign up"
   }
 }

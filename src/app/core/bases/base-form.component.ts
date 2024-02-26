@@ -1,9 +1,12 @@
+import { inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 export abstract class BaseFormComponent {
+  private _formBuilder = inject(FormBuilder);
+
   form: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor() {
     this.initForm();
   }
 

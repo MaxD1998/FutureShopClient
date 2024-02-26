@@ -8,12 +8,14 @@
   <input
     #input
     class="block border rounded-md p-2 w-full {{ errorCode ? 'border-red-600' : '' }}"
-    [placeholder]="placeholder"
-    [type]="type"
-    [value]="value"
+    type="text"
+    maxlength="10"
+    placeholder="DD-MM-YYYY"
     [autocomplete]="autocomplete"
+    [value]="internalValue"
     (change)="onValueChange(input)"
-    (blur)="onValueChange(input)" />
+    (blur)="onValueChange(input)"
+    (input)="transform(input)" />
   @if (errorCode) {
   <span class="absolute text-red-600">{{ errorCode | translate }}</span>
   }

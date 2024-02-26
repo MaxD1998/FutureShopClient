@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthDataService } from '../data-services/auth.data-service';
-import { AuthorizeDto } from '../dtos/authorize-dto';
-import { LoginDto } from '../dtos/login-dto';
+import { AuthorizeDto } from '../dtos/authorize.dto';
+import { LoginDto } from '../dtos/login.dto';
+import { UserInputDto } from '../dtos/user-input.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,18 @@ export class AuthService {
       }
 
       this._user = response;
+    });
+  }
+
+  register(dto: UserInputDto, callback?: () => void): void {
+    this._authDataService.register(dto).subscribe({
+      next: response => {
+        this._user = response;
+
+        if (callback) {
+          callback();
+        }
+      },
     });
   }
 }
