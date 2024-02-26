@@ -23,7 +23,7 @@ export class InputDateComponent implements ControlValueAccessor {
   @Input() required: boolean = false;
 
   internalValue: string = '';
-  value: Date;
+  value: Date | null = null;
 
   onValueChange(element: HTMLInputElement) {
     this.transform(element);
@@ -48,6 +48,12 @@ export class InputDateComponent implements ControlValueAccessor {
 
   transform(element: HTMLInputElement) {
     let value = element.value;
+
+    if (value.length == 0) {
+      this.value = null;
+      return;
+    }
+
     const regex = /^-?\d+$/; //tylko cyfry
 
     if (value.length != 0 && !regex.test(value.replaceAll('-', ''))) {
