@@ -2,16 +2,16 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { BaseFormComponent } from '../../core/bases/base-form.component';
-import { ClientRoute } from '../../core/constants/client-routes/client.route';
-import { LoginDto } from '../../core/dtos/login.dto';
-import { ButtonLayout } from '../../core/enums/button-layout';
-import { IconType } from '../../core/enums/icon-type';
-import { InputType } from '../../core/enums/input-type';
-import { AuthService } from '../../core/services/auth.service';
-import { ButtonComponent } from '../shared/button/button.component';
-import { IconComponent } from '../shared/icon/icon.component';
-import { InputComponent } from '../shared/input/input.component';
+import { BaseFormComponent } from '../../../core/bases/base-form.component';
+import { ClientRoute } from '../../../core/constants/client-routes/client.route';
+import { LoginDto } from '../../../core/dtos/login.dto';
+import { ButtonLayout } from '../../../core/enums/button-layout';
+import { IconType } from '../../../core/enums/icon-type';
+import { InputType } from '../../../core/enums/input-type';
+import { AuthService } from '../../../core/services/auth.service';
+import { ButtonComponent } from '../../shared/button/button.component';
+import { IconComponent } from '../../shared/icon/icon.component';
+import { InputComponent } from '../../shared/input/input.component';
 
 @Component({
   selector: 'app-login',

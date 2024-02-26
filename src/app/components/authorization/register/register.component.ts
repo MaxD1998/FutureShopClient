@@ -2,15 +2,15 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { BaseFormComponent } from '../../core/bases/base-form.component';
-import { ClientRoute } from '../../core/constants/client-routes/client.route';
-import { UserInputDto } from '../../core/dtos/user-input.dto';
-import { InputType } from '../../core/enums/input-type';
-import { AuthService } from '../../core/services/auth.service';
-import { CustomValidators } from '../../core/utils/custom-validators';
-import { ButtonComponent } from '../shared/button/button.component';
-import { InputDateComponent } from '../shared/input-date/input-date.component';
-import { InputComponent } from '../shared/input/input.component';
+import { BaseFormComponent } from '../../../core/bases/base-form.component';
+import { ClientRoute } from '../../../core/constants/client-routes/client.route';
+import { UserInputDto } from '../../../core/dtos/user-input.dto';
+import { InputType } from '../../../core/enums/input-type';
+import { AuthService } from '../../../core/services/auth.service';
+import { CustomValidators } from '../../../core/utils/custom-validators';
+import { ButtonComponent } from '../../shared/button/button.component';
+import { InputDateComponent } from '../../shared/input-date/input-date.component';
+import { InputComponent } from '../../shared/input/input.component';
 
 @Component({
   selector: 'app-register',
