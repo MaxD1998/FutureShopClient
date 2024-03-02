@@ -1,0 +1,16 @@
+@if (categories) {@for (category of categories; track category.id) {
+<div class="flex items-center py-2">
+  <a
+    class="block overflow-hidden text-ellipsis cursor-pointer w-full 
+    {{ category.name.length > 18 ? 'md:whitespace-nowrap' : 'whitespace-nowrap' }} ">
+    {{ category.name }}
+  </a>
+  @if (category.hasChildren) {
+  <app-icon
+    class="hover:bg-green-300 hover:rounded cursor-pointer"
+    [iconName]="IconType.chevronRight"
+    (click)="action(category)">
+  </app-icon>
+  }
+</div>
+} }

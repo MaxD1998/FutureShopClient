@@ -21,8 +21,8 @@ import { InputComponent } from '../../shared/input/input.component';
   imports: [TranslateModule, ReactiveFormsModule, InputComponent, ButtonComponent, IconComponent],
 })
 export class LoginComponent extends BaseFormComponent {
-  private _authService = inject(AuthService);
-  private _router = inject(Router);
+  private readonly _authService = inject(AuthService);
+  private readonly _router = inject(Router);
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   IconType: typeof IconType = IconType;

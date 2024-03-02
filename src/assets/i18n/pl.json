@@ -11,6 +11,10 @@
     "not-white-charackters": "Białe znaki są zabronione",
     "required": "Pole jest wymagane"
   },
+  "aside-component": {
+    "categories": "Kategorie",
+    "menu": "Menu"
+  },
   "login-component": {
     "access-to-order-status-and-purchase-history": "Dostęp do statusu zamówień oraz historii zakupów",
     "dont-you-have-an-account": "Nie masz konta?",

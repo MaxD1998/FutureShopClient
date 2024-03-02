@@ -11,6 +11,10 @@
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
   },
+  "aside-component": {
+    "categories": "Categories",
+    "menu": "Menu"
+  },
   "login-component": {
     "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
     "dont-you-have-an-account": "Don't you have an account?",

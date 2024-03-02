@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseDataService } from '../bases/base.data-service';
 import { AuthControllerRoute } from '../constants/api-routes/auth-controller.route';
 import { AuthorizeDto } from '../dtos/authorize.dto';
 import { LoginDto } from '../dtos/login.dto';
@@ -10,24 +9,22 @@ import { UserInputDto } from '../dtos/user-input.dto';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthDataService extends BaseDataService {
-  constructor(httpClient: HttpClient) {
-    super(httpClient);
-  }
+export class AuthDataService {
+  private readonly _httpClient = inject(HttpClient);
 
   login(dto: LoginDto): Observable<AuthorizeDto> {
-    return this.post(AuthControllerRoute.login, dto, true);
+    return this._httpClient.post<AuthorizeDto>(AuthControllerRoute.login, dto, { withCredentials: true });
   }
 
   logout(): Observable<void> {
-    return this.get(AuthControllerRoute.logout, true);
+    return this._httpClient.get<void>(AuthControllerRoute.logout, { withCredentials: true });
   }
 
   refreshToken(): Observable<AuthorizeDto> {
-    return this.get(AuthControllerRoute.refreshToken, true);
+    return this._httpClient.get<AuthorizeDto>(AuthControllerRoute.refreshToken, { withCredentials: true });
   }
 
   register(dto: UserInputDto): Observable<AuthorizeDto> {
-    return this.post(AuthControllerRoute.register, dto, true);
+    return this._httpClient.post<AuthorizeDto>(AuthControllerRoute.register, dto, { withCredentials: true });
   }
 }

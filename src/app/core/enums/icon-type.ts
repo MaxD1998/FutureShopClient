@@ -1,5 +1,7 @@
 export enum IconType {
   arrowDownCircle = 'arrow-down-circle',
+  arrowUturnLeft = 'arrow-uturn-left',
+  chevronRight = 'chevron-right',
   envelope = 'envelope',
   eye = 'eye',
   globeAlt = 'globe-alt',
@@ -9,4 +11,5 @@ export enum IconType {
   shoppingBag = 'shopping-bag',
   userCircle = 'user-cicrle',
   userGroup = 'user-group',
+  xMark = 'x-mark',
 }

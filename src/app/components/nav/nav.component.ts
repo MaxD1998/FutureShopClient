@@ -20,9 +20,9 @@ import { NavButtonComponent } from './nav-button/nav-button.component';
   imports: [NavButtonComponent, TranslateModule, DropDownListComponent, RouterModule, DropDownListItemComponent],
 })
 export class NavComponent {
-  private _authService = inject(AuthService);
-  private _router = inject(Router);
-  private _translateService = inject(TranslateService);
+  private readonly _authService = inject(AuthService);
+  private readonly _router = inject(Router);
+  private readonly _translateService = inject(TranslateService);
 
   ClientRoute: typeof ClientRoute = ClientRoute;
   DropDownListOrientation: typeof DropDownListOrientation = DropDownListOrientation;

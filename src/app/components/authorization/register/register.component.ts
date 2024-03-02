@@ -20,8 +20,8 @@ import { InputComponent } from '../../shared/input/input.component';
   imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent, InputDateComponent],
 })
 export class RegisterComponent extends BaseFormComponent {
-  private _authService = inject(AuthService);
-  private _router = inject(Router);
+  private readonly _authService = inject(AuthService);
+  private readonly _router = inject(Router);
 
   InputType: typeof InputType = InputType;
 

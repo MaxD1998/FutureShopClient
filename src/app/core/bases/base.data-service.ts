@@ -1,21 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class BaseDataService {
-  private _baseUrl = environment.api;
+  protected readonly _httpClient = inject(HttpClient);
 
-  constructor(private _httpClient: HttpClient) {}
+  protected _baseUrl = environment.api;
 
-  protected get<TResult>(url: string, withCredentials: boolean = false): Observable<TResult> {
-    return this._httpClient.get<TResult>(`${this._baseUrl}${url}`, { withCredentials: withCredentials });
-  }
-
-  protected post<TResult, TModel>(url: string, body: TModel, withCredentials: boolean = false): Observable<TResult> {
-    return this._httpClient.post<TResult>(`${this._baseUrl}${url}`, body, { withCredentials: withCredentials });
+  protected buildUrl(url: string) {
+    return `${this._baseUrl}${url}`;
   }
 }
