@@ -8,6 +8,7 @@ import { DropDownListOrientation } from '../../core/enums/drop-down-list-orienta
 import { IconType } from '../../core/enums/icon-type';
 import { DropDownListItemModel } from '../../core/models/drop-down-list-item.model';
 import { AuthService } from '../../core/services/auth.service';
+import { LangNext } from '../../core/services/language.service';
 import { DropDownListItemComponent } from '../shared/drop-down-list/drop-down-list-item/drop-down-list-item.component';
 import { DropDownListComponent } from '../shared/drop-down-list/drop-down-list.component';
 import { NavButtonComponent } from './nav-button/nav-button.component';
@@ -41,6 +42,7 @@ export class NavComponent {
 
   changeLang(item: DropDownListItemModel): void {
     localStorage.setItem(LocalStorageConst.currentLang, item.id);
+    LangNext();
     this._translateService.use(item.id);
     this.initLangItems();
   }

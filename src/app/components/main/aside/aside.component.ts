@@ -3,6 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CategoryDataService } from '../../../core/data-services/category.data-service';
 import { CategoryDto } from '../../../core/dtos/category.dto';
 import { IconType } from '../../../core/enums/icon-type';
+import { onLangChange } from '../../../core/services/language.service';
 import { IconComponent } from '../../shared/icon/icon.component';
 import { AsideCardComponent } from './aside-card/aside-card.component';
 
@@ -18,6 +19,7 @@ export class AsideComponent {
 
   private readonly _categoryDataService = inject(CategoryDataService);
 
+  private _currentParentId: string | null = null;
   private _categories: CategoryDto[] | null = null;
   private _isFirstLoaded: boolean = false;
 
@@ -25,8 +27,14 @@ export class AsideComponent {
   selectedCategoryParentsIds: (string | null)[] = [];
 
   constructor() {
-    this.getsCategoryByCategoryId(null, () => {
+    this.getsCategoryByCategoryId(this._currentParentId, () => {
       this._isFirstLoaded = true;
+    });
+
+    onLangChange().subscribe(() => {
+      this.getsCategoryByCategoryId(this._currentParentId, () => {
+        this._isFirstLoaded = false;
+      });
     });
   }
 
@@ -50,7 +58,7 @@ export class AsideComponent {
 
     const categoryParentId = this.selectedCategoryParentsIds[lenght - 1];
     this.selectedCategoryParentsIds.pop();
-    this._categories = null;
+    this._currentParentId = categoryParentId;
     this.getsCategoryByCategoryId(categoryParentId, () => {
       this._isFirstLoaded = false;
     });
@@ -70,6 +78,7 @@ export class AsideComponent {
 
     this.selectedCategoryParentsIds.push(category.parentCategoryId);
     this._categories = null;
+    this._currentParentId = categoryId;
     this.getsCategoryByCategoryId(categoryId);
   }
 
@@ -77,7 +86,6 @@ export class AsideComponent {
     this._categoryDataService.GetsByCategoryId(categoryParentId).subscribe({
       next: response => {
         this._categories = response;
-
         if (callback) {
           callback();
         }
