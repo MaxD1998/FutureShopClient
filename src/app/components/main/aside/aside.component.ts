@@ -77,7 +77,6 @@ export class AsideComponent {
     const category = categories.find(x => x.id == categoryId) as CategoryDto;
 
     this.selectedCategoryParentsIds.push(category.parentCategoryId);
-    this._categories = null;
     this._currentParentId = categoryId;
     this.getsCategoryByCategoryId(categoryId);
   }
