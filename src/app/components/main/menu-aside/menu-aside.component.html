@@ -1,25 +1,6 @@
-<div class="relative flex justify-center bg-green-300 p-2">
-  @if (hasSelectedCategoryParentsIds) {
-  <app-icon
-    class="absolute left-2 p-1 cursor-pointer hover:bg-green-400 hover:rounded"
-    iconStyle="w-5 h-5"
-    [iconName]="IconType.arrowUturnLeft"
-    (click)="backLevel()">
-  </app-icon>
-  }
-  <p class="text-xl">{{ 'aside-component.menu' | translate }}</p>
-  <app-icon
-    class="absolute right-2 p-1 cursor-pointer hover:bg-green-400 hover:rounded"
-    iconStyle="w-5 h-5"
-    [iconName]="IconType.xMark"
-    (click)="closeMenu()">
-  </app-icon>
-</div>
-<div class="h-full px-4 border-r">
-  <p class="text-sm text-neutral-500 pt-2">{{ 'aside-component.categories' | translate }}</p>
-  @if (categories) {
-  <div class="overflow-hidden {{ isAnimate ? 'animate-slide' : '' }}">
-    <app-menu-aside-card [categories]="categories" (onItemClick)="selectLevel($event)"></app-menu-aside-card>
-  </div>
-  }
-</div>
+<app-aside
+  [header]="'menu-aside-component.categories' | translate"
+  [items]="categories"
+  (onNextLevel)="getsCategoryByCategoryId($event)"
+  (onUndoLevel)="getsCategoryByCategoryId($event)">
+</app-aside>

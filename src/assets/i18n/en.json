@@ -11,10 +11,6 @@
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
   },
-  "aside-component": {
-    "categories": "Categories",
-    "menu": "Menu"
-  },
   "login-component": {
     "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
     "dont-you-have-an-account": "Don't you have an account?",
@@ -29,6 +25,9 @@
     "sharing-product-reviews": "Sharing product reviews",
     "sign-in": "Sign in",
     "sign-up": "Sign up"
+  },
+  "menu-aside-component": {
+    "categories": "Categories"
   },
   "nav-component": {
     "account": "Account",

@@ -1,94 +1,53 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { map } from 'rxjs';
 import { CategoryDataService } from '../../../core/data-services/category.data-service';
-import { CategoryDto } from '../../../core/dtos/category.dto';
-import { IconType } from '../../../core/enums/icon-type';
+import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { onLangChange } from '../../../core/services/language.service';
+import { AsideComponent } from '../../shared/aside/aside.component';
 import { IconComponent } from '../../shared/icon/icon.component';
-import { MenuAsideCardComponent } from './menu-aside-card/menu-aside-card.component';
 
 @Component({
   selector: 'app-menu-aside',
   standalone: true,
   templateUrl: './menu-aside.component.html',
   styleUrl: './menu-aside.component.css',
-  imports: [MenuAsideCardComponent, IconComponent, TranslateModule],
+  imports: [IconComponent, TranslateModule, AsideComponent],
 })
 export class MenuAsideComponent {
-  @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
-
   private readonly _categoryDataService = inject(CategoryDataService);
 
-  private _currentParentId: string | null = null;
-  private _categories: CategoryDto[] | null = null;
-  private _isFirstLoaded: boolean = false;
+  private _parentId: string | null = null;
 
-  IconType: typeof IconType = IconType;
-  selectedCategoryParentsIds: (string | null)[] = [];
+  categories: AsideItemModel[] = [];
 
   constructor() {
-    this.getsCategoryByCategoryId(this._currentParentId, () => {
-      this._isFirstLoaded = true;
-    });
+    this.getsCategoryByCategoryId(this._parentId);
 
     onLangChange().subscribe(() => {
-      this.getsCategoryByCategoryId(this._currentParentId, () => {
-        this._isFirstLoaded = false;
+      this.getsCategoryByCategoryId(this._parentId);
+    });
+  }
+
+  getsCategoryByCategoryId(categoryParentId: string | null): void {
+    this._categoryDataService
+      .GetsByCategoryId(categoryParentId)
+      .pipe(
+        map(response => {
+          return response.map<AsideItemModel>(x => {
+            return {
+              id: x.id,
+              name: x.name,
+              parentId: x.parentCategoryId,
+              hasChildren: x.hasChildren,
+            };
+          });
+        })
+      )
+      .subscribe({
+        next: response => {
+          this.categories = response;
+        },
       });
-    });
-  }
-
-  get categories(): CategoryDto[] | null {
-    return this._categories;
-  }
-
-  get hasSelectedCategoryParentsIds(): boolean {
-    return this.selectedCategoryParentsIds.length > 0;
-  }
-
-  get isAnimate(): boolean {
-    return !!this.categories && (!this.categories.some(x => x.parentCategoryId == null) || !this._isFirstLoaded);
-  }
-
-  backLevel(): void {
-    const lenght = this.selectedCategoryParentsIds.length;
-    if (lenght == 0) {
-      return;
-    }
-
-    const categoryParentId = this.selectedCategoryParentsIds[lenght - 1];
-    this.selectedCategoryParentsIds.pop();
-    this._currentParentId = categoryParentId;
-    this.getsCategoryByCategoryId(categoryParentId, () => {
-      this._isFirstLoaded = false;
-    });
-  }
-
-  closeMenu(): void {
-    this.onClose.emit();
-  }
-
-  selectLevel(categoryId: string): void {
-    if (!this.categories) {
-      return;
-    }
-
-    const categories = this._categories as CategoryDto[];
-    const category = categories.find(x => x.id == categoryId) as CategoryDto;
-
-    this.selectedCategoryParentsIds.push(category.parentCategoryId);
-    this._currentParentId = categoryId;
-    this.getsCategoryByCategoryId(categoryId);
-  }
-
-  private getsCategoryByCategoryId(categoryParentId: string | null, callback?: () => void): void {
-    this._categoryDataService.GetsByCategoryId(categoryParentId).subscribe({
-      next: response => {
-        this._categories = response;
-        if (callback) {
-          callback();
-        }
-      },
-    });
   }
 }

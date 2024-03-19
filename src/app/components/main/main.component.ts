@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { IconType } from '../../core/enums/icon-type';
-import { AsideComponent } from '../shared/aside/aside.component';
-import { IconComponent } from '../shared/icon/icon.component';
 import { MenuAsideComponent } from './menu-aside/menu-aside.component';
 
 @Component({
@@ -9,14 +6,6 @@ import { MenuAsideComponent } from './menu-aside/menu-aside.component';
   standalone: true,
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
-  imports: [MenuAsideComponent, IconComponent, AsideComponent],
+  imports: [MenuAsideComponent],
 })
-export class MainComponent {
-  IconType: typeof IconType = IconType;
-
-  isMenu: boolean = true;
-
-  changeMenu() {
-    this.isMenu = !this.isMenu;
-  }
-}
+export class MainComponent {}
