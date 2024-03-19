@@ -1,9 +1,13 @@
-<div class="flex flex-col h-full min-w-48 max-w-64 bg-red-300">
-  <div class="flex justify-center p-2 bg-green-300">
-    <div class="w-5 h-5 mr-2"></div>
-    <p class="text-xl">Menu</p>
+<div class="flex flex-col h-full -w-64 bg-red-300">
+  <div class="flex justify-center items-center p-2 bg-green-300">
     <app-icon
-      class="p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
+      class="w-7 h-7 p-1 mr-2 cursor-pointer hover:bg-green-400 hover:rounded"
+      iconStyle="w-5 h-5"
+      [iconName]="IconType.arrowUturnLeft">
+    </app-icon>
+    <p class="w-full text-xl text-center whitespace-normal overflow-auto break-words">Menu</p>
+    <app-icon
+      class="w-7 h-7 p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
       iconStyle="w-5 h-5"
       [iconName]="IconType.xMark">
     </app-icon>
