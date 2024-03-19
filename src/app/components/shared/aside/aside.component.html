@@ -1,15 +1,26 @@
-<div class="flex flex-col h-full w-64 bg-red-300">
-  <div class="flex justify-center items-center p-2 bg-green-300">
-    <app-icon
-      class="w-7 h-7 p-1 mr-2 cursor-pointer hover:bg-green-400 hover:rounded"
-      iconStyle="w-5 h-5"
-      [iconName]="IconType.arrowUturnLeft">
-    </app-icon>
-    <p class="w-full text-xl text-center whitespace-normal overflow-auto break-words">Menu</p>
-    <app-icon
-      class="w-7 h-7 p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
-      iconStyle="w-5 h-5"
-      [iconName]="IconType.xMark">
-    </app-icon>
+<div class="flex h-full">
+  @if (isMenu) {
+  <div class="flex flex-col h-full w-64 bg-red-300">
+    <div class="flex justify-center items-center p-2 bg-green-300">
+      <app-icon
+        class="w-7 h-7 p-1 mr-2 cursor-pointer hover:bg-green-400 hover:rounded"
+        iconStyle="w-5 h-5"
+        [iconName]="IconType.arrowUturnLeft">
+      </app-icon>
+      <p class="w-full text-xl text-center whitespace-normal overflow-auto break-words">Menu</p>
+      <app-icon
+        class="w-7 h-7 p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
+        iconStyle="w-5 h-5"
+        [iconName]="IconType.xMark"
+        (click)="changeMenu()">
+      </app-icon>
+    </div>
   </div>
+  } @else {
+  <div
+    class="h-11 w-11 p-2 border rounded cursor-pointer hover:bg-green-300 hover:border-green-300"
+    (click)="changeMenu()">
+    <app-icon [iconName]="IconType.chevronRight"></app-icon>
+  </div>
+  }
 </div>

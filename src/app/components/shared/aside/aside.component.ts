@@ -11,4 +11,10 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class AsideComponent {
   IconType: typeof IconType = IconType;
+
+  isMenu: boolean = true;
+
+  changeMenu() {
+    this.isMenu = !this.isMenu;
+  }
 }
