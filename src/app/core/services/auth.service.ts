@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
 import { AuthDataService } from '../data-services/auth.data-service';
 import { AuthorizeDto } from '../dtos/authorize.dto';
 import { LoginDto } from '../dtos/login.dto';
@@ -40,13 +39,15 @@ export class AuthService {
     });
   }
 
-  async refreshToken(): Promise<void> {
-    await firstValueFrom(this._authDataService.refreshToken()).then(response => {
-      if (!response) {
-        return;
-      }
+  refreshToken(): void {
+    this._authDataService.refreshToken().subscribe({
+      next: response => {
+        if (!response) {
+          return;
+        }
 
-      this._user = response;
+        this._user = response;
+      },
     });
   }
 

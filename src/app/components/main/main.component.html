@@ -1,14 +1,4 @@
 <div class="flex h-full">
-  <div class="min-w-48 w-1/6 mt-4 {{ isMenu ? 'block' : 'hidden' }}">
-    <app-aside class="flex flex-col h-full" (onClose)="changeMenu()"></app-aside>
-  </div>
-  <div class="mt-4 px-2">
-    <div
-      class="p-2 border rounded cursor-pointer hover:bg-green-300 hover:border-green-300 
-      {{ isMenu ? 'hidden' : 'block' }}"
-      (click)="changeMenu()">
-      <app-icon [iconName]="IconType.chevronRight"></app-icon>
-    </div>
-  </div>
+  <app-menu-aside></app-menu-aside>
   <div class="p-4"></div>
 </div>
