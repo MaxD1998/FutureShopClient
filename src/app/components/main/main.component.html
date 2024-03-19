@@ -1,6 +1,6 @@
 <div class="flex h-full">
   <div class="min-w-48 w-1/6 mt-4 {{ isMenu ? 'block' : 'hidden' }}">
-    <app-aside class="flex flex-col h-full" (onClose)="changeMenu()"></app-aside>
+    <app-menu-aside class="flex flex-col h-full" (onClose)="changeMenu()"></app-menu-aside>
   </div>
   <div class="mt-4 px-2">
     <div
@@ -10,5 +10,6 @@
       <app-icon [iconName]="IconType.chevronRight"></app-icon>
     </div>
   </div>
+  <app-aside></app-aside>
   <div class="p-4"></div>
 </div>

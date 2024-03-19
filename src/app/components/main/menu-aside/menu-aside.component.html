@@ -19,7 +19,7 @@
   <p class="text-sm text-neutral-500 pt-2">{{ 'aside-component.categories' | translate }}</p>
   @if (categories) {
   <div class="overflow-hidden {{ isAnimate ? 'animate-slide' : '' }}">
-    <app-aside-card [categories]="categories" (onItemClick)="selectLevel($event)"></app-aside-card>
+    <app-menu-aside-card [categories]="categories" (onItemClick)="selectLevel($event)"></app-menu-aside-card>
   </div>
   }
 </div>

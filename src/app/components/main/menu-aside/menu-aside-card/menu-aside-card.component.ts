@@ -4,13 +4,13 @@ import { IconType } from '../../../../core/enums/icon-type';
 import { IconComponent } from '../../../shared/icon/icon.component';
 
 @Component({
-  selector: 'app-aside-card',
+  selector: 'app-menu-aside-card',
   standalone: true,
-  templateUrl: './aside-card.component.html',
-  styleUrl: './aside-card.component.css',
+  templateUrl: './menu-aside-card.component.html',
+  styleUrl: './menu-aside-card.component.css',
   imports: [IconComponent],
 })
-export class AsideCardComponent {
+export class MenuAsideCardComponent {
   @Input() categories: CategoryDto[] | null = null;
   @Output() onItemClick: EventEmitter<string> = new EventEmitter<string>();
 

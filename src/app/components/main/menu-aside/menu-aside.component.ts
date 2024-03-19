@@ -5,16 +5,16 @@ import { CategoryDto } from '../../../core/dtos/category.dto';
 import { IconType } from '../../../core/enums/icon-type';
 import { onLangChange } from '../../../core/services/language.service';
 import { IconComponent } from '../../shared/icon/icon.component';
-import { AsideCardComponent } from './aside-card/aside-card.component';
+import { MenuAsideCardComponent } from './menu-aside-card/menu-aside-card.component';
 
 @Component({
-  selector: 'app-aside',
+  selector: 'app-menu-aside',
   standalone: true,
-  templateUrl: './aside.component.html',
-  styleUrl: './aside.component.css',
-  imports: [AsideCardComponent, IconComponent, TranslateModule],
+  templateUrl: './menu-aside.component.html',
+  styleUrl: './menu-aside.component.css',
+  imports: [MenuAsideCardComponent, IconComponent, TranslateModule],
 })
-export class AsideComponent {
+export class MenuAsideComponent {
   @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
 
   private readonly _categoryDataService = inject(CategoryDataService);
