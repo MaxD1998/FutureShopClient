@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-4">
+  <div class="flex justify-between items-center h-11">
+    <h1 class="text-xl">{{ 'category-list-component.categories' | translate }}</h1>
+    <app-button [label]="'category-list-component.create-new-category' | translate" (click)="navigateToCreate()">
+    </app-button>
+  </div>
+  <div class="border-t"></div>
+  <app-grid
+    [columns]="getColumns()"
+    [idName]="'id'"
+    [items]="categories"
+    [isDetailAction]="true"
+    [isEditAction]="true"
+    [isRemoveAction]="true"
+    (onDetailAction)="navigateToDetails($event)"
+    (onEditAction)="navigateToEdit($event)"
+    (onRemoveAction)="removeRecord($event)">
+  </app-grid>
+</div>

@@ -28,7 +28,7 @@ export class InputDateComponent implements ControlValueAccessor {
   onValueChange(element: HTMLInputElement) {
     this.transform(element);
     this.onChange(this.value);
-    this.onTouch(this.value);
+    this.onTouch();
   }
 
   onChange: any = () => {};

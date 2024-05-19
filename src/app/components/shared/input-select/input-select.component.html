@@ -1,0 +1,27 @@
+<div class="relative pb-6">
+  <label class="block my-1">
+    {{ label }}
+    @if (required) {
+      <sup class="text-red-600">*</sup>
+    }
+  </label>
+  <div #selectBox class="relative cursor-pointer">
+    <div
+      class="border rounded-md p-2 w-full h-[2.625rem] {{ errorCode ? 'border-red-600' : '' }}"
+      (click)="setVisible()">
+      <p>{{ selectedItem.value }}</p>
+    </div>
+    @if (isDropdownVisible) {
+      <div class="absolute z-10 border rounded-md w-full bg-white">
+        @for (dropdownItem of dropdownItems; track dropdownItem.id) {
+          <div class="p-2 hover:bg-green-50" (click)="setItem(dropdownItem)">
+            <p>{{ dropdownItem.value }}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+  @if (errorCode) {
+    <span class="absolute text-red-600">{{ errorCode | translate }}</span>
+  }
+</div>

@@ -1,0 +1,17 @@
+<div class="flex">
+  @if (isDetailAction) {
+    <button class="p-1 rounded hover:bg-green-300" (click)="detailAction()">
+      <app-icon [iconName]="IconType.eye" iconStyle="w-5 h-5"></app-icon>
+    </button>
+  }
+  @if (isEditAction) {
+    <button class="p-1 rounded hover:bg-green-300" (click)="editAction()">
+      <app-icon [iconName]="IconType.pencil" iconStyle="w-5 h-5"></app-icon>
+    </button>
+  }
+  @if (isRemoveAction) {
+    <button class="p-1 rounded hover:bg-green-300" (click)="removeAction()">
+      <app-icon [iconName]="IconType.trash" iconStyle="w-5 h-5"></app-icon>
+    </button>
+  }
+</div>

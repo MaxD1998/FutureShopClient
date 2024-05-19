@@ -4,5 +4,5 @@ export interface UserInputDto {
   firstName: string;
   lastName: string;
   password: string;
-  phoneNumber: string | null;
+  phoneNumber?: string;
 }

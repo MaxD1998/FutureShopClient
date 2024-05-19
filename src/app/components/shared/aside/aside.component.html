@@ -1,47 +1,47 @@
 <div class="flex h-full">
   @if (isMenu) {
-  <div class="flex flex-col h-full w-56">
-    <div class="flex w-full justify-center items-center p-2 bg-green-300">
-      <div class="min-w-7 max-w-7 min-h-7 max-h-7 mr-2">
-        @if (parentIds.length > 0) {
+    <div class="flex flex-col h-full w-56">
+      <div class="flex w-full justify-center items-center p-2 bg-green-300">
+        <div class="min-w-7 max-w-7 min-h-7 max-h-7 mr-2">
+          @if (parentIds.length > 0) {
+            <app-icon
+              class="block w-7 h-7 p-1 cursor-pointer hover:bg-green-400 hover:rounded"
+              iconStyle="w-5 h-5"
+              [iconName]="IconType.arrowUturnLeft"
+              (click)="undoLevel()">
+            </app-icon>
+          }
+        </div>
+        <p class="w-full text-xl text-center whitespace-normal overflow-auto break-words">{{ header }}</p>
         <app-icon
-          class="block w-7 h-7 p-1 cursor-pointer hover:bg-green-400 hover:rounded"
+          class="min-w-7 max-w-7 min-h-7 max-h-7 p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
           iconStyle="w-5 h-5"
-          [iconName]="IconType.arrowUturnLeft"
-          (click)="undoLevel()">
+          [iconName]="IconType.xMark"
+          (click)="changeMenu()">
         </app-icon>
+      </div>
+      <div class="h-full border-r">
+        @for (item of items; track item.id) {
+          <a class="flex items-center p-2 cursor-pointer hover:bg-green-50" [routerLink]="item.link">
+            <p class="block overflow-hidden text-ellipsis w-full whitespace-nowrap md:whitespace-nowrap">
+              {{ item.name }}
+            </p>
+            @if (item.hasSubCategories) {
+              <app-icon
+                class="hover:bg-green-300 hover:rounded cursor-pointer"
+                [iconName]="IconType.chevronRight"
+                (click)="nextLevel(item)">
+              </app-icon>
+            }
+          </a>
         }
       </div>
-      <p class="w-full text-xl text-center whitespace-normal overflow-auto break-words">{{ header }}</p>
-      <app-icon
-        class="min-w-7 max-w-7 min-h-7 max-h-7 p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
-        iconStyle="w-5 h-5"
-        [iconName]="IconType.xMark"
-        (click)="changeMenu()">
-      </app-icon>
     </div>
-    <div class="h-full px-2 border-r">
-      @for (item of items; track item.id) {
-      <div class="flex items-center py-2">
-        <a class="block overflow-hidden text-ellipsis cursor-pointer w-full whitespace-nowrap md:whitespace-nowrap">
-          {{ item.name }}
-        </a>
-        @if (item.hasChildren) {
-        <app-icon
-          class="hover:bg-green-300 hover:rounded cursor-pointer"
-          [iconName]="IconType.chevronRight"
-          (click)="nextLevel(item)">
-        </app-icon>
-        }
-      </div>
-      }
-    </div>
-  </div>
   } @else {
-  <div
-    class="h-11 w-11 p-2 border rounded cursor-pointer hover:bg-green-300 hover:border-green-300"
-    (click)="changeMenu()">
-    <app-icon [iconName]="IconType.chevronRight"></app-icon>
-  </div>
+    <div
+      class="h-11 w-11 p-2 border rounded cursor-pointer hover:bg-green-300 hover:border-green-300"
+      (click)="changeMenu()">
+      <app-icon [iconName]="IconType.chevronRight"></app-icon>
+    </div>
   }
 </div>

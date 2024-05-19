@@ -1,0 +1,53 @@
+<div class="flex">
+  <table #table class="w-full">
+    <thead class="bg-green-300">
+      <tr>
+        @for (column of columns; track $index) {
+          <th class="p-0 {{ column.template == GridTemplate.action ? actionColumnWidth() : '' }}">
+            <div class="p-2">
+              <p class="font-medium text-xl">
+                {{ column.headerText }}
+              </p>
+            </div>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody (mouseleave)="rowId = ''">
+      @for (item of items; track $index) {
+        <tr class="h-11 hover:bg-green-50" (mouseover)="rowId = item.id">
+          @for (column of columns; track $index) {
+            <td class="p-2">
+              <div class="flex justify-center">
+                @switch (column.template) {
+                  @case (GridTemplate.action) {
+                    <app-grid-action-field
+                      class="{{ rowId == item.id ? 'block' : 'hidden' }}"
+                      [id]="item.id"
+                      [isDetailAction]="isDetailAction"
+                      [isEditAction]="isEditAction"
+                      [isRemoveAction]="isRemoveAction"
+                      (onDetailAction)="detailAction($event)"
+                      (onEditAction)="editAction($event)"
+                      (onRemoveAction)="removeAction($event)">
+                    </app-grid-action-field>
+                  }
+                  @case (GridTemplate.boolean) {
+                    <app-grid-boolean-field [value]="item[column.field]"></app-grid-boolean-field>
+                  }
+                  @case (GridTemplate.text) {
+                    <app-grid-text-field [value]="item[column.field]"></app-grid-text-field>
+                  }
+                  @default {
+                    {{ item[column.field] }}
+                  }
+                }
+              </div>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+    <tfoot></tfoot>
+  </table>
+</div>

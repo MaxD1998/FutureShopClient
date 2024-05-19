@@ -2,7 +2,7 @@
   <label class="block my-1">
     {{ label }}
     @if (required) {
-    <sup class="text-red-600">*</sup>
+      <sup class="text-red-600">*</sup>
     }
   </label>
   <input
@@ -17,6 +17,6 @@
     (blur)="onValueChange(input)"
     (input)="transform(input)" />
   @if (errorCode) {
-  <span class="absolute text-red-600">{{ errorCode | translate }}</span>
+    <span class="absolute text-red-600">{{ errorCode | translate }}</span>
   }
 </div>

@@ -12,6 +12,10 @@ module.exports = {
           '100%': { width: '100%' },
         },
       },
+      width: {
+        18: '4.5rem',
+        25: '6.25rem',
+      },
     },
   },
   plugins: [],

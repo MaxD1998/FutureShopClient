@@ -1,5 +1,8 @@
 {
   "common": {
+    "input-select": {
+      "select-option": "-- Wybierz opcję --"
+    },
     "languages": {
       "en": "Angielski",
       "pl": "Polski"
@@ -10,6 +13,27 @@
     "equal": "Wartości nie są równe",
     "not-white-charackters": "Białe znaki są zabronione",
     "required": "Pole jest wymagane"
+  },
+  "category-form-component": {
+    "add-sub-category": "Dodaj podkategorię",
+    "add-translation": "Dodaj tłumaczenie",
+    "create-category": "Stwórz kategorię",
+    "choose-category": "Wybierz kategorię",
+    "choose-language": "Wybierz język",
+    "edit-category": "Edytuj kategorię",
+    "name": "Nazwa",
+    "parent-category": "Kategoria nadrzędna",
+    "properties": "Właściwości",
+    "save": "Zapisz",
+    "sub-categories": "Podkategorie",
+    "translations": "Tłumaczenia"
+  },
+  "category-list-component": {
+    "categories": "Kategorie",
+    "create-new-category": "Stwórz nową kategorię",
+    "has-subcategories": "Posiada podkategorie",
+    "is-subcategory": "Jest podkategorią",
+    "name": "Nazwa"
   },
   "login-component": {
     "access-to-order-status-and-purchase-history": "Dostęp do statusu zamówień oraz historii zakupów",
@@ -35,6 +59,7 @@
     "favourite": "Ulubione",
     "language": "Język",
     "logout": "Wyloguj",
+    "settings": "Ustawienia",
     "sign-in": "Zaloguj się"
   },
   "register-component": {
@@ -47,5 +72,12 @@
     "registration": "Rejestracja",
     "repeat-password": "Powtórz hasło",
     "sign-up": "Zarejestruj się"
+  },
+  "settings-aside-component": {
+    "items": {
+      "account": "Konto",
+      "categories": "Kategorie"
+    },
+    "settings": "Ustawienia"
   }
 }

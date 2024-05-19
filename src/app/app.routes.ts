@@ -1,15 +1,24 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from './core/constants/client-routes/client.route';
 import { unauthGuard } from './core/guards/unauth.guard';
+import { mainResolver as mainCategoryListResolver } from './core/resolvers/main-category-list.resolver';
 
 export const routes: Routes = [
   {
     path: ClientRoute.main,
     loadComponent: () => import('./components/main/main.component').then(x => x.MainComponent),
+    resolve: {
+      categories: mainCategoryListResolver,
+    },
   },
   {
-    path: ClientRoute.main,
+    path: '',
     loadChildren: () => import('./components/authorization/authorization.routes').then(x => x.authRoutes),
     canActivate: [unauthGuard],
+  },
+  {
+    path: ClientRoute.settings,
+    loadComponent: () => import('./components/settings/settings.component').then(x => x.SettingsComponent),
+    loadChildren: () => import('./components/settings/settings.routes').then(x => x.settingsRoutes),
   },
 ];

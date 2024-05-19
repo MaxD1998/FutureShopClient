@@ -12,7 +12,7 @@ import { DropDownListItemComponent } from './drop-down-list-item/drop-down-list-
 })
 export class DropDownListComponent {
   @Input() isVisible: boolean = false;
-  @Input() items: DropDownListItemModel[] | null = null;
+  @Input() items?: DropDownListItemModel[] = undefined;
   @Input() orientation: DropDownListOrientation = DropDownListOrientation.left;
   @Output() onItemClick: EventEmitter<DropDownListItemModel> = new EventEmitter<DropDownListItemModel>();
 

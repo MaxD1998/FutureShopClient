@@ -8,7 +8,6 @@ import { DropDownListOrientation } from '../../core/enums/drop-down-list-orienta
 import { IconType } from '../../core/enums/icon-type';
 import { DropDownListItemModel } from '../../core/models/drop-down-list-item.model';
 import { AuthService } from '../../core/services/auth.service';
-import { LangNext } from '../../core/services/language.service';
 import { DropDownListItemComponent } from '../shared/drop-down-list/drop-down-list-item/drop-down-list-item.component';
 import { DropDownListComponent } from '../shared/drop-down-list/drop-down-list.component';
 import { NavButtonComponent } from './nav-button/nav-button.component';
@@ -30,21 +29,28 @@ export class NavComponent {
   IconType: typeof IconType = IconType;
   isDropdownAccountVisible = false;
   isDropdownLanguageVisible = false;
-  langItems: DropDownListItemModel[] = [];
 
-  constructor() {
-    this.initLangItems();
-  }
+  constructor() {}
 
   get isSignedIn(): boolean {
     return this._authService.isSignedIn;
   }
 
+  get langItems(): DropDownListItemModel[] {
+    return environment.availableLangs.map<DropDownListItemModel>(x => {
+      const result: DropDownListItemModel = {
+        id: x,
+        value: this._translateService.instant(`common.languages.${x}`),
+      };
+
+      return result;
+    });
+  }
+
   changeLang(item: DropDownListItemModel): void {
+    this.isDropdownLanguageVisible = false;
     localStorage.setItem(LocalStorageConst.currentLang, item.id);
-    LangNext();
     this._translateService.use(item.id);
-    this.initLangItems();
   }
 
   login(): void {
@@ -57,22 +63,15 @@ export class NavComponent {
     this._authService.logout();
   }
 
+  navigateToSettings(): void {
+    this._router.navigateByUrl(ClientRoute.settings);
+  }
+
   setDropdownAccountVisible(isVisible: boolean): void {
     this.isDropdownAccountVisible = isVisible;
   }
 
   setDropdownLanguageVisible(): void {
     this.isDropdownLanguageVisible = !this.isDropdownLanguageVisible;
-  }
-
-  private initLangItems(): void {
-    this.isDropdownLanguageVisible = false;
-    this.langItems = environment.availableLangs.map<DropDownListItemModel>(x => {
-      const result: DropDownListItemModel = {
-        id: x,
-        value: `common.languages.${x}`,
-      };
-      return result;
-    });
   }
 }

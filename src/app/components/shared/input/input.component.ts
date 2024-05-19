@@ -19,19 +19,18 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() autocomplete: string = '';
-  @Input() errorCode: string | null = null;
+  @Input() errorCode?: string | null = null;
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() required: boolean = false;
   @Input() type: InputType = InputType.text;
-
-  value: string | null = null;
+  @Input() value: string | null = null;
 
   onValueChange(element: HTMLInputElement) {
     const elementValue = element.value;
     this.value = elementValue.length == 0 ? null : elementValue;
     this.onChange(this.value);
-    this.onTouch(this.value);
+    this.onTouch();
   }
 
   onChange: any = () => {};

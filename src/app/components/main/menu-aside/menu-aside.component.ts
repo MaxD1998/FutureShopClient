@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { map } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Observable, map, switchMap } from 'rxjs';
 import { CategoryDataService } from '../../../core/data-services/category.data-service';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
-import { onLangChange } from '../../../core/services/language.service';
 import { AsideComponent } from '../../shared/aside/aside.component';
 import { IconComponent } from '../../shared/icon/icon.component';
 
@@ -15,39 +15,51 @@ import { IconComponent } from '../../shared/icon/icon.component';
   imports: [IconComponent, TranslateModule, AsideComponent],
 })
 export class MenuAsideComponent {
+  private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
+  private readonly _translateService = inject(TranslateService);
 
-  private _parentId: string | null = null;
+  private _parentId?: string = undefined;
 
   categories: AsideItemModel[] = [];
 
   constructor() {
-    this.getsCategoryByCategoryId(this._parentId);
+    this.categories = this._activatedRoute.snapshot.data['categories'];
 
-    onLangChange().subscribe(() => {
-      this.getsCategoryByCategoryId(this._parentId);
-    });
-  }
-
-  getsCategoryByCategoryId(categoryParentId: string | null): void {
-    this._categoryDataService
-      .GetsByCategoryId(categoryParentId)
+    this._translateService.onLangChange
       .pipe(
-        map(response => {
-          return response.map<AsideItemModel>(x => {
-            return {
-              id: x.id,
-              name: x.name,
-              parentId: x.parentCategoryId,
-              hasChildren: x.hasChildren,
-            };
-          });
-        })
+        switchMap(() => {
+          return this.getsCategoryByCategoryId$(this._parentId);
+        }),
       )
       .subscribe({
         next: response => {
           this.categories = response;
         },
       });
+  }
+
+  getsCategoryByCategoryId(categoryParentId?: string): void {
+    this.getsCategoryByCategoryId$(categoryParentId).subscribe({
+      next: response => {
+        this.categories = response;
+      },
+    });
+  }
+
+  private getsCategoryByCategoryId$(categoryParentId?: string): Observable<AsideItemModel[]> {
+    return this._categoryDataService.getsByCategoryParentId(categoryParentId).pipe(
+      map(response => {
+        return response.map<AsideItemModel>(x => {
+          return {
+            id: x.id,
+            name: x.name,
+            parentId: x.parentCategoryId,
+            hasSubCategories: x.hasSubCategories,
+            link: x.id,
+          };
+        });
+      }),
+    );
   }
 }

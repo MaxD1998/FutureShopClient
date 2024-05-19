@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { IconType } from '../../../core/enums/icon-type';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { IconComponent } from '../icon/icon.component';
@@ -8,18 +9,18 @@ import { IconComponent } from '../icon/icon.component';
   standalone: true,
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.css',
-  imports: [IconComponent],
+  imports: [RouterModule, IconComponent],
 })
 export class AsideComponent {
   @Input() items: AsideItemModel[] = [];
   @Input() header: string = '';
   @Output() onNextLevel: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onUndoLevel: EventEmitter<string | null> = new EventEmitter<string | null>();
+  @Output() onUndoLevel: EventEmitter<string | undefined> = new EventEmitter<string | undefined>();
 
   IconType: typeof IconType = IconType;
 
   isMenu: boolean = true;
-  parentIds: (string | null)[] = [];
+  parentIds: (string | undefined)[] = [];
 
   changeMenu(): void {
     this.isMenu = !this.isMenu;

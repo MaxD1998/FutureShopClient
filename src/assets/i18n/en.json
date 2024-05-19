@@ -1,5 +1,8 @@
 {
   "common": {
+    "input-select": {
+      "select-option": "-- Select option --"
+    },
     "languages": {
       "en": "English",
       "pl": "Polish"
@@ -10,6 +13,27 @@
     "equal": "Values are not equal",
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
+  },
+  "category-form-component": {
+    "add-sub-category": "Add subcategory",
+    "add-translation": "Add translation",
+    "create-category": "Create category",
+    "choose-category": "Choose category",
+    "choose-language": "Choose langugae",
+    "edit-category": "Edit category",
+    "name": "Name",
+    "parent-category": "Parent category",
+    "properties": "Properties",
+    "save": "Save",
+    "sub-categories": "Subcategories",
+    "translations": "Translations"
+  },
+  "category-list-component": {
+    "categories": "Categories",
+    "create-new-category": "Create new category",
+    "has-subcategories": "Has subcategories",
+    "is-subcategory": "Is subcategory",
+    "name": "Name"
   },
   "login-component": {
     "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
@@ -35,6 +59,7 @@
     "favourite": "Favourite",
     "language": "Language",
     "logout": "Logout",
+    "settings": "Settings",
     "sign-in": "Sign in"
   },
   "register-component": {
@@ -47,5 +72,12 @@
     "registration": "Registration",
     "repeat-password": "Repeat password",
     "sign-up": "Sign up"
+  },
+  "settings-aside-component": {
+    "items": {
+      "account": "Account",
+      "categories": "Categories"
+    },
+    "settings": "Settings"
   }
 }
