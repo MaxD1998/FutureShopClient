@@ -10,8 +10,8 @@
   </div>
   <div class="border-t"></div>
   <form [formGroup]="form">
-    <div class="flex flex-col">
-      <div class="flex row gap-4">
+    <div class="flex flex-row flex-wrap gap-4">
+      <div class="flex flex-col flex-1">
         <div class="flex flex-1 flex-col">
           <div class="flex items-center h-11">
             <h2 class="text-xl">{{ 'category-form-component.properties' | translate }}</h2>
@@ -23,21 +23,8 @@
             [required]="true">
           </app-input>
         </div>
-        <div class="flex flex-1 flex-col">
-          <div class="flex items-center h-11">
-            <h2 class="text-xl">{{ 'category-form-component.parent-category' | translate }}</h2>
-          </div>
-          <app-input-select
-            formControlName="parentCategory"
-            [errorCode]="errorCode('parentCategory')"
-            [label]="'category-form-component.choose-category' | translate"
-            [items]="parentItems()">
-          </app-input-select>
-        </div>
-      </div>
-      <div class="flex row gap-4">
         <div class="flex flex-1 flex-col" formArrayName="translations">
-          <div class="flex justify-between items-center h-11">
+          <div class="flex justify-between items-center h-11 gap-4">
             <h2 class="text-xl">{{ 'category-form-component.translations' | translate }}</h2>
             <app-button
               [disabled]="isAddTranslationButtonDisabled()"
@@ -61,9 +48,27 @@
               </a>
             </div>
           }
+          @if (translations().controls.length == 0) {
+            <div class="flex justify-center w-full mt-4 text-gray-300">
+              <p>{{ 'category-form-component.no-translations' | translate }}</p>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="flex flex-col flex-1">
+        <div class="flex flex-1 flex-col">
+          <div class="flex items-center h-11">
+            <h2 class="text-xl">{{ 'category-form-component.parent-category' | translate }}</h2>
+          </div>
+          <app-input-select
+            formControlName="parentCategory"
+            [errorCode]="errorCode('parentCategory')"
+            [label]="'category-form-component.choose-category' | translate"
+            [items]="parentItems()">
+          </app-input-select>
         </div>
         <div class="flex flex-1 flex-col" formArrayName="subCategories">
-          <div class="flex justify-between items-center h-11">
+          <div class="flex justify-between items-center h-11 gap-4">
             <h2 class="text-xl">{{ 'category-form-component.sub-categories' | translate }}</h2>
             <app-button
               [disabled]="isAddCategoryButtonDisabled()"
@@ -86,6 +91,12 @@
                 (click)="removeSubCategory($event, $index)">
                 <app-icon class="block" [iconName]="IconType.minus"></app-icon>
               </a>
+            </div>
+          }
+
+          @if (subCategories().controls.length == 0) {
+            <div class="flex justify-center w-full mt-4 text-gray-300">
+              <p>{{ 'category-form-component.no-subcategories' | translate }}</p>
             </div>
           }
         </div>
