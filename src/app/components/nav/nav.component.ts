@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, WritableSignal, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ClientRoute } from '../../core/constants/client-routes/client.route';
 import { LocalStorageConst } from '../../core/constants/localstorage/localstorage.const';
@@ -17,7 +19,15 @@ import { NavButtonComponent } from './nav-button/nav-button.component';
   standalone: true,
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css',
-  imports: [NavButtonComponent, TranslateModule, DropDownListComponent, RouterModule, DropDownListItemComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    NavButtonComponent,
+    TranslateModule,
+    DropDownListComponent,
+    RouterModule,
+    DropDownListItemComponent,
+    AsyncPipe,
+  ],
 })
 export class NavComponent {
   private readonly _authService = inject(AuthService);
@@ -27,39 +37,35 @@ export class NavComponent {
   ClientRoute: typeof ClientRoute = ClientRoute;
   DropDownListOrientation: typeof DropDownListOrientation = DropDownListOrientation;
   IconType: typeof IconType = IconType;
-  isDropdownAccountVisible = false;
-  isDropdownLanguageVisible = false;
 
-  constructor() {}
-
-  get isSignedIn(): boolean {
-    return this._authService.isSignedIn;
-  }
-
-  get langItems(): DropDownListItemModel[] {
-    return environment.availableLangs.map<DropDownListItemModel>(x => {
+  isDropdownAccountVisible: WritableSignal<boolean> = signal(false);
+  isDropdownLanguageVisible: WritableSignal<boolean> = signal(false);
+  langItems: WritableSignal<DropDownListItemModel[]> = signal(
+    environment.availableLangs.map<DropDownListItemModel>(x => {
       const result: DropDownListItemModel = {
         id: x,
-        value: this._translateService.instant(`common.languages.${x}`),
+        value: `common.languages.${x}`,
       };
 
       return result;
-    });
-  }
+    }),
+  );
+
+  isSignedIn$ = this._authService.user$.pipe(map(user => !!user));
 
   changeLang(item: DropDownListItemModel): void {
-    this.isDropdownLanguageVisible = false;
+    this.isDropdownLanguageVisible.set(false);
     localStorage.setItem(LocalStorageConst.currentLang, item.id);
     this._translateService.use(item.id);
   }
 
   login(): void {
-    this.isDropdownAccountVisible = false;
+    this.isDropdownAccountVisible.set(false);
     this._router.navigateByUrl(ClientRoute.login);
   }
 
   logout(): void {
-    this.isDropdownAccountVisible = false;
+    this.isDropdownAccountVisible.set(false);
     this._authService.logout();
   }
 
@@ -68,10 +74,10 @@ export class NavComponent {
   }
 
   setDropdownAccountVisible(isVisible: boolean): void {
-    this.isDropdownAccountVisible = isVisible;
+    this.isDropdownAccountVisible.set(isVisible);
   }
 
   setDropdownLanguageVisible(): void {
-    this.isDropdownLanguageVisible = !this.isDropdownLanguageVisible;
+    this.isDropdownLanguageVisible.set(!this.isDropdownLanguageVisible());
   }
 }

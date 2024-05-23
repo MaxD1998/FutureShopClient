@@ -13,7 +13,8 @@
                 formControlName="firstName"
                 [required]="true"
                 [type]="InputType.text"
-                [errorCode]="errorCode('firstName')"></app-input>
+                [errorCode]="errorCode('firstName')">
+              </app-input>
               <app-input
                 class="xl:w-3/5"
                 label="{{ 'register-component.last-name' | translate }}"
@@ -21,7 +22,8 @@
                 formControlName="lastName"
                 [required]="true"
                 [type]="InputType.text"
-                [errorCode]="errorCode('lastName')"></app-input>
+                [errorCode]="errorCode('lastName')">
+              </app-input>
             </div>
             <div class="xl:flex xl:gap-4">
               <app-input-date
@@ -30,14 +32,16 @@
                 autocomplete="off"
                 formControlName="dateOfBirth"
                 [required]="true"
-                [errorCode]="errorCode('dateOfBirth')"></app-input-date>
+                [errorCode]="errorCode('dateOfBirth')">
+              </app-input-date>
               <app-input
                 class="xl:w-3/5"
                 label="{{ 'register-component.phone-number' | translate }}"
                 autocomplete="tel"
                 formControlName="phoneNumber"
                 [type]="InputType.email"
-                [errorCode]="errorCode('phoneNumber')"></app-input>
+                [errorCode]="errorCode('phoneNumber')">
+              </app-input>
             </div>
             <app-input
               label="{{ 'register-component.email' | translate }}"
@@ -45,22 +49,27 @@
               formControlName="email"
               [required]="true"
               [type]="InputType.email"
-              [errorCode]="errorCode('email')"></app-input>
+              [errorCode]="errorCode('email')">
+            </app-input>
             <app-input
               label="{{ 'register-component.password' | translate }}"
               autocomplete="new-password"
               formControlName="password"
               [required]="true"
               [type]="InputType.password"
-              [errorCode]="errorCode('password')"></app-input>
+              [errorCode]="errorCode('password')">
+            </app-input>
             <app-input
               label="{{ 'register-component.repeat-password' | translate }}"
               autocomplete="off"
               formControlName="repeatPassword"
               [required]="true"
               [type]="InputType.password"
-              [errorCode]="errorCode('repeatPassword')"></app-input>
-            <app-button label="{{ 'register-component.sign-up' | translate }}"></app-button>
+              [errorCode]="errorCode('repeatPassword')">
+            </app-input>
+            <div class="mt-4">
+              <app-button class="mt-4" label="{{ 'register-component.sign-up' | translate }}"></app-button>
+            </div>
           </form>
         </div>
       </div>

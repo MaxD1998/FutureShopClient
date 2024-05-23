@@ -1,4 +1,4 @@
-import { Component, Input, Provider, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Provider, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputType } from '../../../core/enums/input-type';
@@ -15,6 +15,7 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
   imports: [TranslateModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputComponent implements ControlValueAccessor {

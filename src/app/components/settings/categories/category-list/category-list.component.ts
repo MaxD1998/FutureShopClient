@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, WritableSignal, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
 import { CategoryDto } from '../../../../core/dtos/category.dto';
@@ -18,28 +18,34 @@ import { GridComponent } from '../../../shared/grid/grid.component';
   styleUrl: './category-list.component.css',
   imports: [GridComponent, TranslateModule, ButtonComponent],
 })
-export class CategoryListComponent {
+export class CategoryListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
   private readonly _router = inject(Router);
   private readonly _translateService = inject(TranslateService);
+  private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
-  categories: CategoryGridModel[] = [];
+  categories: WritableSignal<CategoryGridModel[]> = signal([]);
 
   constructor() {
     this.initCategories();
-
     this._translateService.onLangChange
       .pipe(
+        takeUntil(this._unsubscribe),
         switchMap(() => {
           return this.getCategories$();
         }),
       )
       .subscribe({
         next: response => {
-          this.categories = response;
+          this.categories.set(response);
         },
       });
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
   getColumns(): DataGridColumnModel[] {
@@ -89,21 +95,23 @@ export class CategoryListComponent {
       )
       .subscribe({
         next: response => {
-          this.categories = response;
+          this.categories.set(response);
         },
       });
   }
 
   private initCategories(): void {
     const categories: CategoryDto[] = this._activatedRoute.snapshot.data['categories'];
-    this.categories = categories.map<CategoryGridModel>(x => {
-      return {
-        id: x.id,
-        name: x.name,
-        isSubCategory: !!x.parentCategoryId,
-        hasSubCategories: x.hasSubCategories,
-      };
-    });
+    this.categories.set(
+      categories.map<CategoryGridModel>(x => {
+        return {
+          id: x.id,
+          name: x.name,
+          isSubCategory: !!x.parentCategoryId,
+          hasSubCategories: x.hasSubCategories,
+        };
+      }),
+    );
   }
 
   private getCategories$(): Observable<CategoryGridModel[]> {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IconType } from '../../../../../core/enums/icon-type';
 import { IconComponent } from '../../../icon/icon.component';
 
@@ -7,6 +7,7 @@ import { IconComponent } from '../../../icon/icon.component';
   standalone: true,
   templateUrl: './grid-boolean-field.component.html',
   styleUrl: './grid-boolean-field.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IconComponent],
 })
 export class GridBooleanFieldComponent {

@@ -1,6 +1,15 @@
-import { Component, ElementRef, HostListener, Input, Provider, ViewChild, forwardRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  Provider,
+  ViewChild,
+  forwardRef,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { SelectItemModel } from '../../../core/models/select-item.model';
 
 const CUSTOM_VALUE_ACCESSOR: Provider = {
@@ -15,6 +24,7 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
   imports: [TranslateModule],
   templateUrl: './input-select.component.html',
   styleUrl: './input-select.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputSelectComponent implements ControlValueAccessor {
@@ -25,24 +35,13 @@ export class InputSelectComponent implements ControlValueAccessor {
 
   @ViewChild('selectBox', { read: ElementRef }) selectBox: ElementRef;
 
-  private readonly _translateService = inject(TranslateService);
   private _firstItem: SelectItemModel = {
-    value: this._translateService.instant('common.input-select.select-option'),
+    value: 'common.input-select.select-option',
   };
 
   isDropdownVisible: boolean = false;
   selectedItem: SelectItemModel = this._firstItem;
   selectedId?: string = undefined;
-
-  constructor() {
-    this._translateService.onLangChange.subscribe({
-      next: () => {
-        if (!this.required) {
-          this._firstItem.value = this._translateService.instant('common.input-select.select-option');
-        }
-      },
-    });
-  }
 
   get dropdownItems(): SelectItemModel[] {
     if (!this.items.some(x => x.id == this.selectedItem.id) && this.selectedItem.id) {

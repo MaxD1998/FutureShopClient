@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { NavComponent } from './components/nav/nav.component';
 
 @Component({
@@ -7,7 +7,8 @@ import { NavComponent } from './components/nav/nav.component';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, NavComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterModule, NavComponent],
 })
 export class AppComponent {
   title = 'FutureShopClient';

@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, WritableSignal, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { IconType } from '../../../core/enums/icon-type';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { IconComponent } from '../icon/icon.component';
@@ -9,7 +10,8 @@ import { IconComponent } from '../icon/icon.component';
   standalone: true,
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.css',
-  imports: [RouterModule, IconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterModule, IconComponent, TranslateModule],
 })
 export class AsideComponent {
   @Input() items: AsideItemModel[] = [];
@@ -19,30 +21,30 @@ export class AsideComponent {
 
   IconType: typeof IconType = IconType;
 
-  isMenu: boolean = true;
-  parentIds: (string | undefined)[] = [];
+  isMenu: WritableSignal<boolean> = signal(true);
+  parentIds: WritableSignal<(string | undefined)[]> = signal([]);
 
   changeMenu(): void {
-    this.isMenu = !this.isMenu;
+    this.isMenu.set(!this.isMenu());
   }
 
   nextLevel(item: AsideItemModel): void {
-    if (!this.parentIds.includes(item.parentId)) {
-      this.parentIds.push(item.parentId);
+    if (!this.parentIds().includes(item.parentId)) {
+      this.parentIds().push(item.parentId);
     }
 
     this.onNextLevel.emit(item.id);
   }
 
   undoLevel(): void {
-    const lenght = this.parentIds.length;
+    const lenght = this.parentIds().length;
 
     if (lenght == 0) {
       return;
     }
 
-    const parentId = this.parentIds[lenght - 1];
-    this.parentIds.pop();
+    const parentId = this.parentIds()[lenght - 1];
+    this.parentIds().pop();
 
     this.onUndoLevel.emit(parentId);
   }

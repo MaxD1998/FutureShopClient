@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
   <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ header }}</h1>
+    <h1 class="text-xl">{{ header() | translate }}</h1>
     <app-button
       [label]="'category-form-component.save' | translate"
       [width]="'w-32'"
@@ -31,7 +31,7 @@
             formControlName="parentCategory"
             [errorCode]="errorCode('parentCategory')"
             [label]="'category-form-component.choose-category' | translate"
-            [items]="parentItems">
+            [items]="parentItems()">
           </app-input-select>
         </div>
       </div>
@@ -40,12 +40,12 @@
           <div class="flex justify-between items-center h-11">
             <h2 class="text-xl">{{ 'category-form-component.translations' | translate }}</h2>
             <app-button
-              [disabled]="isAddTranslationButtonDisabled"
+              [disabled]="isAddTranslationButtonDisabled()"
               [label]="'category-form-component.add-translation' | translate"
               (click)="openDialogWindow($event)">
             </app-button>
           </div>
-          @for (translation of translations.controls; track translation) {
+          @for (translation of translations().controls; track translation) {
             <div class="flex gap-2" [formGroupName]="$index">
               <app-input
                 class="w-full"
@@ -66,19 +66,19 @@
           <div class="flex justify-between items-center h-11">
             <h2 class="text-xl">{{ 'category-form-component.sub-categories' | translate }}</h2>
             <app-button
-              [disabled]="isAddCategoryButtonDisabled"
+              [disabled]="isAddCategoryButtonDisabled()"
               [label]="'category-form-component.add-sub-category' | translate"
               (click)="addSubCategory($event)">
             </app-button>
           </div>
-          @for (child of subCategories.controls; track child) {
+          @for (child of subCategories().controls; track child) {
             <div class="flex gap-2">
               <app-input-select
                 class="w-full"
                 [errorCode]="errorCode($index.toString(), 'subCategories')"
                 [formControlName]="$index"
                 [label]="'category-form-component.choose-category' | translate"
-                [items]="subCategoryItems"
+                [items]="subCategoryItems()"
                 [required]="true">
               </app-input-select>
               <a
@@ -94,12 +94,12 @@
   </form>
 </div>
 <app-dialog-window
-  [isDialogActive]="isDialogActive"
+  [isDialogActive]="isDialogActive()"
   [title]="'category-form-component.choose-language' | translate"
-  (onCloseDialog)="isDialogActive = $event">
+  (onCloseDialog)="isDialogActive.set($event)">
   <app-category-form-dialog-window-content
-    [items]="laguageItems"
-    (onClose)="isDialogActive = $event"
+    [items]="laguageItems()"
+    (onClose)="isDialogActive.set($event)"
     (onValueChange)="addLanguage($event)">
   </app-category-form-dialog-window-content>
 </app-dialog-window>

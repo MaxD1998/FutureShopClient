@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IconType } from '../../../core/enums/icon-type';
 
 @Component({
@@ -7,6 +7,7 @@ import { IconType } from '../../../core/enums/icon-type';
   imports: [],
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
   @Input() iconName: IconType;

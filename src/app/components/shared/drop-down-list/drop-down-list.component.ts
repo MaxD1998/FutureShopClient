@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DropDownListOrientation } from '../../../core/enums/drop-down-list-orientation';
 import { DropDownListItemModel } from '../../../core/models/drop-down-list-item.model';
 import { DropDownListItemComponent } from './drop-down-list-item/drop-down-list-item.component';
@@ -8,6 +8,7 @@ import { DropDownListItemComponent } from './drop-down-list-item/drop-down-list-
   standalone: true,
   templateUrl: './drop-down-list.component.html',
   styleUrl: './drop-down-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DropDownListItemComponent],
 })
 export class DropDownListComponent {

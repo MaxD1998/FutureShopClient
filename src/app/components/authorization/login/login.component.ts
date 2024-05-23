@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,6 +18,7 @@ import { InputComponent } from '../../shared/input/input.component';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslateModule, ReactiveFormsModule, InputComponent, ButtonComponent, IconComponent],
 })
 export class LoginComponent extends BaseFormComponent {

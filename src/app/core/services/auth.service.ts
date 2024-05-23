@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthDataService } from '../data-services/auth.data-service';
 import { AuthorizeDto } from '../dtos/authorize.dto';
 import { LoginDto } from '../dtos/login.dto';
@@ -9,20 +10,14 @@ import { UserInputDto } from '../dtos/user-input.dto';
 })
 export class AuthService {
   private _authDataService: AuthDataService = inject(AuthDataService);
-  private _user: AuthorizeDto | null = null;
+  private _user: BehaviorSubject<AuthorizeDto | undefined> = new BehaviorSubject<AuthorizeDto | undefined>(undefined);
 
-  get jwt(): string {
-    return this._user?.token ?? '';
-  }
-
-  get isSignedIn(): boolean {
-    return this._user !== null;
-  }
+  user$: Observable<AuthorizeDto | undefined> = this._user.asObservable();
 
   login(dto: LoginDto, callback?: () => void): void {
     this._authDataService.login(dto).subscribe({
-      next: respone => {
-        this._user = respone;
+      next: response => {
+        this._user.next(response);
 
         if (callback) {
           callback();
@@ -34,7 +29,7 @@ export class AuthService {
   logout(): void {
     this._authDataService.logout().subscribe({
       next: () => {
-        this._user = null;
+        this._user.next(undefined);
       },
     });
   }
@@ -46,7 +41,7 @@ export class AuthService {
           return;
         }
 
-        this._user = response;
+        this._user.next(response);
       },
     });
   }
@@ -54,7 +49,7 @@ export class AuthService {
   register(dto: UserInputDto, callback?: () => void): void {
     this._authDataService.register(dto).subscribe({
       next: response => {
-        this._user = response;
+        this._user.next(response);
 
         if (callback) {
           callback();

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { SettingsAsideComponent } from './settings-aside/settings-aside.component';
 
 @Component({
@@ -7,6 +7,7 @@ import { SettingsAsideComponent } from './settings-aside/settings-aside.componen
   standalone: true,
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css',
-  imports: [RouterOutlet, SettingsAsideComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterModule, SettingsAsideComponent],
 })
 export class SettingsComponent {}

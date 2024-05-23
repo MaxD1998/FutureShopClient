@@ -9,13 +9,13 @@
     <div
       class="border rounded-md p-2 w-full h-[2.625rem] {{ errorCode ? 'border-red-600' : '' }}"
       (click)="setVisible()">
-      <p>{{ selectedItem.value }}</p>
+      <p>{{ selectedItem.value | translate }}</p>
     </div>
     @if (isDropdownVisible) {
       <div class="absolute z-10 border rounded-md w-full bg-white">
         @for (dropdownItem of dropdownItems; track dropdownItem.id) {
           <div class="p-2 hover:bg-green-50" (click)="setItem(dropdownItem)">
-            <p>{{ dropdownItem.value }}</p>
+            <p>{{ dropdownItem.value | translate }}</p>
           </div>
         }
       </div>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonLayout } from '../../../core/enums/button-layout';
 
 @Component({
@@ -7,6 +7,7 @@ import { ButtonLayout } from '../../../core/enums/button-layout';
   imports: [],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
   @Input() disabled: boolean = false;

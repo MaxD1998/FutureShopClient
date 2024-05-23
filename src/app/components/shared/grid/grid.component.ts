@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { GridTemplate } from '../../../core/enums/grid-template';
 import { DataGridColumnModel } from '../../../core/models/data-grid-column.model';
 import { GridActionFieldComponent } from './grid-field-templates/grid-action-field/grid-action-field.component';
@@ -10,6 +19,7 @@ import { GridTextFieldComponent } from './grid-field-templates/grid-text-field/g
   standalone: true,
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GridActionFieldComponent, GridBooleanFieldComponent, GridTextFieldComponent],
 })
 export class GridComponent implements OnInit {
@@ -35,11 +45,6 @@ export class GridComponent implements OnInit {
     if (this.idName == '') {
       throw new Error('Input "idName" is required');
     }
-  }
-
-  @HostListener('window:resize')
-  anal() {
-    console.log(this.table.nativeElement.offsetWidth);
   }
 
   actionColumnWidth(): string {

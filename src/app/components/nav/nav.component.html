@@ -11,8 +11,8 @@
           (mouseenter)="setDropdownLanguageVisible()"
           (mouseleave)="setDropdownLanguageVisible()">
           <app-drop-down-list
-            [isVisible]="isDropdownLanguageVisible"
-            [items]="langItems"
+            [isVisible]="isDropdownLanguageVisible()"
+            [items]="langItems()"
             (onItemClick)="changeLang($event)">
           </app-drop-down-list>
         </app-nav-button>
@@ -27,11 +27,11 @@
           label="{{ 'nav-component.account' | translate }}"
           (mouseenter)="setDropdownAccountVisible(true)"
           (mouseleave)="setDropdownAccountVisible(false)">
-          <app-drop-down-list [isVisible]="isDropdownAccountVisible" [orientation]="DropDownListOrientation.right">
+          <app-drop-down-list [isVisible]="isDropdownAccountVisible()" [orientation]="DropDownListOrientation.right">
             <app-drop-down-list-item
               [item]="{ id: '1', value: 'nav-component.settings' | translate }"
               routerLink="settings"></app-drop-down-list-item>
-            @if (isSignedIn) {
+            @if (isSignedIn$ | async) {
               <app-drop-down-list-item
                 [item]="{ id: '2', value: 'nav-component.logout' | translate }"
                 (onItemClick)="logout()"></app-drop-down-list-item>
