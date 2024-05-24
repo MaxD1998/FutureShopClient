@@ -26,6 +26,28 @@ export class CategoryListComponent implements OnDestroy {
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   categories: WritableSignal<CategoryGridModel[]> = signal([]);
+  columns: DataGridColumnModel[] = [
+    {
+      field: 'name',
+      headerText: 'category-list-component.name',
+      template: GridTemplate.text,
+    },
+    {
+      field: 'isSubCategory',
+      headerText: 'category-list-component.is-subcategory',
+      template: GridTemplate.boolean,
+    },
+    {
+      field: 'hasSubCategories',
+      headerText: 'category-list-component.has-subcategories',
+      template: GridTemplate.boolean,
+    },
+    {
+      field: 'actions',
+      headerText: '',
+      template: GridTemplate.action,
+    },
+  ];
 
   constructor() {
     this.initCategories();
@@ -46,31 +68,6 @@ export class CategoryListComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribe.next();
     this._unsubscribe.complete();
-  }
-
-  getColumns(): DataGridColumnModel[] {
-    return [
-      {
-        field: 'name',
-        headerText: this._translateService.instant('category-list-component.name'),
-        template: GridTemplate.text,
-      },
-      {
-        field: 'isSubCategory',
-        headerText: this._translateService.instant('category-list-component.is-subcategory'),
-        template: GridTemplate.boolean,
-      },
-      {
-        field: 'hasSubCategories',
-        headerText: this._translateService.instant('category-list-component.has-subcategories'),
-        template: GridTemplate.boolean,
-      },
-      {
-        field: 'actions',
-        headerText: '',
-        template: GridTemplate.action,
-      },
-    ];
   }
 
   navigateToCreate(): void {

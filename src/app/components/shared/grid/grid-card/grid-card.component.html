@@ -1,0 +1,33 @@
+<div class="rounded overflow-hidden min-w-64">
+  <div class="h-4 bg-green-300"></div>
+  <div class="p-2">
+    @for (column of columns; track column) {
+      <p class="text-sm text-gray-400">{{ column.headerText | translate }}</p>
+      @switch (column.template) {
+        <!-- @case (GridTemplate.action) {
+          <div class="">
+            <app-grid-action-field
+              class="{{ rowId == item.id ? 'block' : 'hidden' }}"
+              [id]="item.id"
+              [isDetailAction]="isDetailAction"
+              [isEditAction]="isEditAction"
+              [isRemoveAction]="isRemoveAction"
+              (onDetailAction)="detailAction($event)"
+              (onEditAction)="editAction($event)"
+              (onRemoveAction)="removeAction($event)">
+            </app-grid-action-field>
+          </div>
+        } -->
+        @case (GridTemplate.boolean) {
+          <app-grid-boolean-field [value]="item[column.field]"></app-grid-boolean-field>
+        }
+        @case (GridTemplate.text) {
+          <app-grid-text-field [value]="item[column.field]"></app-grid-text-field>
+        }
+        @default {
+          {{ item[column.field] }}
+        }
+      }
+    }
+  </div>
+</div>

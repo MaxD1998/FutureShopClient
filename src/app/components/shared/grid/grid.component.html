@@ -6,7 +6,7 @@
           <th class="p-0 {{ column.template == GridTemplate.action ? actionColumnWidth() : '' }}">
             <div class="p-2">
               <p class="font-medium text-xl">
-                {{ column.headerText }}
+                {{ column.headerText | translate }}
               </p>
             </div>
           </th>
@@ -14,23 +14,25 @@
       </tr>
     </thead>
     <tbody (mouseleave)="rowId = ''">
-      @for (item of items; track $index) {
+      @for (item of items; track item) {
         <tr class="h-11 hover:bg-green-50" (mouseover)="rowId = item.id">
-          @for (column of columns; track $index) {
+          @for (column of columns; track column) {
             <td class="p-2">
               <div class="flex justify-center">
                 @switch (column.template) {
                   @case (GridTemplate.action) {
-                    <app-grid-action-field
-                      class="{{ rowId == item.id ? 'block' : 'hidden' }}"
-                      [id]="item.id"
-                      [isDetailAction]="isDetailAction"
-                      [isEditAction]="isEditAction"
-                      [isRemoveAction]="isRemoveAction"
-                      (onDetailAction)="detailAction($event)"
-                      (onEditAction)="editAction($event)"
-                      (onRemoveAction)="removeAction($event)">
-                    </app-grid-action-field>
+                    <div class="">
+                      <app-grid-action-field
+                        class="{{ rowId == item.id ? 'block' : 'hidden' }}"
+                        [id]="item.id"
+                        [isDetailAction]="isDetailAction"
+                        [isEditAction]="isEditAction"
+                        [isRemoveAction]="isRemoveAction"
+                        (onDetailAction)="detailAction($event)"
+                        (onEditAction)="editAction($event)"
+                        (onRemoveAction)="removeAction($event)">
+                      </app-grid-action-field>
+                    </div>
                   }
                   @case (GridTemplate.boolean) {
                     <app-grid-boolean-field [value]="item[column.field]"></app-grid-boolean-field>
@@ -51,3 +53,6 @@
     <tfoot></tfoot>
   </table>
 </div>
+<!-- @for (item of items; track item) {
+  <app-grid-card [columns]="columns" [item]="item"></app-grid-card>
+} -->

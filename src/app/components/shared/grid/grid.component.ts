@@ -8,8 +8,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { GridTemplate } from '../../../core/enums/grid-template';
 import { DataGridColumnModel } from '../../../core/models/data-grid-column.model';
+import { GridCardComponent } from './grid-card/grid-card.component';
 import { GridActionFieldComponent } from './grid-field-templates/grid-action-field/grid-action-field.component';
 import { GridBooleanFieldComponent } from './grid-field-templates/grid-boolean-field/grid-boolean-field.component';
 import { GridTextFieldComponent } from './grid-field-templates/grid-text-field/grid-text-field.component';
@@ -20,7 +22,13 @@ import { GridTextFieldComponent } from './grid-field-templates/grid-text-field/g
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [GridActionFieldComponent, GridBooleanFieldComponent, GridTextFieldComponent],
+  imports: [
+    GridActionFieldComponent,
+    GridBooleanFieldComponent,
+    GridTextFieldComponent,
+    GridCardComponent,
+    TranslateModule,
+  ],
 })
 export class GridComponent implements OnInit {
   @Input() columns: DataGridColumnModel[] = [];

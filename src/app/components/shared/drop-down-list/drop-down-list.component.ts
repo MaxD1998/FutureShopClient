@@ -18,7 +18,7 @@ export class DropDownListComponent {
   @Output() onItemClick: EventEmitter<DropDownListItemModel> = new EventEmitter<DropDownListItemModel>();
 
   get styles(): string {
-    let style = 'bg-white absolute border rounded-md min-w-32';
+    let style = 'bg-white absolute border rounded-md min-w-32 overflow-hidden';
     switch (this.orientation) {
       case DropDownListOrientation.left:
         style = `${style} left-0`;
