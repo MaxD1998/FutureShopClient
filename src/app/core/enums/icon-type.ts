@@ -3,6 +3,7 @@ export enum IconType {
   arrowUturnLeft = 'arrow-uturn-left',
   checkCircle = 'check-circle',
   chevronRight = 'chevron-right',
+  ellipsisHorizontal = 'ellipsis-horizontal',
   envelope = 'envelope',
   eye = 'eye',
   globeAlt = 'globe-alt',

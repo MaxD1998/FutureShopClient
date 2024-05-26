@@ -1,51 +1,72 @@
-<div class="flex">
-  <table #table class="w-full">
-    <thead class="bg-green-300">
+<div class="flex relative overflow-auto">
+  <table class="flex-1 relative">
+    <thead>
       <tr>
-        @for (column of columns; track $index) {
-          <th class="p-0 {{ column.template == GridTemplate.action ? actionColumnWidth() : '' }}">
-            <div class="p-2">
-              <p class="font-medium text-xl">
-                {{ column.headerText | translate }}
-              </p>
-            </div>
-          </th>
+        @for (column of columns; track column) {
+          @switch (column.template) {
+            @case (GridTemplate.action) {
+              <th class="p-0 sticky right-0 z-10 bg-green-300">
+                <div class="flex justify-center items-center p-2  {{ actionColumnWidth() }}">
+                  <app-icon [iconName]="IconType.ellipsisHorizontal"></app-icon>
+                </div>
+              </th>
+            }
+            @default {
+              <th class="p-0 bg-green-300">
+                <div class="flex justify-center items-center al p-2">
+                  <p class="font-medium text-xl text-nowrap">
+                    {{ column.headerText | translate }}
+                  </p>
+                </div>
+              </th>
+            }
+          }
         }
       </tr>
     </thead>
     <tbody (mouseleave)="rowId = ''">
       @for (item of items; track item) {
-        <tr class="h-11 hover:bg-green-50" (mouseover)="rowId = item.id">
+        <tr class="h-11 bg-white hover:bg-green-50" (mouseover)="rowId = item.id">
           @for (column of columns; track column) {
-            <td class="p-2">
-              <div class="flex justify-center">
-                @switch (column.template) {
-                  @case (GridTemplate.action) {
-                    <div class="">
-                      <app-grid-action-field
-                        class="{{ rowId == item.id ? 'block' : 'hidden' }}"
-                        [id]="item.id"
-                        [isDetailAction]="isDetailAction"
-                        [isEditAction]="isEditAction"
-                        [isRemoveAction]="isRemoveAction"
-                        (onDetailAction)="detailAction($event)"
-                        (onEditAction)="editAction($event)"
-                        (onRemoveAction)="removeAction($event)">
-                      </app-grid-action-field>
-                    </div>
-                  }
-                  @case (GridTemplate.boolean) {
+            @switch (column.template) {
+              @case (GridTemplate.action) {
+                <td class="p-2 sticky right-0 z-10 bg-inherit">
+                  <div class="flex justify-center {{ actionColumnWidth() }}">
+                    <app-grid-action-field
+                      class="{{ rowId == item.id ? 'block' : 'hidden' }}"
+                      [id]="item.id"
+                      [isDetailAction]="isDetailAction"
+                      [isEditAction]="isEditAction"
+                      [isRemoveAction]="isRemoveAction"
+                      (onDetailAction)="detailAction($event)"
+                      (onEditAction)="editAction($event)"
+                      (onRemoveAction)="removeAction($event)">
+                    </app-grid-action-field>
+                  </div>
+                </td>
+              }
+              @case (GridTemplate.boolean) {
+                <td class="p-2">
+                  <div class="flex justify-center">
                     <app-grid-boolean-field [value]="item[column.field]"></app-grid-boolean-field>
-                  }
-                  @case (GridTemplate.text) {
+                  </div>
+                </td>
+              }
+              @case (GridTemplate.text) {
+                <td class="p-2">
+                  <div class="flex justify-center">
                     <app-grid-text-field [value]="item[column.field]"></app-grid-text-field>
-                  }
-                  @default {
+                  </div>
+                </td>
+              }
+              @default {
+                <td class="p-2">
+                  <div class="flex justify-center">
                     {{ item[column.field] }}
-                  }
-                }
-              </div>
-            </td>
+                  </div>
+                </td>
+              }
+            }
           }
         </tr>
       }
