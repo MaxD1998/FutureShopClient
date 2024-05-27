@@ -3,10 +3,11 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
   Provider,
   ViewChild,
   forwardRef,
+  input,
+  signal,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,10 +29,10 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
   providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputSelectComponent implements ControlValueAccessor {
-  @Input() errorCode: string | null = null;
-  @Input() items: SelectItemModel[] = [];
-  @Input() label: string = '';
-  @Input() required: boolean = false;
+  errorCode = input<string | null>();
+  items = input.required<SelectItemModel[]>();
+  label = input<string>();
+  required = input<boolean>(false);
 
   @ViewChild('selectBox', { read: ElementRef }) selectBox: ElementRef;
 
@@ -39,13 +40,14 @@ export class InputSelectComponent implements ControlValueAccessor {
     value: 'common.input-select.select-option',
   };
 
-  isDropdownVisible: boolean = false;
-  selectedItem: SelectItemModel = this._firstItem;
-  selectedId?: string = undefined;
+  isDropdownVisible = signal<boolean>(false);
+  isFocus = signal<boolean>(false);
+  selectedItem = signal<SelectItemModel>(this._firstItem);
+  selectedId = signal<string | undefined>(undefined);
 
   get dropdownItems(): SelectItemModel[] {
-    if (!this.items.some(x => x.id == this.selectedItem.id) && this.selectedItem.id) {
-      const array = [this.selectedItem].concat(this.items).sort((a, b) => {
+    if (!this.items().some(x => x.id == this.selectedItem().id) && this.selectedItem().id) {
+      const array = [this.selectedItem()].concat(this.items()).sort((a, b) => {
         if (a.value < b.value) {
           return -1;
         }
@@ -55,10 +57,10 @@ export class InputSelectComponent implements ControlValueAccessor {
         return 0;
       });
 
-      return this.required ? array : [this._firstItem].concat(array);
+      return this.required() ? array : [this._firstItem].concat(array);
     }
 
-    const array = this.items.sort((a, b) => {
+    const array = this.items().sort((a, b) => {
       if (a.value < b.value) {
         return -1;
       }
@@ -68,13 +70,14 @@ export class InputSelectComponent implements ControlValueAccessor {
       return 0;
     });
 
-    return this.required ? array : [this._firstItem].concat(array);
+    return this.required() ? array : [this._firstItem].concat(array);
   }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent): void {
     if (!this.selectBox.nativeElement.contains(event.target) && this.isDropdownVisible) {
-      this.isDropdownVisible = false;
+      this.isDropdownVisible.set(false);
+      this.isFocus.set(false);
       this.onTouch();
     }
   }
@@ -83,16 +86,17 @@ export class InputSelectComponent implements ControlValueAccessor {
     this.writeValue(item.id);
     this.onChange(item.id);
     this.onTouch();
-    this.setVisible();
+    this.onClick();
   }
 
-  setVisible(): void {
-    this.isDropdownVisible = !this.isDropdownVisible;
+  onClick(): void {
+    this.isDropdownVisible.set(!this.isDropdownVisible());
+    this.isFocus.set(!this.isFocus());
   }
 
   writeValue(id?: string): void {
-    this.selectedItem = this.dropdownItems.find(x => x.id == id) ?? this._firstItem;
-    this.selectedId = id;
+    this.selectedItem.set(this.dropdownItems.find(x => x.id == id) ?? this._firstItem);
+    this.selectedId.set(id);
   }
 
   onChange: any = () => {};

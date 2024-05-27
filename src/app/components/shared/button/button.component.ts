@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ButtonLayout } from '../../../core/enums/button-layout';
 
 @Component({
@@ -10,10 +10,10 @@ import { ButtonLayout } from '../../../core/enums/button-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
-  @Input() disabled: boolean = false;
-  @Input() label: string = '';
-  @Input() layout: ButtonLayout;
-  @Input() width: string = 'w-full';
+  disabled = input<boolean>(false);
+  label = input.required<string>();
+  layout = input<ButtonLayout>();
+  width = input<string>('w-full');
 
   private _disabled_layout = 'border-gray-300 bg-gray-300 text-gray-500';
   private _disabled_outline_layout = 'border-gray-300 text-gray-500';
@@ -21,7 +21,7 @@ export class ButtonComponent {
   private _green_outline_layout = 'border-green-300 hover:bg-green-300';
 
   initLayout(): string {
-    if (this.disabled) {
+    if (this.disabled()) {
       if (ButtonLayout.greenLayout) {
         return this._disabled_layout;
       } else {
@@ -29,7 +29,7 @@ export class ButtonComponent {
       }
     }
 
-    switch (this.layout) {
+    switch (this.layout()) {
       case ButtonLayout.greenLayout:
         return this._green_layout;
       case ButtonLayout.greenOutlineLayout:

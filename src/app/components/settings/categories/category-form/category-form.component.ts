@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
-  WritableSignal,
   afterNextRender,
   inject,
   signal,
@@ -56,15 +55,15 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
   IconType: typeof IconType = IconType;
 
   id?: string = undefined;
-  isAddCategoryButtonDisabled: WritableSignal<boolean> = signal(true);
-  isAddTranslationButtonDisabled: WritableSignal<boolean> = signal(true);
-  isDialogActive: WritableSignal<boolean> = signal(false);
-  header: WritableSignal<string> = signal('');
-  laguageItems: WritableSignal<SelectItemModel[]> = signal([]);
-  parentItems: WritableSignal<SelectItemModel[]> = signal([]);
-  subCategories: WritableSignal<FormArray> = signal(this.form.controls['subCategories'] as FormArray);
-  subCategoryItems: WritableSignal<SelectItemModel[]> = signal([]);
-  translations: WritableSignal<FormArray> = signal(this.form.controls['translations'] as FormArray);
+  isAddCategoryButtonDisabled = signal<boolean>(true);
+  isAddTranslationButtonDisabled = signal<boolean>(true);
+  isDialogActive = signal<boolean>(false);
+  header = signal<string>('');
+  laguageItems = signal<SelectItemModel[]>([]);
+  parentItems = signal<SelectItemModel[]>([]);
+  subCategories = signal<FormArray>(this.form.controls['subCategories'] as FormArray);
+  subCategoryItems = signal<SelectItemModel[]>([]);
+  translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
   constructor() {
     super();

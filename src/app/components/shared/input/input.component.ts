@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Provider, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Provider, forwardRef, input, model } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputType } from '../../../core/enums/input-type';
@@ -19,18 +19,18 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
   providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputComponent implements ControlValueAccessor {
-  @Input() autocomplete: string = '';
-  @Input() errorCode?: string | null = null;
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
-  @Input() required: boolean = false;
-  @Input() type: InputType = InputType.text;
-  @Input() value: string | null = null;
+  autocomplete = input<string>();
+  errorCode = input<string | null>();
+  label = input<string>();
+  placeholder = input<string>('');
+  required = input<boolean>(false);
+  type = input<string>(InputType.text);
+  value = model<string | null>(null);
 
   onValueChange(element: HTMLInputElement) {
     const elementValue = element.value;
-    this.value = elementValue.length == 0 ? null : elementValue;
-    this.onChange(this.value);
+    this.value.set(elementValue.length == 0 ? null : elementValue);
+    this.onChange(this.value());
     this.onTouch();
   }
 
@@ -38,7 +38,7 @@ export class InputComponent implements ControlValueAccessor {
   onTouch: any = () => {};
 
   writeValue(obj: string): void {
-    this.value = obj;
+    this.value.set(obj);
   }
 
   registerOnChange(fn: any): void {

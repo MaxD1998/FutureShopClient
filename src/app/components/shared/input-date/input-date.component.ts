@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Provider, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Provider, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,10 +18,10 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
   providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputDateComponent implements ControlValueAccessor {
-  @Input() autocomplete: string = '';
-  @Input() errorCode: string | null = null;
-  @Input() label: string = '';
-  @Input() required: boolean = false;
+  autocomplete = input<string>();
+  errorCode = input<string | null>();
+  label = input<string>();
+  required = input<boolean>(false);
 
   internalValue: string = '';
   value: Date | null = null;

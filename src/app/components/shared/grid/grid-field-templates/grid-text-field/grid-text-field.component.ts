@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IconType } from '../../../../../core/enums/icon-type';
 import { IconComponent } from '../../../icon/icon.component';
 
@@ -11,7 +11,7 @@ import { IconComponent } from '../../../icon/icon.component';
   imports: [IconComponent],
 })
 export class GridTextFieldComponent {
-  @Input() value: string | null | undefined = null;
+  value = input<string>();
 
   IconType: typeof IconType = IconType;
 }

@@ -1,4 +1,4 @@
-@if (isDialogActive) {
+@if (isDialogActive()) {
   <div class="flex justify-center items-center w-full h-full absolute top-0 left-0 bg-neutral-500/30 backdrop-blur">
     <div class="bg-white min-w-80 min-h-40 p-4">
       <div class="flex justify-end">
@@ -7,7 +7,7 @@
         </button>
       </div>
       <div class="flex justify-center mb-4">
-        <h1 class="text-xl">{{ title }}</h1>
+        <h1 class="text-xl">{{ title() }}</h1>
       </div>
       <ng-content></ng-content>
     </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, WritableSignal, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
@@ -23,7 +23,7 @@ export class MenuAsideComponent implements OnDestroy {
 
   private _parentId?: string = undefined;
 
-  categories: WritableSignal<AsideItemModel[]> = signal([]);
+  categories = signal<AsideItemModel[]>([]);
 
   constructor() {
     this.categories.set(this._activatedRoute.snapshot.data['categories']);

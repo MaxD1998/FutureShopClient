@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, WritableSignal, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs';
@@ -38,9 +38,9 @@ export class NavComponent {
   DropDownListOrientation: typeof DropDownListOrientation = DropDownListOrientation;
   IconType: typeof IconType = IconType;
 
-  isDropdownAccountVisible: WritableSignal<boolean> = signal(false);
-  isDropdownLanguageVisible: WritableSignal<boolean> = signal(false);
-  langItems: WritableSignal<DropDownListItemModel[]> = signal(
+  isDropdownAccountVisible = signal<boolean>(false);
+  isDropdownLanguageVisible = signal<boolean>(false);
+  langItems = signal<DropDownListItemModel[]>(
     environment.availableLangs.map<DropDownListItemModel>(x => {
       const result: DropDownListItemModel = {
         id: x,

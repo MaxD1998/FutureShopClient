@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { IconType } from '../../../../../core/enums/icon-type';
 import { IconComponent } from '../../../icon/icon.component';
 
@@ -11,27 +11,27 @@ import { IconComponent } from '../../../icon/icon.component';
   imports: [IconComponent],
 })
 export class GridActionFieldComponent {
-  @Input() id: string = '';
+  id = input.required<string>();
 
-  @Input() isDetailAction: boolean = false;
-  @Input() isEditAction: boolean = false;
-  @Input() isRemoveAction: boolean = false;
+  isDetailAction = input<boolean>(false);
+  isEditAction = input<boolean>(false);
+  isRemoveAction = input<boolean>(false);
 
-  @Output() onDetailAction: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onEditAction: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onRemoveAction: EventEmitter<string> = new EventEmitter<string>();
+  onDetailAction = output<string>();
+  onEditAction = output<string>();
+  onRemoveAction = output<string>();
 
   IconType: typeof IconType = IconType;
 
   detailAction(): void {
-    this.onDetailAction.emit(this.id);
+    this.onDetailAction.emit(this.id());
   }
 
   editAction(): void {
-    this.onEditAction.emit(this.id);
+    this.onEditAction.emit(this.id());
   }
 
   removeAction(): void {
-    this.onRemoveAction.emit(this.id);
+    this.onRemoveAction.emit(this.id());
   }
 }

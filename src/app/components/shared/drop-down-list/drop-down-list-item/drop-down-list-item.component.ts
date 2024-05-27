@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DropDownListItemModel } from '../../../../core/models/drop-down-list-item.model';
 
@@ -11,10 +11,11 @@ import { DropDownListItemModel } from '../../../../core/models/drop-down-list-it
   imports: [TranslateModule],
 })
 export class DropDownListItemComponent {
-  @Input() item?: DropDownListItemModel = undefined;
-  @Output() onItemClick: EventEmitter<DropDownListItemModel> = new EventEmitter<DropDownListItemModel>();
+  item = input.required<DropDownListItemModel>();
+
+  onItemClick = output<DropDownListItemModel>();
 
   action() {
-    this.onItemClick.emit(this.item as DropDownListItemModel);
+    this.onItemClick.emit(this.item());
   }
 }

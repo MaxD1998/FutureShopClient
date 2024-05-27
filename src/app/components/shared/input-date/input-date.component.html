@@ -1,22 +1,22 @@
 <div class="relative pb-6">
   <label class="block my-1">
-    {{ label }}
-    @if (required) {
+    {{ label() }}
+    @if (required()) {
       <sup class="text-red-600">*</sup>
     }
   </label>
   <input
     #input
-    class="block border rounded-md p-2 w-full {{ errorCode ? 'border-red-600' : '' }}"
+    class="block border rounded-md p-2 w-full focus:border-blue-600 {{ errorCode() ? 'border-red-600' : '' }}"
     type="text"
     maxlength="10"
     placeholder="DD-MM-YYYY"
-    [autocomplete]="autocomplete"
+    [autocomplete]="autocomplete()"
     [value]="internalValue"
     (change)="onValueChange(input)"
     (blur)="onValueChange(input)"
     (input)="transform(input)" />
-  @if (errorCode) {
-    <span class="absolute text-red-600">{{ errorCode | translate }}</span>
+  @if (errorCode()) {
+    <span class="absolute text-red-600">{{ errorCode() ?? '' | translate }}</span>
   }
 </div>

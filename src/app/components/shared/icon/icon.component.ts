@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IconType } from '../../../core/enums/icon-type';
 
 @Component({
@@ -10,8 +10,8 @@ import { IconType } from '../../../core/enums/icon-type';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
-  @Input() iconName: IconType;
-  @Input() iconStyle: string = 'w-6 h-6';
+  iconName = input.required<string>();
+  iconStyle = input<string>('w-6 h-6');
 
   IconType: typeof IconType = IconType;
 }

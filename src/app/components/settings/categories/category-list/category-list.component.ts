@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, WritableSignal, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
@@ -26,7 +26,7 @@ export class CategoryListComponent implements OnDestroy {
   private readonly _translateService = inject(TranslateService);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
-  categories: WritableSignal<CategoryGridModel[]> = signal([]);
+  categories = signal<CategoryGridModel[]>([]);
   columns: DataGridColumnModel[] = [
     {
       field: 'name',

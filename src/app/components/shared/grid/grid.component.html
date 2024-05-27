@@ -1,8 +1,8 @@
-<div class="flex relative overflow-auto">
+<div class="flex relative overflow-x-auto">
   <table class="flex-1 relative">
     <thead>
       <tr>
-        @for (column of columns; track column) {
+        @for (column of columns(); track column) {
           @switch (column.template) {
             @case (GridTemplate.action) {
               <th class="h-11 p-0 sticky right-0 z-10 bg-green-300">
@@ -27,20 +27,20 @@
       </tr>
     </thead>
     <tbody (mouseleave)="rowId = ''">
-      @for (item of items; track item) {
-        <tr class="bg-white hover:bg-green-50" (mouseover)="rowId = item.id">
-          @for (column of columns; track column) {
+      @for (item of items(); track item) {
+        <tr class="bg-white hover:bg-green-50" (mouseover)="rowId = item[idName()]">
+          @for (column of columns(); track column) {
             @switch (column.template) {
               @case (GridTemplate.action) {
                 <td class="h-11 p-0 sticky right-0 z-10 bg-inherit {{ actionColumnWidth() }}">
                   <div class="flex h-full p-2 border-l border-gray-400">
                     <div class="flex flex-1 justify-center items-center">
                       <app-grid-action-field
-                        class="{{ rowId == item.id ? 'block' : 'hidden' }}"
-                        [id]="item.id"
-                        [isDetailAction]="isDetailAction"
-                        [isEditAction]="isEditAction"
-                        [isRemoveAction]="isRemoveAction"
+                        class="{{ rowId == item[idName()] ? 'block' : 'hidden' }}"
+                        [id]="item[idName()]"
+                        [isDetailAction]="isDetailAction()"
+                        [isEditAction]="isEditAction()"
+                        [isRemoveAction]="isRemoveAction()"
                         (onDetailAction)="detailAction($event)"
                         (onEditAction)="editAction($event)"
                         (onRemoveAction)="removeAction($event)">
@@ -84,6 +84,3 @@
     <tfoot></tfoot>
   </table>
 </div>
-<!-- @for (item of items; track item) {
-  <app-grid-card [columns]="columns" [item]="item"></app-grid-card>
-} -->

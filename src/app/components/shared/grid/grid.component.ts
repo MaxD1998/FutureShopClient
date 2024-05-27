@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridTemplate } from '../../../core/enums/grid-template';
 import { IconType } from '../../../core/enums/icon-type';
@@ -24,29 +24,23 @@ import { GridTextFieldComponent } from './grid-field-templates/grid-text-field/g
     IconComponent,
   ],
 })
-export class GridComponent implements OnInit {
-  @Input() columns: DataGridColumnModel[] = [];
-  @Input() idName: string = '';
-  @Input() items: any[] = [];
+export class GridComponent {
+  columns = input.required<DataGridColumnModel[]>();
+  idName = input.required<string>();
+  items = input<any[]>();
 
-  @Input() isDetailAction: boolean = false;
-  @Input() isEditAction: boolean = false;
-  @Input() isRemoveAction: boolean = false;
+  isDetailAction = input<boolean>(false);
+  isEditAction = input<boolean>(false);
+  isRemoveAction = input<boolean>(false);
 
-  @Output() onDetailAction: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onEditAction: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onRemoveAction: EventEmitter<string> = new EventEmitter<string>();
+  onDetailAction = output<string>();
+  onEditAction = output<string>();
+  onRemoveAction = output<string>();
 
   GridTemplate: typeof GridTemplate = GridTemplate;
   IconType: typeof IconType = IconType;
 
   rowId: string = '';
-
-  ngOnInit(): void {
-    if (this.idName == '') {
-      throw new Error('Input "idName" is required');
-    }
-  }
 
   actionColumnWidth(): string {
     const array = [this.isDetailAction, this.isEditAction, this.isRemoveAction];

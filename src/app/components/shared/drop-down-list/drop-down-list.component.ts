@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, output } from '@angular/core';
 import { DropDownListOrientation } from '../../../core/enums/drop-down-list-orientation';
 import { DropDownListItemModel } from '../../../core/models/drop-down-list-item.model';
 import { DropDownListItemComponent } from './drop-down-list-item/drop-down-list-item.component';
@@ -12,14 +12,16 @@ import { DropDownListItemComponent } from './drop-down-list-item/drop-down-list-
   imports: [DropDownListItemComponent],
 })
 export class DropDownListComponent {
-  @Input() isVisible: boolean = false;
-  @Input() items?: DropDownListItemModel[] = undefined;
-  @Input() orientation: DropDownListOrientation = DropDownListOrientation.left;
-  @Output() onItemClick: EventEmitter<DropDownListItemModel> = new EventEmitter<DropDownListItemModel>();
+  items = input<DropDownListItemModel[]>();
+  orientation = input<DropDownListOrientation>(DropDownListOrientation.left);
+
+  onItemClick = output<DropDownListItemModel>();
+
+  isVisible = model<boolean>(false);
 
   get styles(): string {
     let style = 'bg-white absolute border rounded-md min-w-32 overflow-hidden';
-    switch (this.orientation) {
+    switch (this.orientation()) {
       case DropDownListOrientation.left:
         style = `${style} left-0`;
         break;
@@ -34,7 +36,12 @@ export class DropDownListComponent {
   }
 
   action(model: DropDownListItemModel) {
-    this.onItemClick.emit(this.items?.find(x => x.id == model.id));
-    this.isVisible = false;
+    const item = this.items()?.find(x => x.id == model.id);
+
+    if (item) {
+      this.onItemClick.emit(item);
+    }
+
+    this.isVisible.set(false);
   }
 }

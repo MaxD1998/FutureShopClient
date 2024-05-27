@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, WritableSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ClientRoute } from '../../../core/constants/client-routes/client.route';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
@@ -13,7 +13,7 @@ import { AsideComponent } from '../../shared/aside/aside.component';
   imports: [TranslateModule, AsideComponent],
 })
 export class SettingsAsideComponent {
-  items: WritableSignal<AsideItemModel[]> = signal([
+  items = signal<AsideItemModel[]>([
     {
       id: '1',
       name: 'settings-aside-component.items.account',
