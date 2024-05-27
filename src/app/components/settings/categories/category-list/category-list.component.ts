@@ -1,4 +1,4 @@
-import { Component, OnDestroy, WritableSignal, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, WritableSignal, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
@@ -16,6 +16,7 @@ import { GridComponent } from '../../../shared/grid/grid.component';
   standalone: true,
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GridComponent, TranslateModule, ButtonComponent],
 })
 export class CategoryListComponent implements OnDestroy {
