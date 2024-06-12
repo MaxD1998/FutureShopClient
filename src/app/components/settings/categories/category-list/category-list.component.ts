@@ -5,10 +5,13 @@ import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
 import { CategoryDto } from '../../../../core/dtos/category.dto';
+import { PageDto } from '../../../../core/dtos/page.dto';
 import { GridTemplate } from '../../../../core/enums/grid-template';
 import { CategoryGridModel } from '../../../../core/models/category-grid-model';
 import { DataGridColumnModel } from '../../../../core/models/data-grid-column.model';
+import { PaginationModel } from '../../../../core/models/pagination.model';
 import { ButtonComponent } from '../../../shared/button/button.component';
+import { GridPaginationComponent } from '../../../shared/grid/grid-pagination/grid-pagination.component';
 import { GridComponent } from '../../../shared/grid/grid.component';
 
 @Component({
@@ -17,7 +20,7 @@ import { GridComponent } from '../../../shared/grid/grid.component';
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [GridComponent, TranslateModule, ButtonComponent],
+  imports: [GridComponent, TranslateModule, ButtonComponent, GridPaginationComponent],
 })
 export class CategoryListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
@@ -27,6 +30,11 @@ export class CategoryListComponent implements OnDestroy {
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   categories = signal<CategoryGridModel[]>([]);
+  pagination = signal<PaginationModel>({
+    currentPage: 1,
+    totalPages: 1,
+  });
+
   columns: DataGridColumnModel[] = [
     {
       field: 'name',
@@ -71,6 +79,10 @@ export class CategoryListComponent implements OnDestroy {
     this._unsubscribe.complete();
   }
 
+  changePage(pageNumber: number): void {
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.list}/${pageNumber}`);
+  }
+
   navigateToCreate(): void {
     this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.form}`);
   }
@@ -99,9 +111,9 @@ export class CategoryListComponent implements OnDestroy {
   }
 
   private initCategories(): void {
-    const categories: CategoryDto[] = this._activatedRoute.snapshot.data['categories'];
+    const pageCategories: PageDto<CategoryDto> = this._activatedRoute.snapshot.data['pageCategories'];
     this.categories.set(
-      categories.map<CategoryGridModel>(x => {
+      pageCategories.items.map<CategoryGridModel>(x => {
         return {
           id: x.id,
           name: x.name,
@@ -110,12 +122,17 @@ export class CategoryListComponent implements OnDestroy {
         };
       }),
     );
+    this.pagination.set({
+      currentPage: pageCategories.currentPage,
+      totalPages: pageCategories.totalPages,
+    });
   }
 
   private getCategories$(): Observable<CategoryGridModel[]> {
-    return this._categoryDataService.gets().pipe(
+    const pageNumber = this._activatedRoute.snapshot.params['pageNumber'];
+    return this._categoryDataService.getPage(pageNumber ?? 1).pipe(
       map(response => {
-        return response.map<CategoryGridModel>(x => {
+        return response.items.map<CategoryGridModel>(x => {
           return {
             id: x.id,
             name: x.name,

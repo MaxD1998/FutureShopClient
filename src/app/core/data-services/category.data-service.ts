@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
 import { CategoryFormDto } from '../dtos/category-form.dto';
 import { CategoryDto } from '../dtos/category.dto';
+import { PageDto } from '../dtos/page.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,9 @@ export class CategoryDataService {
     return this._httpClient.get<CategoryFormDto>(url);
   }
 
-  gets(): Observable<CategoryDto[]> {
-    return this._httpClient.get<CategoryDto[]>(CategoryControllerRoute.base);
+  getPage(pageNumber: number): Observable<PageDto<CategoryDto>> {
+    const url = `${CategoryControllerRoute.page}${pageNumber}`;
+    return this._httpClient.get<PageDto<CategoryDto>>(url);
   }
 
   getsAvailableToBeChild(exceptionIds: string[], parentId?: string, id?: string) {

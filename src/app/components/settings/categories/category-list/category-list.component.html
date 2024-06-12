@@ -16,4 +16,5 @@
     (onEditAction)="navigateToEdit($event)"
     (onRemoveAction)="removeRecord($event)">
   </app-grid>
+  <app-grid-pagination [model]="pagination()" (onPageClick)="changePage($event)"> </app-grid-pagination>
 </div>

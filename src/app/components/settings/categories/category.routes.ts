@@ -24,10 +24,19 @@ export const categoryRoutes: Routes = [
   },
   {
     path: ClientRoute.list,
-    loadComponent: () => import('./category-list/category-list.component').then(x => x.CategoryListComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./category-list/category-list.component').then(x => x.CategoryListComponent),
+      },
+      {
+        path: ':pageNumber',
+        loadComponent: () => import('./category-list/category-list.component').then(x => x.CategoryListComponent),
+      },
+    ],
     runGuardsAndResolvers: 'always',
     resolve: {
-      categories: categoryListResolver,
+      pageCategories: categoryListResolver,
     },
   },
 ];
