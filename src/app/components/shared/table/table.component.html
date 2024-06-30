@@ -1,0 +1,91 @@
+<div class="flex flex-col h-full justify-between rounded-t overflow-hidden">
+  <div class="flex overflow-y-auto">
+    <table class="flex-auto table-fixed relative">
+      <thead class="sticky top-0">
+        <tr>
+          @for (column of columns(); track column) {
+            @switch (column.template) {
+              @case (TableTemplate.action) {
+                <th class="p-2 bg-green-300 {{ actionColumnWidth() }}">
+                  <div class="flex justify-center">
+                    <app-icon [iconName]="IconType.ellipsisHorizontal"></app-icon>
+                  </div>
+                </th>
+              }
+              @default {
+                <th class="p-2 bg-green-300">
+                  <div class="flex {{ headerFloat(column.headerFloat) }}">
+                    <span class="font-medium">
+                      {{ column.headerText | translate }}
+                    </span>
+                  </div>
+                </th>
+              }
+            }
+          }
+        </tr>
+      </thead>
+      <tbody (mouseleave)="rowId = ''">
+        @if (items().length == 0) {
+          <tr>
+            <td [colSpan]="columns().length">
+              <div class="flex justify-center">
+                <span class="text-gray-300">{{ 'common.table.no-results' | translate }}</span>
+              </div>
+            </td>
+          </tr>
+        }
+        @for (item of items(); track item[idName()]) {
+          <tr class="bg-white hover:bg-green-50" (mouseover)="rowId = item[idName()]">
+            @for (column of columns(); track column) {
+              @switch (column.template) {
+                @case (TableTemplate.action) {
+                  <td class="{{ actionColumnWidth() }}">
+                    <div class="flex justify-center">
+                      <app-table-action-field
+                        class="{{ rowId == item[idName()] ? 'block' : 'hidden' }}"
+                        [id]="item[idName()]"
+                        [isDetailAction]="isDetailAction()"
+                        [isEditAction]="isEditAction()"
+                        [isRemoveAction]="isRemoveAction()"
+                        (onDetailAction)="detailAction($event)"
+                        (onEditAction)="editAction($event)"
+                        (onRemoveAction)="removeAction($event)">
+                      </app-table-action-field>
+                    </div>
+                  </td>
+                }
+                @case (TableTemplate.boolean) {
+                  <td class="p-2">
+                    <div class="flex justify-center items-center">
+                      <app-table-boolean-field [value]="item[column.field]"></app-table-boolean-field>
+                    </div>
+                  </td>
+                }
+                @case (TableTemplate.text) {
+                  <td class="max-w-0 p-2">
+                    <app-table-text-field
+                      [justify]="headerFloat(column.headerFloat)"
+                      [value]="item[column.field]"></app-table-text-field>
+                  </td>
+                }
+                @default {
+                  <td class="p-2">
+                    <div class="flex h-full justify-center">
+                      <span>
+                        {{ item[column.field] }}
+                      </span>
+                    </div>
+                  </td>
+                }
+              }
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (page() && items().length > 0) {
+    <app-table-pagination [page]="pageModel()" (onPageClick)="onPageClick.emit($event)"></app-table-pagination>
+  }
+</div>

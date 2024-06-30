@@ -26,5 +26,11 @@ export class SettingsAsideComponent {
       hasSubCategories: false,
       link: `${ClientRoute.categories}/${ClientRoute.list}`,
     },
+    {
+      id: '3',
+      name: 'settings-aside-component.items.products-bases',
+      hasSubCategories: false,
+      link: `${ClientRoute.productBase}/${ClientRoute.list}`,
+    },
   ]);
 }

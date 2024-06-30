@@ -3,6 +3,9 @@
     "input-select": {
       "select-option": "-- Wybierz opcję --"
     },
+    "table": {
+      "no-results": "Brak wyników"
+    },
     "languages": {
       "en": "Angielski",
       "pl": "Polski"
@@ -64,6 +67,33 @@
     "settings": "Ustawienia",
     "sign-in": "Zaloguj się"
   },
+  "product-base-form-component": {
+    "add-parameter": "Dodaj parametr",
+    "choose-category": "Wybierz kategorię",
+    "create-product-base": "Stwórz bazę produktu",
+    "edit-product-base": "Edytuj bazę produktu",
+    "name": "Nazwa",
+    "product-parameters": "Parametry produktu",
+    "properties": "Właściwości",
+    "save": "Zapisz",
+    "table-columns": {
+      "name": "Nazwa"
+    }
+  },
+  "product-base-list-component": {
+    "category-name": "Nazwa kateogrii",
+    "create-new-product-base": "Stwórz nową bazę produktu",
+    "name": "Nazwa",
+    "parameter-count": "Liczba parametrów",
+    "products-bases": "Bazy produktów",
+    "product-count": "Liczba produktów"
+  },
+  "product-property-form-component": {
+    "name": "Nazwa",
+    "properties": "Właściwości",
+    "save": "Zapisz",
+    "translations": "Tłumaczenia"
+  },
   "register-component": {
     "date-of-birth": "Data urodzenia",
     "email": "E-mail",
@@ -78,7 +108,8 @@
   "settings-aside-component": {
     "items": {
       "account": "Konto",
-      "categories": "Kategorie"
+      "categories": "Kategorie",
+      "products-bases": "Bazy produktów"
     },
     "settings": "Ustawienia"
   }

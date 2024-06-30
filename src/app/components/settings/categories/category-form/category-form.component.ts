@@ -15,8 +15,8 @@ import { environment } from '../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
-import { CategoryFormDto } from '../../../../core/dtos/category-form.dto';
-import { CategoryDto } from '../../../../core/dtos/category.dto';
+import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
+import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
 import { IconType } from '../../../../core/enums/icon-type';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
@@ -61,7 +61,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
   header = signal<string>('');
   laguageItems = signal<SelectItemModel[]>([]);
   parentItems = signal<SelectItemModel[]>([]);
-  subCategories = signal<FormArray>(this.form.controls['subCategories'] as FormArray);
+  subCategories = signal<FormArray>(this.form.controls['subCategoryIds'] as FormArray);
   subCategoryItems = signal<SelectItemModel[]>([]);
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
@@ -144,40 +144,20 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
       return;
     }
 
-    const form = this.form.controls;
+    const category$ = !this.id
+      ? this._categoryDataService.add(this.form.value)
+      : this._categoryDataService.update(this.id, this.form.value);
 
-    if (!this.id) {
-      this._categoryDataService
-        .add({
-          name: form['name'].value,
-          parentCategoryId: form['parentCategory'].value,
-          subCategoryIds: form['subCategories'].value,
-          translations: form['translations'].value,
-        })
-        .subscribe({
-          next: () =>
-            this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.list}`),
-        });
-    } else {
-      this._categoryDataService
-        .update(this.id, {
-          name: form['name'].value,
-          parentCategoryId: form['parentCategory'].value,
-          subCategoryIds: form['subCategories'].value,
-          translations: form['translations'].value,
-        })
-        .subscribe({
-          next: () =>
-            this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.list}`),
-        });
-    }
+    category$.subscribe({
+      next: () => this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.list}`),
+    });
   }
 
   protected override setFormControls(): {} {
     return {
       name: [null, [Validators.required]],
-      parentCategory: [null],
-      subCategories: new FormArray([]),
+      parentCategoryId: [null],
+      subCategoryIds: new FormArray([]),
       translations: new FormArray([]),
     };
   }
@@ -188,7 +168,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     }
 
     this.form.controls['name'].setValue(category.name);
-    this.form.controls['parentCategory'].setValue(category.parentCategoryId);
+    this.form.controls['parentCategoryId'].setValue(category.parentCategoryId);
 
     category.subCategoryIds.forEach(x =>
       this.subCategories.update(y => {
@@ -210,7 +190,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     );
   }
 
-  private mapToSelectItemModel(source: CategoryDto): SelectItemModel {
+  private mapToSelectItemModel(source: IdNameDto): SelectItemModel {
     return {
       id: source.id,
       value: source.name,
@@ -244,7 +224,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
 
   private setValueChangeEvent(): void {
     const subCategories = (this.subCategories().value as (string | null)[]).filter(x => x != null) as string[];
-    this.form.controls['parentCategory'].valueChanges
+    this.form.controls['parentCategoryId'].valueChanges
       .pipe(
         takeUntil(this._unsubscribe),
         switchMap(response => {
@@ -278,7 +258,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
           return forkJoin({
             childItems: this._categoryDataService.getsAvailableToBeChild(
               response,
-              this.form.controls['parentCategory'].value,
+              this.form.controls['parentCategoryId'].value,
               this.id,
             ),
             parentItems: this._categoryDataService.getsAvailableToBeParent(response, this.id),

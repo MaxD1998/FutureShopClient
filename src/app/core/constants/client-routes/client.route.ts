@@ -6,6 +6,7 @@ export class ClientRoute {
   public static readonly login = 'login';
   public static readonly main = '';
   public static readonly new = 'new';
+  public static readonly productBase = 'product-base';
   public static readonly register = 'register';
   public static readonly settings = 'settings';
 }

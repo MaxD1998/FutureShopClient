@@ -5,22 +5,23 @@ import { categoryListResolver } from '../../../core/resolvers/category-list.reso
 
 export const categoryRoutes: Routes = [
   {
-    path: `${ClientRoute.details}/:id`,
-    loadComponent: () => import('./category-details/category-details.component').then(x => x.CategoryDetailsComponent),
-  },
-  {
     path: `${ClientRoute.form}`,
-    loadComponent: () => import('./category-form/category-form.component').then(x => x.CategoryFormComponent),
-    resolve: {
-      form: categoryFormResolver,
-    },
-  },
-  {
-    path: `${ClientRoute.form}/:id`,
-    loadComponent: () => import('./category-form/category-form.component').then(x => x.CategoryFormComponent),
-    resolve: {
-      form: categoryFormResolver,
-    },
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./category-form/category-form.component').then(x => x.CategoryFormComponent),
+        resolve: {
+          form: categoryFormResolver,
+        },
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('./category-form/category-form.component').then(x => x.CategoryFormComponent),
+        resolve: {
+          form: categoryFormResolver,
+        },
+      },
+    ],
   },
   {
     path: ClientRoute.list,
@@ -28,15 +29,18 @@ export const categoryRoutes: Routes = [
       {
         path: '',
         loadComponent: () => import('./category-list/category-list.component').then(x => x.CategoryListComponent),
+        resolve: {
+          pageCategories: categoryListResolver,
+        },
       },
       {
         path: ':pageNumber',
         loadComponent: () => import('./category-list/category-list.component').then(x => x.CategoryListComponent),
+        resolve: {
+          pageCategories: categoryListResolver,
+        },
       },
     ],
     runGuardsAndResolvers: 'always',
-    resolve: {
-      pageCategories: categoryListResolver,
-    },
   },
 ];

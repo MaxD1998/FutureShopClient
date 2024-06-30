@@ -2,8 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
-import { CategoryFormDto } from '../dtos/category-form.dto';
 import { CategoryDto } from '../dtos/category.dto';
+import { CategoryFormDto } from '../dtos/category.form-dto';
+import { IdNameDto } from '../dtos/id-name.dto';
 import { PageDto } from '../dtos/page.dto';
 
 @Injectable({
@@ -29,7 +30,7 @@ export class CategoryDataService {
     return this._httpClient.get<PageDto<CategoryDto>>(url);
   }
 
-  getsAvailableToBeChild(exceptionIds: string[], parentId?: string, id?: string) {
+  getsAvailableToBeChild(exceptionIds: string[], parentId?: string, id?: string): Observable<IdNameDto[]> {
     const url = `${CategoryControllerRoute.availableToBeChild}${id ?? ''}`;
     let params = new HttpParams();
 
@@ -39,20 +40,24 @@ export class CategoryDataService {
 
     exceptionIds.forEach(x => (params = params.append('childIds', x)));
 
-    return this._httpClient.get<CategoryDto[]>(url, { params: params });
+    return this._httpClient.get<IdNameDto[]>(url, { params: params });
   }
 
-  getsAvailableToBeParent(exceptionIds: string[], id?: string) {
+  getsAvailableToBeParent(exceptionIds: string[], id?: string): Observable<IdNameDto[]> {
     const url = `${CategoryControllerRoute.availableToBeParent}${id ?? ''}`;
     let params = new HttpParams();
     exceptionIds.forEach(x => (params = params.append('childIds', x)));
 
-    return this._httpClient.get<CategoryDto[]>(url, { params: params });
+    return this._httpClient.get<IdNameDto[]>(url, { params: params });
   }
 
   getsByCategoryParentId(categoryParentId?: string): Observable<CategoryDto[]> {
     const url = `${CategoryControllerRoute.categoryParentId}${categoryParentId ?? ''}`;
     return this._httpClient.get<CategoryDto[]>(url);
+  }
+
+  getsIdName(): Observable<IdNameDto[]> {
+    return this._httpClient.get<IdNameDto[]>(CategoryControllerRoute.all);
   }
 
   update(id: string, dto: CategoryFormDto): Observable<CategoryFormDto> {

@@ -75,7 +75,7 @@ export class InputSelectComponent implements ControlValueAccessor {
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent): void {
-    if (!this.selectBox.nativeElement.contains(event.target) && this.isDropdownVisible) {
+    if (!this.selectBox.nativeElement.contains(event.target) && this.isDropdownVisible()) {
       this.isDropdownVisible.set(false);
       this.isFocus.set(false);
       this.onTouch();

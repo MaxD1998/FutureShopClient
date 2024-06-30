@@ -6,4 +6,8 @@ export const settingsRoutes: Routes = [
     path: ClientRoute.categories,
     loadChildren: () => import('./categories/category.routes').then(x => x.categoryRoutes),
   },
+  {
+    path: ClientRoute.productBase,
+    loadChildren: () => import('./product-base/product-base.routes').then(x => x.productBaseRoutes),
+  },
 ];

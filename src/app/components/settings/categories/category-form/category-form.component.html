@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 h-full overflow-hidden">
   <div class="flex justify-between items-center h-11">
     <h1 class="text-xl">{{ header() | translate }}</h1>
     <app-button
@@ -9,11 +9,11 @@
     </app-button>
   </div>
   <div class="border-t"></div>
-  <form [formGroup]="form">
+  <form class="flex-auto overflow-y-auto" [formGroup]="form">
     <div class="flex flex-row flex-wrap gap-4">
-      <div class="flex flex-col flex-1">
-        <div class="flex flex-1 flex-col">
-          <div class="flex items-center h-11">
+      <div class="flex flex-col flex-auto">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center">
             <h2 class="text-xl">{{ 'category-form-component.properties' | translate }}</h2>
           </div>
           <app-input
@@ -23,8 +23,8 @@
             [required]="true">
           </app-input>
         </div>
-        <div class="flex flex-1 flex-col" formArrayName="translations">
-          <div class="flex justify-between items-center h-11 gap-4">
+        <div class="flex flex-col" formArrayName="translations">
+          <div class="flex justify-between items-center">
             <h2 class="text-xl">{{ 'category-form-component.translations' | translate }}</h2>
             <app-button
               [disabled]="isAddTranslationButtonDisabled()"
@@ -55,20 +55,20 @@
           }
         </div>
       </div>
-      <div class="flex flex-col flex-1">
-        <div class="flex flex-1 flex-col">
-          <div class="flex items-center h-11">
+      <div class="flex flex-col flex-auto">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center">
             <h2 class="text-xl">{{ 'category-form-component.parent-category' | translate }}</h2>
           </div>
           <app-input-select
-            formControlName="parentCategory"
-            [errorCode]="errorCode('parentCategory')"
+            formControlName="parentCategoryId"
+            [errorCode]="errorCode('parentCategoryId')"
             [label]="'category-form-component.choose-category' | translate"
             [items]="parentItems()">
           </app-input-select>
         </div>
-        <div class="flex flex-1 flex-col" formArrayName="subCategories">
-          <div class="flex justify-between items-center h-11 gap-4">
+        <div class="flex flex-col" formArrayName="subCategoryIds">
+          <div class="flex justify-between items-center">
             <h2 class="text-xl">{{ 'category-form-component.sub-categories' | translate }}</h2>
             <app-button
               [disabled]="isAddCategoryButtonDisabled()"
@@ -80,7 +80,7 @@
             <div class="flex gap-2">
               <app-input-select
                 class="w-full"
-                [errorCode]="errorCode($index.toString(), 'subCategories')"
+                [errorCode]="errorCode($index.toString(), 'subCategoryIds')"
                 [formControlName]="$index"
                 [label]="'category-form-component.choose-category' | translate"
                 [items]="subCategoryItems()"

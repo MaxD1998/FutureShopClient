@@ -14,7 +14,7 @@
       <p>{{ selectedItem().value | translate }}</p>
     </div>
     @if (isDropdownVisible()) {
-      <div class="absolute z-10 border rounded-md w-full bg-white">
+      <div class="absolute z-10 border rounded-md w-full max-h-60 bg-white overflow-y-auto">
         @for (dropdownItem of dropdownItems; track dropdownItem.id) {
           <div class="p-2 hover:bg-green-50" (click)="setItem(dropdownItem)">
             <p>{{ dropdownItem.value | translate }}</p>
