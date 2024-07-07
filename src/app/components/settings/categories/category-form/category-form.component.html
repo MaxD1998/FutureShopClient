@@ -9,9 +9,9 @@
     </app-button>
   </div>
   <div class="border-t"></div>
-  <form class="flex-auto overflow-y-auto" [formGroup]="form">
+  <div class="flex-auto overflow-y-auto">
     <div class="flex flex-row flex-wrap gap-4">
-      <div class="flex flex-col flex-auto">
+      <form class="flex flex-col flex-auto" [formGroup]="form">
         <div class="flex flex-col gap-4">
           <div class="flex items-center">
             <h2 class="text-xl">{{ 'category-form-component.properties' | translate }}</h2>
@@ -23,40 +23,24 @@
             [required]="true">
           </app-input>
         </div>
-        <div class="flex flex-col" formArrayName="translations">
-          <div class="flex justify-between items-center">
+        <div class="flex flex-col gap-4" formArrayName="translations">
+          <div class="flex items-center h-11">
             <h2 class="text-xl">{{ 'category-form-component.translations' | translate }}</h2>
-            <app-button
-              [disabled]="isAddTranslationButtonDisabled()"
-              [label]="'category-form-component.add-translation' | translate"
-              (click)="openDialogWindow($event)">
-            </app-button>
           </div>
-          @for (translation of translations().controls; track translation) {
-            <div class="flex gap-2" [formGroupName]="$index">
-              <app-input
-                class="w-full"
-                formControlName="translation"
-                [errorCode]="errorCode('translation', 'translations', $index.toString())"
-                [label]="'common.languages.' + translation.value.lang | translate"
-                [required]="true">
-              </app-input>
-              <a
-                class="block border rounded-md mt-8 mb-6 p-2 h-[2.625rem] w-[2.625rem] cursor-pointer hover:bg-green-300 hover:border-green-300"
-                (click)="removeTranslation($event, $index)">
-                <app-icon class="block" [iconName]="IconType.minus"></app-icon>
-              </a>
-            </div>
-          }
-          @if (translations().controls.length == 0) {
-            <div class="flex justify-center w-full mt-4 text-gray-300">
-              <p>{{ 'category-form-component.no-translations' | translate }}</p>
-            </div>
-          }
+          <div>
+            @for (translation of translations().controls; track $index) {
+              <div [formGroupName]="$index">
+                <app-input
+                  formControlName="translation"
+                  [label]="'common.languages.' + translation.value.lang | translate">
+                </app-input>
+              </div>
+            }
+          </div>
         </div>
-      </div>
+      </form>
       <div class="flex flex-col flex-auto">
-        <div class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4" [formGroup]="form">
           <div class="flex items-center">
             <h2 class="text-xl">{{ 'category-form-component.parent-category' | translate }}</h2>
           </div>
@@ -66,51 +50,35 @@
             [label]="'category-form-component.choose-category' | translate"
             [items]="parentItems()">
           </app-input-select>
-        </div>
-        <div class="flex flex-col" formArrayName="subCategoryIds">
-          <div class="flex justify-between items-center">
+        </form>
+        <div class="flex flex-col gap-4">
+          <div class="flex justify-between items-center h-11">
             <h2 class="text-xl">{{ 'category-form-component.sub-categories' | translate }}</h2>
             <app-button
-              [disabled]="isAddCategoryButtonDisabled()"
+              [disabled]="subCategoryItems().length == 0"
               [label]="'category-form-component.add-sub-category' | translate"
-              (click)="addSubCategory($event)">
+              (click)="isDialogActive.set(true)">
             </app-button>
           </div>
-          @for (child of subCategories().controls; track child) {
-            <div class="flex gap-2">
-              <app-input-select
-                class="w-full"
-                [errorCode]="errorCode($index.toString(), 'subCategoryIds')"
-                [formControlName]="$index"
-                [label]="'category-form-component.choose-category' | translate"
-                [items]="subCategoryItems()"
-                [required]="true">
-              </app-input-select>
-              <a
-                class="block border rounded-md mt-8 mb-6 p-2 h-[2.625rem] w-[2.625rem] cursor-pointer hover:bg-green-300 hover:border-green-300"
-                (click)="removeSubCategory($event, $index)">
-                <app-icon class="block" [iconName]="IconType.minus"></app-icon>
-              </a>
-            </div>
-          }
-
-          @if (subCategories().controls.length == 0) {
-            <div class="flex justify-center w-full mt-4 text-gray-300">
-              <p>{{ 'category-form-component.no-subcategories' | translate }}</p>
-            </div>
-          }
+          <app-table
+            idName="id"
+            [columns]="columns"
+            [isRemoveAction]="true"
+            [items]="subCategories().value"
+            (onRemoveAction)="removeSubCategory($event)">
+          </app-table>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <app-dialog-window
   [isDialogActive]="isDialogActive()"
-  [title]="'category-form-component.choose-language' | translate"
+  [title]="'category-form-component.choose-sub-category' | translate"
   (onCloseDialog)="isDialogActive.set($event)">
   <app-category-form-dialog-window-content
-    [items]="laguageItems()"
-    (onClose)="isDialogActive.set($event)"
-    (onValueChange)="addLanguage($event)">
+    [items]="subCategoryItems()"
+    (onClose)="isDialogActive.set(false)"
+    (onValueChange)="setSubCategory($event)">
   </app-category-form-dialog-window-content>
 </app-dialog-window>

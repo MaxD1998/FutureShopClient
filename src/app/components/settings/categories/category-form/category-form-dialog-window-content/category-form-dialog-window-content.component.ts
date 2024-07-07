@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnDestroy, output } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
+import { IdNameDto } from '../../../../../core/dtos/id-name.dto';
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { InputSelectComponent } from '../../../../shared/input-select/input-select.component';
 
@@ -12,21 +14,29 @@ import { InputSelectComponent } from '../../../../shared/input-select/input-sele
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [InputSelectComponent, ReactiveFormsModule],
 })
-export class CategoryFormDialogWindowContentComponent extends BaseFormComponent {
+export class CategoryFormDialogWindowContentComponent extends BaseFormComponent implements OnDestroy {
+  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
   items = input.required<SelectItemModel[]>();
 
   onClose = output<boolean>();
-  onValueChange = output<string>();
+  onValueChange = output<IdNameDto>();
 
   constructor() {
     super();
 
-    this.form.controls['language'].valueChanges.subscribe({
+    this.form.controls['subCategory'].valueChanges.subscribe({
       next: response => {
         this.onClose.emit(false);
 
         if (response) {
-          this.onValueChange.emit(response);
+          const item = this.items().find(x => x.id == response);
+          if (item && item.id) {
+            this.onValueChange.emit({
+              id: item.id,
+              name: item.value,
+            });
+          }
           setTimeout(() => {
             this.form.reset();
           });
@@ -35,9 +45,14 @@ export class CategoryFormDialogWindowContentComponent extends BaseFormComponent 
     });
   }
 
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+
   protected override setFormControls(): {} {
     return {
-      language: [null, Validators.required],
+      subCategory: [null, Validators.required],
     };
   }
 }

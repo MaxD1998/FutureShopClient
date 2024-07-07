@@ -179,14 +179,6 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      categoryId: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      productParameters: new FormArray([]),
-    };
-  }
-
   private setValueChangeEvent(): void {
     this.form.controls['productParameters'].valueChanges
       .pipe(
@@ -203,5 +195,13 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
         }),
       )
       .subscribe();
+  }
+
+  protected override setFormControls(): {} {
+    return {
+      categoryId: [null, [Validators.required]],
+      name: [null, [Validators.required]],
+      productParameters: new FormArray([]),
+    };
   }
 }

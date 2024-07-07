@@ -1,16 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  afterNextRender,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject, forkJoin, map, switchMap, takeUntil } from 'rxjs';
+import { forkJoin, Subject, takeUntil, tap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
@@ -19,12 +11,16 @@ import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
 import { IconType } from '../../../../core/enums/icon-type';
+import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
+import { TableTemplate } from '../../../../core/enums/table-template';
+import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { IconComponent } from '../../../shared/icon/icon.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
 import { InputComponent } from '../../../shared/input/input.component';
 import { DialogWindowComponent } from '../../../shared/modals/dialog-window/dialog-window.component';
+import { TableComponent } from '../../../shared/table/table.component';
 import { CategoryFormDialogWindowContentComponent } from './category-form-dialog-window-content/category-form-dialog-window-content.component';
 
 @Component({
@@ -42,6 +38,7 @@ import { CategoryFormDialogWindowContentComponent } from './category-form-dialog
     CategoryFormDialogWindowContentComponent,
     ReactiveFormsModule,
     TranslateModule,
+    TableComponent,
   ],
 })
 export class CategoryFormComponent extends BaseFormComponent implements OnDestroy {
@@ -55,36 +52,40 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
   IconType: typeof IconType = IconType;
 
   id?: string = undefined;
+
   isAddCategoryButtonDisabled = signal<boolean>(true);
   isAddTranslationButtonDisabled = signal<boolean>(true);
   isDialogActive = signal<boolean>(false);
   header = signal<string>('');
-  laguageItems = signal<SelectItemModel[]>([]);
   parentItems = signal<SelectItemModel[]>([]);
-  subCategories = signal<FormArray>(this.form.controls['subCategoryIds'] as FormArray);
+  subCategories = signal<FormArray>(this.form.controls['subCategories'] as FormArray);
   subCategoryItems = signal<SelectItemModel[]>([]);
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
+  columns: DataTableColumnModel[] = [
+    {
+      field: 'name',
+      headerFloat: TableHeaderFloat.left,
+      headerText: 'product-base-form-component.table-columns.name',
+      template: TableTemplate.text,
+    },
+    {
+      field: 'actions',
+      headerText: '',
+      template: TableTemplate.action,
+    },
+  ];
+
   constructor() {
     super();
+    this.setLangs();
     this.id = this._activatedRoute.snapshot.params['id'];
     this.header.set(this.id ? 'category-form-component.edit-category' : 'category-form-component.create-category');
     const form = this._activatedRoute.snapshot.data['form'];
-    this.subCategoryItems.set(form.subCategoryItems);
     this.parentItems.set(form.parentItems);
+    this.subCategoryItems.set(form.subCategoryItems);
     this.fillForm(form.category);
     this.setValueChangeEvent();
-
-    afterNextRender(() => {
-      setTimeout(() => {
-        const array = this.subCategories().value as string[];
-        this.subCategoryItems.set(this.subCategoryItems().filter(x => !array.includes(x.id as string)));
-        this.setAddCategoryButtonDisabled();
-        this.setAddTranslationButtonDisabled();
-        this.setLaguageItems();
-        this._changeDetectorRef.detectChanges();
-      }, 0);
-    });
   }
 
   ngOnDestroy(): void {
@@ -92,48 +93,14 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     this._unsubscribe.complete();
   }
 
-  addLanguage(id: string): void {
-    this.translations.update(x => {
-      x.push(
-        this._formBuilder.group({
-          lang: [id, [Validators.required]],
-          translation: [null, [Validators.required]],
-        }),
-      );
-      return x;
-    });
-    this.setLaguageItems();
-    this.setAddTranslationButtonDisabled();
+  removeSubCategory(id: string): void {
+    const index = (this.subCategories().value as IdNameDto[]).findIndex(x => x.id == id);
+    this.subCategories().removeAt(index);
   }
 
-  addSubCategory(event: Event): void {
-    event.preventDefault();
+  setSubCategory(value: IdNameDto): void {
     this.subCategories.update(x => {
-      x.push(new FormControl(null));
-      return x;
-    });
-  }
-
-  openDialogWindow(event: Event): void {
-    event.preventDefault();
-    this.isDialogActive.set(true);
-  }
-
-  removeTranslation(event: Event, index: number): void {
-    event.preventDefault();
-    this.translations.update(x => {
-      x.removeAt(index);
-      return x;
-    });
-
-    this.setLaguageItems();
-    this.setAddTranslationButtonDisabled();
-  }
-
-  removeSubCategory(event: Event, index: number): void {
-    event.preventDefault();
-    this.subCategories.update(x => {
-      x.removeAt(index);
+      x.push(new FormControl(value));
       return x;
     });
   }
@@ -153,131 +120,107 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      name: [null, [Validators.required]],
-      parentCategoryId: [null],
-      subCategoryIds: new FormArray([]),
-      translations: new FormArray([]),
-    };
-  }
-
-  private fillForm(category?: CategoryFormDto): void {
+  private fillForm(category: CategoryFormDto): void {
     if (!category) {
       return;
     }
 
-    this.form.controls['name'].setValue(category.name);
-    this.form.controls['parentCategoryId'].setValue(category.parentCategoryId);
+    const controls = this.form.controls;
 
-    category.subCategoryIds.forEach(x =>
-      this.subCategories.update(y => {
-        y.push(new FormControl(x));
-        return y;
-      }),
-    );
+    controls['name'].setValue(category.name);
+    controls['parentCategoryId'].setValue(category.parentCategoryId);
 
-    category.translations.forEach(x =>
+    this.subCategories.update(x => {
+      category.subCategories.forEach(y => {
+        x.push(new FormControl(y));
+      });
+
+      return x;
+    });
+
+    this.translations.update(x => {
+      (x.controls as FormGroup[]).forEach(y => {
+        const transaltion = category.translations.find(z => z.lang == y.controls['lang'].value);
+        if (transaltion) {
+          y.controls['translation'].setValue(transaltion.translation);
+        }
+      });
+
+      return x;
+    });
+  }
+
+  private setLangs(): void {
+    environment.availableLangs.forEach(x => {
       this.translations.update(y => {
         y.push(
           this._formBuilder.group({
-            lang: [x.lang, [Validators.required]],
-            translation: [x.translation, [Validators.required]],
+            lang: [x, [Validators.required]],
+            translation: [null],
           }),
         );
         return y;
-      }),
-    );
-  }
-
-  private mapToSelectItemModel(source: IdNameDto): SelectItemModel {
-    return {
-      id: source.id,
-      value: source.name,
-    };
-  }
-
-  private setAddCategoryButtonDisabled(): void {
-    const subCategoriesLength = (this.subCategories().value as (string | null)[]).filter(x => x == null).length;
-    const result = this.subCategoryItems().length <= subCategoriesLength;
-    this.isAddCategoryButtonDisabled.set(result);
-  }
-
-  private setAddTranslationButtonDisabled(): void {
-    const result = environment.availableLangs.length == (this.translations().value as FormGroup[]).length;
-    this.isAddTranslationButtonDisabled.set(result);
-  }
-
-  private setLaguageItems(): void {
-    const array = (this.translations().controls as FormGroup[]).map(x => x.controls['lang'].value);
-    const results = environment.availableLangs
-      .filter(x => !array.includes(x))
-      .map(x => {
-        return {
-          id: x,
-          value: `common.languages.${x}`,
-        };
       });
+    });
+  }
 
-    this.laguageItems.set(results);
+  private setItems(): void {
+    const category = this.form.controls;
+    const parentCategoryId = category['parentCategoryId'].value;
+    const subCategoryIds = (category['subCategories'].value as IdNameDto[]).map(x => x.id);
+
+    forkJoin({
+      parentCategoryItems: this._categoryDataService.getsAvailableToBeParent(subCategoryIds, this.id),
+      subCategoryItems: this._categoryDataService.getsAvailableToBeChild(subCategoryIds, parentCategoryId, this.id),
+    }).subscribe({
+      next: response => {
+        this.parentItems.set(
+          response.parentCategoryItems.map(x => {
+            return {
+              id: x.id,
+              value: x.name,
+            };
+          }),
+        );
+
+        this.subCategoryItems.set(
+          response.subCategoryItems.map(x => {
+            return {
+              id: x.id,
+              value: x.name,
+            };
+          }),
+        );
+      },
+    });
   }
 
   private setValueChangeEvent(): void {
-    const subCategories = (this.subCategories().value as (string | null)[]).filter(x => x != null) as string[];
     this.form.controls['parentCategoryId'].valueChanges
       .pipe(
         takeUntil(this._unsubscribe),
-        switchMap(response => {
-          return forkJoin({
-            childItems: this._categoryDataService.getsAvailableToBeChild(subCategories, response, this.id),
-            parentItems: this._categoryDataService.getsAvailableToBeParent(subCategories, this.id),
-          }).pipe(
-            map(response => {
-              return {
-                childItems: response.childItems.map(x => this.mapToSelectItemModel(x)),
-                parentItems: response.parentItems.map(x => this.mapToSelectItemModel(x)),
-              };
-            }),
-          );
+        tap(() => {
+          this.setItems();
         }),
       )
-      .subscribe({
-        next: response => {
-          this.subCategoryItems.set(response.childItems);
-          this.parentItems.set(response.parentItems);
-          this.setAddCategoryButtonDisabled();
-        },
-      });
+      .subscribe();
 
-    this.subCategories()
-      .valueChanges.pipe(
+    this.form.controls['subCategories'].valueChanges
+      .pipe(
         takeUntil(this._unsubscribe),
-        map((response: (string | null)[]) => response.filter(x => x != null) as string[]),
-        switchMap(response => {
-          this.subCategoryItems.set(this.subCategoryItems().filter(x => !response.includes(x.id as string)));
-          return forkJoin({
-            childItems: this._categoryDataService.getsAvailableToBeChild(
-              response,
-              this.form.controls['parentCategoryId'].value,
-              this.id,
-            ),
-            parentItems: this._categoryDataService.getsAvailableToBeParent(response, this.id),
-          }).pipe(
-            map(response => {
-              return {
-                childItems: response.childItems.map(x => this.mapToSelectItemModel(x)),
-                parentItems: response.parentItems.map(x => this.mapToSelectItemModel(x)),
-              };
-            }),
-          );
+        tap(() => {
+          this.setItems();
         }),
       )
-      .subscribe({
-        next: response => {
-          this.subCategoryItems.set(response.childItems);
-          this.parentItems.set(response.parentItems);
-          this.setAddCategoryButtonDisabled();
-        },
-      });
+      .subscribe();
+  }
+
+  protected override setFormControls(): {} {
+    return {
+      name: [null, [Validators.required]],
+      parentCategoryId: [null],
+      subCategories: new FormArray([]),
+      translations: new FormArray([]),
+    };
   }
 }
