@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Injector, input, output, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormArray, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,12 +17,13 @@ import { InputComponent } from '../../../../shared/input/input.component';
   imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent],
 })
 export class ProductPropertyFormComponent extends BaseFormComponent {
+  private readonly _injector = inject(Injector);
   editParameter = input<ProductParameterFormDto>();
   onSubmit = output<ProductParameterFormDto>();
 
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
-  editParameter$ = toObservable(this.editParameter);
+  editParameter$ = toObservable(this.editParameter, { injector: this._injector });
 
   constructor() {
     super();

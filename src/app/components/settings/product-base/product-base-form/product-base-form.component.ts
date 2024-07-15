@@ -27,11 +27,11 @@ import { ProductPropertyFormComponent } from './product-property-form/product-pr
   styleUrl: './product-base-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    TranslateModule,
+    ReactiveFormsModule,
     ButtonComponent,
     InputComponent,
     InputSelectComponent,
-    TranslateModule,
-    ReactiveFormsModule,
     TableComponent,
     DialogWindowComponent,
     ProductPropertyFormComponent,
@@ -42,6 +42,7 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
   private readonly _productBaseDataService = inject(ProductBaseDataService);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 
   id?: string = undefined;

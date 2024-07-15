@@ -88,6 +88,26 @@
     "products-bases": "Bazy produktów",
     "product-count": "Liczba produktów"
   },
+  "product-form-component": {
+    "create-product": "Stwórz produkt",
+    "edit-product": "Edytuj produkt",
+    "name": "Nazwa",
+    "product-base": "Baza produktu",
+    "save": "Zapisz",
+    "set-product-base": "Ustaw bazę produktu",
+    "set-value": "Ustaw wartość",
+    "table-columns": {
+      "name": "Nazwa",
+      "value": "Wartość"
+    }
+  },
+  "product-list-component": {
+    "create-new-product": "Stwórz nowy produkt",
+    "filled-property": "Uzupełnione właściwości",
+    "name": "Nazwa",
+    "price": "Cena",
+    "products": "Produkty"
+  },
   "product-property-form-component": {
     "name": "Nazwa",
     "properties": "Właściwości",
@@ -109,8 +129,17 @@
     "items": {
       "account": "Konto",
       "categories": "Kategorie",
+      "products": "Produkty",
       "products-bases": "Bazy produktów"
     },
     "settings": "Ustawienia"
+  },
+  "set-product-base-form-component": {
+    "product-base": "Baza produktu",
+    "warning": "Aby przejść do formularza należy wybrać bazę produktu!"
+  },
+  "set-product-parameter-value-component": {
+    "save": "Zapisz",
+    "value": "Wartość"
   }
 }

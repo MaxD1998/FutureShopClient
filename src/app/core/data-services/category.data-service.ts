@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
-import { CategoryDto } from '../dtos/category.dto';
 import { CategoryFormDto } from '../dtos/category.form-dto';
+import { CategoryListDto } from '../dtos/category.list-dto';
 import { IdNameDto } from '../dtos/id-name.dto';
 import { PageDto } from '../dtos/page.dto';
 
@@ -12,6 +12,7 @@ import { PageDto } from '../dtos/page.dto';
 })
 export class CategoryDataService {
   private readonly _httpClient = inject(HttpClient);
+
   add(dto: CategoryFormDto): Observable<CategoryFormDto> {
     return this._httpClient.post<CategoryFormDto>(CategoryControllerRoute.base, dto);
   }
@@ -25,9 +26,9 @@ export class CategoryDataService {
     return this._httpClient.get<CategoryFormDto>(url);
   }
 
-  getPage(pageNumber: number): Observable<PageDto<CategoryDto>> {
+  getPage(pageNumber: number): Observable<PageDto<CategoryListDto>> {
     const url = `${CategoryControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<CategoryDto>>(url);
+    return this._httpClient.get<PageDto<CategoryListDto>>(url);
   }
 
   getsAvailableToBeChild(exceptionIds: string[], parentId?: string, id?: string): Observable<IdNameDto[]> {
@@ -51,9 +52,9 @@ export class CategoryDataService {
     return this._httpClient.get<IdNameDto[]>(url, { params: params });
   }
 
-  getsByCategoryParentId(categoryParentId?: string): Observable<CategoryDto[]> {
+  getsByCategoryParentId(categoryParentId?: string): Observable<CategoryListDto[]> {
     const url = `${CategoryControllerRoute.categoryParentId}${categoryParentId ?? ''}`;
-    return this._httpClient.get<CategoryDto[]>(url);
+    return this._httpClient.get<CategoryListDto[]>(url);
   }
 
   getsIdName(): Observable<IdNameDto[]> {

@@ -1,4 +1,4 @@
-export interface ProductBaseDto {
+export interface ProductBaseListDto {
   categoryName: string;
   id: string;
   name: string;

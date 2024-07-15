@@ -1,4 +1,4 @@
-export interface CategoryDto {
+export interface CategoryListDto {
   id: string;
   name: string;
   hasSubCategories: boolean;

@@ -11,7 +11,7 @@
       {{ isFocus() ? 'border-blue-600' : '' }} 
       {{ errorCode() ? 'border-red-600' : '' }}"
       (click)="onClick()">
-      <p>{{ selectedItem().value | translate }}</p>
+      <p class="{{ isDisabled() ? 'text-gray-500' : '' }}">{{ selectedItem().value | translate }}</p>
     </div>
     @if (isDropdownVisible()) {
       <div class="absolute z-10 border rounded-md w-full max-h-60 bg-white overflow-y-auto">

@@ -30,6 +30,7 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
 })
 export class InputSelectComponent implements ControlValueAccessor {
   errorCode = input<string | null>();
+  isDisabled = input<boolean>(false);
   items = input.required<SelectItemModel[]>();
   label = input<string>();
   required = input<boolean>(false);
@@ -75,7 +76,7 @@ export class InputSelectComponent implements ControlValueAccessor {
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent): void {
-    if (!this.selectBox.nativeElement.contains(event.target) && this.isDropdownVisible()) {
+    if (!this.isDisabled() && !this.selectBox.nativeElement.contains(event.target) && this.isDropdownVisible()) {
       this.isDropdownVisible.set(false);
       this.isFocus.set(false);
       this.onTouch();
@@ -90,6 +91,10 @@ export class InputSelectComponent implements ControlValueAccessor {
   }
 
   onClick(): void {
+    if (this.isDisabled()) {
+      return;
+    }
+
     this.isDropdownVisible.set(!this.isDropdownVisible());
     this.isFocus.set(!this.isFocus());
   }

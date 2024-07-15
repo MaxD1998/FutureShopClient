@@ -88,6 +88,26 @@
     "products-bases": "Product bases",
     "product-count": "Product count"
   },
+  "product-form-component": {
+    "create-product": "Create product",
+    "edit-product": "Edit product",
+    "name": "Name",
+    "product-base": "Product base",
+    "save": "Save",
+    "set-product-base": "Set product base",
+    "set-value": "Set value",
+    "table-columns": {
+      "name": "Name",
+      "value": "Value"
+    }
+  },
+  "product-list-component": {
+    "create-new-product": "Create new product",
+    "filled-property": "Filled property",
+    "name": "Name",
+    "price": "Price",
+    "products": "Products"
+  },
   "product-property-form-component": {
     "name": "Name",
     "properties": "Properties",
@@ -109,8 +129,17 @@
     "items": {
       "account": "Account",
       "categories": "Categories",
+      "products": "Products",
       "products-bases": "Products bases"
     },
     "settings": "Settings"
+  },
+  "set-product-base-form-component": {
+    "product-base": "Product base",
+    "warning": "To go to the form, select the product base!"
+  },
+  "set-product-parameter-value-component": {
+    "save": "Save",
+    "value": "Value"
   }
 }

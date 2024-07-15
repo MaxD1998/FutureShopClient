@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+  <app-input-select
+    formControlName="productBaseId"
+    [errorCode]="errorCode('productBaseId')"
+    [label]="'set-product-base-form-component.product-base' | translate"
+    [items]="items()"
+    [required]="true">
+  </app-input-select>
+</form>
+<p>{{ 'set-product-base-form-component.warning' | translate }}</p>

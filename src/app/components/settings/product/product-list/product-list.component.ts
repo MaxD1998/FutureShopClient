@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
-import { ProductBaseDataService } from '../../../../core/data-services/product-base.data-service';
+import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { PageDto } from '../../../../core/dtos/page.dto';
-import { ProductBaseListDto } from '../../../../core/dtos/product-base.list-dto';
+import { ProductListDto } from '../../../../core/dtos/product.list-dto';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../core/models/pagination.model';
@@ -13,16 +13,16 @@ import { ButtonComponent } from '../../../shared/button/button.component';
 import { TableComponent } from '../../../shared/table/table.component';
 
 @Component({
-  selector: 'app-product-base-list',
+  selector: 'app-product-list',
   standalone: true,
-  templateUrl: './product-base-list.component.html',
-  styleUrl: './product-base-list.component.css',
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, ButtonComponent, TableComponent],
+  imports: [TableComponent, ButtonComponent, TranslateModule],
 })
-export class ProductBaseListComponent implements OnDestroy {
+export class ProductListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _productBaseDataService = inject(ProductBaseDataService);
+  private readonly _productDataService = inject(ProductDataService);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
@@ -30,27 +30,22 @@ export class ProductBaseListComponent implements OnDestroy {
     currentPage: 1,
     totalPages: 1,
   });
-  productBases = signal<ProductBaseListDto[]>([]);
+  products = signal<ProductListDto[]>([]);
 
   columns: DataTableColumnModel[] = [
     {
       field: 'name',
-      headerText: 'product-base-list-component.name',
+      headerText: 'product-list-component.name',
       template: TableTemplate.text,
     },
     {
-      field: 'categoryName',
-      headerText: 'product-base-list-component.category-name',
+      field: 'price',
+      headerText: 'product-list-component.price',
       template: TableTemplate.text,
     },
     {
-      field: 'productCount',
-      headerText: 'product-base-list-component.product-count',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'productParameterCount',
-      headerText: 'product-base-list-component.parameter-count',
+      field: 'filledPropertyCount',
+      headerText: 'product-list-component.filled-property',
       template: TableTemplate.text,
     },
     {
@@ -62,8 +57,8 @@ export class ProductBaseListComponent implements OnDestroy {
 
   constructor() {
     this._activatedRoute.paramMap.pipe(takeUntil(this._unsubscribe)).subscribe(() => {
-      const pageProductBases: PageDto<ProductBaseListDto> = this._activatedRoute.snapshot.data['pageProductBases'];
-      this.setPageProductBase(pageProductBases);
+      const pageProducts: PageDto<ProductListDto> = this._activatedRoute.snapshot.data['pageProducts'];
+      this.setPageProduct(pageProducts);
     });
   }
 
@@ -73,38 +68,38 @@ export class ProductBaseListComponent implements OnDestroy {
   }
 
   changePage(pageNumber: number): void {
-    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.productBase}/${ClientRoute.list}/${pageNumber}`);
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.product}/${ClientRoute.list}/${pageNumber}`);
   }
 
   navigateToCreate(): void {
-    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.productBase}/${ClientRoute.form}`);
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.product}/${ClientRoute.form}`);
   }
 
   navigateToEdit(id: string): void {
-    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.productBase}/${ClientRoute.form}/${id}`);
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.product}/${ClientRoute.form}/${id}`);
   }
 
   removeRecord(id: string): void {
-    this._productBaseDataService
+    this._productDataService
       .delete(id)
       .pipe(
         switchMap(() => {
           const pageNumber = this._activatedRoute.snapshot.params['pageNumber'];
-          return this._productBaseDataService.getPage(pageNumber ?? 1);
+          return this._productDataService.getPage(pageNumber ?? 1);
         }),
       )
       .subscribe({
         next: response => {
-          this.setPageProductBase(response);
+          this.setPageProduct(response);
         },
       });
   }
 
-  private setPageProductBase(pageProductBases: PageDto<ProductBaseListDto>): void {
-    this.productBases.set(pageProductBases.items);
+  private setPageProduct(pageProducts: PageDto<ProductListDto>): void {
+    this.products.set(pageProducts.items);
     this.pagination.set({
-      currentPage: pageProductBases.currentPage,
-      totalPages: pageProductBases.totalPages,
+      currentPage: pageProducts.currentPage,
+      totalPages: pageProducts.totalPages,
     });
   }
 }

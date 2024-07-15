@@ -9,29 +9,27 @@
     </app-button>
   </div>
   <div class="border-t"></div>
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="flex flex-col">
-      <div class="flex items-center h-11">
-        <h2 class="text-xl">{{ 'product-base-form-component.properties' | translate }}</h2>
+  <form class="flex flex-col" [formGroup]="form">
+    <div class="flex items-center h-11">
+      <h2 class="text-xl">{{ 'product-base-form-component.properties' | translate }}</h2>
+    </div>
+    <div class="flex flex-row flex-wrap gap-4">
+      <div class="flex flex-col flex-auto">
+        <app-input
+          formControlName="name"
+          [errorCode]="errorCode('name')"
+          [label]="'product-base-form-component.name' | translate"
+          [required]="true">
+        </app-input>
       </div>
-      <div class="flex flex-row flex-wrap gap-4">
-        <div class="flex flex-col flex-auto">
-          <app-input
-            formControlName="name"
-            [errorCode]="errorCode('name')"
-            [label]="'product-base-form-component.name' | translate"
-            [required]="true">
-          </app-input>
-        </div>
-        <div class="flex flex-col flex-auto">
-          <app-input-select
-            formControlName="categoryId"
-            [errorCode]="errorCode('categoryId')"
-            [label]="'product-base-form-component.choose-category' | translate"
-            [items]="categoryItems()"
-            [required]="true">
-          </app-input-select>
-        </div>
+      <div class="flex flex-col flex-auto">
+        <app-input-select
+          formControlName="categoryId"
+          [errorCode]="errorCode('categoryId')"
+          [label]="'product-base-form-component.choose-category' | translate"
+          [items]="categoryItems()"
+          [required]="true">
+        </app-input-select>
       </div>
     </div>
   </form>
@@ -56,7 +54,6 @@
   [isDialogActive]="isDialogActive()"
   [title]="dialogTitle() | translate"
   (onCloseDialog)="isDialogActive.set($event)">
-  <app-product-property-form
-    [editParameter]="parameterToEdit()?.parameter"
-    (onSubmit)="submitProductParameter($event)"></app-product-property-form>
+  <app-product-property-form [editParameter]="parameterToEdit()?.parameter" (onSubmit)="submitProductParameter($event)">
+  </app-product-property-form>
 </app-dialog-window>

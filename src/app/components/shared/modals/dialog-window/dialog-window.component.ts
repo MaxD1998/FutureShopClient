@@ -18,9 +18,4 @@ export class DialogWindowComponent {
   isDialogActive = model<boolean>(false);
 
   IconType: typeof IconType = IconType;
-
-  closeDialog(): void {
-    this.isDialogActive.set(false);
-    this.onCloseDialog.emit(this.isDialogActive());
-  }
 }

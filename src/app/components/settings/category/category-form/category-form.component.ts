@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,7 +44,6 @@ import { CategoryFormDialogWindowContentComponent } from './category-form-dialog
 export class CategoryFormComponent extends BaseFormComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
@@ -111,12 +110,16 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
       return;
     }
 
+    const value = this.form.value as CategoryFormDto;
+
+    value.translations = value.translations.filter(x => x.translation);
+
     const category$ = !this.id
-      ? this._categoryDataService.add(this.form.value)
-      : this._categoryDataService.update(this.id, this.form.value);
+      ? this._categoryDataService.add(value)
+      : this._categoryDataService.update(this.id, value);
 
     category$.subscribe({
-      next: () => this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.list}`),
+      next: () => this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.category}/${ClientRoute.list}`),
     });
   }
 

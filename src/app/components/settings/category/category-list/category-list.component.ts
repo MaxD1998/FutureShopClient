@@ -4,7 +4,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, switchMap, takeUntil, tap } from 'rxjs';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
-import { CategoryDto } from '../../../../core/dtos/category.dto';
+import { CategoryListDto } from '../../../../core/dtos/category.list-dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { CategoryGridModel } from '../../../../core/models/category-grid-model';
@@ -75,15 +75,15 @@ export class CategoryListComponent implements OnDestroy {
   }
 
   changePage(pageNumber: number): void {
-    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.list}/${pageNumber}`);
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.category}/${ClientRoute.list}/${pageNumber}`);
   }
 
   navigateToCreate(): void {
-    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.form}`);
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.category}/${ClientRoute.form}`);
   }
 
   navigateToEdit(id: string): void {
-    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.categories}/${ClientRoute.form}/${id}`);
+    this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.category}/${ClientRoute.form}/${id}`);
   }
 
   removeRecord(id: string): void {
@@ -99,7 +99,7 @@ export class CategoryListComponent implements OnDestroy {
 
   private initCategories(): void {
     this._activatedRoute.paramMap.pipe(takeUntil(this._unsubscribe)).subscribe(() => {
-      const pageCategories: PageDto<CategoryDto> = this._activatedRoute.snapshot.data['pageCategories'];
+      const pageCategories: PageDto<CategoryListDto> = this._activatedRoute.snapshot.data['pageCategories'];
       this.categories.set(
         pageCategories.items.map<CategoryGridModel>(x => {
           return {

@@ -21,7 +21,7 @@ export const productBaseFormResolver: ResolveFn<{ productBase?: ProductBaseFormD
     map(response => {
       return {
         productBase: response.productBase,
-        categories: response.categories.map<SelectItemModel>(x => {
+        categories: response.categories.map(x => {
           return {
             id: x.id,
             value: x.name,
