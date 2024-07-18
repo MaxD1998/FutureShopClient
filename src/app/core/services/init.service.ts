@@ -10,9 +10,7 @@ export function autoLogin(): Provider | EnvironmentProviders {
   return {
     provide: APP_INITIALIZER,
     useFactory(service: AuthService) {
-      return () => {
-        service.refreshToken();
-      };
+      return () => service.refreshToken();
     },
     deps: [AuthService],
     multi: true,
