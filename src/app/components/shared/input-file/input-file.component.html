@@ -1,0 +1,5 @@
+<div class="flex items-center">
+  <label class="p-2 mr-2 rounded-md cursor-pointer bg-green-300 hover:bg-green-400" for="btn">{{ label() }}</label>
+  <input #input [accept]="accept()" id="btn" type="file" hidden (change)="valueChane(input)" />
+  <span>{{ fileName() | translate }}</span>
+</div>

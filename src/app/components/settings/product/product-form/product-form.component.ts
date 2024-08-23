@@ -1,26 +1,32 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { Observable, switchMap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { ProductParameterDataService } from '../../../../core/data-services/product-parameter.data-service';
+import { ProductPhotoDataService } from '../../../../core/data-services/product-photo.data-service';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
+import { ProductPhotoModel } from '../../../../core/models/product-photo.model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
+import { TempIdGenerator } from '../../../../core/utils/temp-id-generator';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
 import { InputComponent } from '../../../shared/input/input.component';
 import { DialogWindowComponent } from '../../../shared/modals/dialog-window/dialog-window.component';
 import { TableComponent } from '../../../shared/table/table.component';
+import { PreviewProductPhotoComponent } from './preview-product-photo/preview-product-photo.component';
 import { SetProductBaseFormComponent } from './set-product-base-form/set-product-base-form.component';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
+import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.component';
 
 @Component({
   selector: 'app-product-form',
@@ -38,6 +44,8 @@ import { SetProductParameterValueComponent } from './set-product-parameter-value
     SetProductBaseFormComponent,
     TableComponent,
     SetProductParameterValueComponent,
+    SetProductPhotoComponent,
+    PreviewProductPhotoComponent,
   ],
 })
 export class ProductFormComponent extends BaseFormComponent {
@@ -45,7 +53,9 @@ export class ProductFormComponent extends BaseFormComponent {
   private readonly _location = inject(Location);
   private readonly _productDataService = inject(ProductDataService);
   private readonly _productParamterDataService = inject(ProductParameterDataService);
+  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
   private readonly _router = inject(Router);
+  private readonly _tempIdGenerator = new TempIdGenerator();
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   DialogType: typeof DialogType = DialogType;
@@ -55,24 +65,65 @@ export class ProductFormComponent extends BaseFormComponent {
   dialogType = signal<DialogType>(DialogType.productBase);
   header = signal<string>('');
   isDialogActive = signal<boolean>(true);
+  fileId = signal<string>('');
   productBaseItems = signal<SelectItemModel[]>([]);
   productParameter = signal<{ productParameterId: string; value?: string }>({
     productParameterId: '',
   });
   productParameters = signal<{ id: string; name: string; value?: string }[]>([]);
+  productPhotos = signal<ProductPhotoModel[]>([]);
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
-  columns: DataTableColumnModel[] = [
+  dialogHeader = computed(() => {
+    switch (this.dialogType()) {
+      case DialogType.productBase:
+        return 'product-form-component.set-product-base';
+      case DialogType.productParameterValue:
+        return 'product-form-component.set-value';
+      case DialogType.productPhoto:
+        return 'product-form-component.set-product-photo';
+      default:
+        return '';
+    }
+  });
+
+  productParameterColumns: DataTableColumnModel[] = [
     {
       field: 'name',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.table-columns.name',
+      headerText: 'product-form-component.product-parameter-table-columns.name',
       template: TableTemplate.text,
     },
     {
       field: 'value',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.table-columns.value',
+      headerText: 'product-form-component.product-parameter-table-columns.value',
+      template: TableTemplate.text,
+    },
+    {
+      field: 'actions',
+      headerText: '',
+      template: TableTemplate.action,
+    },
+  ];
+
+  productPhotoColumns: DataTableColumnModel[] = [
+    {
+      field: 'name',
+      headerFloat: TableHeaderFloat.left,
+      headerText: 'product-form-component.product-photo-table-columns.name',
+      template: TableTemplate.text,
+    },
+    {
+      field: 'type',
+      headerFloat: TableHeaderFloat.left,
+      headerText: 'product-form-component.product-photo-table-columns.type',
+      template: TableTemplate.text,
+    },
+    {
+      field: 'size',
+      headerFloat: TableHeaderFloat.left,
+      headerText: 'product-form-component.product-photo-table-columns.size',
       template: TableTemplate.text,
     },
     {
@@ -102,6 +153,10 @@ export class ProductFormComponent extends BaseFormComponent {
       this.productParameters.set(form.productParameters);
     }
 
+    if (form.files) {
+      this.productPhotos.set(form.files);
+    }
+
     this.fillForm(form.product);
   }
 
@@ -109,13 +164,17 @@ export class ProductFormComponent extends BaseFormComponent {
     if (this.dialogType() == DialogType.productBase) {
       this._location.back();
     } else {
+      if (this.fileId() != '') {
+        this.fileId.set('');
+      }
+
       this.isDialogActive.set(false);
     }
   }
 
   openSetParameterValueDialog(id: string): void {
-    if (this.dialogType() != DialogType.ProductParameterValue) {
-      this.dialogType.set(DialogType.ProductParameterValue);
+    if (this.dialogType() != DialogType.productParameterValue) {
+      this.dialogType.set(DialogType.productParameterValue);
     }
 
     const productParameter = this.productParameters().find(x => x.id == id);
@@ -125,8 +184,26 @@ export class ProductFormComponent extends BaseFormComponent {
         productParameterId: productParameter.id,
         value: productParameter.value,
       });
+
       this.isDialogActive.set(true);
     }
+  }
+
+  openSetPhotoDialog(): void {
+    if (this.dialogType() != DialogType.productPhoto) {
+      this.dialogType.set(DialogType.productPhoto);
+    }
+
+    this.isDialogActive.set(true);
+  }
+
+  previewPhoto(id: string): void {
+    if (this.dialogType() != DialogType.previewProductPhoto) {
+      this.dialogType.set(DialogType.previewProductPhoto);
+    }
+
+    this.fileId.set(id);
+    this.isDialogActive.set(true);
   }
 
   removeParameterValue(id: string): void {
@@ -138,6 +215,17 @@ export class ProductFormComponent extends BaseFormComponent {
     if (productParameter) {
       productParameter.value = undefined;
     }
+
+    if (index > -1) {
+      array.removeAt(index);
+    }
+  }
+
+  removeProductPhoto(id: string) {
+    this.productPhotos.set(this.productPhotos().filter(x => x.id != id));
+    const array = this.form.controls['productPhotos'] as FormArray;
+    const arrayValues = array.value as string[];
+    const index = arrayValues.findIndex(x => x == id);
 
     if (index > -1) {
       array.removeAt(index);
@@ -187,25 +275,53 @@ export class ProductFormComponent extends BaseFormComponent {
     this.isDialogActive.set(false);
   }
 
+  setProductPhoto(file: File): void {
+    this.productPhotos().push({
+      id: this._tempIdGenerator.assingId(),
+      name: file.name,
+      size: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+      type: file.type,
+      file: file,
+    });
+
+    this.productPhotos.set(Array.from(this.productPhotos()));
+    this.isDialogActive.set(false);
+  }
+
   submit(): void {
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    const value = this.form.value as ProductFormDto;
+    const files = this.productPhotos()
+      .filter(x => x.id.includes('temp') && x.file)
+      .map(x => x.file) as Blob[];
 
-    value.translations = value.translations.filter(x => x.translation);
+    const result$ =
+      files.length > 0
+        ? this._productPhotoDataService.addList(files).pipe(
+            switchMap(response => {
+              return this.addOrUpdateProduct$(response);
+            }),
+          )
+        : this.addOrUpdateProduct$();
 
-    const product$ = !this.id ? this._productDataService.add(value) : this._productDataService.update(this.id, value);
-
-    console.log(value);
-
-    product$.subscribe({
+    result$.subscribe({
       next: () => {
         this._router.navigateByUrl(`${ClientRoute.settings}/${ClientRoute.product}/${ClientRoute.list}`);
       },
     });
+  }
+
+  private addOrUpdateProduct$(fileIds?: string[]): Observable<ProductFormDto> {
+    this.updateFormProductPhoto(fileIds);
+
+    const value = this.form.value as ProductFormDto;
+
+    value.translations = value.translations.filter(x => x.translation);
+
+    return !this.id ? this._productDataService.add(value) : this._productDataService.update(this.id, value);
   }
 
   private fillForm(product?: ProductFormDto): void {
@@ -235,6 +351,10 @@ export class ProductFormComponent extends BaseFormComponent {
       return x;
     });
 
+    product.productPhotos.forEach(x => {
+      (form['productPhotos'] as FormArray).push(new FormControl(x));
+    });
+
     this.translations.update(x => {
       (x.controls as FormGroup[]).forEach(y => {
         const transaltion = product.translations.find(z => z.lang == y.controls['lang'].value);
@@ -261,18 +381,45 @@ export class ProductFormComponent extends BaseFormComponent {
     });
   }
 
+  private updateFormProductPhoto(fileIds?: string[]): void {
+    if (fileIds && fileIds.length > 0) {
+      const files = this.productPhotos().filter(x => x.id.includes('temp') && x.file);
+
+      if (fileIds.length == files.length) {
+        fileIds.forEach((x, index) => {
+          files[index].id = x;
+        });
+      }
+    }
+
+    if (this.productPhotos().length > 0) {
+      const form = this.form.controls;
+      const productPhotos = form['productPhotos'] as FormArray;
+      const productPhotoValues = productPhotos.controls as FormControl[];
+
+      this.productPhotos().forEach(x => {
+        if (!productPhotoValues.some(y => y.value == x.id)) {
+          productPhotos.push(new FormControl(x.id));
+        }
+      });
+    }
+  }
+
   protected override setFormControls(): {} {
     return {
       name: [null, [Validators.required]],
       price: [0, [Validators.required]],
       productBaseId: [null, [Validators.required]],
       productParameterValues: new FormArray([]),
+      productPhotos: new FormArray([]),
       translations: new FormArray([]),
     };
   }
 }
 
 enum DialogType {
+  previewProductPhoto,
   productBase,
-  ProductParameterValue,
+  productParameterValue,
+  productPhoto,
 }

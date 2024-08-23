@@ -1,5 +1,8 @@
 {
   "common": {
+    "input-file": {
+      "file-was-not-selected": "File was not selected"
+    },
     "input-select": {
       "select-option": "-- Select option --"
     },
@@ -89,17 +92,25 @@
     "product-count": "Product count"
   },
   "product-form-component": {
+    "add-photo": "Dodaj zdjęcie",
     "create-product": "Create product",
     "edit-product": "Edit product",
     "name": "Name",
+    "photos": "Photos",
     "product-base": "Product base",
-    "save": "Save",
-    "set-product-base": "Set product base",
-    "set-value": "Set value",
-    "table-columns": {
+    "product-parameters": "Product parameters",
+    "product-parameter-table-columns": {
       "name": "Name",
       "value": "Value"
-    }
+    },
+    "product-photo-table-columns": {
+      "name": "Name",
+      "size": "Size",
+      "type": "Type"
+    },
+    "save": "Save",
+    "set-product-base": "Set product base",
+    "set-value": "Set value"
   },
   "product-list-component": {
     "create-new-product": "Create new product",
@@ -141,5 +152,10 @@
   "set-product-parameter-value-component": {
     "save": "Save",
     "value": "Value"
+  },
+  "set-product-photo-component": {
+    "choose-file": "Choose file",
+    "file-is-empty": "File is empty",
+    "save": "Save"
   }
 }

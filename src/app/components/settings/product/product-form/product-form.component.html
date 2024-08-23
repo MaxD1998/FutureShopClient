@@ -9,68 +9,96 @@
     </app-button>
   </div>
   <div class="border-t"></div>
-  <form class="flex flex-row gap-4" [formGroup]="form">
-    <div class="flex flex-col flex-auto gap-4">
-      <div class="flex items-center h-11">
-        <h2 class="text-xl">{{ 'product-base-form-component.properties' | translate }}</h2>
+  <form class="flex flex-col gap-4" [formGroup]="form">
+    <div class="flex flex-row gap-4">
+      <div class="flex flex-col flex-auto gap-4">
+        <div class="flex items-center h-11">
+          <h2 class="text-xl">{{ 'product-base-form-component.properties' | translate }}</h2>
+        </div>
+        <div class="flex flex-col flex-wrap">
+          <app-input
+            formControlName="name"
+            [errorCode]="errorCode('name')"
+            [label]="'product-form-component.name' | translate"
+            [required]="true">
+          </app-input>
+          <app-input-select
+            formControlName="productBaseId"
+            [errorCode]="errorCode('productBaseId')"
+            [label]="'product-form-component.product-base' | translate"
+            [isDisabled]="true"
+            [items]="productBaseItems()"
+            [required]="true">
+          </app-input-select>
+        </div>
       </div>
-      <div class="flex flex-col flex-wrap">
-        <app-input
-          formControlName="name"
-          [errorCode]="errorCode('name')"
-          [label]="'product-form-component.name' | translate"
-          [required]="true">
-        </app-input>
-        <app-input-select
-          formControlName="productBaseId"
-          [errorCode]="errorCode('productBaseId')"
-          [label]="'product-form-component.product-base' | translate"
-          [isDisabled]="true"
-          [items]="productBaseItems()"
-          [required]="true">
-        </app-input-select>
-      </div>
-    </div>
-    <div class="flex flex-col flex-auto gap-4" formArrayName="translations">
-      <div class="flex items-center h-11">
-        <h2 class="text-xl">{{ 'category-form-component.translations' | translate }}</h2>
-      </div>
-      <div>
-        @for (translation of translations().controls; track $index) {
-          <div [formGroupName]="$index">
-            <app-input formControlName="translation" [label]="'common.languages.' + translation.value.lang | translate">
-            </app-input>
-          </div>
-        }
+      <div class="flex flex-col flex-auto gap-4" formArrayName="translations">
+        <div class="flex items-center h-11">
+          <h2 class="text-xl">{{ 'category-form-component.translations' | translate }}</h2>
+        </div>
+        <div>
+          @for (translation of translations().controls; track $index) {
+            <div [formGroupName]="$index">
+              <app-input
+                formControlName="translation"
+                [label]="'common.languages.' + translation.value.lang | translate">
+              </app-input>
+            </div>
+          }
+        </div>
       </div>
     </div>
   </form>
-  <app-table
-    idName="id"
-    [columns]="columns"
-    [isEditAction]="true"
-    [isRemoveAction]="true"
-    [items]="productParameters()"
-    (onEditAction)="openSetParameterValueDialog($event)"
-    (onRemoveAction)="removeParameterValue($event)">
-  </app-table>
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center h-11 justify-between">
+      <h2 class="text-xl">{{ 'product-form-component.photos' | translate }}</h2>
+      <app-button [label]="'product-form-component.add-photo' | translate" (click)="openSetPhotoDialog()"></app-button>
+    </div>
+    <app-table
+      idName="id"
+      [columns]="productPhotoColumns"
+      [isDetailAction]="true"
+      [isRemoveAction]="true"
+      (onDetailAction)="previewPhoto($event)"
+      (onRemoveAction)="removeProductPhoto($event)"
+      [items]="productPhotos()">
+    </app-table>
+  </div>
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center h-11 justify-between">
+      <h2 class="text-xl">{{ 'product-form-component.product-parameters' | translate }}</h2>
+    </div>
+    <app-table
+      idName="id"
+      [columns]="productParameterColumns"
+      [isEditAction]="true"
+      [isRemoveAction]="true"
+      [items]="productParameters()"
+      (onEditAction)="openSetParameterValueDialog($event)"
+      (onRemoveAction)="removeParameterValue($event)">
+    </app-table>
+  </div>
 </div>
 <app-dialog-window
   [isDialogActive]="isDialogActive()"
-  [title]="
-    (dialogType() == DialogType.productBase
-      ? 'product-form-component.set-product-base'
-      : 'product-form-component.set-value'
-    ) | translate
-  "
+  [title]="dialogHeader() | translate"
   (onCloseDialog)="dialogClose()">
-  @if (dialogType() == DialogType.productBase) {
-    <app-set-product-base-form [items]="productBaseItems()" (onValueChange)="setProductBase($event)">
-    </app-set-product-base-form>
-  } @else {
-    <app-set-product-parameter-value
-      [productParameter]="productParameter()"
-      (onSave)="setProductParameterValue($event)">
-    </app-set-product-parameter-value>
+  @switch (dialogType()) {
+    @case (DialogType.previewProductPhoto) {
+      <app-preview-product-photo [id]="fileId()"></app-preview-product-photo>
+    }
+    @case (DialogType.productBase) {
+      <app-set-product-base-form [items]="productBaseItems()" (onValueChange)="setProductBase($event)">
+      </app-set-product-base-form>
+    }
+    @case (DialogType.productParameterValue) {
+      <app-set-product-parameter-value
+        [productParameter]="productParameter()"
+        (onSave)="setProductParameterValue($event)">
+      </app-set-product-parameter-value>
+    }
+    @case (DialogType.productPhoto) {
+      <app-set-product-photo (onSave)="setProductPhoto($event)"></app-set-product-photo>
+    }
   }
 </app-dialog-window>

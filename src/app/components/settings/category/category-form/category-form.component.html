@@ -55,7 +55,7 @@
           <div class="flex justify-between items-center h-11">
             <h2 class="text-xl">{{ 'category-form-component.sub-categories' | translate }}</h2>
             <app-button
-              [disabled]="subCategoryItems().length == 0"
+              [isDisabled]="subCategoryItems().length == 0"
               [label]="'category-form-component.add-sub-category' | translate"
               (click)="isDialogActive.set(true)">
             </app-button>

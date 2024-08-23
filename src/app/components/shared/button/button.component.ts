@@ -10,7 +10,7 @@ import { ButtonLayout } from '../../../core/enums/button-layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
-  disabled = input<boolean>(false);
+  isDisabled = input<boolean>(false);
   label = input.required<string>();
   layout = input<ButtonLayout>();
   width = input<string>('w-full');
@@ -21,7 +21,7 @@ export class ButtonComponent {
   private _green_outline_layout = 'border-green-300 hover:bg-green-300';
 
   initLayout(): string {
-    if (this.disabled()) {
+    if (this.isDisabled()) {
       if (ButtonLayout.greenLayout) {
         return this._disabled_layout;
       } else {

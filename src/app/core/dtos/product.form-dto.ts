@@ -7,5 +7,6 @@ export interface ProductFormDto {
   price: number;
   productBaseId: string;
   productParameterValues: ProductParameterValueFormDto[];
+  productPhotos: string[];
   translations: ProductTranslationFormDto[];
 }
