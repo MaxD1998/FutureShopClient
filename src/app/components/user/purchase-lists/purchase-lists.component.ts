@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-favourite',
+  selector: 'app-purchase-lists',
   standalone: true,
   imports: [],
-  templateUrl: './favourite.component.html',
-  styleUrl: './favourite.component.css',
+  templateUrl: './purchase-lists.component.html',
+  styleUrl: './purchase-lists.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FavouriteComponent {
+export class PurchaseListsComponent {
 
 }

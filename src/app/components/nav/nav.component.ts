@@ -61,7 +61,7 @@ export class NavComponent {
 
   login(): void {
     this.isDropdownAccountVisible.set(false);
-    this._router.navigateByUrl(ClientRoute.login);
+    this._router.navigateByUrl(`${ClientRoute.auth}/${ClientRoute.login}`);
   }
 
   logout(): void {
