@@ -30,6 +30,7 @@ export const routes: Routes = [
   },
   {
     path: ClientRoute.user,
+    loadComponent: () => import('./components/user/user.component').then(x => x.UserComponent),
     loadChildren: () => import('./components/user/user.routes').then(x => x.userRoutes),
   },
 ];
