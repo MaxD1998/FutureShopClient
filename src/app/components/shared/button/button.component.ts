@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ButtonLayout } from '../../../core/enums/button-layout';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [],
+  imports: [IconComponent],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
+  isIcon = input<boolean>(false);
   isDisabled = input<boolean>(false);
   label = input.required<string>();
   layout = input<ButtonLayout>();

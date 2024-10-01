@@ -39,7 +39,7 @@ export class ProductPhotoDataService {
     return this._httpClient.get(url, { responseType: 'blob' });
   }
 
-  getListInfoByIdsAsync(ids: string[]): Observable<ProductPhotoInfoDto[]> {
+  getListInfoByIds(ids: string[]): Observable<ProductPhotoInfoDto[]> {
     let params = new HttpParams();
 
     ids.forEach(x => {

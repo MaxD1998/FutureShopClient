@@ -26,6 +26,11 @@ export class CategoryDataService {
     return this._httpClient.get<CategoryFormDto>(url);
   }
 
+  getIdNameById(id: string): Observable<IdNameDto> {
+    const url = `${CategoryControllerRoute.idName}${id}`;
+    return this._httpClient.get<IdNameDto>(url);
+  }
+
   getPage(pageNumber: number): Observable<PageDto<CategoryListDto>> {
     const url = `${CategoryControllerRoute.page}${pageNumber}`;
     return this._httpClient.get<PageDto<CategoryListDto>>(url);

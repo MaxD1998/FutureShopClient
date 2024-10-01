@@ -19,6 +19,7 @@ import { ProductPhotoModel } from '../../../../core/models/product-photo.model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { TempIdGenerator } from '../../../../core/utils/temp-id-generator';
 import { ButtonComponent } from '../../../shared/button/button.component';
+import { InputNumberComponent } from '../../../shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
 import { InputComponent } from '../../../shared/input/input.component';
 import { DialogWindowComponent } from '../../../shared/modals/dialog-window/dialog-window.component';
@@ -39,6 +40,7 @@ import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.
     TranslateModule,
     ButtonComponent,
     InputComponent,
+    InputNumberComponent,
     InputSelectComponent,
     DialogWindowComponent,
     SetProductBaseFormComponent,
@@ -408,7 +410,7 @@ export class ProductFormComponent extends BaseFormComponent {
   protected override setFormControls(): {} {
     return {
       name: [null, [Validators.required]],
-      price: [0, [Validators.required]],
+      price: [null, [Validators.required]],
       productBaseId: [null, [Validators.required]],
       productParameterValues: new FormArray([]),
       productPhotos: new FormArray([]),

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Injector, input, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { of, switchMap } from 'rxjs';
+import { of, Subject, switchMap } from 'rxjs';
 import { ProductPhotoDataService } from '../../../../../core/data-services/product-photo.data-service';
 
 @Component({
@@ -14,6 +14,7 @@ import { ProductPhotoDataService } from '../../../../../core/data-services/produ
 export class PreviewProductPhotoComponent {
   private readonly _injector = inject(Injector);
   private readonly _productPhotoDataService = inject(ProductPhotoDataService);
+  private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   id = input<string>();
 

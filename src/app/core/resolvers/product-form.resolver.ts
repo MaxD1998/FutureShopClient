@@ -27,7 +27,7 @@ export const productFormResolver: ResolveFn<{
         switchMap(response => {
           return forkJoin({
             files: response.productPhotos
-              ? productPhotoDataService.getListInfoByIdsAsync(response.productPhotos)
+              ? productPhotoDataService.getListInfoByIds(response.productPhotos)
               : of(undefined),
             product: of(response),
             productBases: productBaseDataService.getIdNameById(response.productBaseId).pipe(

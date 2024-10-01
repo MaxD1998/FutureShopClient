@@ -1,5 +1,9 @@
 <div class="flex justify-center">
   <button class="p-2 border rounded-md {{ width() }} {{ initLayout() }}" [disabled]="isDisabled()">
-    {{ label() }}
+    @if (isIcon()) {
+      <app-icon [iconName]="label()"></app-icon>
+    } @else {
+      {{ label() }}
+    }
   </button>
 </div>

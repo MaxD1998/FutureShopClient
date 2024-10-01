@@ -1,5 +1,7 @@
 export enum IconType {
   arrowDownCircle = 'arrow-down-circle',
+  arrowLeftCircleFilled = 'arrow-left-circle-filled',
+  arrowRightCircleFilled = 'arrow-right-circle-filled',
   arrowUturnLeft = 'arrow-uturn-left',
   checkCircle = 'check-circle',
   chevronRight = 'chevron-right',
@@ -11,6 +13,8 @@ export enum IconType {
   minus = 'minus',
   minusCircle = 'minus-circle',
   pencil = 'pencil',
+  photo = 'photo',
+  plus = 'plus',
   rocketLaunch = 'rocket-launch',
   share = 'share',
   shoppingBag = 'shopping-bag',

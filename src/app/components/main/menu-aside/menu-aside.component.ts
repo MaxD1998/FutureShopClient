@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
+import { ClientRoute } from '../../../core/constants/client-routes/client.route';
 import { CategoryDataService } from '../../../core/data-services/category.data-service';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { AsideComponent } from '../../shared/aside/aside.component';
@@ -64,7 +65,7 @@ export class MenuAsideComponent implements OnDestroy {
             name: x.name,
             parentId: x.parentCategoryId,
             hasSubCategories: x.hasSubCategories,
-            link: x.id,
+            link: `${ClientRoute.product}/${x.id}`,
           };
         });
       }),

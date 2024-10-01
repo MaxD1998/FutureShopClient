@@ -30,6 +30,12 @@
             [items]="productBaseItems()"
             [required]="true">
           </app-input-select>
+          <app-input-number
+            formControlName="price"
+            [errorCode]="errorCode('price')"
+            [label]="'product-form-component.price' | translate"
+            [required]="true">
+          </app-input-number>
         </div>
       </div>
       <div class="flex flex-col flex-auto gap-4" formArrayName="translations">

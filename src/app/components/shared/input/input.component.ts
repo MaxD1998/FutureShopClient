@@ -27,7 +27,7 @@ export class InputComponent implements ControlValueAccessor {
   type = input<string>(InputType.text);
   value = model<string | null>(null);
 
-  onValueChange(element: HTMLInputElement) {
+  onValueChange(element: HTMLInputElement): void {
     const elementValue = element.value;
     this.value.set(elementValue.length == 0 ? null : elementValue);
     this.onChange(this.value());

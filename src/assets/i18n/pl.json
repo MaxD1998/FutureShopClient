@@ -1,17 +1,20 @@
 {
   "common": {
+    "currencies": {
+      "pln": "zł"
+    },
     "input-file": {
       "file-was-not-selected": "Nie wybrano pliku"
     },
     "input-select": {
       "select-option": "-- Wybierz opcję --"
     },
-    "table": {
-      "no-results": "Brak wyników"
-    },
     "languages": {
       "en": "Angielski",
       "pl": "Polski"
+    },
+    "table": {
+      "no-results": "Brak wyników"
     }
   },
   "validation-errors": {
@@ -91,12 +94,22 @@
     "products-bases": "Bazy produktów",
     "product-count": "Liczba produktów"
   },
+  "product-details.component": {
+    "product-feedback": "Opinii o produkcie",
+    "rating": "Ocena",
+    "specyfication": "Specyfikacja",
+    "table": {
+      "name": "Nazwa",
+      "value": "Wartość"
+    }
+  },
   "product-form-component": {
     "add-photo": "Dodaj zdjęcie",
     "create-product": "Stwórz produkt",
     "edit-product": "Edytuj produkt",
     "name": "Nazwa",
     "photos": "Zdjęcia",
+    "price": "Cena",
     "product-base": "Baza produktu",
     "product-parameters": "Parametry produktu",
     "product-parameter-table-columns": {
@@ -124,6 +137,24 @@
     "properties": "Właściwości",
     "save": "Zapisz",
     "translations": "Tłumaczenia"
+  },
+  "product-shop-item.component": {
+    "add-to-basket": "Dodaj do koszyka"
+  },
+  "product-shop-list-component": {
+    "filters-header": "Filtry",
+    "filters": {
+      "name": "Nazwa",
+      "price-from": "Cena od",
+      "price-to": "Cena do",
+      "sort": "Sortuj"
+    },
+    "sort-items": {
+      "0": "od A-Z",
+      "1": "od Z-A",
+      "2": "Cena rosnąco",
+      "3": "Cena malejąco"
+    }
   },
   "register-component": {
     "date-of-birth": "Data urodzenia",

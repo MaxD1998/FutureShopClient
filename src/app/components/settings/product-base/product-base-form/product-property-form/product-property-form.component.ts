@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, Injector, input, output, si
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormArray, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ProductParameterFormDto } from '../../../../../core/dtos/product-parameter.form-dto';
@@ -18,6 +19,8 @@ import { InputComponent } from '../../../../shared/input/input.component';
 })
 export class ProductPropertyFormComponent extends BaseFormComponent {
   private readonly _injector = inject(Injector);
+  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
   editParameter = input<ProductParameterFormDto>();
   onSubmit = output<ProductParameterFormDto>();
 

@@ -15,9 +15,8 @@
           (onItemClick)="changeLang($event)">
         </app-drop-down-list>
       </app-nav-button>
-      <app-nav-button
-        [iconName]="IconType.shoppingBag"
-        label="{{ 'nav-component.basket' | translate }}"></app-nav-button>
+      <app-nav-button [iconName]="IconType.shoppingBag" label="{{ 'nav-component.basket' | translate }}">
+      </app-nav-button>
       <app-nav-button [iconName]="IconType.heart" label="{{ 'nav-component.favourite' | translate }}"></app-nav-button>
       <app-nav-button
         [iconName]="IconType.userCircle"

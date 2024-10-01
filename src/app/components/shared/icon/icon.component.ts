@@ -10,6 +10,7 @@ import { IconType } from '../../../core/enums/icon-type';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
+  colorStyle = input<string>('currentColor');
   iconName = input.required<string>();
   iconStyle = input<string>('w-6 h-6');
 

@@ -7,5 +7,6 @@ export class CategoryControllerRoute {
   public static readonly availableToBeChild = this.base + 'AvailableToBeChild/';
   public static readonly availableToBeParent = this.base + 'AvailableToBeParent/';
   public static readonly categoryParentId = this.base + 'CategoryParentId/';
+  public static readonly idName = this.base + 'IdName/';
   public static readonly page = this.base + 'Page/';
 }

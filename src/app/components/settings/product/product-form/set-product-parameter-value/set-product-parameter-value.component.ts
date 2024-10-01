@@ -40,6 +40,8 @@ export class SetProductParameterValueComponent extends BaseFormComponent {
       productParameterId: this.productParameter().productParameterId,
       value: this.form.controls['value'].value,
     });
+
+    this.form.reset();
   }
 
   protected override setFormControls(): {} {

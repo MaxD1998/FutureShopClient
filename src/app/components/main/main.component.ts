@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MenuAsideComponent } from './menu-aside/menu-aside.component';
 
 @Component({
@@ -6,6 +7,6 @@ import { MenuAsideComponent } from './menu-aside/menu-aside.component';
   standalone: true,
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
-  imports: [MenuAsideComponent],
+  imports: [RouterModule, MenuAsideComponent],
 })
 export class MainComponent {}

@@ -20,7 +20,7 @@ export class DropDownListComponent {
   isVisible = model<boolean>(false);
 
   get styles(): string {
-    let style = 'bg-white absolute border rounded-md min-w-32 overflow-hidden';
+    let style = 'bg-white absolute border rounded-md min-w-32 overflow-hidden z-50';
     switch (this.orientation()) {
       case DropDownListOrientation.left:
         style = `${style} left-0`;

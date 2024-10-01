@@ -4,7 +4,7 @@ import { productFormResolver } from '../../../core/resolvers/product-form.resolv
 import { productListResolver } from '../../../core/resolvers/product-list.resolver';
 export const productRoutes: Routes = [
   {
-    path: `${ClientRoute.form}`,
+    path: ClientRoute.form,
     children: [
       {
         path: '',
@@ -23,7 +23,7 @@ export const productRoutes: Routes = [
     ],
   },
   {
-    path: `${ClientRoute.list}`,
+    path: ClientRoute.list,
     children: [
       {
         path: '',
