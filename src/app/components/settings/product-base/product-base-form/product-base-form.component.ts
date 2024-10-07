@@ -166,6 +166,7 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     productBase.productParameters.forEach(x => {
       (this.form.controls['productParameters'] as FormArray).push(
         this._formBuilder.group({
+          id: [x.id],
           name: [x.name, [Validators.required]],
           translations: new FormArray(
             x.translations.map<FormGroup>(y => {
