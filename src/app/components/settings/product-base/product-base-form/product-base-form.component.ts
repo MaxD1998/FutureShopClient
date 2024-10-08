@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { FormArray, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { ProductBaseDataService } from '../../../../core/data-services/product-base.data-service';
@@ -12,6 +12,7 @@ import { ButtonLayout } from '../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
+import { ProductParameterFormModel } from '../../../../core/models/product-parameter.form-model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
@@ -48,11 +49,11 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
   id?: string = undefined;
 
   categoryItems = signal<SelectItemModel[]>([]);
-  parameterToEdit = signal<{ index: number; parameter: ProductParameterFormDto } | undefined>(undefined);
+  parameterToEdit = signal<ProductParameterFormModel | undefined>(undefined);
   header = signal<string>('');
   isDialogActive = signal<boolean>(false);
   isNewParameter = signal<boolean>(true);
-  productParameters = signal<{ id: string; name: string }[]>([]);
+  productParameters = signal<ProductParameterFormModel[]>([]);
 
   dialogTitle = computed<string>(() => {
     return this.isNewParameter()
@@ -95,7 +96,7 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     this.isDialogActive.set(true);
 
     const parameterToEdit = this.form.controls['productParameters'] as FormArray;
-    this.parameterToEdit.set({ index: parseInt(id), parameter: parameterToEdit.value[id] });
+    this.parameterToEdit.set(new ProductParameterFormModel(parameterToEdit.value[id], Number(id)));
   }
 
   openDialogWindow(event: Event): void {
@@ -107,7 +108,7 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     (this.form.controls['productParameters'] as FormArray).removeAt(parseInt(id));
   }
 
-  submitProductParameter(value: ProductParameterFormDto): void {
+  submitProductParameter(value: ProductParameterFormModel): void {
     this.isDialogActive.set(false);
     if (!value) {
       return;
@@ -118,14 +119,16 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     if (parameterToEdit) {
       const index = parameterToEdit.index;
       const productParameter = (this.form.controls['productParameters'] as FormArray).at(index);
-      productParameter.setValue(value);
+      productParameter.patchValue(value.mapToDto());
     } else {
       (this.form.controls['productParameters'] as FormArray).push(
         this._formBuilder.group({
+          id: [null],
           name: [value.name, [Validators.required]],
           translations: new FormArray(
             value.translations.map<FormGroup>(x => {
               return this._formBuilder.group({
+                id: x.id,
                 lang: x.lang,
                 translation: x.translation,
               });
@@ -143,6 +146,8 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
       this.form.markAllAsTouched();
       return;
     }
+
+    console.log(this.form.value);
 
     const productBase$ = !this.id
       ? this._productBaseDataService.add(this.form.value)
@@ -171,6 +176,7 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
           translations: new FormArray(
             x.translations.map<FormGroup>(y => {
               return this._formBuilder.group({
+                id: y.id,
                 lang: y.lang,
                 translation: y.translation,
               });
@@ -185,18 +191,13 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     this.form.controls['productParameters'].valueChanges
       .pipe(
         takeUntil(this._unsubscribe),
-        tap(response => {
-          this.productParameters.set(
-            (response as { name: string }[]).map<{ id: string; name: string }>(x => {
-              return {
-                id: (response as { name: string }[]).indexOf(x).toString(),
-                name: x.name,
-              };
-            }),
-          );
-        }),
+        map(response => response as ProductParameterFormDto[]),
       )
-      .subscribe();
+      .subscribe({
+        next: response => {
+          this.productParameters.set(response.map((x, index) => new ProductParameterFormModel(x, index)));
+        },
+      });
   }
 
   protected override setFormControls(): {} {

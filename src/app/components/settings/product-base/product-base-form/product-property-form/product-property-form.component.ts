@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, inject, Injector, input, output, si
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormArray, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
-import { ProductParameterFormDto } from '../../../../../core/dtos/product-parameter.form-dto';
+import { ProductParameterFormModel } from '../../../../../core/models/product-parameter.form-model';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { InputComponent } from '../../../../shared/input/input.component';
 
@@ -19,10 +18,9 @@ import { InputComponent } from '../../../../shared/input/input.component';
 })
 export class ProductPropertyFormComponent extends BaseFormComponent {
   private readonly _injector = inject(Injector);
-  private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
-  editParameter = input<ProductParameterFormDto>();
-  onSubmit = output<ProductParameterFormDto>();
+  editParameter = input<ProductParameterFormModel>();
+  onSubmit = output<ProductParameterFormModel>();
 
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
@@ -35,11 +33,13 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
     this.editParameter$.subscribe({
       next: response => {
         if (response) {
+          this.form.controls['id'].setValue(response.id);
           this.form.controls['name'].setValue(response.name);
           this.translations.update(x => {
             (x.controls as FormGroup[]).forEach(y => {
               const transaltion = response.translations.find(z => z.lang == y.controls['lang'].value);
               if (transaltion) {
+                y.controls['id'].setValue(transaltion.id);
                 y.controls['translation'].setValue(transaltion.translation);
               }
             });
@@ -57,13 +57,7 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
       return;
     }
 
-    const translations = this.form.controls['translations'].value as { lang: string; translation: string }[];
-    const result: ProductParameterFormDto = {
-      name: this.form.controls['name'].value,
-      translations: translations.filter(x => !!x.translation),
-    };
-
-    this.onSubmit.emit(result);
+    this.onSubmit.emit(new ProductParameterFormModel(this.form.value, this.editParameter()?.index ?? 0));
     this.form.reset();
     this.translations().clear();
     this.setLangs();
@@ -74,6 +68,7 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
       this.translations.update(y => {
         y.push(
           this._formBuilder.group({
+            id: [null],
             lang: [x, [Validators.required]],
             translation: [null],
           }),
@@ -85,6 +80,7 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
 
   protected override setFormControls(): {} {
     return {
+      id: [null],
       name: [null, [Validators.required]],
       translations: new FormArray([]),
     };
