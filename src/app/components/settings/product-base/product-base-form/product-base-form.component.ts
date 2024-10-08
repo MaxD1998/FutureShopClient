@@ -94,6 +94,11 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     this._unsubscribe.complete();
   }
 
+  closeDialog(): void {
+    this.isDialogActive.set(false);
+    this.parameterToEdit.set(undefined);
+  }
+
   editParameter(id: string): void {
     this.isDialogActive.set(true);
     this.parameterToEdit.set(this.productParameters().find(x => x.index?.toString() == id));

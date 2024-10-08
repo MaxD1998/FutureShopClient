@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Injector, input, output, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { FormArray, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { environment } from '../../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
@@ -28,24 +28,44 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
 
   constructor() {
     super();
-    this.setLangs();
 
     this.editParameter$.subscribe({
       next: response => {
         if (response) {
           this.form.controls['id'].setValue(response.id);
           this.form.controls['name'].setValue(response.name);
-          this.translations.update(x => {
-            (x.controls as FormGroup[]).forEach(y => {
-              const transaltion = response.translations.find(z => z.lang == y.controls['lang'].value);
-              if (transaltion) {
-                y.controls['id'].setValue(transaltion.id);
-                y.controls['translation'].setValue(transaltion.translation);
-              }
-            });
 
-            return x;
+          const translations = environment.availableLangs.map(lang => {
+            const transaltion = response.translations.find(x => x.lang == lang);
+            if (transaltion) {
+              return this._formBuilder.group({
+                id: [transaltion.id],
+                lang: [lang, [Validators.required]],
+                translation: [transaltion.translation],
+              });
+            } else {
+              return this._formBuilder.group({
+                id: [null],
+                lang: [lang, [Validators.required]],
+                translation: [null],
+              });
+            }
           });
+
+          this.form.setControl('translations', this._formBuilder.array(translations));
+          this.translations.set(this.form.controls['translations'] as FormArray);
+        } else {
+          this.form.reset();
+          const translations = environment.availableLangs.map(lang => {
+            return this._formBuilder.group({
+              id: [null],
+              lang: [lang, [Validators.required]],
+              translation: [null],
+            });
+          });
+
+          this.form.setControl('translations', this._formBuilder.array(translations));
+          this.translations.set(this.form.controls['translations'] as FormArray);
         }
       },
     });
@@ -60,23 +80,6 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
     this.onSubmit.emit(new ProductParameterFormModel(this.form.value, this.editParameter()?.index));
 
     this.form.reset();
-    this.translations().clear();
-    this.setLangs();
-  }
-
-  private setLangs(): void {
-    environment.availableLangs.forEach(x => {
-      this.translations.update(y => {
-        y.push(
-          this._formBuilder.group({
-            id: [null],
-            lang: [x, [Validators.required]],
-            translation: [null],
-          }),
-        );
-        return y;
-      });
-    });
   }
 
   protected override setFormControls(): {} {
