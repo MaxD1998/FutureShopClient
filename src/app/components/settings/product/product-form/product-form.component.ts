@@ -12,8 +12,6 @@ import { ProductPhotoDataService } from '../../../../core/data-services/product-
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
-import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
-import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
 import { ProductPhotoModel } from '../../../../core/models/product-photo.model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
@@ -28,6 +26,7 @@ import { PreviewProductPhotoComponent } from './preview-product-photo/preview-pr
 import { SetProductBaseFormComponent } from './set-product-base-form/set-product-base-form.component';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
 import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.component';
+import { DialogType, ProductFormUtils } from './utils/product-form.utils';
 
 @Component({
   selector: 'app-product-form',
@@ -76,64 +75,10 @@ export class ProductFormComponent extends BaseFormComponent {
   productPhotos = signal<ProductPhotoModel[]>([]);
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
-  dialogHeader = computed(() => {
-    switch (this.dialogType()) {
-      case DialogType.productBase:
-        return 'product-form-component.set-product-base';
-      case DialogType.productParameterValue:
-        return 'product-form-component.set-value';
-      case DialogType.productPhoto:
-        return 'product-form-component.set-product-photo';
-      default:
-        return '';
-    }
-  });
+  dialogHeader = computed(() => ProductFormUtils.getDialogHeader(this.dialogType()));
 
-  productParameterColumns: DataTableColumnModel[] = [
-    {
-      field: 'name',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-parameter-table-columns.name',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'value',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-parameter-table-columns.value',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'actions',
-      headerText: '',
-      template: TableTemplate.action,
-    },
-  ];
-
-  productPhotoColumns: DataTableColumnModel[] = [
-    {
-      field: 'name',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-photo-table-columns.name',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'type',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-photo-table-columns.type',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'size',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-photo-table-columns.size',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'actions',
-      headerText: '',
-      template: TableTemplate.action,
-    },
-  ];
+  productParameterColumns: DataTableColumnModel[] = ProductFormUtils.getProductParameterColumns();
+  productPhotoColumns: DataTableColumnModel[] = ProductFormUtils.getProductPhotoColumns();
 
   constructor() {
     super();
@@ -417,11 +362,4 @@ export class ProductFormComponent extends BaseFormComponent {
       translations: new FormArray([]),
     };
   }
-}
-
-enum DialogType {
-  previewProductPhoto,
-  productBase,
-  productParameterValue,
-  productPhoto,
 }
