@@ -16,24 +16,18 @@ export class SettingsAsideComponent {
   items = signal<AsideItemModel[]>([
     {
       id: '1',
-      name: 'settings-aside-component.items.account',
-      hasSubCategories: false,
-      link: '',
-    },
-    {
-      id: '2',
       name: 'settings-aside-component.items.categories',
       hasSubCategories: false,
       link: `${ClientRoute.category}/${ClientRoute.list}`,
     },
     {
-      id: '3',
+      id: '2',
       name: 'settings-aside-component.items.products-bases',
       hasSubCategories: false,
       link: `${ClientRoute.productBase}/${ClientRoute.list}`,
     },
     {
-      id: '4',
+      id: '3',
       name: 'settings-aside-component.items.products',
       hasSubCategories: false,
       link: `${ClientRoute.product}/${ClientRoute.list}`,

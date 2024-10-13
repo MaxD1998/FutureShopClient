@@ -156,6 +156,11 @@
       "3": "Cena malejąco"
     }
   },
+  "purchase-lists-component": {
+    "add-list": "Dodaj listę",
+    "favourite": "Ulubione",
+    "purchase-lists": "Listy zakupów"
+  },
   "register-component": {
     "date-of-birth": "Data urodzenia",
     "email": "E-mail",
@@ -169,7 +174,6 @@
   },
   "settings-aside-component": {
     "items": {
-      "account": "Konto",
       "categories": "Kategorie",
       "products": "Produkty",
       "products-bases": "Bazy produktów"
@@ -188,5 +192,11 @@
     "choose-file": "Wybierz plik",
     "file-is-empty": "Plik jest pusty",
     "save": "Zapisz"
+  },
+  "user-aside-component": {
+    "items": {
+      "account": "Konto",
+      "purchase-lists": "Listy zakupów"
+    }
   }
 }

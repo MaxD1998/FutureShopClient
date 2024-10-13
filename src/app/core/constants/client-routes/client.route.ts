@@ -10,7 +10,7 @@ export class ClientRoute {
   public static readonly new = 'new';
   public static readonly product = 'product';
   public static readonly productBase = 'product-base';
-  public static readonly purchaseList = 'purchase-list';
+  public static readonly purchaseLists = 'purchase-lists';
   public static readonly register = 'register';
   public static readonly settings = 'settings';
   public static readonly user = 'user';

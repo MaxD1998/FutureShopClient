@@ -1,1 +1,13 @@
-<p>purchase-lists works!</p>
+<div class="flex flex-col h-full gap-4 px-1">
+  <div class="flex justify-between items-center h-11">
+    <h1 class="text-xl">{{ 'purchase-lists-component.purchase-lists' | translate }}</h1>
+    <app-button [label]="'purchase-lists-component.add-list' | translate" (click)="create()"></app-button>
+  </div>
+  <div class="border-t"></div>
+  @for (purchaseList of purchaseLists(); track $index) {
+    <div class="border p-4 rounded-md hover:shadow-md">
+      <p>{{ purchaseList.isFavourite ? ('purchase-lists-component.favourite' | translate) : purchaseList.name }}</p>
+      <span class="text-sm text-gray-400">13.10.2024 (ostatnia zmiana)</span>
+    </div>
+  }
+</div>

@@ -156,6 +156,11 @@
       "3": "Price descending"
     }
   },
+  "purchase-lists-component": {
+    "add-list": "Add List",
+    "favourite": "Favourite",
+    "purchase-lists": "Purchase lists"
+  },
   "register-component": {
     "date-of-birth": "Date of birth",
     "email": "E-mail",
@@ -169,7 +174,6 @@
   },
   "settings-aside-component": {
     "items": {
-      "account": "Account",
       "categories": "Categories",
       "products": "Products",
       "products-bases": "Products bases"
@@ -188,5 +192,11 @@
     "choose-file": "Choose file",
     "file-is-empty": "File is empty",
     "save": "Save"
+  },
+  "user-aside-component": {
+    "items": {
+      "account": "Account",
+      "purchase-lists": "Purchase lists"
+    }
   }
 }
