@@ -122,10 +122,10 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     let productParameters = this.productParameters();
     const productParameter = this.parameterToEdit();
     if (productParameter) {
-      productParameters[productParameter.index ?? 0] = value;
+      productParameters[productParameter.index] = value;
     } else {
       productParameters = this.productParameters();
-      value.index = productParameters.length;
+      value.index = productParameters.length + 1;
       productParameters.push(value);
     }
 
@@ -142,6 +142,7 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     this._productBase.productParameters = this.productParameters();
     const result = this._productBase.mapToDto();
 
+    console.log(result);
     const productBase$ = !this.id
       ? this._productBaseDataService.add(result)
       : this._productBaseDataService.update(this.id, result);

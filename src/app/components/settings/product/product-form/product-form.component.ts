@@ -10,6 +10,7 @@ import { ClientRoute } from '../../../../core/constants/client-routes/client.rou
 import { ProductParameterDataService } from '../../../../core/data-services/product-parameter.data-service';
 import { ProductPhotoDataService } from '../../../../core/data-services/product-photo.data-service';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
+import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
@@ -201,9 +202,11 @@ export class ProductFormComponent extends BaseFormComponent {
     });
   }
 
-  setProductParameterValue(parameterValue: { productParameterId: string; value: string }): void {
+  setProductParameterValue(parameterValue: ProductParameterValueFormDto): void {
     const array = this.form.controls['productParameterValues'] as FormArray;
     const arrayValues = array.value as { productParameterId: string; value?: string }[];
+    console.log(arrayValues);
+    console.log(parameterValue.productParameterId);
     const value = arrayValues.find(x => x.productParameterId == parameterValue.productParameterId);
 
     if (value) {

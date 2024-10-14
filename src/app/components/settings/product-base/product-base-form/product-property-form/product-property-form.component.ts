@@ -77,7 +77,7 @@ export class ProductPropertyFormComponent extends BaseFormComponent {
       return;
     }
 
-    this.onSubmit.emit(new ProductParameterFormModel(this.form.value, this.editParameter()?.index));
+    this.onSubmit.emit(new ProductParameterFormModel(this.form.value, this.editParameter()?.index ?? 0));
 
     this.form.reset();
   }

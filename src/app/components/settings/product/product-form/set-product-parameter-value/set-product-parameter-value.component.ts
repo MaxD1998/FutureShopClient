@@ -3,6 +3,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
+import { ProductParameterValueFormDto } from '../../../../../core/dtos/product-parameter-value.form-dto';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { InputComponent } from '../../../../shared/input/input.component';
 
@@ -17,9 +18,9 @@ import { InputComponent } from '../../../../shared/input/input.component';
 export class SetProductParameterValueComponent extends BaseFormComponent {
   private readonly _injector = inject(Injector);
 
-  productParameter = input.required<{ productParameterId: string; value?: string }>();
+  productParameter = input.required<ProductParameterValueFormDto>();
 
-  onSave = output<{ productParameterId: string; value: string }>();
+  onSave = output<ProductParameterValueFormDto>();
 
   constructor() {
     super();
@@ -37,6 +38,7 @@ export class SetProductParameterValueComponent extends BaseFormComponent {
 
   submit(): void {
     this.onSave.emit({
+      id: this.productParameter().id,
       productParameterId: this.productParameter().productParameterId,
       value: this.form.controls['value'].value,
     });
