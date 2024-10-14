@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { forkJoin, map, of, switchMap } from 'rxjs';
+import { defaultIfEmpty, forkJoin, map, of, switchMap } from 'rxjs';
 import { ProductPhotoDataService } from '../data-services/product-photo.data-service';
 import { ProductDataService } from '../data-services/product.data-service';
 import { ProductDto } from '../dtos/product.dto';
@@ -29,7 +29,7 @@ export const productDetailsResolver: ResolveFn<{
                     }),
                   ),
                 );
-                return forkJoin(requests);
+                return forkJoin(requests).pipe(defaultIfEmpty([]));
               }),
             )
           : of([]),

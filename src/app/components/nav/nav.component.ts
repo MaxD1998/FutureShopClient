@@ -56,7 +56,6 @@ export class NavComponent {
   changeLang(item: DropDownListItemModel): void {
     this.isDropdownLanguageVisible.set(false);
     localStorage.setItem(LocalStorageConst.currentLang, item.id);
-    this._translateService.use(item.id);
     window.location.reload();
   }
 
