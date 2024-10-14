@@ -306,6 +306,7 @@ export class ProductFormComponent extends BaseFormComponent {
       (x.controls as FormGroup[]).forEach(y => {
         const transaltion = product.translations.find(z => z.lang == y.controls['lang'].value);
         if (transaltion) {
+          y.controls['id'].setValue(transaltion.id);
           y.controls['translation'].setValue(transaltion.translation);
         }
       });
@@ -319,6 +320,7 @@ export class ProductFormComponent extends BaseFormComponent {
       this.translations.update(y => {
         y.push(
           this._formBuilder.group({
+            id: [null],
             lang: [x, [Validators.required]],
             translation: [null],
           }),
