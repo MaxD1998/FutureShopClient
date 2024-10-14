@@ -205,8 +205,6 @@ export class ProductFormComponent extends BaseFormComponent {
   setProductParameterValue(parameterValue: ProductParameterValueFormDto): void {
     const array = this.form.controls['productParameterValues'] as FormArray;
     const arrayValues = array.value as { productParameterId: string; value?: string }[];
-    console.log(arrayValues);
-    console.log(parameterValue.productParameterId);
     const value = arrayValues.find(x => x.productParameterId == parameterValue.productParameterId);
 
     if (value) {

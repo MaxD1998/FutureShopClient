@@ -142,7 +142,6 @@ export class ProductBaseFormComponent extends BaseFormComponent implements OnDes
     this._productBase.productParameters = this.productParameters();
     const result = this._productBase.mapToDto();
 
-    console.log(result);
     const productBase$ = !this.id
       ? this._productBaseDataService.add(result)
       : this._productBaseDataService.update(this.id, result);
