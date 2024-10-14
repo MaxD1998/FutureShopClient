@@ -287,6 +287,7 @@ export class ProductFormComponent extends BaseFormComponent {
         if (productParameter) {
           (form['productParameterValues'] as FormArray).push(
             new FormControl({
+              id: y.id,
               productParameterId: y.productParameterId,
               value: y.value,
             }),
@@ -347,8 +348,13 @@ export class ProductFormComponent extends BaseFormComponent {
       const productPhotoValues = productPhotos.controls as FormControl[];
 
       this.productPhotos().forEach(x => {
-        if (!productPhotoValues.some(y => y.value == x.id)) {
-          productPhotos.push(new FormControl(x.id));
+        if (!productPhotoValues.some(y => y.value['fileId'] == x.id)) {
+          productPhotos.push(
+            new FormControl({
+              id: null,
+              fileId: x.id,
+            }),
+          );
         }
       });
     }

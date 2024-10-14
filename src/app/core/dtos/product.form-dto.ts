@@ -1,4 +1,5 @@
 import { ProductParameterValueFormDto } from './product-parameter-value.form-dto';
+import { ProductPhotoFormDto } from './product-photo.form-dto';
 import { ProductTranslationFormDto } from './product-translation.form-dto';
 
 export interface ProductFormDto {
@@ -7,6 +8,6 @@ export interface ProductFormDto {
   price: number;
   productBaseId: string;
   productParameterValues: ProductParameterValueFormDto[];
-  productPhotos: string[];
+  productPhotos: ProductPhotoFormDto[];
   translations: ProductTranslationFormDto[];
 }
