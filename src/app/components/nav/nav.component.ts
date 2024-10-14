@@ -57,6 +57,7 @@ export class NavComponent {
     this.isDropdownLanguageVisible.set(false);
     localStorage.setItem(LocalStorageConst.currentLang, item.id);
     this._translateService.use(item.id);
+    window.location.reload();
   }
 
   login(): void {

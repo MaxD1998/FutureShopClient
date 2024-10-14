@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable, Subject, map, switchMap, takeUntil, tap } from 'rxjs';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
@@ -21,11 +21,10 @@ import { TableComponent } from '../../../shared/table/table.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslateModule, ButtonComponent, TableComponent],
 })
-export class CategoryListComponent implements OnDestroy {
+export class CategoryListComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
   private readonly _router = inject(Router);
-  private readonly _translateService = inject(TranslateService);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   categories = signal<CategoryGridModel[]>([]);
@@ -59,19 +58,6 @@ export class CategoryListComponent implements OnDestroy {
 
   constructor() {
     this.initCategories();
-    this._translateService.onLangChange
-      .pipe(
-        takeUntil(this._unsubscribe),
-        switchMap(() => {
-          return this.getCategories$();
-        }),
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
   }
 
   changePage(pageNumber: number): void {
