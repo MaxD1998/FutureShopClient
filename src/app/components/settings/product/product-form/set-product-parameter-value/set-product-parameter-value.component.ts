@@ -18,7 +18,7 @@ import { InputComponent } from '../../../../shared/input/input.component';
 export class SetProductParameterValueComponent extends BaseFormComponent {
   private readonly _injector = inject(Injector);
 
-  productParameter = input.required<ProductParameterValueFormDto>();
+  productParameter = input<ProductParameterValueFormDto>();
 
   onSave = output<ProductParameterValueFormDto>();
 
@@ -27,21 +27,28 @@ export class SetProductParameterValueComponent extends BaseFormComponent {
 
     toObservable(this.productParameter, { injector: this._injector }).subscribe({
       next: productParameter => {
-        const value = productParameter.value;
+        if (productParameter) {
+          const value = productParameter.value;
 
-        if (value) {
-          this.form.controls['value'].setValue(value);
+          if (value) {
+            this.form.controls['value'].setValue(value);
+          }
+        } else {
+          this.form.reset();
         }
       },
     });
   }
 
   submit(): void {
-    this.onSave.emit({
-      id: this.productParameter().id,
-      productParameterId: this.productParameter().productParameterId,
-      value: this.form.controls['value'].value,
-    });
+    const productParameter = this.productParameter();
+    if (productParameter) {
+      this.onSave.emit({
+        id: productParameter.id,
+        productParameterId: productParameter.productParameterId,
+        value: this.form.controls['value'].value,
+      });
+    }
 
     this.form.reset();
   }

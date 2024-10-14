@@ -11,6 +11,7 @@ import { ProductParameterDataService } from '../../../../core/data-services/prod
 import { ProductPhotoDataService } from '../../../../core/data-services/product-photo.data-service';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
+import { ProductPhotoFormDto } from '../../../../core/dtos/product-photo.form-dto';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
@@ -69,9 +70,7 @@ export class ProductFormComponent extends BaseFormComponent {
   isDialogActive = signal<boolean>(true);
   fileId = signal<string>('');
   productBaseItems = signal<SelectItemModel[]>([]);
-  productParameter = signal<{ productParameterId: string; value?: string }>({
-    productParameterId: '',
-  });
+  productParameter = signal<{ productParameterId: string; value?: string } | undefined>(undefined);
   productParameters = signal<{ id: string; name: string; value?: string }[]>([]);
   productPhotos = signal<ProductPhotoModel[]>([]);
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
@@ -111,6 +110,9 @@ export class ProductFormComponent extends BaseFormComponent {
   dialogClose(): void {
     if (this.dialogType() == DialogType.productBase) {
       this._location.back();
+    } else if (this.dialogType() == DialogType.productParameterValue) {
+      this.productParameter.set(undefined);
+      this.isDialogActive.set(false);
     } else {
       if (this.fileId() != '') {
         this.fileId.set('');
@@ -172,8 +174,8 @@ export class ProductFormComponent extends BaseFormComponent {
   removeProductPhoto(id: string) {
     this.productPhotos.set(this.productPhotos().filter(x => x.id != id));
     const array = this.form.controls['productPhotos'] as FormArray;
-    const arrayValues = array.value as string[];
-    const index = arrayValues.findIndex(x => x == id);
+    const arrayValues = array.value as ProductPhotoFormDto[];
+    const index = arrayValues.findIndex(x => x.fileId == id);
 
     if (index > -1) {
       array.removeAt(index);
@@ -221,6 +223,7 @@ export class ProductFormComponent extends BaseFormComponent {
     }
 
     this.isDialogActive.set(false);
+    this.productParameter.set(undefined);
   }
 
   setProductPhoto(file: File): void {
