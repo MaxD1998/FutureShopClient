@@ -7,13 +7,14 @@ import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
 import { ButtonComponent } from '../../../shared/button/button.component';
+import { DropDownComponent } from '../../../shared/drop-down/drop-down.component';
 import { InputPlusMinusComponent } from '../../../shared/input-plus-minus/input-plus-minus.component';
 import { TableComponent } from '../../../shared/table/table.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [TranslateModule, ButtonComponent, InputPlusMinusComponent, TableComponent],
+  imports: [TranslateModule, ButtonComponent, InputPlusMinusComponent, TableComponent, DropDownComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

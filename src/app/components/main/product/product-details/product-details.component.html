@@ -29,7 +29,9 @@
       <div class="flex gap-4">
         <app-input-plus-minus></app-input-plus-minus>
         <app-button class="w-full" [label]="'Dodaj do koszyka' | translate"></app-button>
-        <app-button [isIcon]="true" [label]="IconType.heart"></app-button>
+        <app-button [isIcon]="true" [label]="IconType.heart">
+          <app-drop-down></app-drop-down>
+        </app-button>
       </div>
     </div>
   </div>
