@@ -5,7 +5,7 @@
       [label]="'product-form-component.save' | translate"
       [width]="'w-32'"
       [layout]="ButtonLayout.greenLayout"
-      (click)="submit()">
+      (onClick)="submit()">
     </app-button>
   </div>
   <div class="border-t"></div>
@@ -58,7 +58,9 @@
   <div class="flex flex-col gap-4">
     <div class="flex items-center h-11 justify-between">
       <h2 class="text-xl">{{ 'product-form-component.photos' | translate }}</h2>
-      <app-button [label]="'product-form-component.add-photo' | translate" (click)="openSetPhotoDialog()"></app-button>
+      <app-button
+        [label]="'product-form-component.add-photo' | translate"
+        (onClick)="openSetPhotoDialog()"></app-button>
     </div>
     <app-table
       idName="id"

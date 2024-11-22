@@ -1,7 +1,7 @@
-<div class="flex flex-col h-full gap-4">
+<div class="flex flex-col h-body gap-4">
   <div class="flex justify-between items-center h-11">
     <h1 class="text-xl">{{ 'category-list-component.categories' | translate }}</h1>
-    <app-button [label]="'category-list-component.create-new-category' | translate" (click)="navigateToCreate()">
+    <app-button [label]="'category-list-component.create-new-category' | translate" (onClick)="navigateToCreate()">
     </app-button>
   </div>
   <div class="border-t"></div>

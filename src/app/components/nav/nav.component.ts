@@ -56,12 +56,12 @@ export class NavComponent {
   changeLang(item: DropDownListItemModel): void {
     this.isDropdownLanguageVisible.set(false);
     localStorage.setItem(LocalStorageConst.currentLang, item.id);
-    this._translateService.use(item.id);
+    window.location.reload();
   }
 
   login(): void {
     this.isDropdownAccountVisible.set(false);
-    this._router.navigateByUrl(ClientRoute.login);
+    this._router.navigateByUrl(`${ClientRoute.auth}/${ClientRoute.login}`);
   }
 
   logout(): void {

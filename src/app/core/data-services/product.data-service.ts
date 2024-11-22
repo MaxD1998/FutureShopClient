@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { ProductControllerRoute } from '../constants/api-routes/product-controller.route';
 import { PageDto } from '../dtos/page.dto';
 import { ProductShopListDto } from '../dtos/product-shop.list-dto';
@@ -8,11 +8,13 @@ import { ProductShopLisRequestDto } from '../dtos/product-shop.list-request-dto'
 import { ProductDto } from '../dtos/product.dto';
 import { ProductFormDto } from '../dtos/product.form-dto';
 import { ProductListDto } from '../dtos/product.list-dto';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductDataService {
+  private readonly _authService = inject(AuthService);
   private readonly _httpClient = inject(HttpClient);
 
   add(dto: ProductFormDto): Observable<ProductFormDto> {
@@ -29,33 +31,55 @@ export class ProductDataService {
   }
 
   getDetailsById(id: string): Observable<ProductDto> {
-    const url = `${ProductControllerRoute.details}${id}`;
-    return this._httpClient.get<ProductDto>(url);
+    return this._authService.user$.pipe(
+      take(1),
+      switchMap(user => {
+        const url = `${ProductControllerRoute.details}${id}`;
+        const favouriteId = localStorage.getItem('favouriteId');
+
+        if (!user && favouriteId) {
+          const params = new HttpParams().append('favouriteId', favouriteId);
+          return this._httpClient.get<ProductDto>(url, { params: params });
+        } else {
+          return this._httpClient.get<ProductDto>(url);
+        }
+      }),
+    );
   }
 
   getShopListByCategoryId(categoryId: string, request?: ProductShopLisRequestDto): Observable<ProductShopListDto[]> {
-    const url = `${ProductControllerRoute.shopList}${categoryId}`;
-    let params = new HttpParams();
+    return this._authService.user$.pipe(
+      take(1),
+      switchMap(user => {
+        const url = `${ProductControllerRoute.shopList}${categoryId}`;
+        const favouriteId = localStorage.getItem('favouriteId');
+        let params = new HttpParams();
 
-    if (request) {
-      if (request.name) {
-        params = params.append('name', request.name);
-      }
+        if (!user && favouriteId) {
+          params = params.append('favouriteId', favouriteId);
+        }
 
-      if (request.priceFrom) {
-        params = params.append('priceFrom', request.priceFrom);
-      }
+        if (request) {
+          if (request.name) {
+            params = params.append('name', request.name);
+          }
 
-      if (request.priceTo) {
-        params = params.append('priceTo', request.priceTo);
-      }
+          if (request.priceFrom) {
+            params = params.append('priceFrom', request.priceFrom);
+          }
 
-      if (request.sortType) {
-        params = params.append('sortType', request.sortType);
-      }
-    }
+          if (request.priceTo) {
+            params = params.append('priceTo', request.priceTo);
+          }
 
-    return this._httpClient.get<ProductShopListDto[]>(url, { params: params });
+          if (request.sortType) {
+            params = params.append('sortType', request.sortType);
+          }
+        }
+
+        return this._httpClient.get<ProductShopListDto[]>(url, { params: params });
+      }),
+    );
   }
 
   getPage(pageNumber: number): Observable<PageDto<ProductListDto>> {

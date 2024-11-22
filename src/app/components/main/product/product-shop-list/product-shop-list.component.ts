@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { forkJoin, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
-import { CategoryDataService } from '../../../../core/data-services/category.data-service';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { ProductShopListDto } from '../../../../core/dtos/product-shop.list-dto';
@@ -12,6 +10,7 @@ import { ProductShopLisRequestDto } from '../../../../core/dtos/product-shop.lis
 import { ProductSortType } from '../../../../core/enums/product-sort-type';
 import { ProductShopListModel } from '../../../../core/models/product-shop.list-model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
+import { PurchaseListService } from '../../../../core/services/purchase-list.service';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { InputNumberComponent } from '../../../shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
@@ -34,12 +33,10 @@ import { ProductShopItemComponent } from './product-shop-item/product-shop-item.
   styleUrl: './product-shop-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductShopListComponent extends BaseFormComponent implements OnDestroy {
+export class ProductShopListComponent extends BaseFormComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _categoryDataService = inject(CategoryDataService);
   private readonly _productDataService = inject(ProductDataService);
-  private readonly _translateService = inject(TranslateService);
-  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+  private readonly _purchaseListService = inject(PurchaseListService);
 
   categoryName = signal<string>('');
   products = signal<ProductShopListModel[]>([]);
@@ -55,7 +52,7 @@ export class ProductShopListComponent extends BaseFormComponent implements OnDes
 
   constructor() {
     super();
-
+    this._purchaseListService.getUserPurchaseLists();
     this._activatedRoute.data.subscribe({
       next: data => {
         if (!data) {
@@ -67,42 +64,6 @@ export class ProductShopListComponent extends BaseFormComponent implements OnDes
         this.products.set(result.products.map(x => new ProductShopListModel(x)));
       },
     });
-
-    this._translateService.onLangChange
-      .pipe(
-        takeUntil(this._unsubscribe),
-        tap(() => {
-          this.products.set([]);
-        }),
-        switchMap(() => {
-          const request: ProductShopLisRequestDto = {
-            name: this.form.value['name'],
-            priceFrom: this.form.value['priceFrom'],
-            priceTo: this.form.value['priceTo'],
-            sortType: Number(this.form.value['sortType']),
-          };
-
-          return this._categoryDataService.getIdNameById(this._activatedRoute.snapshot.params['categoryId']).pipe(
-            switchMap(response => {
-              return forkJoin({
-                category: of(response),
-                products: this._productDataService.getShopListByCategoryId(response.id, request),
-              });
-            }),
-          );
-        }),
-      )
-      .subscribe({
-        next: response => {
-          this.categoryName.set(response.category.name);
-          this.products.set(response.products.map(x => new ProductShopListModel(x)));
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
   }
 
   filter(): void {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ButtonLayout } from '../../../core/enums/button-layout';
 import { IconComponent } from '../icon/icon.component';
 
@@ -16,6 +16,8 @@ export class ButtonComponent {
   label = input.required<string>();
   layout = input<ButtonLayout>();
   width = input<string>('w-full');
+
+  onClick = output<Event>();
 
   private _disabled_layout = 'border-gray-300 bg-gray-300 text-gray-500';
   private _disabled_outline_layout = 'border-gray-300 text-gray-500';

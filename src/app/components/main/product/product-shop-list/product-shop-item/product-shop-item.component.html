@@ -1,21 +1,42 @@
-<div class="flex flex-col h-96 p-2 rounded-md cursor-pointer hover:shadow-lg" (click)="goToDetails()">
-  <div class="flex justify-center relative">
-    <img class="object-contain h-60" [src]="image()" />
+<div class="rounded-md cursor-pointer hover:shadow-lg" (mouseenter)="setHover(true)" (mouseleave)="setHover(false)">
+  <div class="relative">
+    @if (product().isInPurchaseList || isHover()) {
+      <div class="absolute top-1 right-1">
+        <div class="rounded-md overflow-hidden hover:bg-green-300">
+          <a class="block p-1" (click)="addToFavourite()">
+            <app-icon [iconName]="product().isInPurchaseList ? IconType.fillHeart : IconType.heart"></app-icon>
+          </a>
+        </div>
+        <app-drop-down [(isVisible)]="isFavouriteOpen">
+          <app-add-product-to-purchase-list
+            [isVisible]="isFavouriteOpen()"
+            [productId]="product().id"
+            (isInPurchaseListChange)="onInPurchaseListChange($event)"
+            (onClose)="isFavouriteOpen.set($event)">
+          </app-add-product-to-purchase-list>
+        </app-drop-down>
+      </div>
+    }
   </div>
-  <div class="flex-auto">
-    <span>
-      {{ product().name }}
-    </span>
-  </div>
-  <div class="flex">
-    <span class="text-2xl">
-      {{ product().price }}
-      {{ 'common.currencies.pln' | translate }}
-    </span>
-  </div>
-  <div class="pt-2">
-    <app-button
-      [label]="'product-shop-item.component.add-to-basket' | translate"
-      (click)="addToBasket($event)"></app-button>
+  <div class="flex flex-col h-96 p-2" (click)="goToDetails()">
+    <div class="flex justify-center">
+      <img class="object-contain h-60" [src]="image()" />
+    </div>
+    <div class="flex-auto">
+      <span>
+        {{ product().name }}
+      </span>
+    </div>
+    <div class="flex">
+      <span class="text-2xl">
+        {{ product().price }}
+        {{ 'common.currencies.pln' | translate }}
+      </span>
+    </div>
+    <div class="pt-2">
+      <app-button
+        [label]="'product-shop-item.component.add-to-basket' | translate"
+        (onClick)="addToBasket($event)"></app-button>
+    </div>
   </div>
 </div>

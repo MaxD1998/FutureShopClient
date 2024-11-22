@@ -23,6 +23,16 @@
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
   },
+  "add-product-to-purchase-list-component": {
+    "add-a-new-list": "Add a new list",
+    "favourite": "Favourite",
+    "ready": "Ready",
+    "save-on-a-list": "Save on a list"
+  },
+  "add-purchase-list-component": {
+    "add": "Add",
+    "name": "Name"
+  },
   "category-form-component": {
     "add-sub-category": "Add subcategory",
     "add-translation": "Add translation",
@@ -156,6 +166,13 @@
       "3": "Price descending"
     }
   },
+  "purchase-lists-component": {
+    "add-list": "Add list",
+    "add-purchase-list": "Add purchase list",
+    "favourite": "Favourite",
+    "last-change": "Last change",
+    "purchase-lists": "Purchase lists"
+  },
   "register-component": {
     "date-of-birth": "Date of birth",
     "email": "E-mail",
@@ -169,7 +186,6 @@
   },
   "settings-aside-component": {
     "items": {
-      "account": "Account",
       "categories": "Categories",
       "products": "Products",
       "products-bases": "Products bases"
@@ -188,5 +204,14 @@
     "choose-file": "Choose file",
     "file-is-empty": "File is empty",
     "save": "Save"
+  },
+  "small-purchase-list-form-component": {
+    "add": "Add"
+  },
+  "user-aside-component": {
+    "items": {
+      "account": "Account",
+      "purchase-lists": "Purchase lists"
+    }
   }
 }

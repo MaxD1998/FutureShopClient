@@ -5,7 +5,7 @@
       [label]="'category-form-component.save' | translate"
       [width]="'w-32'"
       [layout]="ButtonLayout.greenLayout"
-      (click)="submit()">
+      (onClick)="submit()">
     </app-button>
   </div>
   <div class="border-t"></div>
@@ -57,7 +57,7 @@
             <app-button
               [isDisabled]="subCategoryItems().length == 0"
               [label]="'category-form-component.add-sub-category' | translate"
-              (click)="isDialogActive.set(true)">
+              (onClick)="isDialogActive.set(true)">
             </app-button>
           </div>
           <app-table

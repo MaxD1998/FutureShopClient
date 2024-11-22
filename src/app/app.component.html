@@ -1,8 +1,10 @@
-<div class="flex h-screen w-screen justify-center">
-  <div class="flex flex-auto flex-col max-w-364">
-    <app-nav></app-nav>
-    <main class="flex-auto overflow-hidden">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
+<div class="h-full w-full px-4">
+  <header class="h-24 relative">
+    <div class="fixed w-full top-0 left-0 z-10 bg-white px-4">
+      <app-nav class="block max-w-364 mx-auto"></app-nav>
+    </div>
+  </header>
+  <main class="max-w-364 mx-auto">
+    <router-outlet></router-outlet>
+  </main>
 </div>

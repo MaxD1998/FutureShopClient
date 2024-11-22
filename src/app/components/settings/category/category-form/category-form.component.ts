@@ -16,7 +16,6 @@ import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { ButtonComponent } from '../../../shared/button/button.component';
-import { IconComponent } from '../../../shared/icon/icon.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
 import { InputComponent } from '../../../shared/input/input.component';
 import { DialogWindowComponent } from '../../../shared/modals/dialog-window/dialog-window.component';
@@ -33,7 +32,6 @@ import { CategoryFormDialogWindowContentComponent } from './category-form-dialog
     InputComponent,
     ButtonComponent,
     InputSelectComponent,
-    IconComponent,
     DialogWindowComponent,
     CategoryFormDialogWindowContentComponent,
     ReactiveFormsModule,
@@ -111,7 +109,6 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     }
 
     const value = this.form.value as CategoryFormDto;
-
     value.translations = value.translations.filter(x => x.translation);
 
     const category$ = !this.id
@@ -145,6 +142,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
       (x.controls as FormGroup[]).forEach(y => {
         const transaltion = category.translations.find(z => z.lang == y.controls['lang'].value);
         if (transaltion) {
+          y.controls['id'].setValue(transaltion.id);
           y.controls['translation'].setValue(transaltion.translation);
         }
       });
@@ -158,6 +156,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
       this.translations.update(y => {
         y.push(
           this._formBuilder.group({
+            id: [null],
             lang: [x, [Validators.required]],
             translation: [null],
           }),

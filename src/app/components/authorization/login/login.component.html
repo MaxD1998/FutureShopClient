@@ -16,7 +16,7 @@
             formControlName="password"
             placeholder="{{ 'login-component.enter-your-password' | translate }}"
             [type]="InputType.password"></app-input>
-          <app-button label="{{ 'login-component.sign-in' | translate }}" width="w-60"></app-button>
+          <app-button label="{{ 'login-component.sign-in' | translate }}"></app-button>
         </form>
       </div>
     </div>
@@ -49,7 +49,7 @@
       <app-button
         label="{{ 'login-component.sign-up' | translate }}!"
         [layout]="ButtonLayout.greenLayout"
-        (click)="navigateToRegister()"></app-button>
+        (onClick)="navigateToRegister()"></app-button>
     </div>
   </div>
 </div>

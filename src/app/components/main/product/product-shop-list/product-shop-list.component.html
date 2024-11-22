@@ -1,43 +1,39 @@
-<div class="h-full px-1 overflow-y-auto">
-  <div class="flex flex-auto flex-col gap-4">
-    <div class="flex flex-col">
-      <h1 class="text-xl">{{ 'product-shop-list-component.filters-header' | translate }}</h1>
-      <form [formGroup]="form" (ngSubmit)="filter()">
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          <app-input
-            formControlName="name"
-            [label]="'product-shop-list-component.filters.name' | translate"></app-input>
-          <app-input-select
-            formControlName="sortType"
-            [items]="sortItems"
-            [label]="'product-shop-list-component.filters.sort' | translate"
-            [required]="true">
-          </app-input-select>
-          <div class="flex flex-row gap-2">
-            <app-input-number
-              formControlName="priceFrom"
-              class="w-full"
-              [label]="'product-shop-list-component.filters.price-from' | translate">
-            </app-input-number>
-            <app-input-number
-              formControlName="priceTo"
-              class="w-full"
-              [label]="'product-shop-list-component.filters.price-to' | translate">
-            </app-input-number>
-          </div>
+<div class="flex flex-col">
+  <div class="flex flex-col mb-4">
+    <h1 class="text-xl">{{ 'product-shop-list-component.filters-header' | translate }}</h1>
+    <form [formGroup]="form" (ngSubmit)="filter()">
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <app-input formControlName="name" [label]="'product-shop-list-component.filters.name' | translate"></app-input>
+        <app-input-select
+          formControlName="sortType"
+          [items]="sortItems"
+          [label]="'product-shop-list-component.filters.sort' | translate"
+          [required]="true">
+        </app-input-select>
+        <div class="flex flex-row gap-2">
+          <app-input-number
+            formControlName="priceFrom"
+            class="w-full"
+            [label]="'product-shop-list-component.filters.price-from' | translate">
+          </app-input-number>
+          <app-input-number
+            formControlName="priceTo"
+            class="w-full"
+            [label]="'product-shop-list-component.filters.price-to' | translate">
+          </app-input-number>
         </div>
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          <app-button class="sm:col-start-1 md:col-start-2 lg:col-start-3" [label]="'Filtruj' | translate"></app-button>
-        </div>
-      </form>
-    </div>
-    <h2 class="text-xl">
-      {{ categoryName() }}
-    </h2>
-    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-      @for (product of products(); track $index) {
-        <app-product-shop-item [product]="product"></app-product-shop-item>
-      }
-    </div>
+      </div>
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <app-button class="sm:col-start-1 md:col-start-2 lg:col-start-3" [label]="'Filtruj' | translate"></app-button>
+      </div>
+    </form>
+  </div>
+  <h2 class="text-xl">
+    {{ categoryName() }}
+  </h2>
+  <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+    @for (product of products(); track $index) {
+      <app-product-shop-item [product]="product"></app-product-shop-item>
+    }
   </div>
 </div>

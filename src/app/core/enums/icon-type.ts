@@ -8,6 +8,7 @@ export enum IconType {
   ellipsisHorizontal = 'ellipsis-horizontal',
   envelope = 'envelope',
   eye = 'eye',
+  fillHeart = 'fill-heart',
   globeAlt = 'globe-alt',
   heart = 'heart',
   minus = 'minus',

@@ -47,7 +47,7 @@ export class LoginComponent extends BaseFormComponent {
   }
 
   navigateToRegister(): void {
-    this._router.navigateByUrl(ClientRoute.register);
+    this._router.navigateByUrl(`${ClientRoute.auth}/${ClientRoute.register}`);
   }
 
   protected setFormControls(): {} {

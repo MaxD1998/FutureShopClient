@@ -23,6 +23,16 @@
     "not-white-charackters": "Białe znaki są zabronione",
     "required": "Pole jest wymagane"
   },
+  "add-product-to-purchase-list-component": {
+    "add-a-new-list": "Dodaj nową listę",
+    "favourite": "Ulubione",
+    "ready": "Gotowe",
+    "save-on-a-list": "Zapisz na liście"
+  },
+  "add-purchase-list-component": {
+    "add": "Dodaj",
+    "name": "Nazwa"
+  },
   "category-form-component": {
     "add-sub-category": "Dodaj podkategorię",
     "add-translation": "Dodaj tłumaczenie",
@@ -156,6 +166,13 @@
       "3": "Cena malejąco"
     }
   },
+  "purchase-lists-component": {
+    "add-list": "Dodaj listę",
+    "add-purchase-list": "Dodaj listę zakupową",
+    "favourite": "Ulubione",
+    "last-change": "Ostatnia zmiana",
+    "purchase-lists": "Listy zakupów"
+  },
   "register-component": {
     "date-of-birth": "Data urodzenia",
     "email": "E-mail",
@@ -169,7 +186,6 @@
   },
   "settings-aside-component": {
     "items": {
-      "account": "Konto",
       "categories": "Kategorie",
       "products": "Produkty",
       "products-bases": "Bazy produktów"
@@ -188,5 +204,14 @@
     "choose-file": "Wybierz plik",
     "file-is-empty": "Plik jest pusty",
     "save": "Zapisz"
+  },
+  "small-purchase-list-form-component": {
+    "add": "Dodaj"
+  },
+  "user-aside-component": {
+    "items": {
+      "account": "Konto",
+      "purchase-lists": "Listy zakupów"
+    }
   }
 }

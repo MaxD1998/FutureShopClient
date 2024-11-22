@@ -1,34 +1,39 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Subject, switchMap, takeUntil } from 'rxjs';
-import { ProductPhotoDataService } from '../../../../core/data-services/product-photo.data-service';
-import { ProductDataService } from '../../../../core/data-services/product.data-service';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProductDto } from '../../../../core/dtos/product.dto';
 import { IconType } from '../../../../core/enums/icon-type';
 import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
+import { PurchaseListService } from '../../../../core/services/purchase-list.service';
+import { AddProductToPurchaseListComponent } from '../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
 import { ButtonComponent } from '../../../shared/button/button.component';
+import { DropDownComponent } from '../../../shared/drop-down/drop-down.component';
 import { InputPlusMinusComponent } from '../../../shared/input-plus-minus/input-plus-minus.component';
 import { TableComponent } from '../../../shared/table/table.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [TranslateModule, ButtonComponent, InputPlusMinusComponent, TableComponent],
+  imports: [
+    TranslateModule,
+    ButtonComponent,
+    InputPlusMinusComponent,
+    TableComponent,
+    DropDownComponent,
+    AddProductToPurchaseListComponent,
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductDetailsComponent implements OnDestroy {
+export class ProductDetailsComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _productDataService = inject(ProductDataService);
-  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
-  private readonly _translateService = inject(TranslateService);
-  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+  private readonly _purchaseListService = inject(PurchaseListService);
 
   images = signal<{ source: string; isShowed: boolean }[]>([]);
+  isFavouriteOpen = signal<boolean>(false);
   product = signal<ProductDto | undefined>(undefined);
 
   image = computed<string>(() => {
@@ -57,28 +62,21 @@ export class ProductDetailsComponent implements OnDestroy {
   constructor() {
     this.product.set(this._activatedRoute.snapshot.data['data']['product']);
     this.images.set(this._activatedRoute.snapshot.data['data']['images']);
+    this._purchaseListService.getUserPurchaseLists();
+  }
+
+  addToFavourite(): void {
+    this.isFavouriteOpen.set(!this.isFavouriteOpen());
+  }
+
+  onInPurchaseListChange(value: boolean): void {
     const product = this.product();
     if (!product) {
       return;
     }
 
-    this._translateService.onLangChange
-      .pipe(
-        takeUntil(this._unsubscribe),
-        switchMap(() => {
-          return this._productDataService.getDetailsById(product.id);
-        }),
-      )
-      .subscribe({
-        next: reponse => {
-          this.product.set(reponse);
-        },
-      });
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+    product.isInPurchaseList = value;
+    this.product.set(product);
   }
 
   showImage(index: number): void {

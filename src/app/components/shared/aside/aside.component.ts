@@ -17,6 +17,7 @@ export class AsideComponent {
   items = input.required<AsideItemModel[]>();
   header = input.required<string[]>();
 
+  onMenuChange = output<boolean>();
   onNextLevel = output<string>();
   onUndoLevel = output<string | undefined>();
 
@@ -27,6 +28,7 @@ export class AsideComponent {
 
   changeMenu(): void {
     this.isMenu.set(!this.isMenu());
+    this.onMenuChange.emit(this.isMenu());
   }
 
   nextLevel(item: AsideItemModel): void {

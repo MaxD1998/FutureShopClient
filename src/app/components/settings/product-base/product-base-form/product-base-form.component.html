@@ -5,7 +5,7 @@
       [label]="'product-base-form-component.save' | translate"
       [width]="'w-32'"
       [layout]="ButtonLayout.greenLayout"
-      (click)="submit()">
+      (onClick)="submit()">
     </app-button>
   </div>
   <div class="border-t"></div>
@@ -36,12 +36,14 @@
   <div class="flex flex-col flex-auto gap-4">
     <div class="flex justify-between items-center">
       <h2 class="text-xl">{{ 'product-base-form-component.product-parameters' | translate }}</h2>
-      <app-button [label]="'product-base-form-component.add-parameter' | translate" (click)="openDialogWindow($event)">
+      <app-button
+        [label]="'product-base-form-component.add-parameter' | translate"
+        (onClick)="openDialogWindow($event)">
       </app-button>
     </div>
     <app-table
       [columns]="columns"
-      [idName]="'id'"
+      [idName]="'index'"
       [isEditAction]="true"
       [isRemoveAction]="true"
       [items]="productParameters()"
@@ -53,7 +55,7 @@
 <app-dialog-window
   [isDialogActive]="isDialogActive()"
   [title]="dialogTitle() | translate"
-  (onCloseDialog)="isDialogActive.set($event)">
-  <app-product-property-form [editParameter]="parameterToEdit()?.parameter" (onSubmit)="submitProductParameter($event)">
+  (onCloseDialog)="closeDialog()">
+  <app-product-property-form [editParameter]="parameterToEdit()" (onSubmit)="submitProductParameter($event)">
   </app-product-property-form>
 </app-dialog-window>

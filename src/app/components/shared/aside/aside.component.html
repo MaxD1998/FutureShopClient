@@ -1,6 +1,6 @@
-<div class="flex h-full">
+<div class="flex rounded-md h-full max-h-body">
   @if (isMenu()) {
-    <div class="flex flex-col h-full w-56">
+    <div class="flex flex-col flex-auto sm:w-56 max-sm:w-full">
       <div class="flex w-full justify-center items-center p-2 bg-green-300">
         <div class="min-w-7 max-w-7 min-h-7 max-h-7 mr-2">
           @if (parentIds().length > 0) {
@@ -20,7 +20,7 @@
           (click)="changeMenu()">
         </app-icon>
       </div>
-      <div class="h-full border-r">
+      <div class="border-r border-b border-l rounded-b-md pb-4 overflow-auto">
         @for (item of items(); track item.id) {
           <div class="flex items-center hover:bg-green-50">
             <a

@@ -6,6 +6,15 @@ import { mainResolver as mainCategoryListResolver } from './core/resolvers/main-
 
 export const routes: Routes = [
   {
+    path: ClientRoute.auth,
+    loadChildren: () => import('./components/authorization/authorization.routes').then(x => x.authRoutes),
+    canActivate: [unauthGuard],
+  },
+  {
+    path: ClientRoute.basket,
+    loadComponent: () => import('./components/basket/basket.component').then(x => x.BasketComponent),
+  },
+  {
     path: ClientRoute.main,
     loadComponent: () => import('./components/main/main.component').then(x => x.MainComponent),
     loadChildren: () => import('./components/main/main.routes').then(x => x.mainRoutes),
@@ -14,14 +23,14 @@ export const routes: Routes = [
     },
   },
   {
-    path: '',
-    loadChildren: () => import('./components/authorization/authorization.routes').then(x => x.authRoutes),
-    canActivate: [unauthGuard],
-  },
-  {
     path: ClientRoute.settings,
     loadComponent: () => import('./components/settings/settings.component').then(x => x.SettingsComponent),
     loadChildren: () => import('./components/settings/settings.routes').then(x => x.settingsRoutes),
     canActivate: [authGuard],
+  },
+  {
+    path: ClientRoute.user,
+    loadComponent: () => import('./components/user/user.component').then(x => x.UserComponent),
+    loadChildren: () => import('./components/user/user.routes').then(x => x.userRoutes),
   },
 ];

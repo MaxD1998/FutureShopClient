@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-8">
-  <div class="flex gap-4">
+  <div class="flex gap-4 flex-wrap">
     <div class="flex flex-1 flex-col gap-4">
       <div class="flex justify-center border h-112">
         <img class="object-contain" [src]="image()" />
@@ -26,10 +26,26 @@
           {{ 'common.currencies.pln' | translate }}
         </span>
       </div>
-      <div class="flex gap-4">
+      <div class="flex flex-wrap gap-2">
         <app-input-plus-minus></app-input-plus-minus>
-        <app-button class="w-full" [label]="'Dodaj do koszyka' | translate"></app-button>
-        <app-button [isIcon]="true" [label]="IconType.heart"></app-button>
+        <div class="flex flex-auto gap-2">
+          <app-button class="flex-auto" [label]="'Dodaj do koszyka' | translate"></app-button>
+          <app-button
+            [isIcon]="true"
+            [label]="product()?.isInPurchaseList ? IconType.fillHeart : IconType.heart"
+            (onClick)="addToFavourite()">
+            @if (product()) {
+              <app-drop-down [(isVisible)]="isFavouriteOpen">
+                <app-add-product-to-purchase-list
+                  [isVisible]="isFavouriteOpen()"
+                  [productId]="product()?.id ?? ''"
+                  (isInPurchaseListChange)="onInPurchaseListChange($event)"
+                  (onClose)="isFavouriteOpen.set($event)">
+                </app-add-product-to-purchase-list>
+              </app-drop-down>
+            }
+          </app-button>
+        </div>
       </div>
     </div>
   </div>

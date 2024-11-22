@@ -15,9 +15,15 @@
           (onItemClick)="changeLang($event)">
         </app-drop-down-list>
       </app-nav-button>
-      <app-nav-button [iconName]="IconType.shoppingBag" label="{{ 'nav-component.basket' | translate }}">
+      <app-nav-button
+        [iconName]="IconType.shoppingBag"
+        label="{{ 'nav-component.basket' | translate }}"
+        [routerLink]="ClientRoute.basket">
       </app-nav-button>
-      <app-nav-button [iconName]="IconType.heart" label="{{ 'nav-component.favourite' | translate }}"></app-nav-button>
+      <app-nav-button
+        [iconName]="IconType.heart"
+        label="{{ 'nav-component.favourite' | translate }}"
+        [routerLink]="ClientRoute.user + '/' + ClientRoute.purchaseLists"></app-nav-button>
       <app-nav-button
         [iconName]="IconType.userCircle"
         label="{{ 'nav-component.account' | translate }}"
@@ -26,15 +32,18 @@
         <app-drop-down-list [isVisible]="isDropdownAccountVisible()" [orientation]="DropDownListOrientation.right">
           <app-drop-down-list-item
             [item]="{ id: '1', value: 'nav-component.settings' | translate }"
-            routerLink="settings"></app-drop-down-list-item>
+            [routerLink]="ClientRoute.settings">
+          </app-drop-down-list-item>
           @if (isSignedIn$ | async) {
             <app-drop-down-list-item
               [item]="{ id: '2', value: 'nav-component.logout' | translate }"
-              (onItemClick)="logout()"></app-drop-down-list-item>
+              (onItemClick)="logout()">
+            </app-drop-down-list-item>
           } @else {
             <app-drop-down-list-item
               [item]="{ id: '2', value: 'nav-component.sign-in' | translate }"
-              (onItemClick)="login()"></app-drop-down-list-item>
+              (onItemClick)="login()">
+            </app-drop-down-list-item>
           }
         </app-drop-down-list>
       </app-nav-button>

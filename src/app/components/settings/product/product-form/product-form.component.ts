@@ -10,10 +10,10 @@ import { ClientRoute } from '../../../../core/constants/client-routes/client.rou
 import { ProductParameterDataService } from '../../../../core/data-services/product-parameter.data-service';
 import { ProductPhotoDataService } from '../../../../core/data-services/product-photo.data-service';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
+import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
+import { ProductPhotoFormDto } from '../../../../core/dtos/product-photo.form-dto';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
 import { ButtonLayout } from '../../../../core/enums/button-layout';
-import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
-import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
 import { ProductPhotoModel } from '../../../../core/models/product-photo.model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
@@ -28,6 +28,7 @@ import { PreviewProductPhotoComponent } from './preview-product-photo/preview-pr
 import { SetProductBaseFormComponent } from './set-product-base-form/set-product-base-form.component';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
 import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.component';
+import { DialogType, ProductFormUtils } from './utils/product-form.utils';
 
 @Component({
   selector: 'app-product-form',
@@ -69,71 +70,15 @@ export class ProductFormComponent extends BaseFormComponent {
   isDialogActive = signal<boolean>(true);
   fileId = signal<string>('');
   productBaseItems = signal<SelectItemModel[]>([]);
-  productParameter = signal<{ productParameterId: string; value?: string }>({
-    productParameterId: '',
-  });
+  productParameter = signal<{ productParameterId: string; value?: string } | undefined>(undefined);
   productParameters = signal<{ id: string; name: string; value?: string }[]>([]);
   productPhotos = signal<ProductPhotoModel[]>([]);
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
 
-  dialogHeader = computed(() => {
-    switch (this.dialogType()) {
-      case DialogType.productBase:
-        return 'product-form-component.set-product-base';
-      case DialogType.productParameterValue:
-        return 'product-form-component.set-value';
-      case DialogType.productPhoto:
-        return 'product-form-component.set-product-photo';
-      default:
-        return '';
-    }
-  });
+  dialogHeader = computed(() => ProductFormUtils.getDialogHeader(this.dialogType()));
 
-  productParameterColumns: DataTableColumnModel[] = [
-    {
-      field: 'name',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-parameter-table-columns.name',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'value',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-parameter-table-columns.value',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'actions',
-      headerText: '',
-      template: TableTemplate.action,
-    },
-  ];
-
-  productPhotoColumns: DataTableColumnModel[] = [
-    {
-      field: 'name',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-photo-table-columns.name',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'type',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-photo-table-columns.type',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'size',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'product-form-component.product-photo-table-columns.size',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'actions',
-      headerText: '',
-      template: TableTemplate.action,
-    },
-  ];
+  productParameterColumns: DataTableColumnModel[] = ProductFormUtils.getProductParameterColumns();
+  productPhotoColumns: DataTableColumnModel[] = ProductFormUtils.getProductPhotoColumns();
 
   constructor() {
     super();
@@ -165,6 +110,9 @@ export class ProductFormComponent extends BaseFormComponent {
   dialogClose(): void {
     if (this.dialogType() == DialogType.productBase) {
       this._location.back();
+    } else if (this.dialogType() == DialogType.productParameterValue) {
+      this.productParameter.set(undefined);
+      this.isDialogActive.set(false);
     } else {
       if (this.fileId() != '') {
         this.fileId.set('');
@@ -226,8 +174,8 @@ export class ProductFormComponent extends BaseFormComponent {
   removeProductPhoto(id: string) {
     this.productPhotos.set(this.productPhotos().filter(x => x.id != id));
     const array = this.form.controls['productPhotos'] as FormArray;
-    const arrayValues = array.value as string[];
-    const index = arrayValues.findIndex(x => x == id);
+    const arrayValues = array.value as ProductPhotoFormDto[];
+    const index = arrayValues.findIndex(x => x.fileId == id);
 
     if (index > -1) {
       array.removeAt(index);
@@ -256,7 +204,7 @@ export class ProductFormComponent extends BaseFormComponent {
     });
   }
 
-  setProductParameterValue(parameterValue: { productParameterId: string; value: string }): void {
+  setProductParameterValue(parameterValue: ProductParameterValueFormDto): void {
     const array = this.form.controls['productParameterValues'] as FormArray;
     const arrayValues = array.value as { productParameterId: string; value?: string }[];
     const value = arrayValues.find(x => x.productParameterId == parameterValue.productParameterId);
@@ -275,6 +223,7 @@ export class ProductFormComponent extends BaseFormComponent {
     }
 
     this.isDialogActive.set(false);
+    this.productParameter.set(undefined);
   }
 
   setProductPhoto(file: File): void {
@@ -342,6 +291,7 @@ export class ProductFormComponent extends BaseFormComponent {
         if (productParameter) {
           (form['productParameterValues'] as FormArray).push(
             new FormControl({
+              id: y.id,
               productParameterId: y.productParameterId,
               value: y.value,
             }),
@@ -361,6 +311,7 @@ export class ProductFormComponent extends BaseFormComponent {
       (x.controls as FormGroup[]).forEach(y => {
         const transaltion = product.translations.find(z => z.lang == y.controls['lang'].value);
         if (transaltion) {
+          y.controls['id'].setValue(transaltion.id);
           y.controls['translation'].setValue(transaltion.translation);
         }
       });
@@ -374,6 +325,7 @@ export class ProductFormComponent extends BaseFormComponent {
       this.translations.update(y => {
         y.push(
           this._formBuilder.group({
+            id: [null],
             lang: [x, [Validators.required]],
             translation: [null],
           }),
@@ -400,8 +352,13 @@ export class ProductFormComponent extends BaseFormComponent {
       const productPhotoValues = productPhotos.controls as FormControl[];
 
       this.productPhotos().forEach(x => {
-        if (!productPhotoValues.some(y => y.value == x.id)) {
-          productPhotos.push(new FormControl(x.id));
+        if (!productPhotoValues.some(y => y.value['fileId'] == x.id)) {
+          productPhotos.push(
+            new FormControl({
+              id: null,
+              fileId: x.id,
+            }),
+          );
         }
       });
     }
@@ -417,11 +374,4 @@ export class ProductFormComponent extends BaseFormComponent {
       translations: new FormArray([]),
     };
   }
-}
-
-enum DialogType {
-  previewProductPhoto,
-  productBase,
-  productParameterValue,
-  productPhoto,
 }
