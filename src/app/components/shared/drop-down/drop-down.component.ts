@@ -1,5 +1,5 @@
 import {
-  afterNextRender,
+  afterRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -14,7 +14,6 @@ import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-drop-down',
-  standalone: true,
   imports: [],
   templateUrl: './drop-down.component.html',
   styleUrl: './drop-down.component.css',
@@ -32,7 +31,7 @@ export class DropDownComponent {
   style = signal<string>('');
 
   constructor() {
-    afterNextRender(() => {
+    afterRender(() => {
       this.checkDropdownPosition();
     });
 
@@ -40,7 +39,6 @@ export class DropDownComponent {
       next: value => {
         if (value) {
           this._isOpen = false;
-          this.checkDropdownPosition();
         }
       },
     });

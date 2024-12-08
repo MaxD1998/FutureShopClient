@@ -23,21 +23,20 @@ import { TableComponent } from '../../../shared/table/table.component';
 import { CategoryFormDialogWindowContentComponent } from './category-form-dialog-window-content/category-form-dialog-window-content.component';
 
 @Component({
-  selector: 'app-category-form',
-  standalone: true,
-  templateUrl: './category-form.component.html',
-  styleUrl: './category-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    InputComponent,
-    ButtonComponent,
-    InputSelectComponent,
-    DialogWindowComponent,
-    CategoryFormDialogWindowContentComponent,
-    ReactiveFormsModule,
-    TranslateModule,
-    TableComponent,
-  ],
+    selector: 'app-category-form',
+    templateUrl: './category-form.component.html',
+    styleUrl: './category-form.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        InputComponent,
+        ButtonComponent,
+        InputSelectComponent,
+        DialogWindowComponent,
+        CategoryFormDialogWindowContentComponent,
+        ReactiveFormsModule,
+        TranslateModule,
+        TableComponent,
+    ]
 })
 export class CategoryFormComponent extends BaseFormComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);

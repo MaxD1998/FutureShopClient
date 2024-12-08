@@ -22,21 +22,20 @@ import { TableComponent } from '../../../shared/table/table.component';
 import { ProductPropertyFormComponent } from './product-property-form/product-property-form.component';
 
 @Component({
-  selector: 'app-product-base-form',
-  standalone: true,
-  templateUrl: './product-base-form.component.html',
-  styleUrl: './product-base-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    TranslateModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-    InputComponent,
-    InputSelectComponent,
-    TableComponent,
-    DialogWindowComponent,
-    ProductPropertyFormComponent,
-  ],
+    selector: 'app-product-base-form',
+    templateUrl: './product-base-form.component.html',
+    styleUrl: './product-base-form.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        TranslateModule,
+        ReactiveFormsModule,
+        ButtonComponent,
+        InputComponent,
+        InputSelectComponent,
+        TableComponent,
+        DialogWindowComponent,
+        ProductPropertyFormComponent,
+    ]
 })
 export class ProductBaseFormComponent extends BaseFormComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);

@@ -31,25 +31,24 @@ import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.
 import { DialogType, ProductFormUtils } from './utils/product-form.utils';
 
 @Component({
-  selector: 'app-product-form',
-  standalone: true,
-  templateUrl: './product-form.component.html',
-  styleUrl: './product-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ReactiveFormsModule,
-    TranslateModule,
-    ButtonComponent,
-    InputComponent,
-    InputNumberComponent,
-    InputSelectComponent,
-    DialogWindowComponent,
-    SetProductBaseFormComponent,
-    TableComponent,
-    SetProductParameterValueComponent,
-    SetProductPhotoComponent,
-    PreviewProductPhotoComponent,
-  ],
+    selector: 'app-product-form',
+    templateUrl: './product-form.component.html',
+    styleUrl: './product-form.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        ButtonComponent,
+        InputComponent,
+        InputNumberComponent,
+        InputSelectComponent,
+        DialogWindowComponent,
+        SetProductBaseFormComponent,
+        TableComponent,
+        SetProductParameterValueComponent,
+        SetProductPhotoComponent,
+        PreviewProductPhotoComponent,
+    ]
 })
 export class ProductFormComponent extends BaseFormComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);

@@ -6,7 +6,7 @@ import { IconType } from '../../../../core/enums/icon-type';
 import { TableHeaderFloat } from '../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../core/models/data-table-column.model';
-import { PurchaseListService } from '../../../../core/services/purchase-list.service';
+import { BasketService } from '../../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { DropDownComponent } from '../../../shared/drop-down/drop-down.component';
@@ -15,7 +15,6 @@ import { TableComponent } from '../../../shared/table/table.component';
 
 @Component({
   selector: 'app-product-details',
-  standalone: true,
   imports: [
     TranslateModule,
     ButtonComponent,
@@ -30,11 +29,14 @@ import { TableComponent } from '../../../shared/table/table.component';
 })
 export class ProductDetailsComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _purchaseListService = inject(PurchaseListService);
+  private readonly _basketService = inject(BasketService);
+
+  readonly startQuantity = 1;
 
   images = signal<{ source: string; isShowed: boolean }[]>([]);
   isFavouriteOpen = signal<boolean>(false);
-  product = signal<ProductDto | undefined>(undefined);
+  product = signal<ProductDto>(this._activatedRoute.snapshot.data['data']['product']);
+  quantity = signal<number>(this.startQuantity);
 
   image = computed<string>(() => {
     const image = this.images().find(x => x.isShowed);
@@ -60,9 +62,17 @@ export class ProductDetailsComponent {
   IconType: typeof IconType = IconType;
 
   constructor() {
-    this.product.set(this._activatedRoute.snapshot.data['data']['product']);
     this.images.set(this._activatedRoute.snapshot.data['data']['images']);
-    this._purchaseListService.getUserPurchaseLists();
+  }
+
+  addToBasket(): void {
+    const product = this.product();
+    if (product) {
+      this._basketService.addToBasket({
+        productId: product.id,
+        quantity: this.quantity(),
+      });
+    }
   }
 
   addToFavourite(): void {
@@ -71,10 +81,6 @@ export class ProductDetailsComponent {
 
   onInPurchaseListChange(value: boolean): void {
     const product = this.product();
-    if (!product) {
-      return;
-    }
-
     product.isInPurchaseList = value;
     this.product.set(product);
   }

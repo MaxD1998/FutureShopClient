@@ -33,6 +33,19 @@
     "add": "Dodaj",
     "name": "Nazwa"
   },
+  "basket-component": {
+    "basket": "Koszyk",
+    "basket-is-empty": "Koszyk jest pusty",
+    "check-our-product-and-get-inspired": "Sprawdź nasze produkty i zainspiruj się!",
+    "clear-basket": "Wyczyść koszyk",
+    "go-to-the-main-side": "Przejdź do strony głównej",
+    "go-to-the-order": "Przejdź do zamówienia",
+    "hurry-up!-products-in-the-basket-are-not-reserved!": "Pośpiesz się! Produkty w koszyku nie są rezerwowane!",
+    "log-in": "Zaloguj się",
+    "save-as-a-list": "Zapisz jako listę",
+    "to-check-our-products-or-get-inspired": ", aby sprawdzić zapisane produkty lub zainspiruj się",
+    "to-pay": "Do zapłaty"
+  },
   "category-form-component": {
     "add-sub-category": "Dodaj podkategorię",
     "add-translation": "Dodaj tłumaczenie",
@@ -105,6 +118,7 @@
     "product-count": "Liczba produktów"
   },
   "product-details.component": {
+    "add-to-basket": "Dodaj do koszyka",
     "product-feedback": "Opinii o produkcie",
     "rating": "Ocena",
     "specyfication": "Specyfikacja",

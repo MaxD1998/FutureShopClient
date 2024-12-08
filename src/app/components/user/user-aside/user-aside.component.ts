@@ -5,12 +5,11 @@ import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { AsideComponent } from '../../shared/aside/aside.component';
 
 @Component({
-  selector: 'app-user-aside',
-  standalone: true,
-  imports: [TranslateModule, AsideComponent],
-  templateUrl: './user-aside.component.html',
-  styleUrl: './user-aside.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-user-aside',
+    imports: [TranslateModule, AsideComponent],
+    templateUrl: './user-aside.component.html',
+    styleUrl: './user-aside.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserAsideComponent {
   items = signal<AsideItemModel[]>([

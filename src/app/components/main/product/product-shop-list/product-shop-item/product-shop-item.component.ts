@@ -7,6 +7,7 @@ import { ClientRoute } from '../../../../../core/constants/client-routes/client.
 import { ProductPhotoDataService } from '../../../../../core/data-services/product-photo.data-service';
 import { IconType } from '../../../../../core/enums/icon-type';
 import { ProductShopListModel } from '../../../../../core/models/product-shop.list-model';
+import { BasketService } from '../../../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { DropDownComponent } from '../../../../shared/drop-down/drop-down.component';
@@ -14,13 +15,13 @@ import { IconComponent } from '../../../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-product-shop-item',
-  standalone: true,
   imports: [TranslateModule, ButtonComponent, IconComponent, DropDownComponent, AddProductToPurchaseListComponent],
   templateUrl: './product-shop-item.component.html',
   styleUrl: './product-shop-item.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductShopItemComponent {
+  private readonly _basketService = inject(BasketService);
   private readonly _injector = inject(Injector);
   private readonly _productPhotoDataService = inject(ProductPhotoDataService);
   private readonly _router = inject(Router);
@@ -43,6 +44,10 @@ export class ProductShopItemComponent {
 
   addToBasket(event: Event): void {
     event.stopPropagation();
+    this._basketService.addToBasket({
+      productId: this.product().id,
+      quantity: 1,
+    });
   }
 
   addToFavourite(): void {

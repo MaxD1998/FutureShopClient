@@ -4,12 +4,11 @@ import { ButtonComponent } from '../../../../shared/button/button.component';
 import { InputFileComponent } from '../../../../shared/input-file/input-file.component';
 
 @Component({
-  selector: 'app-set-product-photo',
-  standalone: true,
-  imports: [ButtonComponent, InputFileComponent, TranslateModule],
-  templateUrl: './set-product-photo.component.html',
-  styleUrl: './set-product-photo.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-set-product-photo',
+    imports: [ButtonComponent, InputFileComponent, TranslateModule],
+    templateUrl: './set-product-photo.component.html',
+    styleUrl: './set-product-photo.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SetProductPhotoComponent {
   private _file?: File;

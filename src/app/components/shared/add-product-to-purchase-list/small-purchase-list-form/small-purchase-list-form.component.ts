@@ -8,12 +8,11 @@ import { ButtonComponent } from '../../button/button.component';
 import { InputComponent } from '../../input/input.component';
 
 @Component({
-  selector: 'app-small-purchase-list-form',
-  standalone: true,
-  imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent],
-  templateUrl: './small-purchase-list-form.component.html',
-  styleUrl: './small-purchase-list-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-small-purchase-list-form',
+    imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent],
+    templateUrl: './small-purchase-list-form.component.html',
+    styleUrl: './small-purchase-list-form.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SmallPurchaseListFormComponent extends BaseFormComponent {
   private readonly _purchaseListService = inject(PurchaseListService);

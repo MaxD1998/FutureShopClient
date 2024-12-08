@@ -10,13 +10,12 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
 };
 
 @Component({
-  selector: 'app-input',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './input.component.html',
-  styleUrl: './input.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [CUSTOM_VALUE_ACCESSOR],
+    selector: 'app-input',
+    imports: [TranslateModule],
+    templateUrl: './input.component.html',
+    styleUrl: './input.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [CUSTOM_VALUE_ACCESSOR]
 })
 export class InputComponent implements ControlValueAccessor {
   autocomplete = input<string>();

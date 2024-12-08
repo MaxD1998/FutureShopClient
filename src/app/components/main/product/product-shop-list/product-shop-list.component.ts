@@ -10,7 +10,6 @@ import { ProductShopLisRequestDto } from '../../../../core/dtos/product-shop.lis
 import { ProductSortType } from '../../../../core/enums/product-sort-type';
 import { ProductShopListModel } from '../../../../core/models/product-shop.list-model';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
-import { PurchaseListService } from '../../../../core/services/purchase-list.service';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { InputNumberComponent } from '../../../shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../shared/input-select/input-select.component';
@@ -19,7 +18,6 @@ import { ProductShopItemComponent } from './product-shop-item/product-shop-item.
 
 @Component({
   selector: 'app-product-shop-list',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     TranslateModule,
@@ -36,7 +34,6 @@ import { ProductShopItemComponent } from './product-shop-item/product-shop-item.
 export class ProductShopListComponent extends BaseFormComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productDataService = inject(ProductDataService);
-  private readonly _purchaseListService = inject(PurchaseListService);
 
   categoryName = signal<string>('');
   products = signal<ProductShopListModel[]>([]);
@@ -52,7 +49,6 @@ export class ProductShopListComponent extends BaseFormComponent {
 
   constructor() {
     super();
-    this._purchaseListService.getUserPurchaseLists();
     this._activatedRoute.data.subscribe({
       next: data => {
         if (!data) {

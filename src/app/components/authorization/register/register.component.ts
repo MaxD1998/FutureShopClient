@@ -13,12 +13,11 @@ import { InputDateComponent } from '../../shared/input-date/input-date.component
 import { InputComponent } from '../../shared/input/input.component';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent, InputDateComponent],
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent, InputDateComponent]
 })
 export class RegisterComponent extends BaseFormComponent {
   private readonly _authService = inject(AuthService);

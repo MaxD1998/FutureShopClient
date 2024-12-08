@@ -18,32 +18,31 @@ import { BaseFormComponent } from '../../../core/bases/base-form.component';
 import { PurchaseListDto } from '../../../core/dtos/purchase-list.dto';
 import { ButtonLayout } from '../../../core/enums/button-layout';
 import { IconType } from '../../../core/enums/icon-type';
-import { AuthService } from '../../../core/services/auth.service';
 import { PurchaseListService } from '../../../core/services/purchase-list.service';
+import { UserService } from '../../../core/services/user.service';
 import { ButtonComponent } from '../button/button.component';
 import { IconComponent } from '../icon/icon.component';
 import { SmallPurchaseListFormComponent } from './small-purchase-list-form/small-purchase-list-form.component';
 
 @Component({
-  selector: 'app-add-product-to-purchase-list',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    TranslateModule,
-    IconComponent,
-    ButtonComponent,
-    SmallPurchaseListFormComponent,
-    AsyncPipe,
-  ],
-  templateUrl: './add-product-to-purchase-list.component.html',
-  styleUrl: './add-product-to-purchase-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-add-product-to-purchase-list',
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        IconComponent,
+        ButtonComponent,
+        SmallPurchaseListFormComponent,
+        AsyncPipe,
+    ],
+    templateUrl: './add-product-to-purchase-list.component.html',
+    styleUrl: './add-product-to-purchase-list.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddProductToPurchaseListComponent extends BaseFormComponent implements OnDestroy {
   private readonly _injector = inject(Injector);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
-  authService = inject(AuthService);
+  authService = inject(UserService);
   purchaseListService = inject(PurchaseListService);
 
   isVisible = input.required<boolean>();

@@ -33,6 +33,19 @@
     "add": "Add",
     "name": "Name"
   },
+  "basket-component": {
+    "basket": "Basket",
+    "basket-is-empty": "Basket is empty",
+    "check-our-product-and-get-inspired": "check our product and get inspired",
+    "clear-basket": "Clear basket",
+    "go-to-the-main-side": "Go to the main side",
+    "go-to-the-order": "Go to the order",
+    "hurry-up!-products-in-the-basket-are-not-reserved!": "Hurry up! Products in the basket are not reserved!",
+    "log-in": "Log in",
+    "save-as-a-list": "Save as a list",
+    "to-check-our-products-or-get-inspired": "to check our products or get inspired",
+    "to-pay": "To pay"
+  },
   "category-form-component": {
     "add-sub-category": "Add subcategory",
     "add-translation": "Add translation",
@@ -105,6 +118,7 @@
     "product-count": "Product count"
   },
   "product-details.component": {
+    "add-to-basket": "Add to basket",
     "product-feedback": "Product feedback",
     "rating": "Rating",
     "specyfication": "Specyfication",

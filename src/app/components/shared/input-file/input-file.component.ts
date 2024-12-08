@@ -2,12 +2,11 @@ import { ChangeDetectionStrategy, Component, input, output, signal } from '@angu
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-input-file',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './input-file.component.html',
-  styleUrl: './input-file.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-input-file',
+    imports: [TranslateModule],
+    templateUrl: './input-file.component.html',
+    styleUrl: './input-file.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputFileComponent {
   accept = input<string>('*');

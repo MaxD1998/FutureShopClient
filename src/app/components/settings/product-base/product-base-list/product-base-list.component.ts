@@ -13,12 +13,11 @@ import { ButtonComponent } from '../../../shared/button/button.component';
 import { TableComponent } from '../../../shared/table/table.component';
 
 @Component({
-  selector: 'app-product-base-list',
-  standalone: true,
-  templateUrl: './product-base-list.component.html',
-  styleUrl: './product-base-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, ButtonComponent, TableComponent],
+    selector: 'app-product-base-list',
+    templateUrl: './product-base-list.component.html',
+    styleUrl: './product-base-list.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TranslateModule, ButtonComponent, TableComponent]
 })
 export class ProductBaseListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);

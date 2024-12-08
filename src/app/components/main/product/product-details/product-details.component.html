@@ -17,33 +17,35 @@
       </div>
     </div>
     <div class="flex flex-col flex-1 gap-4">
-      <h1 class="text-2xl font-semibold">{{ product()?.name }}</h1>
+      <h1 class="text-2xl font-semibold">{{ product().name }}</h1>
       <span class="text-xl">{{ 'product-details.component.rating' | translate }}: 8.5/10</span>
       <span>{{ 'product-details.component.product-feedback' | translate }}: 4</span>
       <div class="flex">
         <span class="text-2xl">
-          {{ product()?.price }}
+          {{ product().price }}
           {{ 'common.currencies.pln' | translate }}
         </span>
       </div>
       <div class="flex flex-wrap gap-2">
-        <app-input-plus-minus></app-input-plus-minus>
+        <app-input-plus-minus [minValue]="startQuantity" [(value)]="quantity"></app-input-plus-minus>
         <div class="flex flex-auto gap-2">
-          <app-button class="flex-auto" [label]="'Dodaj do koszyka' | translate"></app-button>
+          <app-button
+            class="flex-auto"
+            [label]="'product-details.component.add-to-basket' | translate"
+            (onClick)="addToBasket()">
+          </app-button>
           <app-button
             [isIcon]="true"
-            [label]="product()?.isInPurchaseList ? IconType.fillHeart : IconType.heart"
+            [label]="product().isInPurchaseList ? IconType.fillHeart : IconType.heart"
             (onClick)="addToFavourite()">
-            @if (product()) {
-              <app-drop-down [(isVisible)]="isFavouriteOpen">
-                <app-add-product-to-purchase-list
-                  [isVisible]="isFavouriteOpen()"
-                  [productId]="product()?.id ?? ''"
-                  (isInPurchaseListChange)="onInPurchaseListChange($event)"
-                  (onClose)="isFavouriteOpen.set($event)">
-                </app-add-product-to-purchase-list>
-              </app-drop-down>
-            }
+            <app-drop-down [(isVisible)]="isFavouriteOpen">
+              <app-add-product-to-purchase-list
+                [isVisible]="isFavouriteOpen()"
+                [productId]="product().id"
+                (isInPurchaseListChange)="onInPurchaseListChange($event)"
+                (onClose)="isFavouriteOpen.set($event)">
+              </app-add-product-to-purchase-list>
+            </app-drop-down>
           </app-button>
         </div>
       </div>
@@ -52,6 +54,6 @@
   <div class="border-t"></div>
   <div class="flex flex-col gap-2">
     <h2 class="text-xl">{{ 'product-details.component.specyfication' | translate }}</h2>
-    <app-table idName="id" [columns]="columns" [items]="product()?.productParameters ?? []"></app-table>
+    <app-table idName="id" [columns]="columns" [items]="product().productParameters"></app-table>
   </div>
 </div>

@@ -2,10 +2,10 @@ import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { map, take } from 'rxjs';
 import { UserType } from '../enums/user-type';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
+  const authService = inject(UserService);
 
   return authService.user$.pipe(
     take(1),

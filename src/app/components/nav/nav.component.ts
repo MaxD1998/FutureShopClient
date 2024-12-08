@@ -10,27 +10,28 @@ import { DropDownListOrientation } from '../../core/enums/drop-down-list-orienta
 import { IconType } from '../../core/enums/icon-type';
 import { DropDownListItemModel } from '../../core/models/drop-down-list-item.model';
 import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../../core/services/user.service';
 import { DropDownListItemComponent } from '../shared/drop-down-list/drop-down-list-item/drop-down-list-item.component';
 import { DropDownListComponent } from '../shared/drop-down-list/drop-down-list.component';
 import { NavButtonComponent } from './nav-button/nav-button.component';
 
 @Component({
-  selector: 'app-nav',
-  standalone: true,
-  templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    NavButtonComponent,
-    TranslateModule,
-    DropDownListComponent,
-    RouterModule,
-    DropDownListItemComponent,
-    AsyncPipe,
-  ],
+    selector: 'app-nav',
+    templateUrl: './nav.component.html',
+    styleUrl: './nav.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NavButtonComponent,
+        TranslateModule,
+        DropDownListComponent,
+        RouterModule,
+        DropDownListItemComponent,
+        AsyncPipe,
+    ]
 })
 export class NavComponent {
   private readonly _authService = inject(AuthService);
+  private readonly _userService = inject(UserService);
   private readonly _router = inject(Router);
   private readonly _translateService = inject(TranslateService);
 
@@ -51,7 +52,7 @@ export class NavComponent {
     }),
   );
 
-  isSignedIn$ = this._authService.user$.pipe(map(user => !!user));
+  isSignedIn$ = this._userService.user$.pipe(map(user => !!user));
 
   changeLang(item: DropDownListItemModel): void {
     this.isDropdownLanguageVisible.set(false);

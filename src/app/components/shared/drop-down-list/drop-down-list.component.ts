@@ -4,12 +4,11 @@ import { DropDownListItemModel } from '../../../core/models/drop-down-list-item.
 import { DropDownListItemComponent } from './drop-down-list-item/drop-down-list-item.component';
 
 @Component({
-  selector: 'app-drop-down-list',
-  standalone: true,
-  templateUrl: './drop-down-list.component.html',
-  styleUrl: './drop-down-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DropDownListItemComponent],
+    selector: 'app-drop-down-list',
+    templateUrl: './drop-down-list.component.html',
+    styleUrl: './drop-down-list.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [DropDownListItemComponent]
 })
 export class DropDownListComponent {
   items = input<DropDownListItemModel[]>();

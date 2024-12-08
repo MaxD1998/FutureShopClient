@@ -1,18 +1,18 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { IconType } from '../../../core/enums/icon-type';
-import { ButtonComponent } from '../button/button.component';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-input-plus-minus',
-  standalone: true,
-  imports: [ButtonComponent, IconComponent],
+  imports: [IconComponent],
   templateUrl: './input-plus-minus.component.html',
   styleUrl: './input-plus-minus.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputPlusMinusComponent {
-  value = model<number>(0);
+  minValue = input<number>(0);
+
+  value = model<number>(this.minValue());
 
   IconType: typeof IconType = IconType;
 
@@ -23,7 +23,7 @@ export class InputPlusMinusComponent {
   }
 
   reduce(): void {
-    if (this.value() > 0) {
+    if (this.value() > this.minValue()) {
       this.value.set(this.value() - 1);
     }
   }

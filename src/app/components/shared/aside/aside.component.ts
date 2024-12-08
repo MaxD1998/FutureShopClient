@@ -6,12 +6,11 @@ import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
-  selector: 'app-aside',
-  standalone: true,
-  templateUrl: './aside.component.html',
-  styleUrl: './aside.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, IconComponent, TranslateModule],
+    selector: 'app-aside',
+    templateUrl: './aside.component.html',
+    styleUrl: './aside.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterModule, IconComponent, TranslateModule]
 })
 export class AsideComponent {
   items = input.required<AsideItemModel[]>();

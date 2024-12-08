@@ -7,14 +7,13 @@ import { PurchaseListDataService } from '../../../core/data-services/purchase-li
 import { IconType } from '../../../core/enums/icon-type';
 import { PurchaseListModel } from '../../../core/models/purchase-list.model';
 import { PurchaseListService } from '../../../core/services/purchase-list.service';
+import { AddPurchaseListComponent } from '../../shared/add-purchase-list/add-purchase-list.component';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { IconComponent } from '../../shared/icon/icon.component';
 import { DialogWindowComponent } from '../../shared/modals/dialog-window/dialog-window.component';
-import { AddPurchaseListComponent } from './add-purchase-list/add-purchase-list.component';
 
 @Component({
   selector: 'app-purchase-lists',
-  standalone: true,
   imports: [
     TranslateModule,
     ButtonComponent,

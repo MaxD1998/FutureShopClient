@@ -7,12 +7,11 @@ import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { InputSelectComponent } from '../../../../shared/input-select/input-select.component';
 
 @Component({
-  selector: 'app-set-product-base-form',
-  standalone: true,
-  imports: [ReactiveFormsModule, TranslateModule, InputSelectComponent],
-  templateUrl: './set-product-base-form.component.html',
-  styleUrl: './set-product-base-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-set-product-base-form',
+    imports: [ReactiveFormsModule, TranslateModule, InputSelectComponent],
+    templateUrl: './set-product-base-form.component.html',
+    styleUrl: './set-product-base-form.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SetProductBaseFormComponent extends BaseFormComponent implements OnDestroy {
   private readonly _unsubscribe: Subject<void> = new Subject<void>();

@@ -9,13 +9,12 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
 };
 
 @Component({
-  selector: 'app-input-number',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './input-number.component.html',
-  styleUrl: './input-number.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [CUSTOM_VALUE_ACCESSOR],
+    selector: 'app-input-number',
+    imports: [TranslateModule],
+    templateUrl: './input-number.component.html',
+    styleUrl: './input-number.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [CUSTOM_VALUE_ACCESSOR]
 })
 export class InputNumberComponent {
   autocomplete = input<string>();

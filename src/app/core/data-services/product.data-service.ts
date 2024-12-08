@@ -8,13 +8,13 @@ import { ProductShopLisRequestDto } from '../dtos/product-shop.list-request-dto'
 import { ProductDto } from '../dtos/product.dto';
 import { ProductFormDto } from '../dtos/product.form-dto';
 import { ProductListDto } from '../dtos/product.list-dto';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductDataService {
-  private readonly _authService = inject(AuthService);
+  private readonly _authService = inject(UserService);
   private readonly _httpClient = inject(HttpClient);
 
   add(dto: ProductFormDto): Observable<ProductFormDto> {

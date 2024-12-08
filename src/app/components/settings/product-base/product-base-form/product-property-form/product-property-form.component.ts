@@ -9,34 +9,37 @@ import { ButtonComponent } from '../../../../shared/button/button.component';
 import { InputComponent } from '../../../../shared/input/input.component';
 
 @Component({
-  selector: 'app-product-property-form',
-  standalone: true,
-  templateUrl: './product-property-form.component.html',
-  styleUrl: './product-property-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent],
+    selector: 'app-product-property-form',
+    templateUrl: './product-property-form.component.html',
+    styleUrl: './product-property-form.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent]
 })
 export class ProductPropertyFormComponent extends BaseFormComponent {
   private readonly _injector = inject(Injector);
 
   editParameter = input<ProductParameterFormModel>();
+  isDialogActive = input.required<boolean>();
   onSubmit = output<ProductParameterFormModel>();
 
   translations = signal<FormArray>(this.form.controls['translations'] as FormArray);
-
-  editParameter$ = toObservable(this.editParameter, { injector: this._injector });
-
   constructor() {
     super();
 
-    this.editParameter$.subscribe({
+    toObservable(this.isDialogActive, { injector: this._injector }).subscribe({
       next: response => {
-        if (response) {
-          this.form.controls['id'].setValue(response.id);
-          this.form.controls['name'].setValue(response.name);
+        if (!response) {
+          return;
+        }
+
+        const parameter = this.editParameter();
+
+        if (parameter) {
+          this.form.controls['id'].setValue(parameter.id);
+          this.form.controls['name'].setValue(parameter.name);
 
           const translations = environment.availableLangs.map(lang => {
-            const transaltion = response.translations.find(x => x.lang == lang);
+            const transaltion = parameter.translations.find(x => x.lang == lang);
             if (transaltion) {
               return this._formBuilder.group({
                 id: [transaltion.id],

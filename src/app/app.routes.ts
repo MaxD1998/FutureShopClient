@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ClientRoute } from './core/constants/client-routes/client.route';
 import { authGuard } from './core/guards/auth.guard';
 import { unauthGuard } from './core/guards/unauth.guard';
+import { basketResolver } from './core/resolvers/basket.resolver';
 import { mainResolver as mainCategoryListResolver } from './core/resolvers/main-category-list.resolver';
 
 export const routes: Routes = [
@@ -13,6 +14,9 @@ export const routes: Routes = [
   {
     path: ClientRoute.basket,
     loadComponent: () => import('./components/basket/basket.component').then(x => x.BasketComponent),
+    resolve: {
+      data: basketResolver,
+    },
   },
   {
     path: ClientRoute.main,

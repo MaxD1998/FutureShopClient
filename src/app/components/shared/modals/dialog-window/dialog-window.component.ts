@@ -3,12 +3,11 @@ import { IconType } from '../../../../core/enums/icon-type';
 import { IconComponent } from '../../icon/icon.component';
 
 @Component({
-  selector: 'app-dialog-window',
-  standalone: true,
-  templateUrl: './dialog-window.component.html',
-  styleUrl: './dialog-window.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent],
+    selector: 'app-dialog-window',
+    templateUrl: './dialog-window.component.html',
+    styleUrl: './dialog-window.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IconComponent]
 })
 export class DialogWindowComponent {
   title = input<string>();

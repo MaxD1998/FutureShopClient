@@ -2,12 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { PaginationModel } from '../../../../core/models/pagination.model';
 
 @Component({
-  selector: 'app-table-pagination',
-  standalone: true,
-  imports: [],
-  templateUrl: './table-pagination.component.html',
-  styleUrl: './table-pagination.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-table-pagination',
+    imports: [],
+    templateUrl: './table-pagination.component.html',
+    styleUrl: './table-pagination.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TablePaginationComponent {
   page = input.required<PaginationModel>();

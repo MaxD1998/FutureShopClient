@@ -3,12 +3,11 @@ import { IconType } from '../../../../../core/enums/icon-type';
 import { IconComponent } from '../../../icon/icon.component';
 
 @Component({
-  selector: 'app-table-action-field',
-  standalone: true,
-  templateUrl: './table-action-field.component.html',
-  styleUrl: './table-action-field.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent],
+    selector: 'app-table-action-field',
+    templateUrl: './table-action-field.component.html',
+    styleUrl: './table-action-field.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IconComponent]
 })
 export class TableActionFieldComponent {
   id = input.required<string>();

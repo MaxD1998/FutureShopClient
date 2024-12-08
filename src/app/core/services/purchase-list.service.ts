@@ -4,16 +4,18 @@ import { PurchaseListDataService } from '../data-services/purchase-list.data-ser
 import { PurchaseListItemFormDto } from '../dtos/purchase-list-item.from-dto';
 import { PurchaseListDto } from '../dtos/purchase-list.dto';
 import { PurchaseListFormDto } from '../dtos/purchase-list.from-dto';
-import { AuthService } from './auth.service';
+import { BasketService } from './basket.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PurchaseListService {
-  private readonly _authService = inject(AuthService);
+  private readonly _basketService = inject(BasketService);
   private readonly _purchaseListDataService = inject(PurchaseListDataService);
+  private readonly _userService = inject(UserService);
 
-  purchaseLists$: BehaviorSubject<PurchaseListDto[]> = new BehaviorSubject<PurchaseListDto[]>([]);
+  readonly purchaseLists$: BehaviorSubject<PurchaseListDto[]> = new BehaviorSubject<PurchaseListDto[]>([]);
 
   addOrRemovePurchaseListItem(addPurchaseListIds: string[], productId: string, callback?: () => void): void {
     this.purchaseLists$
@@ -60,12 +62,20 @@ export class PurchaseListService {
           return result$;
         }),
         switchMap(response => {
-          return response.length > 0 ? this.getUserPurchaseLists$() : this.purchaseLists$.pipe(take(1));
+          return forkJoin({
+            purchaseLists: response.length > 0 ? this.getUserPurchaseLists$() : this.purchaseLists$.pipe(take(1)),
+            basket: this._basketService.basket$.pipe(
+              take(1),
+              switchMap(basket => {
+                return basket ? (basket.basketItems.length > 0 ? this._basketService.getBasket$() : of([])) : of([]);
+              }),
+            ),
+          });
         }),
       )
       .subscribe({
         next: response => {
-          this.purchaseLists$.next(response);
+          this.purchaseLists$.next(response.purchaseLists);
 
           if (callback) {
             callback();
@@ -75,58 +85,19 @@ export class PurchaseListService {
   }
 
   create(dto: PurchaseListFormDto, callback?: (dto: PurchaseListDto) => void): void {
-    this._purchaseListDataService
-      .create(dto)
-      .pipe(
-        switchMap(response => {
-          return forkJoin({
-            list: this.purchaseLists$.pipe(take(1)),
-            newValue: this._purchaseListDataService.getById(response.id as string),
-          });
-        }),
-      )
-      .subscribe({
-        next: response => {
-          response.list.push(response.newValue);
-          const list = response.list.sort((a, b) => {
-            if (a.isFavourite > b.isFavourite) {
-              return -1;
-            }
-
-            if (a.isFavourite < b.isFavourite) {
-              return 1;
-            }
-
-            if (a.name.toUpperCase() > b.name.toUpperCase()) {
-              return 1;
-            }
-
-            if (a.name.toUpperCase() < b.name.toUpperCase()) {
-              return -1;
-            }
-
-            return 0;
-          });
-
-          this.purchaseLists$.next(list);
-          if (callback) {
-            callback(response.newValue);
-          }
-        },
-      });
-  }
-
-  getUserPurchaseLists(): void {
-    this.getUserPurchaseLists$().subscribe({
+    this.create$(dto).subscribe({
       next: response => {
-        this.purchaseLists$.next(response);
+        this.purchaseLists$.next(response.list);
+        if (callback) {
+          callback(response.newValue);
+        }
       },
     });
   }
 
-  public getUserPurchaseLists$(): Observable<PurchaseListDto[]> {
+  getUserPurchaseLists$(): Observable<PurchaseListDto[]> {
     const key = 'favouriteId';
-    return this._authService.user$.pipe(
+    return this._userService.user$.pipe(
       take(1),
       switchMap(user => {
         if (user) {
@@ -176,6 +147,50 @@ export class PurchaseListService {
             }),
           );
         }
+      }),
+      tap(purchaseLists => {
+        this.purchaseLists$.next(purchaseLists);
+      }),
+    );
+  }
+
+  private create$(dto: PurchaseListFormDto): Observable<{
+    list: PurchaseListDto[];
+    newValue: PurchaseListDto;
+  }> {
+    return this._purchaseListDataService.create(dto).pipe(
+      switchMap(response => {
+        return forkJoin({
+          list: this.purchaseLists$.pipe(take(1)),
+          newValue: this._purchaseListDataService.getById(response.id as string),
+        });
+      }),
+      switchMap(response => {
+        response.list.push(response.newValue);
+        const list = response.list.sort((a, b) => {
+          if (a.isFavourite > b.isFavourite) {
+            return -1;
+          }
+
+          if (a.isFavourite < b.isFavourite) {
+            return 1;
+          }
+
+          if (a.name.toUpperCase() > b.name.toUpperCase()) {
+            return 1;
+          }
+
+          if (a.name.toUpperCase() < b.name.toUpperCase()) {
+            return -1;
+          }
+
+          return 0;
+        });
+
+        return forkJoin({
+          list: of(list),
+          newValue: of(response.newValue),
+        });
       }),
     );
   }

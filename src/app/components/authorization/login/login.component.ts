@@ -14,12 +14,11 @@ import { IconComponent } from '../../shared/icon/icon.component';
 import { InputComponent } from '../../shared/input/input.component';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, ReactiveFormsModule, InputComponent, ButtonComponent, IconComponent],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TranslateModule, ReactiveFormsModule, InputComponent, ButtonComponent, IconComponent]
 })
 export class LoginComponent extends BaseFormComponent {
   private readonly _authService = inject(AuthService);

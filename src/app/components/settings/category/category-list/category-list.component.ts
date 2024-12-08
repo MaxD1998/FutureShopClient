@@ -14,12 +14,11 @@ import { ButtonComponent } from '../../../shared/button/button.component';
 import { TableComponent } from '../../../shared/table/table.component';
 
 @Component({
-  selector: 'app-category-list',
-  standalone: true,
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, ButtonComponent, TableComponent],
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
+    styleUrl: './category-list.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [TranslateModule, ButtonComponent, TableComponent]
 })
 export class CategoryListComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);

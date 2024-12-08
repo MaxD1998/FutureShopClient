@@ -6,13 +6,13 @@ import { routes } from './app.routes';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { langInterceptor } from './core/interceptors/lang.interceptor';
-import { autoLogin, provideTranslation } from './core/services/init.service';
+import { loadData, provideTranslation } from './core/services/init.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([jwtInterceptor, langInterceptor, errorInterceptor])),
     provideTranslation(),
-    autoLogin(),
+    loadData(),
   ],
 };

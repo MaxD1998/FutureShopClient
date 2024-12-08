@@ -1,10 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { from, switchMap, take } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
+  const authService = inject(UserService);
 
   return from(
     authService.user$.pipe(

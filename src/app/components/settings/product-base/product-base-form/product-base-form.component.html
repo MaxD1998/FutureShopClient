@@ -56,6 +56,9 @@
   [isDialogActive]="isDialogActive()"
   [title]="dialogTitle() | translate"
   (onCloseDialog)="closeDialog()">
-  <app-product-property-form [editParameter]="parameterToEdit()" (onSubmit)="submitProductParameter($event)">
+  <app-product-property-form
+    [editParameter]="parameterToEdit()"
+    [isDialogActive]="isDialogActive()"
+    (onSubmit)="submitProductParameter($event)">
   </app-product-property-form>
 </app-dialog-window>

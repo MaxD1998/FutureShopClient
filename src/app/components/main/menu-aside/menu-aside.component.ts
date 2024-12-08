@@ -6,15 +6,13 @@ import { ClientRoute } from '../../../core/constants/client-routes/client.route'
 import { CategoryDataService } from '../../../core/data-services/category.data-service';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { AsideComponent } from '../../shared/aside/aside.component';
-import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-menu-aside',
-  standalone: true,
   templateUrl: './menu-aside.component.html',
   styleUrl: './menu-aside.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, TranslateModule, AsideComponent],
+  imports: [TranslateModule, AsideComponent],
 })
 export class MenuAsideComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);

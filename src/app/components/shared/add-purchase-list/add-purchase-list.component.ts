@@ -3,13 +3,12 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { tap } from 'rxjs';
-import { BaseFormComponent } from '../../../../core/bases/base-form.component';
-import { ButtonComponent } from '../../../shared/button/button.component';
-import { InputComponent } from '../../../shared/input/input.component';
+import { BaseFormComponent } from '../../../core/bases/base-form.component';
+import { ButtonComponent } from '../button/button.component';
+import { InputComponent } from '../input/input.component';
 
 @Component({
   selector: 'app-add-purchase-list',
-  standalone: true,
   imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent],
   templateUrl: './add-purchase-list.component.html',
   styleUrl: './add-purchase-list.component.css',

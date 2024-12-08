@@ -4,12 +4,11 @@ import { of, Subject, switchMap } from 'rxjs';
 import { ProductPhotoDataService } from '../../../../../core/data-services/product-photo.data-service';
 
 @Component({
-  selector: 'app-preview-product-photo',
-  standalone: true,
-  imports: [],
-  templateUrl: './preview-product-photo.component.html',
-  styleUrl: './preview-product-photo.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-preview-product-photo',
+    imports: [],
+    templateUrl: './preview-product-photo.component.html',
+    styleUrl: './preview-product-photo.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewProductPhotoComponent {
   private readonly _injector = inject(Injector);

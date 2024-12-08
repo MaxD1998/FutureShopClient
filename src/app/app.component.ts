@@ -3,12 +3,11 @@ import { RouterModule } from '@angular/router';
 import { NavComponent } from './components/nav/nav.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, NavComponent],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterModule, NavComponent]
 })
 export class AppComponent {
   title = 'FutureShopClient';

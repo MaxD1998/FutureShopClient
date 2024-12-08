@@ -9,13 +9,12 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
 };
 
 @Component({
-  selector: 'app-input-date',
-  standalone: true,
-  imports: [TranslateModule],
-  templateUrl: './input-date.component.html',
-  styleUrl: './input-date.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [CUSTOM_VALUE_ACCESSOR],
+    selector: 'app-input-date',
+    imports: [TranslateModule],
+    templateUrl: './input-date.component.html',
+    styleUrl: './input-date.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [CUSTOM_VALUE_ACCESSOR]
 })
 export class InputDateComponent implements ControlValueAccessor {
   autocomplete = input<string>();
