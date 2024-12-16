@@ -14,15 +14,15 @@ export class CategoryDataService {
   private readonly _httpClient = inject(HttpClient);
 
   add(dto: CategoryFormDto): Observable<CategoryFormDto> {
-    return this._httpClient.post<CategoryFormDto>(CategoryControllerRoute.base, dto);
+    return this._httpClient.post<CategoryFormDto>(CategoryControllerRoute.productModule, dto);
   }
 
   delete(id: string): Observable<null> {
-    return this._httpClient.delete<null>(`${CategoryControllerRoute.base}${id}`);
+    return this._httpClient.delete<null>(`${CategoryControllerRoute.productModule}${id}`);
   }
 
   getById(id: string): Observable<CategoryFormDto> {
-    const url = `${CategoryControllerRoute.base}${id}`;
+    const url = `${CategoryControllerRoute.productModule}${id}`;
     return this._httpClient.get<CategoryFormDto>(url);
   }
 
@@ -67,7 +67,7 @@ export class CategoryDataService {
   }
 
   update(id: string, dto: CategoryFormDto): Observable<CategoryFormDto> {
-    const url = `${CategoryControllerRoute.base}${id}`;
+    const url = `${CategoryControllerRoute.productModule}${id}`;
     return this._httpClient.put<CategoryFormDto>(url, dto);
   }
 }

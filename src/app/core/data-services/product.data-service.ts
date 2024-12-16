@@ -18,15 +18,15 @@ export class ProductDataService {
   private readonly _httpClient = inject(HttpClient);
 
   add(dto: ProductFormDto): Observable<ProductFormDto> {
-    return this._httpClient.post<ProductFormDto>(ProductControllerRoute.base, dto);
+    return this._httpClient.post<ProductFormDto>(ProductControllerRoute.productModule, dto);
   }
 
   delete(id: string): Observable<null> {
-    return this._httpClient.delete<null>(`${ProductControllerRoute.base}${id}`);
+    return this._httpClient.delete<null>(`${ProductControllerRoute.productModule}${id}`);
   }
 
   getById(id: string): Observable<ProductFormDto> {
-    const url = `${ProductControllerRoute.base}${id}`;
+    const url = `${ProductControllerRoute.productModule}${id}`;
     return this._httpClient.get<ProductFormDto>(url);
   }
 
@@ -88,7 +88,7 @@ export class ProductDataService {
   }
 
   update(id: string, dto: ProductFormDto): Observable<ProductFormDto> {
-    const url = `${ProductControllerRoute.base}${id}`;
+    const url = `${ProductControllerRoute.productModule}${id}`;
     return this._httpClient.put<ProductFormDto>(url, dto);
   }
 }
