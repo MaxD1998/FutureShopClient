@@ -7,7 +7,7 @@
       }
     </label>
   }
-  <div #selectBox class="relative cursor-pointer">
+  <div #selectBox class="relative {{ isDisabled() ? 'cursor-default' : 'cursor-pointer' }}">
     <div
       class="border rounded-md p-2 w-full h-[2.625rem] 
       {{ isFocus() ? 'border-blue-600' : '' }} 

@@ -1,0 +1,78 @@
+<div class="px-2 py-8">
+  <div class="flex justify-center">
+    <div class="min-w-96 w-2/5">
+      <div class="py-2 px-4 border rounded-md">
+        <h1 class="text-2xl text-center">{{ 'auth-module.register-component.registration' | translate }}</h1>
+        <div class="pt-4">
+          <form [formGroup]="form" (ngSubmit)="register()">
+            <div class="xl:flex xl:gap-4">
+              <app-input
+                class="xl:w-2/5"
+                label="{{ 'auth-module.register-component.first-name' | translate }}"
+                autocomplete="given-name"
+                formControlName="firstName"
+                [required]="true"
+                [type]="InputType.text"
+                [errorCode]="errorCode('firstName')">
+              </app-input>
+              <app-input
+                class="xl:w-3/5"
+                label="{{ 'auth-module.register-component.last-name' | translate }}"
+                autocomplete="family-name"
+                formControlName="lastName"
+                [required]="true"
+                [type]="InputType.text"
+                [errorCode]="errorCode('lastName')">
+              </app-input>
+            </div>
+            <div class="xl:flex xl:gap-4">
+              <app-input-date
+                class="xl:w-2/5"
+                label="{{ 'auth-module.register-component.date-of-birth' | translate }}"
+                autocomplete="off"
+                formControlName="dateOfBirth"
+                [required]="true"
+                [errorCode]="errorCode('dateOfBirth')">
+              </app-input-date>
+              <app-input
+                class="xl:w-3/5"
+                label="{{ 'auth-module.register-component.phone-number' | translate }}"
+                autocomplete="tel"
+                formControlName="phoneNumber"
+                [type]="InputType.email"
+                [errorCode]="errorCode('phoneNumber')">
+              </app-input>
+            </div>
+            <app-input
+              label="{{ 'auth-module.register-component.email' | translate }}"
+              autocomplete="email"
+              formControlName="email"
+              [required]="true"
+              [type]="InputType.email"
+              [errorCode]="errorCode('email')">
+            </app-input>
+            <app-input
+              label="{{ 'auth-module.register-component.password' | translate }}"
+              autocomplete="new-password"
+              formControlName="password"
+              [required]="true"
+              [type]="InputType.password"
+              [errorCode]="errorCode('password')">
+            </app-input>
+            <app-input
+              label="{{ 'auth-module.register-component.repeat-password' | translate }}"
+              autocomplete="off"
+              formControlName="repeatPassword"
+              [required]="true"
+              [type]="InputType.password"
+              [errorCode]="errorCode('repeatPassword')">
+            </app-input>
+            <div class="mt-4">
+              <app-button class="mt-4" label="{{ 'auth-module.register-component.sign-up' | translate }}"></app-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="flex flex-col h-full gap-4">
+  <div class="flex justify-between items-center h-11">
+    <h1 class="text-xl">{{ 'product-module.product-base-list-component.products-bases' | translate }}</h1>
+    <app-button
+      *canEdit="ModuleType.productModule"
+      [label]="'product-module.product-base-list-component.create-new-product-base' | translate"
+      (click)="navigateToCreate()">
+    </app-button>
+  </div>
+  <div class="border-t"></div>
+  <div class="flex-auto overflow-hidden">
+    <app-table
+      [columns]="columns"
+      [idName]="'id'"
+      [items]="productBases()"
+      [isEditAction]="true"
+      [isRemoveAction]="true"
+      [page]="pagination()"
+      (onEditAction)="navigateToEdit($event)"
+      (onPageClick)="changePage($event)"
+      (onRemoveAction)="removeRecord($event)">
+    </app-table>
+  </div>
+</div>

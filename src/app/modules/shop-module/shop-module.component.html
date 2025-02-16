@@ -1,0 +1,26 @@
+<header class="h-24 relative">
+  <div class="fixed w-full top-0 left-0 z-10 bg-white px-4">
+    <app-nav class="block max-w-364 mx-auto">
+      <app-nav-button
+        [iconName]="IconType.shoppingBag"
+        label="{{ 'nav-component.basket' | translate }}"
+        [routerLink]="ClientRoute.basket">
+      </app-nav-button>
+      <app-nav-button
+        [iconName]="IconType.heart"
+        label="{{ 'nav-component.favourite' | translate }}"
+        [routerLink]="ClientRoute.user + '/' + ClientRoute.purchaseLists">
+      </app-nav-button>
+      @if (isLocalAdmin$ | async) {
+        <app-nav-button
+          [iconName]="IconType.cog8Tooth"
+          label="{{ 'nav-component.settings' | translate }}"
+          [routerLink]="ClientRoute.shopModule + '/' + ClientRoute.settings">
+        </app-nav-button>
+      }
+    </app-nav>
+  </div>
+</header>
+<main class="max-w-364 mx-auto mt-4">
+  <router-outlet></router-outlet>
+</main>

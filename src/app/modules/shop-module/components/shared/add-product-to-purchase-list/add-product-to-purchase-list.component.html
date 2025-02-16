@@ -1,0 +1,42 @@
+<div class="flex flex-col w-72 bg-white">
+  <div class="flex w-full justify-between pb-4 border-b">
+    <span class="font-semibold">
+      {{ 'shop-module.add-product-to-purchase-list-component.save-on-a-list' | translate }}
+    </span>
+    <button class="rounded-md hover:bg-gray-200" (click)="close()">
+      <app-icon [iconName]="IconType.xMark"></app-icon>
+    </button>
+  </div>
+  @if (authService.user$ | async) {
+    @if (isOpenAddForm()) {
+      <app-small-purchase-list-form (onClick)="isOpenAddForm.set(false)"></app-small-purchase-list-form>
+    } @else {
+      <app-button
+        class="mt-2"
+        [label]="'shop-module.add-product-to-purchase-list-component.add-a-new-list' | translate"
+        [layout]="ButtonLayout.greenOutlineLayout"
+        (onClick)="isOpenAddForm.set(true)">
+      </app-button>
+    }
+  }
+  <form [formGroup]="form">
+    <div formArrayName="purchaseLists">
+      @for (purchaseList of purchaseListsForm().controls; track $index) {
+        <div class="py-2">
+          <input type="checkbox" [formControlName]="$index" />
+          <span class="ml-2">{{
+            purchaseLists()[$index].isFavourite
+              ? ('shop-module.add-product-to-purchase-list-component.favourite' | translate)
+              : purchaseLists()[$index].name
+          }}</span>
+        </div>
+      }
+    </div>
+  </form>
+  <div class="pt-4 border-t">
+    <app-button
+      [label]="'shop-module.add-product-to-purchase-list-component.ready' | translate"
+      [layout]="ButtonLayout.greenLayout"
+      (onClick)="submit()"></app-button>
+  </div>
+</div>

@@ -9,13 +9,14 @@
   }
   <input
     #input
-    class="block border rounded-md p-2 w-full focus:border-blue-600  bg-transparent {{
-      errorCode() ? 'border-red-600' : ''
-    }}"
+    class="block border rounded-md p-2 w-full focus:border-blue-600  bg-transparent 
+    {{ isDisabled() ? 'text-gray-500' : '' }}
+    {{ errorCode() ? 'border-red-600' : '' }}"
+    [autocomplete]="autocomplete()"
+    [disabled]="isDisabled()"
     [placeholder]="placeholder()"
     [type]="type()"
     [value]="value()"
-    [autocomplete]="autocomplete()"
     (change)="onValueChange(input)"
     (blur)="onValueChange(input)" />
   @if (errorCode()) {

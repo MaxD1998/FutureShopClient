@@ -12,18 +12,18 @@ import { TableTextFieldComponent } from './table-field-templates/table-text-fiel
 import { TablePaginationComponent } from './table-pagination/table-pagination.component';
 
 @Component({
-    selector: 'app-table',
-    templateUrl: './table.component.html',
-    styleUrl: './table.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        TableActionFieldComponent,
-        TableBooleanFieldComponent,
-        TableTextFieldComponent,
-        TranslateModule,
-        IconComponent,
-        TablePaginationComponent,
-    ]
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    TableActionFieldComponent,
+    TableBooleanFieldComponent,
+    TableTextFieldComponent,
+    TranslateModule,
+    IconComponent,
+    TablePaginationComponent,
+  ],
 })
 export class TableComponent {
   columns = input.required<DataTableColumnModel[]>();

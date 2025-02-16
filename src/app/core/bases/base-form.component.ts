@@ -4,11 +4,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export abstract class BaseFormComponent {
   protected readonly _formBuilder = inject(FormBuilder);
 
-  form: FormGroup;
-
-  constructor() {
-    this.initForm();
-  }
+  form: FormGroup = this._formBuilder.group(this.setFormControls());
 
   errorCode(field: string, arrayName?: string, formGroupName?: string): string | null {
     const control = !arrayName
@@ -29,9 +25,4 @@ export abstract class BaseFormComponent {
   }
 
   protected abstract setFormControls(): {};
-
-  private initForm(): void {
-    const controls = this.setFormControls();
-    this.form = this._formBuilder.group(controls);
-  }
 }

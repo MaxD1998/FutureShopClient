@@ -20,12 +20,12 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
 };
 
 @Component({
-    selector: 'app-input-select',
-    imports: [TranslateModule],
-    templateUrl: './input-select.component.html',
-    styleUrl: './input-select.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [CUSTOM_VALUE_ACCESSOR]
+  selector: 'app-input-select',
+  imports: [TranslateModule],
+  templateUrl: './input-select.component.html',
+  styleUrl: './input-select.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputSelectComponent implements ControlValueAccessor {
   errorCode = input<string | null>();

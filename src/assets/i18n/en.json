@@ -23,209 +23,280 @@
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
   },
-  "add-product-to-purchase-list-component": {
-    "add-a-new-list": "Add a new list",
-    "favourite": "Favourite",
-    "ready": "Ready",
-    "save-on-a-list": "Save on a list"
+  "auth-module": {
+    "login-component": {
+      "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
+      "dont-you-have-an-account": "Don't you have an account?",
+      "dont-worry-and-do this-right-now": "Don't worry and do this right now!",
+      "email": "Email",
+      "enter-your-email": "Enter your email",
+      "enter-your-password": "Enter your password",
+      "newsletter-with-current-information": "Newsletter with current information",
+      "our-users-have": "Our users have:",
+      "password": "Password",
+      "possibilities-of-faster-shopping": "Possibilities of faster shopping",
+      "sharing-product-reviews": "Sharing product reviews",
+      "sign-in": "Sign in",
+      "sign-up": "Sign up"
+    },
+    "register-component": {
+      "date-of-birth": "Date of birth",
+      "email": "E-mail",
+      "last-name": "Last name",
+      "first-name": "First name",
+      "password": "Password",
+      "phone-number": "Phone number",
+      "registration": "Registration",
+      "repeat-password": "Repeat password",
+      "sign-up": "Sign up"
+    }
   },
-  "add-purchase-list-component": {
-    "add": "Add",
-    "name": "Name"
+  "product-module": {
+    "category-form-component": {
+      "add-sub-category": "Add subcategory",
+      "add-translation": "Add translation",
+      "create-category": "Create category",
+      "choose-category": "Choose category",
+      "choose-sub-category": "Choose subcategory",
+      "edit-category": "Edit category",
+      "name": "Name",
+      "no-subcategories": "No subcategories",
+      "no-translations": "No translations",
+      "parent-category": "Parent category",
+      "properties": "Properties",
+      "save": "Save",
+      "sub-categories": "Subcategories",
+      "table-columns": {
+        "name": "Name"
+      },
+      "translations": "Translations"
+    },
+    "category-list-component": {
+      "categories": "Categories",
+      "create-new-category": "Create new category",
+      "has-subcategories": "Has subcategories",
+      "is-subcategory": "Is subcategory",
+      "name": "Name"
+    },
+    "product-base-form-component": {
+      "choose-category": "Choose category",
+      "create-product-base": "Create product base",
+      "edit-product-base": "Edit product base",
+      "name": "Name",
+      "properties": "Properties",
+      "save": "Save"
+    },
+    "product-base-list-component": {
+      "category-name": "Category name",
+      "create-new-product-base": "Create new product base",
+      "name": "Name",
+      "parameter-count": "Parameter count",
+      "products-bases": "Product bases",
+      "product-count": "Product count"
+    },
+    "product-form-component": {
+      "add-photo": "Add photo",
+      "create-product": "Create product",
+      "edit-product": "Edit product",
+      "name": "Name",
+      "photos": "Photos",
+      "product-base": "Product base",
+      "product-photo-table-columns": {
+        "name": "Name",
+        "size": "Size",
+        "type": "Type"
+      },
+      "properties": "Properties",
+      "save": "Save",
+      "translations": "Translations"
+    },
+    "product-list-component": {
+      "create-new-product": "Create new product",
+      "filled-property": "Filled property",
+      "name": "Name",
+      "price": "Price",
+      "products": "Products"
+    },
+    "product-module-component": {
+      "items": {
+        "categories": "Categories",
+        "products": "Products",
+        "products-bases": "Products bases"
+      },
+      "menu": "Menu"
+    },
+    "set-product-base-form-component": {
+      "product-base": "Product base",
+      "warning": "To go to the form, select the product base!"
+    },
+    "set-product-parameter-value-component": {
+      "save": "Save",
+      "value": "Value"
+    },
+    "set-product-photo-component": {
+      "choose-file": "Choose file",
+      "file-is-empty": "File is empty",
+      "save": "Save"
+    }
   },
-  "basket-component": {
-    "basket": "Basket",
-    "basket-is-empty": "Basket is empty",
-    "check-our-product-and-get-inspired": "check our product and get inspired",
-    "clear-basket": "Clear basket",
-    "go-to-the-main-side": "Go to the main side",
-    "go-to-the-order": "Go to the order",
-    "hurry-up!-products-in-the-basket-are-not-reserved!": "Hurry up! Products in the basket are not reserved!",
-    "log-in": "Log in",
-    "save-as-a-list": "Save as a list",
-    "to-check-our-products-or-get-inspired": "to check our products or get inspired",
-    "to-pay": "To pay"
+  "shop-module": {
+    "add-product-to-purchase-list-component": {
+      "add-a-new-list": "Add a new list",
+      "favourite": "Favourite",
+      "ready": "Ready",
+      "save-on-a-list": "Save on a list"
+    },
+    "add-purchase-list-component": {
+      "add": "Add",
+      "name": "Name"
+    },
+    "basket-component": {
+      "basket": "Basket",
+      "basket-is-empty": "Basket is empty",
+      "check-our-product-and-get-inspired": "check our product and get inspired",
+      "clear-basket": "Clear basket",
+      "go-to-the-main-side": "Go to the main side",
+      "go-to-the-order": "Go to the order",
+      "hurry-up!-products-in-the-basket-are-not-reserved!": "Hurry up! Products in the basket are not reserved!",
+      "log-in": "Log in",
+      "save-as-a-list": "Save as a list",
+      "to-check-our-products-or-get-inspired": "to check our products or get inspired",
+      "to-pay": "To pay"
+    },
+    "category-form-component": {
+      "add-translation": "Add translation",
+      "edit-category": "Edit category",
+      "name": "Name",
+      "no-subcategories": "No subcategories",
+      "no-translations": "No translations",
+      "parent-category": "Parent category",
+      "properties": "Properties",
+      "save": "Save",
+      "sub-categories": "Subcategories",
+      "table-columns": {
+        "name": "Name"
+      },
+      "translations": "Translations"
+    },
+    "category-list-component": {
+      "categories": "Categories",
+      "has-subcategories": "Has subcategories",
+      "is-subcategory": "Is subcategory",
+      "name": "Name"
+    },
+    "menu-aside-component": {
+      "categories": "Categories"
+    },
+    "product-base-form-component": {
+      "add-parameter": "Add parameter",
+      "choose-category": "Choose category",
+      "edit-product-base": "Edit product base",
+      "name": "Name",
+      "product-parameters": "Product parameters",
+      "properties": "Properties",
+      "save": "Save",
+      "table-columns": {
+        "name": "Name"
+      }
+    },
+    "product-base-list-component": {
+      "category-name": "Category name",
+      "name": "Name",
+      "parameter-count": "Parameter count",
+      "products-bases": "Product bases",
+      "product-count": "Product count"
+    },
+    "product-details.component": {
+      "add-to-basket": "Add to basket",
+      "product-feedback": "Product feedback",
+      "rating": "Rating",
+      "specyfication": "Specyfication",
+      "table": {
+        "name": "Name",
+        "value": "Value"
+      }
+    },
+    "product-item.component": {
+      "add-to-basket": "Add to basket"
+    },
+    "product-form-component": {
+      "edit-product": "Edit product",
+      "name": "Name",
+      "price": "Price",
+      "product-base": "Product base",
+      "product-parameters": "Product parameters",
+      "product-parameter-table-columns": {
+        "name": "Name",
+        "value": "Value"
+      },
+      "properties": "Properties",
+      "save": "Save",
+      "set-value": "Set value",
+      "translations": "Translations"
+    },
+    "product-list-component": {
+      "create-new-product": "Create new product",
+      "filled-property": "Filled property",
+      "name": "Name",
+      "price": "Price",
+      "products": "Products"
+    },
+    "product-property-form-component": {
+      "name": "Name",
+      "properties": "Properties",
+      "save": "Save",
+      "translations": "Translations"
+    },
+    "product-shop-list-component": {
+      "filters-header": "Filters",
+      "filters": {
+        "name": "Name",
+        "price-from": "Price from",
+        "price-to": "Price to",
+        "sort": "Sort"
+      },
+      "sort-items": {
+        "0": "From A-Z",
+        "1": "From Z-A",
+        "2": "Price ascending",
+        "3": "Price descending"
+      }
+    },
+    "purchase-lists-component": {
+      "add-list": "Add list",
+      "add-purchase-list": "Add purchase list",
+      "favourite": "Favourite",
+      "last-change": "Last change",
+      "purchase-lists": "Purchase lists"
+    },
+    "settings-component": {
+      "items": {
+        "categories": "Categories",
+        "products": "Products",
+        "products-bases": "Product bases"
+      },
+      "menu": "Menu"
+    },
+    "small-purchase-list-form-component": {
+      "add": "Add"
+    },
+    "user-aside-component": {
+      "items": {
+        "account": "Account",
+        "purchase-lists": "Purchase lists"
+      },
+      "menu": "Menu"
+    }
   },
-  "category-form-component": {
-    "add-sub-category": "Add subcategory",
-    "add-translation": "Add translation",
-    "create-category": "Create category",
-    "choose-category": "Choose category",
-    "choose-sub-category": "Choose subcategory",
-    "edit-category": "Edit category",
-    "name": "Name",
-    "no-subcategories": "No subcategories",
-    "no-translations": "No translations",
-    "parent-category": "Parent category",
-    "properties": "Properties",
-    "save": "Save",
-    "sub-categories": "Subcategories",
-    "translations": "Translations"
-  },
-  "category-list-component": {
-    "categories": "Categories",
-    "create-new-category": "Create new category",
-    "has-subcategories": "Has subcategories",
-    "is-subcategory": "Is subcategory",
-    "name": "Name"
-  },
-  "login-component": {
-    "access-to-order-status-and-purchase-history": "Access to order status and purchase history",
-    "dont-you-have-an-account": "Don't you have an account?",
-    "dont-worry-and-do this-right-now": "Don't worry and do this right now!",
-    "email": "Email",
-    "enter-your-email": "Enter your email",
-    "enter-your-password": "Enter your password",
-    "newsletter-with-current-information": "Newsletter with current information",
-    "our-users-have": "Our users have:",
-    "password": "Password",
-    "possibilities-of-faster-shopping": "Possibilities of faster shopping",
-    "sharing-product-reviews": "Sharing product reviews",
-    "sign-in": "Sign in",
-    "sign-up": "Sign up"
-  },
-  "menu-aside-component": {
-    "categories": "Categories"
-  },
+  "warehouse-module": {},
   "nav-component": {
     "account": "Account",
     "basket": "Basket",
     "favourite": "Favourite",
     "language": "Language",
     "logout": "Logout",
-    "settings": "Settings",
+    "modules": "Modules",
+    "settings": "Ustawienia",
     "sign-in": "Sign in"
-  },
-  "product-base-form-component": {
-    "add-parameter": "Add parameter",
-    "choose-category": "Choose category",
-    "create-product-base": "Create product base",
-    "edit-product-base": "Edit product base",
-    "name": "Name",
-    "product-parameters": "Product parameters",
-    "properties": "Properties",
-    "save": "Save",
-    "table-columns": {
-      "name": "Name"
-    }
-  },
-  "product-base-list-component": {
-    "category-name": "Category name",
-    "create-new-product-base": "Create new product base",
-    "name": "Name",
-    "parameter-count": "Parameter count",
-    "products-bases": "Product bases",
-    "product-count": "Product count"
-  },
-  "product-details.component": {
-    "add-to-basket": "Add to basket",
-    "product-feedback": "Product feedback",
-    "rating": "Rating",
-    "specyfication": "Specyfication",
-    "table": {
-      "name": "Name",
-      "value": "Value"
-    }
-  },
-  "product-form-component": {
-    "add-photo": "Dodaj zdjęcie",
-    "create-product": "Create product",
-    "edit-product": "Edit product",
-    "name": "Name",
-    "photos": "Photos",
-    "price": "Price",
-    "product-base": "Product base",
-    "product-parameters": "Product parameters",
-    "product-parameter-table-columns": {
-      "name": "Name",
-      "value": "Value"
-    },
-    "product-photo-table-columns": {
-      "name": "Name",
-      "size": "Size",
-      "type": "Type"
-    },
-    "save": "Save",
-    "set-product-base": "Set product base",
-    "set-value": "Set value"
-  },
-  "product-list-component": {
-    "create-new-product": "Create new product",
-    "filled-property": "Filled property",
-    "name": "Name",
-    "price": "Price",
-    "products": "Products"
-  },
-  "product-property-form-component": {
-    "name": "Name",
-    "properties": "Properties",
-    "save": "Save",
-    "translations": "Translations"
-  },
-  "product-shop-item.component": {
-    "add-to-basket": "Add to basket"
-  },
-  "product-shop-list-component": {
-    "filters-header": "Filters",
-    "filters": {
-      "name": "Name",
-      "price-from": "Price from",
-      "price-to": "Price to",
-      "sort": "Sort"
-    },
-    "sort-items": {
-      "0": "From A-Z",
-      "1": "From Z-A",
-      "2": "Price ascending",
-      "3": "Price descending"
-    }
-  },
-  "purchase-lists-component": {
-    "add-list": "Add list",
-    "add-purchase-list": "Add purchase list",
-    "favourite": "Favourite",
-    "last-change": "Last change",
-    "purchase-lists": "Purchase lists"
-  },
-  "register-component": {
-    "date-of-birth": "Date of birth",
-    "email": "E-mail",
-    "last-name": "Last name",
-    "first-name": "First name",
-    "password": "Password",
-    "phone-number": "Phone number",
-    "registration": "Registration",
-    "repeat-password": "Repeat password",
-    "sign-up": "Sign up"
-  },
-  "settings-aside-component": {
-    "items": {
-      "categories": "Categories",
-      "products": "Products",
-      "products-bases": "Products bases"
-    },
-    "settings": "Settings"
-  },
-  "set-product-base-form-component": {
-    "product-base": "Product base",
-    "warning": "To go to the form, select the product base!"
-  },
-  "set-product-parameter-value-component": {
-    "save": "Save",
-    "value": "Value"
-  },
-  "set-product-photo-component": {
-    "choose-file": "Choose file",
-    "file-is-empty": "File is empty",
-    "save": "Save"
-  },
-  "small-purchase-list-form-component": {
-    "add": "Add"
-  },
-  "user-aside-component": {
-    "items": {
-      "account": "Account",
-      "purchase-lists": "Purchase lists"
-    }
   }
 }

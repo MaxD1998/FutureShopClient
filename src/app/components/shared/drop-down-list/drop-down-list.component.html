@@ -1,12 +1,8 @@
 @if (isVisible()) {
   <div [class]="styles">
     <div class="flex flex-col gap-2">
-      @if (items()) {
-        @for (item of items(); track item.id) {
-          <app-drop-down-list-item [item]="item" (onItemClick)="action($event)"></app-drop-down-list-item>
-        }
-      } @else {
-        <ng-content></ng-content>
+      @for (item of items(); track item.id) {
+        <app-drop-down-list-item [item]="item" (onItemClick)="action($event)"></app-drop-down-list-item>
       }
     </div>
   </div>

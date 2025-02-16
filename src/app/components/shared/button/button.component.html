@@ -4,7 +4,7 @@
     [disabled]="isDisabled()"
     (click)="onClick.emit($event)">
     @if (isIcon()) {
-      <app-icon [iconName]="label()"></app-icon>
+      <app-icon class="block" [iconName]="label()"></app-icon>
     } @else {
       <span class="text-nowrap">{{ label() }}</span>
     }

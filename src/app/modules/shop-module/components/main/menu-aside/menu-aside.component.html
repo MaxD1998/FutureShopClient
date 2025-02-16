@@ -1,0 +1,6 @@
+<app-aside
+  [header]="'shop-module.menu-aside-component.categories' | translate"
+  [items]="categories()"
+  (onNextLevel)="getsCategoryByCategoryId($event)"
+  (onUndoLevel)="getsCategoryByCategoryId($event)">
+</app-aside>

@@ -1,0 +1,119 @@
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { Subject, takeUntil, tap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { ClientRoute } from '../../../core/constants/client-routes/client.route';
+import { LocalStorageConst } from '../../../core/constants/localstorage/localstorage.const';
+import { AuthorizeDto } from '../../../core/dtos/authorize.dto';
+import { DropDownListOrientation } from '../../../core/enums/drop-down-list-orientation';
+import { IconType } from '../../../core/enums/icon-type';
+import { UserType } from '../../../core/enums/user-type';
+import { DropDownListItemModel } from '../../../core/models/drop-down-list-item.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../modules/auth-module/core/services/user.service';
+import { DropDownListComponent } from '../drop-down-list/drop-down-list.component';
+import { NavButtonComponent } from './nav-button/nav-button.component';
+
+@Component({
+  selector: 'app-nav',
+  templateUrl: './nav.component.html',
+  styleUrl: './nav.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NavButtonComponent, TranslateModule, DropDownListComponent, RouterModule, DropDownListComponent],
+})
+export class NavComponent implements OnDestroy {
+  private readonly _authService = inject(AuthService);
+  private readonly _userService = inject(UserService);
+  private readonly _router = inject(Router);
+  private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
+  ClientRoute: typeof ClientRoute = ClientRoute;
+  DropDownListOrientation: typeof DropDownListOrientation = DropDownListOrientation;
+  IconType: typeof IconType = IconType;
+
+  isDropdownAccountVisible = signal<boolean>(false);
+  isDropdownLanguageVisible = signal<boolean>(false);
+  langItems = signal<DropDownListItemModel[]>(
+    environment.availableLangs.map<DropDownListItemModel>(x => {
+      const result: DropDownListItemModel = {
+        id: x,
+        value: `common.languages.${x}`,
+        callback: this.changeLang.bind(this),
+      };
+
+      return result;
+    }),
+  );
+
+  userItems = signal<DropDownListItemModel[]>([]);
+
+  constructor() {
+    this._userService.user$.pipe(takeUntil(this._unsubscribe), tap(this.setUserItems.bind(this))).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+
+  changeLang(item: DropDownListItemModel): void {
+    this.isDropdownLanguageVisible.set(false);
+    localStorage.setItem(LocalStorageConst.currentLang, item.id);
+    window.location.reload();
+  }
+
+  login(): void {
+    this.isDropdownAccountVisible.set(false);
+    this._router.navigateByUrl(`${ClientRoute.authModule}/${ClientRoute.auth}/${ClientRoute.login}`);
+  }
+
+  logout(): void {
+    this.isDropdownAccountVisible.set(false);
+    this._authService.logout();
+  }
+
+  setDropdownAccountVisible(isVisible: boolean): void {
+    this.isDropdownAccountVisible.set(isVisible);
+  }
+
+  setDropdownLanguageVisible(): void {
+    this.isDropdownLanguageVisible.set(!this.isDropdownLanguageVisible());
+  }
+
+  private setUserItems(user: AuthorizeDto | undefined): void {
+    if (user) {
+      let array: DropDownListItemModel[] = [
+        {
+          id: '',
+          value: 'nav-component.logout',
+          callback: this.logout.bind(this),
+        },
+      ];
+
+      if (user.modules.length > 0 || user.roles.some(x => x == UserType.superAdmin)) {
+        const module: DropDownListItemModel[] = [
+          {
+            id: '',
+            value: 'nav-component.modules',
+            callback: () => {
+              this._router.navigateByUrl(`${ClientRoute.module}`);
+            },
+          },
+        ];
+
+        array = module.concat(array);
+      }
+
+      this.userItems.set(array);
+    } else {
+      this.userItems.set([
+        {
+          id: '',
+          value: 'nav-component.sign-in',
+          callback: this.login.bind(this),
+        },
+      ]);
+    }
+  }
+}

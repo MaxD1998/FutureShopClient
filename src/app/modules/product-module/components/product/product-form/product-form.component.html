@@ -1,0 +1,68 @@
+<div class="flex flex-col h-full gap-4">
+  <div class="flex justify-between items-center h-11">
+    <h1 class="text-xl">{{ header | translate }}</h1>
+    <app-button
+      [label]="'product-module.product-form-component.save' | translate"
+      [width]="'w-32'"
+      [layout]="ButtonLayout.greenLayout"
+      (onClick)="submit()">
+    </app-button>
+  </div>
+  <div class="border-t"></div>
+  <form class="flex flex-col gap-4" [formGroup]="form">
+    <div class="flex items-center h-11">
+      <h2 class="text-xl">{{ 'product-module.product-form-component.properties' | translate }}</h2>
+    </div>
+    <div class="flex flex-auto gap-4 flex-wrap">
+      <div class="flex flex-1 flex-col">
+        <app-input
+          formControlName="name"
+          [errorCode]="errorCode('name')"
+          [label]="'product-module.product-form-component.name' | translate"
+          [required]="true">
+        </app-input>
+      </div>
+      <div class="flex flex-1 flex-col">
+        <app-input-select
+          formControlName="productBaseId"
+          [errorCode]="errorCode('productBaseId')"
+          [label]="'product-module.product-form-component.product-base' | translate"
+          [items]="productBaseItems"
+          [required]="true">
+        </app-input-select>
+      </div>
+    </div>
+  </form>
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center h-11 justify-between">
+      <h2 class="text-xl">{{ 'product-module.product-form-component.photos' | translate }}</h2>
+      <app-button
+        [label]="'product-module.product-form-component.add-photo' | translate"
+        (onClick)="openSetPhotoDialog()"></app-button>
+    </div>
+    <app-table
+      idName="id"
+      [columns]="productPhotoColumns"
+      [isDetailAction]="true"
+      [isRemoveAction]="true"
+      (onDetailAction)="previewPhoto($event)"
+      (onRemoveAction)="removeProductPhoto($event)"
+      [items]="productPhotos()">
+    </app-table>
+  </div>
+</div>
+<app-dialog-window
+  [isDialogActive]="isDialogActive()"
+  [title]="
+    (dialogType() == DialogType.productPhoto ? 'product-module.product-form-component.add-photo' : '') | translate
+  "
+  (onCloseDialog)="dialogClose()">
+  @switch (dialogType()) {
+    @case (DialogType.previewProductPhoto) {
+      <app-preview-product-photo [id]="fileId()"></app-preview-product-photo>
+    }
+    @case (DialogType.productPhoto) {
+      <app-set-product-photo (onSave)="setProductPhoto($event)"></app-set-product-photo>
+    }
+  }
+</app-dialog-window>

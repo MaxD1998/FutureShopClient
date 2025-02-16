@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, of, switchMap, tap } from 'rxjs';
+import { LoginDto } from '../../modules/auth-module/core/dtos/login.dto';
+import { UserService } from '../../modules/auth-module/core/services/user.service';
+import { UserInputDto } from '../../modules/shop-module/core/dtos/user-input.dto';
+import { BasketService } from '../../modules/shop-module/core/services/basket.service';
+import { PurchaseListService } from '../../modules/shop-module/core/services/purchase-list.service';
 import { AuthDataService } from '../data-services/auth.data-service';
-import { LoginDto } from '../dtos/login.dto';
-import { UserInputDto } from '../dtos/user-input.dto';
-import { BasketService } from './basket.service';
-import { PurchaseListService } from './purchase-list.service';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',

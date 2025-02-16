@@ -1,0 +1,65 @@
+<div class="flex flex-col gap-4 h-full overflow-hidden">
+  <div class="flex justify-between items-center h-11">
+    <h1 class="text-xl">{{ 'shop-module.category-form-component.edit-category' | translate }}</h1>
+    <app-button
+      [label]="'shop-module.category-form-component.save' | translate"
+      [width]="'w-32'"
+      [layout]="ButtonLayout.greenLayout"
+      (onClick)="submit()">
+    </app-button>
+  </div>
+  <div class="border-t"></div>
+  <div class="flex-auto overflow-y-auto">
+    <div class="flex flex-row flex-wrap gap-4">
+      <form class="flex flex-col flex-1" [formGroup]="form">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center">
+            <h2 class="text-xl">{{ 'shop-module.category-form-component.properties' | translate }}</h2>
+          </div>
+          <app-input
+            formControlName="name"
+            [errorCode]="errorCode('name')"
+            [label]="'shop-module.category-form-component.name' | translate"
+            [isDisabled]="true"
+            [required]="true">
+          </app-input>
+        </div>
+        <div class="flex flex-col gap-4" formArrayName="translations">
+          <div class="flex items-center h-11">
+            <h2 class="text-xl">{{ 'product-module.category-form-component.translations' | translate }}</h2>
+          </div>
+          <div>
+            @for (translation of translations.controls; track $index) {
+              <div [formGroupName]="$index">
+                <app-input
+                  formControlName="translation"
+                  [label]="'common.languages.' + translation.value.lang | translate">
+                </app-input>
+              </div>
+            }
+          </div>
+        </div>
+      </form>
+      <div class="flex flex-col flex-1">
+        <form class="flex flex-col gap-4" [formGroup]="form">
+          <div class="flex items-center">
+            <h2 class="text-xl">{{ 'shop-module.category-form-component.parent-category' | translate }}</h2>
+          </div>
+          <app-input-select
+            formControlName="parentCategoryId"
+            [errorCode]="errorCode('parentCategoryId')"
+            [label]="'shop-module.category-form-component.parent-category' | translate"
+            [items]="parentCategoryItems"
+            [isDisabled]="true">
+          </app-input-select>
+        </form>
+        <div class="flex flex-col gap-4">
+          <div class="flex justify-between items-center h-11">
+            <h2 class="text-xl">{{ 'shop-module.category-form-component.sub-categories' | translate }}</h2>
+          </div>
+          <app-table idName="id" [columns]="columns" [items]="subCategories"> </app-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

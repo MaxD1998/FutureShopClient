@@ -1,0 +1,18 @@
+<div class="flex flex-col gap-2">
+  <div class="relative pb-6">
+    <app-input-file
+      [label]="'product-module.set-product-photo-component.choose-file' | translate"
+      (onValueChange)="onFileLoaded($event)">
+    </app-input-file>
+    @if (isEmptyFile()) {
+      <span class="absolute text-red-600">
+        {{ 'product-module.set-product-photo-component.file-is-empty' | translate }}
+      </span>
+    }
+  </div>
+  <app-button
+    [isDisabled]="isDisabledButton()"
+    [label]="'product-module.set-product-photo-component.save' | translate"
+    (onClick)="submit()">
+  </app-button>
+</div>

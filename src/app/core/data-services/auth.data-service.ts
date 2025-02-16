@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { LoginDto } from '../../modules/auth-module/core/dtos/login.dto';
+import { UserInputDto } from '../../modules/shop-module/core/dtos/user-input.dto';
 import { AuthControllerRoute } from '../constants/api-routes/auth-controller.route';
 import { AuthorizeDto } from '../dtos/authorize.dto';
-import { LoginDto } from '../dtos/login.dto';
-import { UserInputDto } from '../dtos/user-input.dto';
 
 @Injectable({
   providedIn: 'root',

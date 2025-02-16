@@ -23,209 +23,280 @@
     "not-white-charackters": "Białe znaki są zabronione",
     "required": "Pole jest wymagane"
   },
-  "add-product-to-purchase-list-component": {
-    "add-a-new-list": "Dodaj nową listę",
-    "favourite": "Ulubione",
-    "ready": "Gotowe",
-    "save-on-a-list": "Zapisz na liście"
+  "auth-module": {
+    "login-component": {
+      "access-to-order-status-and-purchase-history": "Dostęp do statusu zamówień oraz historii zakupów",
+      "dont-you-have-an-account": "Nie masz konta?",
+      "dont-worry-and-do this-right-now": "Nie martw się i zrób to już teraz!",
+      "email": "Email",
+      "enter-your-email": "Wprowadź swój email",
+      "enter-your-password": "Wprowadź swoje hasło",
+      "newsletter-with-current-information": "Newsletter z najnowszymi informacjami",
+      "our-users-have": "Nasi użytkownicy posiadają:",
+      "password": "Hasło",
+      "possibilities-of-faster-shopping": "Możliwości szybszych zakupów",
+      "sharing-product-reviews": "Udostępnianie recenzji produktów",
+      "sign-in": "Zaloguj się",
+      "sign-up": "Zarejestruj się"
+    },
+    "register-component": {
+      "date-of-birth": "Data urodzenia",
+      "email": "E-mail",
+      "last-name": "Nazwisko",
+      "first-name": "Imię",
+      "password": "Hasło",
+      "phone-number": "Numer telefonu",
+      "registration": "Rejestracja",
+      "repeat-password": "Powtórz hasło",
+      "sign-up": "Zarejestruj się"
+    }
   },
-  "add-purchase-list-component": {
-    "add": "Dodaj",
-    "name": "Nazwa"
+  "product-module": {
+    "category-form-component": {
+      "add-sub-category": "Dodaj podkategorię",
+      "add-translation": "Dodaj tłumaczenie",
+      "create-category": "Stwórz kategorię",
+      "choose-category": "Wybierz kategorię",
+      "choose-sub-category": "Wybierz podkategorię",
+      "edit-category": "Edytuj kategorię",
+      "name": "Nazwa",
+      "no-subcategories": "Brak podkategorii",
+      "no-translations": "Brak tłumaczeń",
+      "parent-category": "Kategoria nadrzędna",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "sub-categories": "Podkategorie",
+      "table-columns": {
+        "name": "Nazwa"
+      },
+      "translations": "Tłumaczenia"
+    },
+    "category-list-component": {
+      "categories": "Kategorie",
+      "create-new-category": "Stwórz nową kategorię",
+      "has-subcategories": "Posiada podkategorie",
+      "is-subcategory": "Jest podkategorią",
+      "name": "Nazwa"
+    },
+    "product-base-form-component": {
+      "choose-category": "Wybierz kategorię",
+      "create-product-base": "Stwórz bazę produktu",
+      "edit-product-base": "Edytuj bazę produktu",
+      "name": "Nazwa",
+      "properties": "Właściwości",
+      "save": "Zapisz"
+    },
+    "product-base-list-component": {
+      "category-name": "Nazwa kateogrii",
+      "create-new-product-base": "Stwórz nową bazę produktu",
+      "name": "Nazwa",
+      "parameter-count": "Liczba parametrów",
+      "products-bases": "Bazy produktów",
+      "product-count": "Liczba produktów"
+    },
+    "product-form-component": {
+      "add-photo": "Dodaj zdjęcie",
+      "create-product": "Stwórz produkt",
+      "edit-product": "Edytuj produkt",
+      "name": "Nazwa",
+      "photos": "Zdjęcia",
+      "product-base": "Baza produktu",
+      "product-photo-table-columns": {
+        "name": "Nazwa",
+        "size": "Rozmiar",
+        "type": "Typ"
+      },
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "translations": "Tłumaczenia"
+    },
+    "product-list-component": {
+      "create-new-product": "Stwórz nowy produkt",
+      "filled-property": "Uzupełnione właściwości",
+      "name": "Nazwa",
+      "price": "Cena",
+      "products": "Produkty"
+    },
+    "product-module-component": {
+      "items": {
+        "categories": "Kategorie",
+        "products": "Produkty",
+        "products-bases": "Bazy produktów"
+      },
+      "menu": "Menu"
+    },
+    "set-product-base-form-component": {
+      "product-base": "Baza produktu",
+      "warning": "Aby przejść do formularza należy wybrać bazę produktu!"
+    },
+    "set-product-parameter-value-component": {
+      "save": "Zapisz",
+      "value": "Wartość"
+    },
+    "set-product-photo-component": {
+      "choose-file": "Wybierz plik",
+      "file-is-empty": "Plik jest pusty",
+      "save": "Zapisz"
+    }
   },
-  "basket-component": {
-    "basket": "Koszyk",
-    "basket-is-empty": "Koszyk jest pusty",
-    "check-our-product-and-get-inspired": "Sprawdź nasze produkty i zainspiruj się!",
-    "clear-basket": "Wyczyść koszyk",
-    "go-to-the-main-side": "Przejdź do strony głównej",
-    "go-to-the-order": "Przejdź do zamówienia",
-    "hurry-up!-products-in-the-basket-are-not-reserved!": "Pośpiesz się! Produkty w koszyku nie są rezerwowane!",
-    "log-in": "Zaloguj się",
-    "save-as-a-list": "Zapisz jako listę",
-    "to-check-our-products-or-get-inspired": ", aby sprawdzić zapisane produkty lub zainspiruj się",
-    "to-pay": "Do zapłaty"
+  "shop-module": {
+    "add-product-to-purchase-list-component": {
+      "add-a-new-list": "Dodaj nową listę",
+      "favourite": "Ulubione",
+      "ready": "Gotowe",
+      "save-on-a-list": "Zapisz na liście"
+    },
+    "add-purchase-list-component": {
+      "add": "Dodaj",
+      "name": "Nazwa"
+    },
+    "basket-component": {
+      "basket": "Koszyk",
+      "basket-is-empty": "Koszyk jest pusty",
+      "check-our-product-and-get-inspired": "Sprawdź nasze produkty i zainspiruj się!",
+      "clear-basket": "Wyczyść koszyk",
+      "go-to-the-main-side": "Przejdź do strony głównej",
+      "go-to-the-order": "Przejdź do zamówienia",
+      "hurry-up!-products-in-the-basket-are-not-reserved!": "Pośpiesz się! Produkty w koszyku nie są rezerwowane!",
+      "log-in": "Zaloguj się",
+      "save-as-a-list": "Zapisz jako listę",
+      "to-check-our-products-or-get-inspired": ", aby sprawdzić zapisane produkty lub zainspiruj się",
+      "to-pay": "Do zapłaty"
+    },
+    "category-form-component": {
+      "add-translation": "Dodaj tłumaczenie",
+      "edit-category": "Edytuj kategorię",
+      "name": "Nazwa",
+      "no-subcategories": "Brak podkategorii",
+      "no-translations": "Brak tłumaczeń",
+      "parent-category": "Kategoria nadrzędna",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "sub-categories": "Podkategorie",
+      "table-columns": {
+        "name": "Nazwa"
+      },
+      "translations": "Tłumaczenia"
+    },
+    "category-list-component": {
+      "categories": "Kategorie",
+      "has-subcategories": "Posiada podkategorie",
+      "is-subcategory": "Jest podkategorią",
+      "name": "Nazwa"
+    },
+    "menu-aside-component": {
+      "categories": "Kategorie"
+    },
+    "product-base-form-component": {
+      "add-parameter": "Dodaj parametr",
+      "choose-category": "Wybierz kategorię",
+      "edit-product-base": "Edytuj bazę produktu",
+      "name": "Nazwa",
+      "product-parameters": "Parametry produktu",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "table-columns": {
+        "name": "Nazwa"
+      }
+    },
+    "product-base-list-component": {
+      "category-name": "Nazwa kateogrii",
+      "name": "Nazwa",
+      "parameter-count": "Liczba parametrów",
+      "products-bases": "Bazy produktów",
+      "product-count": "Liczba produktów"
+    },
+    "product-details.component": {
+      "add-to-basket": "Dodaj do koszyka",
+      "product-feedback": "Opinii o produkcie",
+      "rating": "Ocena",
+      "specyfication": "Specyfikacja",
+      "table": {
+        "name": "Nazwa",
+        "value": "Wartość"
+      }
+    },
+    "product-item.component": {
+      "add-to-basket": "Dodaj do koszyka"
+    },
+    "product-form-component": {
+      "edit-product": "Edytuj produkt",
+      "name": "Nazwa",
+      "price": "Cena",
+      "product-base": "Baza produktu",
+      "product-parameters": "Parametry produktu",
+      "product-parameter-table-columns": {
+        "name": "Nazwa",
+        "value": "Wartość"
+      },
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "set-value": "Ustaw wartość",
+      "translations": "Tłumaczenia"
+    },
+    "product-list-component": {
+      "create-new-product": "Stwórz nowy produkt",
+      "filled-property": "Uzupełnione właściwości",
+      "name": "Nazwa",
+      "price": "Cena",
+      "products": "Produkty"
+    },
+    "product-property-form-component": {
+      "name": "Nazwa",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "translations": "Tłumaczenia"
+    },
+    "product-shop-list-component": {
+      "filters-header": "Filtry",
+      "filters": {
+        "name": "Nazwa",
+        "price-from": "Cena od",
+        "price-to": "Cena do",
+        "sort": "Sortuj"
+      },
+      "sort-items": {
+        "0": "od A-Z",
+        "1": "od Z-A",
+        "2": "Cena rosnąco",
+        "3": "Cena malejąco"
+      }
+    },
+    "purchase-lists-component": {
+      "add-list": "Dodaj listę",
+      "add-purchase-list": "Dodaj listę zakupową",
+      "favourite": "Ulubione",
+      "last-change": "Ostatnia zmiana",
+      "purchase-lists": "Listy zakupów"
+    },
+    "settings-component": {
+      "items": {
+        "categories": "Kategorie",
+        "products": "Produkty",
+        "products-bases": "Bazy produktów"
+      },
+      "menu": "Menu"
+    },
+    "small-purchase-list-form-component": {
+      "add": "Dodaj"
+    },
+    "user-aside-component": {
+      "items": {
+        "account": "Konto",
+        "purchase-lists": "Listy zakupów"
+      },
+      "menu": "Menu"
+    }
   },
-  "category-form-component": {
-    "add-sub-category": "Dodaj podkategorię",
-    "add-translation": "Dodaj tłumaczenie",
-    "create-category": "Stwórz kategorię",
-    "choose-category": "Wybierz kategorię",
-    "choose-sub-category": "Wybierz podkategorię",
-    "edit-category": "Edytuj kategorię",
-    "name": "Nazwa",
-    "no-subcategories": "Brak podkategorii",
-    "no-translations": "Brak tłumaczeń",
-    "parent-category": "Kategoria nadrzędna",
-    "properties": "Właściwości",
-    "save": "Zapisz",
-    "sub-categories": "Podkategorie",
-    "translations": "Tłumaczenia"
-  },
-  "category-list-component": {
-    "categories": "Kategorie",
-    "create-new-category": "Stwórz nową kategorię",
-    "has-subcategories": "Posiada podkategorie",
-    "is-subcategory": "Jest podkategorią",
-    "name": "Nazwa"
-  },
-  "login-component": {
-    "access-to-order-status-and-purchase-history": "Dostęp do statusu zamówień oraz historii zakupów",
-    "dont-you-have-an-account": "Nie masz konta?",
-    "dont-worry-and-do this-right-now": "Nie martw się i zrób to już teraz!",
-    "email": "Email",
-    "enter-your-email": "Wprowadź swój email",
-    "enter-your-password": "Wprowadź swoje hasło",
-    "newsletter-with-current-information": "Newsletter z najnowszymi informacjami",
-    "our-users-have": "Nasi użytkownicy posiadają:",
-    "password": "Hasło",
-    "possibilities-of-faster-shopping": "Możliwości szybszych zakupów",
-    "sharing-product-reviews": "Udostępnianie recenzji produktów",
-    "sign-in": "Zaloguj się",
-    "sign-up": "Zarejestruj się"
-  },
-  "menu-aside-component": {
-    "categories": "Kategorie"
-  },
+  "warehouse-module": {},
   "nav-component": {
     "account": "Konto",
     "basket": "Koszyk",
     "favourite": "Ulubione",
     "language": "Język",
     "logout": "Wyloguj",
+    "modules": "Moduły",
     "settings": "Ustawienia",
     "sign-in": "Zaloguj się"
-  },
-  "product-base-form-component": {
-    "add-parameter": "Dodaj parametr",
-    "choose-category": "Wybierz kategorię",
-    "create-product-base": "Stwórz bazę produktu",
-    "edit-product-base": "Edytuj bazę produktu",
-    "name": "Nazwa",
-    "product-parameters": "Parametry produktu",
-    "properties": "Właściwości",
-    "save": "Zapisz",
-    "table-columns": {
-      "name": "Nazwa"
-    }
-  },
-  "product-base-list-component": {
-    "category-name": "Nazwa kateogrii",
-    "create-new-product-base": "Stwórz nową bazę produktu",
-    "name": "Nazwa",
-    "parameter-count": "Liczba parametrów",
-    "products-bases": "Bazy produktów",
-    "product-count": "Liczba produktów"
-  },
-  "product-details.component": {
-    "add-to-basket": "Dodaj do koszyka",
-    "product-feedback": "Opinii o produkcie",
-    "rating": "Ocena",
-    "specyfication": "Specyfikacja",
-    "table": {
-      "name": "Nazwa",
-      "value": "Wartość"
-    }
-  },
-  "product-form-component": {
-    "add-photo": "Dodaj zdjęcie",
-    "create-product": "Stwórz produkt",
-    "edit-product": "Edytuj produkt",
-    "name": "Nazwa",
-    "photos": "Zdjęcia",
-    "price": "Cena",
-    "product-base": "Baza produktu",
-    "product-parameters": "Parametry produktu",
-    "product-parameter-table-columns": {
-      "name": "Nazwa",
-      "value": "Wartość"
-    },
-    "product-photo-table-columns": {
-      "name": "Nazwa",
-      "size": "Rozmiar",
-      "type": "Typ"
-    },
-    "save": "Zapisz",
-    "set-product-base": "Ustaw bazę produktu",
-    "set-value": "Ustaw wartość"
-  },
-  "product-list-component": {
-    "create-new-product": "Stwórz nowy produkt",
-    "filled-property": "Uzupełnione właściwości",
-    "name": "Nazwa",
-    "price": "Cena",
-    "products": "Produkty"
-  },
-  "product-property-form-component": {
-    "name": "Nazwa",
-    "properties": "Właściwości",
-    "save": "Zapisz",
-    "translations": "Tłumaczenia"
-  },
-  "product-shop-item.component": {
-    "add-to-basket": "Dodaj do koszyka"
-  },
-  "product-shop-list-component": {
-    "filters-header": "Filtry",
-    "filters": {
-      "name": "Nazwa",
-      "price-from": "Cena od",
-      "price-to": "Cena do",
-      "sort": "Sortuj"
-    },
-    "sort-items": {
-      "0": "od A-Z",
-      "1": "od Z-A",
-      "2": "Cena rosnąco",
-      "3": "Cena malejąco"
-    }
-  },
-  "purchase-lists-component": {
-    "add-list": "Dodaj listę",
-    "add-purchase-list": "Dodaj listę zakupową",
-    "favourite": "Ulubione",
-    "last-change": "Ostatnia zmiana",
-    "purchase-lists": "Listy zakupów"
-  },
-  "register-component": {
-    "date-of-birth": "Data urodzenia",
-    "email": "E-mail",
-    "last-name": "Nazwisko",
-    "first-name": "Imię",
-    "password": "Hasło",
-    "phone-number": "Numer telefonu",
-    "registration": "Rejestracja",
-    "repeat-password": "Powtórz hasło",
-    "sign-up": "Zarejestruj się"
-  },
-  "settings-aside-component": {
-    "items": {
-      "categories": "Kategorie",
-      "products": "Produkty",
-      "products-bases": "Bazy produktów"
-    },
-    "settings": "Ustawienia"
-  },
-  "set-product-base-form-component": {
-    "product-base": "Baza produktu",
-    "warning": "Aby przejść do formularza należy wybrać bazę produktu!"
-  },
-  "set-product-parameter-value-component": {
-    "save": "Zapisz",
-    "value": "Wartość"
-  },
-  "set-product-photo-component": {
-    "choose-file": "Wybierz plik",
-    "file-is-empty": "Plik jest pusty",
-    "save": "Zapisz"
-  },
-  "small-purchase-list-form-component": {
-    "add": "Dodaj"
-  },
-  "user-aside-component": {
-    "items": {
-      "account": "Konto",
-      "purchase-lists": "Listy zakupów"
-    }
   }
 }
