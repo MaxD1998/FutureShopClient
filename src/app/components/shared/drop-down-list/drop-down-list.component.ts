@@ -33,14 +33,10 @@ export class DropDownListComponent {
   }
 
   action(model: DropDownListItemModel) {
-    const item = this.items()?.find(x => x.id == model.id);
+    const callback = model.callback;
 
-    if (item) {
-      const callback = item.callback;
-
-      if (callback) {
-        callback(model);
-      }
+    if (callback) {
+      callback(model);
     }
 
     this.isVisible.set(false);
