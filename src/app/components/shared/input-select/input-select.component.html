@@ -9,7 +9,7 @@
   }
   <div #selectBox class="relative {{ isDisabled() ? 'cursor-default' : 'cursor-pointer' }}">
     <div
-      class="border rounded-md p-2 w-full h-[2.625rem] 
+      class="border border-gray-200 rounded-md p-2 w-full h-[2.625rem] 
       {{ isFocus() ? 'border-blue-600' : '' }} 
       {{ errorCode() ? 'border-red-600' : '' }}"
       (click)="onClick()">

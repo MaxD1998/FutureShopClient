@@ -2,7 +2,7 @@
   @for (item of items(); track $index) {
     <li>
       <button
-        class="border border-green-300 h-9 min-w-9 rounded
+        class="cursor-pointer border border-green-300 h-9 min-w-9 rounded
         {{ !item.isDisabled ? 'hover:bg-green-300 ' : '' }}
         {{ page().currentPage.toString() == item.name ? 'bg-green-300' : '' }}"
         [disabled]="item.isDisabled"

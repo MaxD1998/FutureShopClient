@@ -1,6 +1,6 @@
 <div class="flex flex-col justify-center">
   <button
-    class="flex-auto p-2 border rounded-md {{ initLayout() }}"
+    class="flex-auto p-2 border border-gray-200 rounded-md cursor-pointer {{ initLayout() }}"
     [disabled]="isDisabled()"
     (click)="onClick.emit($event)">
     @if (isIcon()) {

@@ -9,7 +9,9 @@
       @if (canShowModule(ModuleType.shopModule) | async) {
         <div>
           <div class="flex justify-center">
-            <button class="p-8 border border-black rounded-md hover:bg-orange-400" (click)="navigateToShopModule()">
+            <button
+              class="p-8 border border-black rounded-md cursor-pointer hover:bg-orange-400"
+              (click)="navigateToShopModule()">
               <app-icon iconStyle="w-16 h-16" [iconName]="IconType.shoppingBag"></app-icon>
             </button>
           </div>
@@ -21,7 +23,9 @@
       @if (canShowModule(ModuleType.productModule) | async) {
         <div>
           <div class="flex justify-center">
-            <button class="p-8 border border-black rounded-md hover:bg-blue-400" (click)="navigateToProductModule()">
+            <button
+              class="p-8 border border-black rounded-md cursor-pointer hover:bg-blue-400"
+              (click)="navigateToProductModule()">
               <app-icon iconStyle="w-16 h-16" [iconName]="IconType.rectangleStack"></app-icon>
             </button>
           </div>
@@ -33,7 +37,7 @@
       @if (canShowModule(ModuleType.warehouseModule) | async) {
         <div>
           <div class="flex justify-center">
-            <button class="p-8 border border-black rounded-md hover:bg-yellow-400">
+            <button class="p-8 border border-black rounded-md cursor-pointer hover:bg-yellow-400">
               <app-icon iconStyle="w-16 h-16" [iconName]="IconType.buildingStorefront"></app-icon>
             </button>
           </div>
@@ -45,7 +49,7 @@
       @if (canShowModule(ModuleType.authModule) | async) {
         <div>
           <div class="flex justify-center">
-            <button class="p-8 border border-black rounded-md hover:bg-green-400">
+            <button class="p-8 border border-black rounded-md cursor-pointer hover:bg-green-400">
               <app-icon iconStyle="w-16 h-16" [iconName]="IconType.userGroup"></app-icon>
             </button>
           </div>

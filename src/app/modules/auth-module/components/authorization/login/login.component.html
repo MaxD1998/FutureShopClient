@@ -1,7 +1,7 @@
 <div class="flex justify-center lg:block">
   <div class="flex flex-col lg:flex-row lg:justify-between">
     <div class="px-2 py-8 w-2/5 min-w-96">
-      <div class="border py-2 px-4 rounded-md">
+      <div class="border border-gray-200 py-2 px-4 rounded-md">
         <h1 class="text-2xl text-center">{{ 'auth-module.login-component.sign-in' | translate }}</h1>
         <form [formGroup]="form" (ngSubmit)="login()">
           <app-input

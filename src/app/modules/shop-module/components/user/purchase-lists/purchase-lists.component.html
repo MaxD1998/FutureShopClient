@@ -6,9 +6,9 @@
       (onClick)="this.isDialogActive.set(true)">
     </app-button>
   </div>
-  <div class="border-t"></div>
+  <div class="border-t border-gray-200"></div>
   @for (purchaseList of purchaseLists(); track $index) {
-    <div class="flex justify-between items-center border p-4 rounded-md w-full hover:shadow-md">
+    <div class="flex justify-between items-center border border-gray-200 p-4 rounded-md w-full hover:shadow-md">
       <div>
         <p>
           {{
@@ -29,7 +29,7 @@
         </div>
       </div>
       @if (!purchaseList.isFavourite) {
-        <button (click)="remove(purchaseList.id)">
+        <button class="cursor-pointer" (click)="remove(purchaseList.id)">
           <app-icon class="block" [iconName]="IconType.xMark"></app-icon>
         </button>
       }

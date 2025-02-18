@@ -1,9 +1,9 @@
 <div class="flex flex-col w-72 bg-white">
-  <div class="flex w-full justify-between pb-4 border-b">
+  <div class="flex w-full justify-between pb-4 border-b border-gray-200">
     <span class="font-semibold">
       {{ 'shop-module.add-product-to-purchase-list-component.save-on-a-list' | translate }}
     </span>
-    <button class="rounded-md hover:bg-gray-200" (click)="close()">
+    <button class="cursor-pointer rounded-md hover:bg-gray-200" (click)="close()">
       <app-icon [iconName]="IconType.xMark"></app-icon>
     </button>
   </div>
@@ -33,7 +33,7 @@
       }
     </div>
   </form>
-  <div class="pt-4 border-t">
+  <div class="pt-4 border-t border-gray-200">
     <app-button
       [label]="'shop-module.add-product-to-purchase-list-component.ready' | translate"
       [layout]="ButtonLayout.greenLayout"

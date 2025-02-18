@@ -9,7 +9,9 @@
   }
   <input
     #input
-    class="block border rounded-md p-2 w-full focus:border-blue-600 {{ errorCode() ? 'border-red-600' : '' }}"
+    class="block border border-gray-200 rounded-md p-2 w-full focus:border-blue-600 {{
+      errorCode() ? 'border-red-600' : ''
+    }}"
     [placeholder]="placeholder()"
     [value]="value()"
     [autocomplete]="autocomplete()"
