@@ -1,6 +1,6 @@
 export interface CategoryListDto {
   id: string;
   name: string;
-  hasSubCategories: boolean;
+  subCategories: CategoryListDto[];
   parentCategoryId?: string;
 }

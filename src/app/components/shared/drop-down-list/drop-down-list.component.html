@@ -1,9 +1,12 @@
-@if (isVisible()) {
-  <div [class]="styles">
-    <div class="flex flex-col gap-2">
-      @for (item of items(); track item.id) {
-        <app-drop-down-list-item [item]="item" (onItemClick)="action($event)"></app-drop-down-list-item>
-      }
-    </div>
+<div
+  class="absolute min-w-48 right-0 rounded-md bg-neutral-900 z-10 outline-1 -outline-offset-1 outline-neutral-950 shadow-lg">
+  <div class="py-1">
+    @for (item of items(); track item.id) {
+      <a
+        class="block px-4 py-2 w-full text-neutral-300 cursor-pointer hover:bg-neutral-800 whitespace-nowrap"
+        (click)="action(item)">
+        {{ item.value | translate }}
+      </a>
+    }
   </div>
-}
+</div>

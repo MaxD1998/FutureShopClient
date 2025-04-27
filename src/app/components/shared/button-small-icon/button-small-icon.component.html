@@ -1,0 +1,18 @@
+@switch (layout()) {
+  @case (ButtonLayout.filled) {
+    <button
+      class="block p-1 bg-sky-600 text-white cursor-pointer rounded-md hover:bg-sky-700"
+      [disabled]="isDisabled()"
+      (click)="onClick.emit($event)">
+      <app-icon [iconName]="icon()" [iconStyle]="iconStyle()"></app-icon>
+    </button>
+  }
+  @case (ButtonLayout.outline) {
+    <button
+      class="block p-1 bg-neutral-900 text-white cursor-pointer rounded-md hover:bg-sky-600"
+      [disabled]="isDisabled()"
+      (click)="onClick.emit($event)">
+      <app-icon [iconName]="icon()" [iconStyle]="iconStyle()"></app-icon>
+    </button>
+  }
+}

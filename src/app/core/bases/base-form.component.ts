@@ -6,7 +6,7 @@ export abstract class BaseFormComponent {
 
   form: FormGroup = this._formBuilder.group(this.setFormControls());
 
-  errorCode(field: string, arrayName?: string, formGroupName?: string): string | null {
+  errorCode(field: string, arrayName?: string, formGroupName?: string): string {
     const control = !arrayName
       ? this.form.controls[field]
       : !formGroupName
@@ -21,7 +21,7 @@ export abstract class BaseFormComponent {
       return `validation-errors.${key}`;
     }
 
-    return null;
+    return '';
   }
 
   protected abstract setFormControls(): {};

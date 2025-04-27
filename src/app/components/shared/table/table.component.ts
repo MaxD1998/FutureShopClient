@@ -5,10 +5,10 @@ import { TableHeaderFloat } from '../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../core/models/pagination.model';
+import { ButtonComponent } from '../button/button.component';
 import { IconComponent } from '../icon/icon.component';
 import { TableActionFieldComponent } from './table-field-templates/table-action-field/table-action-field.component';
 import { TableBooleanFieldComponent } from './table-field-templates/table-boolean-field/table-boolean-field.component';
-import { TableTextFieldComponent } from './table-field-templates/table-text-field/table-text-field.component';
 import { TablePaginationComponent } from './table-pagination/table-pagination.component';
 
 @Component({
@@ -19,14 +19,16 @@ import { TablePaginationComponent } from './table-pagination/table-pagination.co
   imports: [
     TableActionFieldComponent,
     TableBooleanFieldComponent,
-    TableTextFieldComponent,
     TranslateModule,
     IconComponent,
     TablePaginationComponent,
+    ButtonComponent,
   ],
 })
 export class TableComponent {
+  buttonLabel = input<string>('');
   columns = input.required<DataTableColumnModel[]>();
+  header = input.required<string>();
   idName = input.required<string>();
   items = input.required<any[]>();
   page = input<PaginationModel>();
@@ -35,6 +37,7 @@ export class TableComponent {
   isEditAction = input<boolean>(false);
   isRemoveAction = input<boolean>(false);
 
+  onButtonAction = output<void>();
   onDetailAction = output<string>();
   onEditAction = output<string>();
   onPageClick = output<number>();

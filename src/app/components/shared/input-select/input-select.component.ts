@@ -2,15 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
+  Injector,
   Provider,
   ViewChild,
+  afterRender,
   forwardRef,
+  inject,
   input,
+  model,
   signal,
 } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { tap } from 'rxjs';
 import { SelectItemModel } from '../../../core/models/select-item.model';
 
 const CUSTOM_VALUE_ACCESSOR: Provider = {
@@ -28,79 +33,55 @@ const CUSTOM_VALUE_ACCESSOR: Provider = {
   providers: [CUSTOM_VALUE_ACCESSOR],
 })
 export class InputSelectComponent implements ControlValueAccessor {
+  private readonly _injector = inject(Injector);
+
+  items = input.required<SelectItemModel[]>();
+
   errorCode = input<string | null>();
   isDisabled = input<boolean>(false);
-  items = input.required<SelectItemModel[]>();
   label = input<string>();
   required = input<boolean>(false);
-
-  @ViewChild('selectBox', { read: ElementRef }) selectBox: ElementRef;
-
-  private _firstItem: SelectItemModel = {
-    value: 'common.input-select.select-option',
-  };
+  value = model<string | undefined>();
 
   isDropdownVisible = signal<boolean>(false);
   isFocus = signal<boolean>(false);
-  selectedItem = signal<SelectItemModel>(this._firstItem);
-  selectedId = signal<string | undefined>(undefined);
 
-  get dropdownItems(): SelectItemModel[] {
-    if (!this.items().some(x => x.id == this.selectedItem().id) && this.selectedItem().id) {
-      const array = [this.selectedItem()].concat(this.items()).sort((a, b) => {
-        if (a.value < b.value) {
-          return -1;
+  error$ = toObservable(this.errorCode, { injector: this._injector }).pipe(
+    tap(errorCode => {
+      const errorOutline = 'outline-red-600';
+      const errorFocusOutline = 'focus:outline-red-600';
+
+      if (!!errorCode) {
+        this.select.nativeElement.classList.add(errorOutline);
+        this.select.nativeElement.classList.add(errorFocusOutline);
+      } else {
+        if (this.select.nativeElement.classList.contains(errorOutline)) {
+          this.select.nativeElement.classList.remove(errorOutline);
         }
-        if (a.value > b.value) {
-          return 1;
+
+        if (this.select.nativeElement.classList.contains(errorFocusOutline)) {
+          this.select.nativeElement.classList.remove(errorFocusOutline);
         }
-        return 0;
-      });
-
-      return this.required() ? array : [this._firstItem].concat(array);
-    }
-
-    const array = this.items().sort((a, b) => {
-      if (a.value < b.value) {
-        return -1;
       }
-      if (a.value > b.value) {
-        return 1;
-      }
-      return 0;
+    }),
+  );
+
+  @ViewChild('select') select: ElementRef;
+
+  constructor() {
+    afterRender(() => {
+      this.error$.subscribe();
     });
-
-    return this.required() ? array : [this._firstItem].concat(array);
   }
 
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    if (!this.isDisabled() && !this.selectBox.nativeElement.contains(event.target) && this.isDropdownVisible()) {
-      this.isDropdownVisible.set(false);
-      this.isFocus.set(false);
-      this.onTouch();
-    }
-  }
-
-  setItem(item: SelectItemModel): void {
-    this.writeValue(item.id);
-    this.onChange(item.id);
+  onValueChange(element: HTMLSelectElement): void {
+    this.value.set(element.value);
+    this.onChange(this.value());
     this.onTouch();
-    this.onClick();
   }
 
-  onClick(): void {
-    if (this.isDisabled()) {
-      return;
-    }
-
-    this.isDropdownVisible.set(!this.isDropdownVisible());
-    this.isFocus.set(!this.isFocus());
-  }
-
-  writeValue(id?: string): void {
-    this.selectedItem.set(this.dropdownItems.find(x => x.id == id) ?? this._firstItem);
-    this.selectedId.set(id);
+  writeValue(value: string): void {
+    this.value.set(value);
   }
 
   onChange: any = () => {};

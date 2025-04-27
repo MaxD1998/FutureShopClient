@@ -11,6 +11,5 @@ import { IconComponent } from '../../icon/icon.component';
 })
 export class NavButtonComponent {
   iconName = input.required<IconType>();
-  label = input<string>();
   routeLink = input<string>();
 }

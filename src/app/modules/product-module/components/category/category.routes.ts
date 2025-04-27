@@ -9,7 +9,7 @@ export const categoryRoutes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: `${ClientRoute.form}`,
+    path: ClientRoute.form,
     children: [
       {
         path: '',

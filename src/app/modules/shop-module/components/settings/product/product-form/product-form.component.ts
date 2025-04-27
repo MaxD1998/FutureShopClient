@@ -9,6 +9,7 @@ import { InputSelectComponent } from '../../../../../../components/shared/input-
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { DialogWindowComponent } from '../../../../../../components/shared/modals/dialog-window/dialog-window.component';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
+import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { IdValueDto } from '../../../../../../core/dtos/id-value.dto';
@@ -34,6 +35,7 @@ import { SetProductParameterValueComponent } from './set-product-parameter-value
     InputComponent,
     InputNumberComponent,
     InputSelectComponent,
+    ToggleComponent,
     DialogWindowComponent,
     TableComponent,
     SetProductParameterValueComponent,
@@ -79,6 +81,7 @@ export class ProductFormComponent extends BaseFormComponent {
     super();
 
     const form = this.form.controls;
+    form['isActive'].setValue(this.product.isActive);
     form['name'].setValue(this.product.name);
     form['productBaseId'].setValue(this.product.productBaseId);
     form['price'].setValue(this.product.price);
@@ -158,6 +161,7 @@ export class ProductFormComponent extends BaseFormComponent {
 
   protected override setFormControls(): {} {
     return {
+      isActive: [false],
       name: [null, [Validators.required]],
       price: [null, [Validators.required]],
       productBaseId: [null, [Validators.required]],

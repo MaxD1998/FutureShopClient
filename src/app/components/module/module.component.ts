@@ -7,12 +7,12 @@ import { IconType } from '../../core/enums/icon-type';
 import { ModuleType } from '../../core/enums/module-type';
 import { UserType } from '../../core/enums/user-type';
 import { UserService } from '../../modules/auth-module/core/services/user.service';
-import { IconComponent } from '../shared/icon/icon.component';
 import { NavComponent } from '../shared/nav/nav.component';
+import { ModuleButtonComponent } from './module-button/module-button.component';
 
 @Component({
   selector: 'app-module',
-  imports: [AsyncPipe, IconComponent, NavComponent],
+  imports: [AsyncPipe, NavComponent, ModuleButtonComponent],
   templateUrl: './module.component.html',
   styleUrl: './module.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,15 +1,19 @@
 <form class="flex flex-col" [formGroup]="form" (ngSubmit)="submit()">
   <div class="flex items-center mb-2">
-    <h2 class="text-xl">{{ 'shop-module.product-property-form-component.properties' | translate }}</h2>
+    <h2 class="text-xl text-white font-semibold">
+      {{ 'shop-module.product-property-form-component.properties' | translate }}
+    </h2>
   </div>
   <app-input
     formControlName="name"
-    [errorCode]="errorCode('name')"
+    [errorCode]="errorCode('name') | translate"
     [label]="'shop-module.product-property-form-component.name' | translate"
     [required]="true">
   </app-input>
   <div class="flex items-center mb-2">
-    <h2 class="text-xl">{{ 'shop-module.product-property-form-component.translations' | translate }}</h2>
+    <h2 class="text-xl text-white font-semibold">
+      {{ 'shop-module.product-property-form-component.translations' | translate }}
+    </h2>
   </div>
   <div formArrayName="translations">
     @for (translation of translations().controls; track $index) {

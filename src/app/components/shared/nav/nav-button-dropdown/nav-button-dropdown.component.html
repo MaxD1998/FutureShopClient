@@ -1,0 +1,10 @@
+<div class="relative">
+  <a
+    class="block p-2 my-3 rounded-md text-neutral-300 cursor-pointer hover:bg-sky-600 hover:text-white"
+    (click)="isOpen.set(!isOpen())">
+    <app-icon [iconName]="iconName()"></app-icon>
+  </a>
+  @if (isOpen()) {
+    <app-drop-down-list [items]="items()" (onClick)="isOpen.set(false)"></app-drop-down-list>
+  }
+</div>

@@ -18,19 +18,19 @@ export class ProductModuleComponent {
     {
       id: '1',
       name: 'product-module.product-module-component.items.categories',
-      hasSubCategories: false,
+      subCategories: [],
       link: `${ClientRoute.category}/${ClientRoute.list}`,
     },
     {
       id: '2',
       name: 'product-module.product-module-component.items.products-bases',
-      hasSubCategories: false,
+      subCategories: [],
       link: `${ClientRoute.productBase}/${ClientRoute.list}`,
     },
     {
       id: '3',
       name: 'product-module.product-module-component.items.products',
-      hasSubCategories: false,
+      subCategories: [],
       link: `${ClientRoute.product}/${ClientRoute.list}`,
     },
   ];

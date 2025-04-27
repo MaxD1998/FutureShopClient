@@ -1,53 +1,56 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Injector, input, output, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonLayout } from '../../../core/enums/button-layout';
 import { IconType } from '../../../core/enums/icon-type';
 import { AsideItemModel } from '../../../core/models/aside-item.model';
-import { IconComponent } from '../icon/icon.component';
+import { ButtonSmallIconComponent } from '../button-small-icon/button-small-icon.component';
 
 @Component({
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterModule, IconComponent, TranslateModule],
+  imports: [RouterModule, TranslateModule, ButtonSmallIconComponent],
 })
 export class AsideComponent {
+  private readonly _injector = inject(Injector);
+
   items = input.required<AsideItemModel[]>();
   header = input.required<string[]>();
 
-  onMenuChange = output<boolean>();
-  onNextLevel = output<string>();
-  onUndoLevel = output<string | undefined>();
+  asideStyle = input<string>('h-[calc(100vh-6rem)]');
+  setCloseButton = input<boolean>(false);
 
-  IconType: typeof IconType = IconType;
+  onCloseMenu = output<void>();
 
-  isMenu = signal<boolean>(true);
-  parentIds = signal<(string | undefined)[]>([]);
+  ButtonLayout = ButtonLayout;
+  IconType = IconType;
 
-  changeMenu(): void {
-    this.isMenu.set(!this.isMenu());
-    this.onMenuChange.emit(this.isMenu());
+  currentItems = signal<AsideItemModel[]>([]);
+  parentId = signal<string | undefined>(undefined);
+
+  constructor() {
+    toObservable(this.items, { injector: this._injector }).subscribe({
+      next: items => {
+        this.currentItems.set(Array.from(items));
+      },
+    });
   }
 
   nextLevel(item: AsideItemModel): void {
-    if (!this.parentIds().includes(item.parentId)) {
-      this.parentIds().push(item.parentId);
-    }
-
-    this.onNextLevel.emit(item.id);
+    this.currentItems.set(Array.from(item.subCategories));
+    this.parentId.set(item.id);
   }
 
   undoLevel(): void {
-    const lenght = this.parentIds().length;
+    const items = this.items();
+    const item = items.find(x => x.id == this.parentId());
 
-    if (lenght == 0) {
-      return;
+    if (item) {
+      this.currentItems.set(Array.from(items.filter(x => x.parentId == item.parentId)));
+      this.parentId.set(item.parentId);
     }
-
-    const parentId = this.parentIds()[lenght - 1];
-    this.parentIds().pop();
-
-    this.onUndoLevel.emit(parentId);
   }
 }

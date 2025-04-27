@@ -1,9 +1,0 @@
-@if (value()) {
-  <div class="flex {{ justify() }} overflow-hidden">
-    <span class="truncate">{{ value() }}</span>
-  </div>
-} @else {
-  <div class="flex {{ justify() }}">
-    <app-icon [iconName]="IconType.minus"></app-icon>
-  </div>
-}

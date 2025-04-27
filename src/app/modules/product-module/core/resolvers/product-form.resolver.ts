@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../data-service/product-base.data-service';
@@ -16,19 +17,22 @@ export const productFormResolver: ResolveFn<{
   const productDataService = inject(ProductDataService);
   const productBaseDataService = inject(ProductBaseDataService);
   const productPhotoDataService = inject(ProductPhotoDataService);
+  const translateService = inject(TranslateService);
   const id = route.params['id'];
+  const selectOption = [{ value: translateService.instant('common.input-select.select-option') }];
 
   return id
     ? productDataService.getById(id).pipe(
         switchMap(response => {
           return forkJoin({
-            files: response.productPhotos
-              ? productPhotoDataService.getListInfoByIds(response.productPhotos.map(x => x.fileId))
-              : of(undefined),
+            files:
+              response.productPhotos.length > 0
+                ? productPhotoDataService.getListInfoByIds(response.productPhotos.map(x => x.fileId))
+                : of(undefined),
             product: of(response),
             productBases: productBaseDataService.getIdNameById(response.productBaseId).pipe(
               map(x => {
-                return x
+                const result = x
                   ? ([
                       {
                         id: x.id,
@@ -36,6 +40,8 @@ export const productFormResolver: ResolveFn<{
                       },
                     ] as SelectItemModel[])
                   : [];
+
+                return selectOption.concat(result);
               }),
             ),
           });
@@ -44,12 +50,14 @@ export const productFormResolver: ResolveFn<{
     : forkJoin({
         productBases: productBaseDataService.getListIdName().pipe(
           map(response =>
-            response.map(x => {
-              return {
-                id: x.id,
-                value: x.name,
-              };
-            }),
+            selectOption.concat(
+              response.map(x => {
+                return {
+                  id: x.id,
+                  value: x.name,
+                };
+              }),
+            ),
           ),
         ),
       });

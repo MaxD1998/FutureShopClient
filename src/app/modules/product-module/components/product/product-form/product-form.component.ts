@@ -14,12 +14,12 @@ import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
-import { FileModel } from '../../../../../core/models/file.model';
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { TempIdGenerator } from '../../../../../core/utils/temp-id-generator';
 import { ProductPhotoDataService } from '../../../core/data-service/product-photo.data-service';
 import { ProductDataService } from '../../../core/data-service/product.data-service';
 import { ProductPhotoFormDto } from '../../../core/dtos/product-photo.form-dto';
+import { ProductPhotoInfoDto } from '../../../core/dtos/product-photo.info-dto';
 import { ProductFormDto } from '../../../core/dtos/product.form-dto';
 import { PreviewProductPhotoComponent } from './preview-product-photo/preview-product-photo.component';
 import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.component';
@@ -87,7 +87,7 @@ export class ProductFormComponent extends BaseFormComponent {
   dialogType = signal<DialogType>(DialogType.productPhoto);
   isDialogActive = signal<boolean>(false);
   fileId = signal<string>('');
-  productPhotos = signal<FileModel[]>(this._activatedRoute.snapshot.data['form']['files'] ?? []);
+  productPhotos = signal<ProductPhotoInfoDto[]>(this._activatedRoute.snapshot.data['form']['files'] ?? []);
 
   constructor() {
     super();

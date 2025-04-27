@@ -1,14 +1,14 @@
-<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-8 p-4 bg-neutral-900 rounded-xl">
   <div class="flex gap-4 flex-wrap">
     <div class="flex flex-1 flex-col gap-4">
-      <div class="flex justify-center border h-112">
+      <div class="flex justify-center h-112">
         <img class="object-contain" [src]="image()" />
       </div>
       <div class="flex justify-center gap-4">
         @for (image of images(); track $index) {
           <a
-            class="flex justify-center border rounded w-20 h-20 p-1 cursor-pointer {{
-              image.isShowed ? 'border-green-300' : ''
+            class="flex justify-center border outline-2 -outline-offset-2 outline-sky-500 rounded-xl w-24 h-24 p-2 cursor-pointer {{
+              image.isShowed ? 'outline-sky-600' : ''
             }}"
             (click)="showImage($index)">
             <img class="object-contain" [src]="image.source" />
@@ -17,11 +17,15 @@
       </div>
     </div>
     <div class="flex flex-col flex-1 gap-4">
-      <h1 class="text-2xl font-semibold">{{ product().name }}</h1>
-      <span class="text-xl">{{ 'shop-module.product-details.component.rating' | translate }}: 8.5/10</span>
-      <span>{{ 'shop-module.product-details.component.product-feedback' | translate }}: 4</span>
+      <h1 class="text-xl text-white font-semibold">{{ product().name }}</h1>
+      <span class="text-xl text-white font-semibold"
+        >{{ 'shop-module.product-details.component.rating' | translate }}: 8.5/10
+      </span>
+      <span class="text-white font-semibold"
+        >{{ 'shop-module.product-details.component.product-feedback' | translate }}: 4
+      </span>
       <div class="flex">
-        <span class="text-2xl">
+        <span class="text-xl text-white font-semibold">
           {{ product().price }}
           {{ 'common.currencies.pln' | translate }}
         </span>
@@ -34,9 +38,8 @@
             [label]="'shop-module.product-details.component.add-to-basket' | translate"
             (onClick)="addToBasket()">
           </app-button>
-          <app-button
-            [isIcon]="true"
-            [label]="product().isInPurchaseList ? IconType.fillHeart : IconType.heart"
+          <app-button-icon
+            [icon]="product().isInPurchaseList ? IconType.fillHeart : IconType.heart"
             (onClick)="addToFavourite()">
             <app-drop-down [(isVisible)]="isFavouriteOpen">
               <app-add-product-to-purchase-list
@@ -46,14 +49,18 @@
                 (onClose)="isFavouriteOpen.set($event)">
               </app-add-product-to-purchase-list>
             </app-drop-down>
-          </app-button>
+          </app-button-icon>
         </div>
       </div>
     </div>
   </div>
-  <div class="border-t"></div>
+  <div class="border-t border-gray-200"></div>
   <div class="flex flex-col gap-2">
-    <h2 class="text-xl">{{ 'shop-module.product-details.component.specyfication' | translate }}</h2>
-    <app-table idName="id" [columns]="columns" [items]="product().productParameters"></app-table>
+    <app-table
+      idName="id"
+      [columns]="columns"
+      [header]="'shop-module.product-details.component.specyfication'"
+      [items]="product().productParameters">
+    </app-table>
   </div>
 </div>

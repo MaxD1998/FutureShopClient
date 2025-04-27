@@ -1,11 +1,11 @@
 @switch (value()) {
   @case (true) {
-    <app-icon [iconName]="IconType.checkCircle"></app-icon>
+    <app-icon [iconName]="IconType.checkCircle" [iconStyle]="'size-5'"></app-icon>
   }
   @case (false) {
-    <app-icon [iconName]="IconType.minusCircle"></app-icon>
+    <app-icon [iconName]="IconType.minusCircle" [iconStyle]="'size-5'"></app-icon>
   }
   @default {
-    <app-icon [iconName]="IconType.minus"></app-icon>
+    <app-icon [iconName]="IconType.minus" [iconStyle]="'size-5'"></app-icon>
   }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subject, takeUntil, tap } from 'rxjs';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../components/shared/input-select/input-select.component';
@@ -41,6 +41,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
   private readonly _router = inject(Router);
+  private readonly _translateService = inject(TranslateService);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
@@ -138,6 +139,7 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     const category = this.form.controls;
     const parentCategoryId = category['parentCategoryId'].value;
     const subCategoryIds = (category['subCategories'].value as IdNameDto[]).map(x => x.id);
+    const selectOption = [{ value: this._translateService.instant('common.input-select.select-option') }];
 
     forkJoin({
       parentCategoryItems: this._categoryDataService.getsAvailableToBeParent(subCategoryIds, this.id),
@@ -145,21 +147,25 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     }).subscribe({
       next: response => {
         this.parentItems.set(
-          response.parentCategoryItems.map(x => {
-            return {
-              id: x.id,
-              value: x.name,
-            };
-          }),
+          selectOption.concat(
+            response.parentCategoryItems.map(x => {
+              return {
+                id: x.id,
+                value: x.name,
+              };
+            }),
+          ),
         );
 
         this.subCategoryItems.set(
-          response.subCategoryItems.map(x => {
-            return {
-              id: x.id,
-              value: x.name,
-            };
-          }),
+          selectOption.concat(
+            response.subCategoryItems.map(x => {
+              return {
+                id: x.id,
+                value: x.name,
+              };
+            }),
+          ),
         );
       },
     });

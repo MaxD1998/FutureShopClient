@@ -2,10 +2,8 @@ import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, switchMap, takeUntil } from 'rxjs';
-import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { CanEditDirective } from '../../../../../core/directives/can-edit.directive';
 import { PageDto } from '../../../../../core/dtos/page.dto';
 import { ModuleType } from '../../../../../core/enums/module-type';
 import { TableTemplate } from '../../../../../core/enums/table-template';
@@ -19,7 +17,7 @@ import { ProductBaseListDto } from '../../../core/dtos/product-base.list-dto';
   templateUrl: './product-base-list.component.html',
   styleUrl: './product-base-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CanEditDirective, TranslateModule, ButtonComponent, TableComponent],
+  imports: [TranslateModule, TableComponent],
 })
 export class ProductBaseListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);

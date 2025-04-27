@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonIconComponent } from '../../../../../../components/shared/button-icon/button-icon.component';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { DropDownComponent } from '../../../../../../components/shared/drop-down/drop-down.component';
 import { InputPlusMinusComponent } from '../../../../../../components/shared/input-plus-minus/input-plus-minus.component';
@@ -22,6 +23,7 @@ import { AddProductToPurchaseListComponent } from '../../../shared/add-product-t
     TableComponent,
     DropDownComponent,
     AddProductToPurchaseListComponent,
+    ButtonIconComponent,
   ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
@@ -48,13 +50,13 @@ export class ProductDetailsComponent {
     {
       field: 'name',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'product-details.component.table.name',
+      headerText: 'shop-module.product-details.component.table.name',
       template: TableTemplate.text,
     },
     {
       field: 'value',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'product-details.component.table.value',
+      headerText: 'shop-module.product-details.component.table.value',
       template: TableTemplate.text,
     },
   ];

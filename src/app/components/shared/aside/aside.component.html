@@ -1,51 +1,39 @@
-<div class="flex rounded-md h-full max-h-body">
-  @if (isMenu()) {
-    <div class="flex flex-col flex-auto sm:w-56 max-sm:w-full">
-      <div class="flex w-full justify-center items-center p-2 bg-green-300">
-        <div class="min-w-7 max-w-7 min-h-7 max-h-7 mr-2">
-          @if (parentIds().length > 0) {
-            <app-icon
-              class="block w-7 h-7 p-1 cursor-pointer hover:bg-green-400 hover:rounded"
-              iconStyle="w-5 h-5"
-              [iconName]="IconType.arrowUturnLeft"
-              (click)="undoLevel()">
-            </app-icon>
-          }
-        </div>
-        <p class="w-full text-xl text-center whitespace-normal overflow-auto break-words">{{ header() }}</p>
-        <app-icon
-          class="min-w-7 max-w-7 min-h-7 max-h-7 p-1 ml-2 cursor-pointer hover:bg-green-400 hover:rounded"
-          iconStyle="w-5 h-5"
-          [iconName]="IconType.xMark"
-          (click)="changeMenu()">
-        </app-icon>
+<div class="w-72 bg-neutral-900 rounded-tr-xl mr-8">
+  <div class="{{ asideStyle() }} flex flex-col flex-1">
+    <div class="flex justify-between items-center h-14 w-full px-4 py-2">
+      <div class="flex gap-2 items-center">
+        @if (setCloseButton()) {
+          <app-button-small-icon [icon]="IconType.xMark" iconStyle="size-5" (onClick)="onCloseMenu.emit()">
+          </app-button-small-icon>
+        }
+        <header class="text-xl text-white font-semibold">{{ header() }}</header>
       </div>
-      <div class="border-r border-b border-l rounded-b-md pb-4 overflow-auto bg-white">
-        @for (item of items(); track item.id) {
-          <div class="flex items-center hover:bg-green-50">
+      @if (parentId()) {
+        <app-button-small-icon [icon]="IconType.arrowUturnLeft" iconStyle="size-5" (onClick)="undoLevel()">
+        </app-button-small-icon>
+      }
+    </div>
+    <ul class="p-2 overflow-auto">
+      @for (currentItem of currentItems(); track $index) {
+        <li class="px-2 py-1 cursor-pointer hover:bg-neutral-800">
+          <div class="flex justify-between items-center h-8">
             <a
-              class="block py-2 pl-2 overflow-hidden text-ellipsis cursor-pointer w-full whitespace-nowrap md:whitespace-nowrap"
-              [routerLink]="item.link">
-              {{ item.name | translate }}
+              class="block w-full text-white font-semibold"
+              [routerLink]="currentItem.link"
+              (click)="onCloseMenu.emit()">
+              {{ currentItem.name | translate }}
             </a>
-            @if (item.hasSubCategories) {
-              <div class="py-2 pr-2">
-                <app-icon
-                  class="block hover:bg-green-300 hover:rounded cursor-pointer"
-                  [iconName]="IconType.chevronRight"
-                  (click)="nextLevel(item)">
-                </app-icon>
-              </div>
+            @if (currentItem.subCategories.length != 0) {
+              <app-button-small-icon
+                iconStyle="size-4"
+                [icon]="IconType.chevronRight"
+                [layout]="ButtonLayout.filled"
+                (click)="nextLevel(currentItem)">
+              </app-button-small-icon>
             }
           </div>
-        }
-      </div>
-    </div>
-  } @else {
-    <div
-      class="h-11 w-11 p-2 border rounded cursor-pointer hover:bg-green-300 hover:border-green-300"
-      (click)="changeMenu()">
-      <app-icon [iconName]="IconType.chevronRight"></app-icon>
-    </div>
-  }
+        </li>
+      }
+    </ul>
+  </div>
 </div>

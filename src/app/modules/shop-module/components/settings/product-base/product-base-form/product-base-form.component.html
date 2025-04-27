@@ -1,54 +1,47 @@
-<div class="flex flex-col h-full gap-4">
-  <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ 'shop-module.product-base-form-component.edit-product-base' | translate }}</h1>
-    <app-button
-      [label]="'shop-module.product-base-form-component.save' | translate"
-      [width]="'w-32'"
-      [layout]="ButtonLayout.greenLayout"
-      (onClick)="submit()">
-    </app-button>
+<div class="flex flex-col h-full bg-neutral-900 rounded-tl-xl">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">
+      {{ 'shop-module.product-base-form-component.edit-product-base' | translate }}
+    </h1>
+    <app-button [label]="'shop-module.product-base-form-component.save' | translate" (onClick)="submit()"></app-button>
   </div>
-  <div class="border-t"></div>
-  <form class="flex flex-col" [formGroup]="form">
-    <div class="flex items-center h-11">
-      <h2 class="text-xl">{{ 'shop-module.product-base-form-component.properties' | translate }}</h2>
-    </div>
-    <div class="flex flex-row flex-wrap gap-4">
-      <div class="flex flex-col flex-auto">
-        <app-input
-          formControlName="name"
-          [errorCode]="errorCode('name')"
-          [isDisabled]="true"
-          [label]="'shop-module.product-base-form-component.name' | translate"
-          [required]="true">
-        </app-input>
+  <div class="flex flex-col p-4">
+    <form class="flex flex-col" [formGroup]="form">
+      <h2 class="text-xl text-neutral-100 font-semibold mb-4">
+        {{ 'shop-module.product-base-form-component.properties' | translate }}
+      </h2>
+      <div class="flex flex-row flex-wrap gap-4">
+        <div class="flex flex-col flex-1">
+          <app-input
+            formControlName="name"
+            [errorCode]="errorCode('name') | translate"
+            [isDisabled]="true"
+            [label]="'shop-module.product-base-form-component.name' | translate"
+            [required]="true">
+          </app-input>
+        </div>
+        <div class="flex flex-col flex-1">
+          <app-input-select
+            formControlName="categoryId"
+            [errorCode]="errorCode('categoryId') | translate"
+            [isDisabled]="true"
+            [label]="'shop-module.product-base-form-component.choose-category' | translate"
+            [items]="categoryItems"
+            [required]="true">
+          </app-input-select>
+        </div>
       </div>
-      <div class="flex flex-col flex-auto">
-        <app-input-select
-          formControlName="categoryId"
-          [errorCode]="errorCode('categoryId')"
-          [isDisabled]="true"
-          [label]="'shop-module.product-base-form-component.choose-category' | translate"
-          [items]="categoryItems"
-          [required]="true">
-        </app-input-select>
-      </div>
-    </div>
-  </form>
-  <div class="flex flex-col flex-auto gap-4">
-    <div class="flex justify-between items-center">
-      <h2 class="text-xl">{{ 'shop-module.product-base-form-component.product-parameters' | translate }}</h2>
-      <app-button
-        [label]="'shop-module.product-base-form-component.add-parameter' | translate"
-        (onClick)="openDialogWindow($event)">
-      </app-button>
-    </div>
+    </form>
     <app-table
+      class="flex-1"
+      [buttonLabel]="'shop-module.product-base-form-component.add-parameter'"
       [columns]="columns"
+      [header]="'shop-module.product-base-form-component.product-parameters'"
       [idName]="'index'"
       [isEditAction]="true"
       [isRemoveAction]="true"
       [items]="productParameters()"
+      (onButtonAction)="addParameter()"
       (onEditAction)="editParameter($event)"
       (onRemoveAction)="removeParamter($event)">
     </app-table>

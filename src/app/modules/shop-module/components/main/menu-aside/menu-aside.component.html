@@ -1,6 +1,9 @@
-<app-aside
-  [header]="'shop-module.menu-aside-component.categories' | translate"
-  [items]="categories()"
-  (onNextLevel)="getsCategoryByCategoryId($event)"
-  (onUndoLevel)="getsCategoryByCategoryId($event)">
-</app-aside>
+<div class="w-full h-full absolute top-0 left-0 bg-neutral-500/30 backdrop-blur-sm z-50">
+  <app-aside
+    [header]="'shop-module.menu-aside-component.categories' | translate"
+    [asideStyle]="'h-screen'"
+    [setCloseButton]="true"
+    [items]="categories()"
+    (onCloseMenu)="onCloseMenu.emit()">
+  </app-aside>
+</div>

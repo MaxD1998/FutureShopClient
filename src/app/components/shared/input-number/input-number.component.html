@@ -1,7 +1,7 @@
 <div class="relative pb-6">
   @if (label()) {
     <label class="block my-1">
-      {{ label() }}
+      <span class="text-neutral-100 font-semibold">{{ label() }}</span>
       @if (required()) {
         <sup class="text-red-600">*</sup>
       }
@@ -9,7 +9,7 @@
   }
   <input
     #input
-    class="block border rounded-md p-2 w-full focus:border-blue-600 {{ errorCode() ? 'border-red-600' : '' }}"
+    class="block p-2 w-full bg-neutral-800 text-neutral-100 font-semibold rounded-md outline-1 -outline-offset-1 outline-neutral-700 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600"
     [placeholder]="placeholder()"
     [value]="value()"
     [autocomplete]="autocomplete()"
@@ -17,6 +17,6 @@
     (change)="onValueChange(input)"
     (input)="transfom(input)" />
   @if (errorCode()) {
-    <span class="absolute text-red-600">{{ errorCode() ?? '' | translate }}</span>
+    <span class="absolute text-red-600">{{ errorCode() }}</span>
   }
 </div>

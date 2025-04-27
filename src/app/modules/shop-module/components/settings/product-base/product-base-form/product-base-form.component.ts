@@ -80,6 +80,11 @@ export class ProductBaseFormComponent extends BaseFormComponent {
     this.form.controls['categoryId'].setValue(this.productBase.categoryId);
   }
 
+  addParameter(): void {
+    this.isDialogActive.set(true);
+    this.parameterToEdit.set(undefined);
+  }
+
   closeDialog(): void {
     this.isDialogActive.set(false);
     this.parameterToEdit.set(undefined);

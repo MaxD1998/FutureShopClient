@@ -74,9 +74,9 @@
     "category-list-component": {
       "categories": "Categories",
       "create-new-category": "Create new category",
-      "has-subcategories": "Has subcategories",
       "is-subcategory": "Is subcategory",
-      "name": "Name"
+      "name": "Name",
+      "number-of-subcategories": "Number of subcategories"
     },
     "product-base-form-component": {
       "choose-category": "Choose category",
@@ -140,6 +140,33 @@
     }
   },
   "shop-module": {
+    "ad-campaign-form-component": {
+      "active": "Active",
+      "add": "Add",
+      "ads": "Ads",
+      "create-ad-campaign": "Create ad campaign",
+      "edit-ad-campaign": "Edit ad campaign",
+      "end": "End",
+      "name": "Name",
+      "properties": "Properties",
+      "save": "Save",
+      "start": "Start",
+      "table-columns": {
+        "language": "Language",
+        "name": "Name",
+        "size": "Size",
+        "type": "Type"
+      }
+    },
+    "ad-campaign-list-component": {
+      "ad-campaigns": "Ad campaigns",
+      "create-new-ad-campaign": "Create new ad campaign",
+      "end": "End",
+      "is-active": "Active",
+      "name": "Name",
+      "number-of-ad-campaign-items": "Number of ad campaign items",
+      "start": "Start"
+    },
     "add-product-to-purchase-list-component": {
       "add-a-new-list": "Add a new list",
       "favourite": "Favourite",
@@ -164,6 +191,7 @@
       "to-pay": "To pay"
     },
     "category-form-component": {
+      "active": "Active",
       "add-translation": "Add translation",
       "edit-category": "Edit category",
       "name": "Name",
@@ -180,9 +208,9 @@
     },
     "category-list-component": {
       "categories": "Categories",
-      "has-subcategories": "Has subcategories",
       "is-subcategory": "Is subcategory",
-      "name": "Name"
+      "name": "Name",
+      "number-of-subcategories": "Number of subcategories"
     },
     "menu-aside-component": {
       "categories": "Categories"
@@ -220,6 +248,7 @@
       "add-to-basket": "Add to basket"
     },
     "product-form-component": {
+      "active": "Active",
       "edit-product": "Edit product",
       "name": "Name",
       "price": "Price",
@@ -271,11 +300,17 @@
     },
     "settings-component": {
       "items": {
+        "ad-campaigns": "Ad campaigns",
         "categories": "Categories",
         "products": "Products",
         "products-bases": "Product bases"
       },
       "menu": "Menu"
+    },
+    "set-ad-campaign-item-component": {
+      "choose-file": "Choose file",
+      "file-is-empty": "File is empty",
+      "save": "Save"
     },
     "small-purchase-list-form-component": {
       "add": "Add"

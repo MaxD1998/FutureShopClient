@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of } from 'rxjs';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { CategoryDataService } from '../data-service/category.data-service';
@@ -12,6 +13,7 @@ export const productBaseFormResolver: ResolveFn<{ productBase?: ProductBaseFormD
 ) => {
   const categoryDataService = inject(CategoryDataService);
   const productBaseDataService = inject(ProductBaseDataService);
+  const translateService = inject(TranslateService);
   const id = route.params['id'];
 
   return forkJoin({
@@ -21,12 +23,18 @@ export const productBaseFormResolver: ResolveFn<{ productBase?: ProductBaseFormD
     map(response => {
       return {
         productBase: response.productBase,
-        categories: response.categories.map(x => {
-          return {
-            id: x.id,
-            value: x.name,
-          };
-        }),
+        categories: [
+          {
+            value: translateService.instant('common.input-select.select-option'),
+          },
+        ].concat(
+          response.categories.map(x => {
+            return {
+              id: x.id,
+              value: x.name,
+            };
+          }),
+        ),
       };
     }),
   );

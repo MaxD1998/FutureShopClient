@@ -1,64 +1,63 @@
-<div class="flex flex-col gap-4 h-full overflow-hidden">
-  <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ 'shop-module.category-form-component.edit-category' | translate }}</h1>
-    <app-button
-      [label]="'shop-module.category-form-component.save' | translate"
-      [width]="'w-32'"
-      [layout]="ButtonLayout.greenLayout"
-      (onClick)="submit()">
-    </app-button>
+<div class="h-full bg-neutral-900 rounded-tl-xl">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">
+      {{ 'shop-module.category-form-component.edit-category' | translate }}
+    </h1>
+    <app-button [label]="'shop-module.category-form-component.save' | translate" (onClick)="submit()"></app-button>
   </div>
-  <div class="border-t"></div>
-  <div class="flex-auto overflow-y-auto">
-    <div class="flex flex-row flex-wrap gap-4">
-      <form class="flex flex-col flex-1" [formGroup]="form">
-        <div class="flex flex-col gap-4">
-          <div class="flex items-center">
-            <h2 class="text-xl">{{ 'shop-module.category-form-component.properties' | translate }}</h2>
-          </div>
-          <app-input
-            formControlName="name"
-            [errorCode]="errorCode('name')"
-            [label]="'shop-module.category-form-component.name' | translate"
-            [isDisabled]="true"
-            [required]="true">
-          </app-input>
+  <div class="flex flex-row flex-wrap gap-4 flex-auto p-4 overflow-y-auto">
+    <form class="flex flex-col flex-1" [formGroup]="form">
+      <h2 class="text-xl text-neutral-100 font-semibold mb-4">
+        {{ 'shop-module.category-form-component.properties' | translate }}
+      </h2>
+      <app-input
+        formControlName="name"
+        [errorCode]="errorCode('name') | translate"
+        [label]="'shop-module.category-form-component.name' | translate"
+        [isDisabled]="true"
+        [required]="true">
+      </app-input>
+      <app-toggle
+        formControlName="isActive"
+        [errorCode]="errorCode('isActive') | translate"
+        [label]="'shop-module.product-form-component.active' | translate">
+      </app-toggle>
+      <div class="flex flex-col gap-4" formArrayName="translations">
+        <h2 class="text-xl text-neutral-100 font-semibold">
+          {{ 'shop-module.category-form-component.translations' | translate }}
+        </h2>
+        <div>
+          @for (translation of translations.controls; track $index) {
+            <div [formGroupName]="$index">
+              <app-input
+                formControlName="translation"
+                [label]="'common.languages.' + translation.value.lang | translate">
+              </app-input>
+            </div>
+          }
         </div>
-        <div class="flex flex-col gap-4" formArrayName="translations">
-          <div class="flex items-center h-11">
-            <h2 class="text-xl">{{ 'product-module.category-form-component.translations' | translate }}</h2>
-          </div>
-          <div>
-            @for (translation of translations.controls; track $index) {
-              <div [formGroupName]="$index">
-                <app-input
-                  formControlName="translation"
-                  [label]="'common.languages.' + translation.value.lang | translate">
-                </app-input>
-              </div>
-            }
-          </div>
-        </div>
+      </div>
+    </form>
+    <div class="flex flex-col flex-1">
+      <form class="flex flex-col" [formGroup]="form">
+        <h2 class="text-xl text-neutral-100 font-semibold mb-4">
+          {{ 'shop-module.category-form-component.parent-category' | translate }}
+        </h2>
+        <app-input-select
+          formControlName="parentCategoryId"
+          [errorCode]="errorCode('parentCategoryId') | translate"
+          [label]="'shop-module.category-form-component.parent-category' | translate"
+          [items]="parentCategoryItems"
+          [isDisabled]="true">
+        </app-input-select>
       </form>
-      <div class="flex flex-col flex-1">
-        <form class="flex flex-col gap-4" [formGroup]="form">
-          <div class="flex items-center">
-            <h2 class="text-xl">{{ 'shop-module.category-form-component.parent-category' | translate }}</h2>
-          </div>
-          <app-input-select
-            formControlName="parentCategoryId"
-            [errorCode]="errorCode('parentCategoryId')"
-            [label]="'shop-module.category-form-component.parent-category' | translate"
-            [items]="parentCategoryItems"
-            [isDisabled]="true">
-          </app-input-select>
-        </form>
-        <div class="flex flex-col gap-4">
-          <div class="flex justify-between items-center h-11">
-            <h2 class="text-xl">{{ 'shop-module.category-form-component.sub-categories' | translate }}</h2>
-          </div>
-          <app-table idName="id" [columns]="columns" [items]="subCategories"> </app-table>
-        </div>
+      <div class="flex flex-col gap-4">
+        <app-table
+          idName="id"
+          [columns]="columns"
+          [header]="'shop-module.category-form-component.sub-categories'"
+          [items]="subCategories">
+        </app-table>
       </div>
     </div>
   </div>

@@ -1,13 +1,7 @@
-<header class="h-24 relative">
-  <div class="fixed w-full top-0 left-0 z-10 bg-white px-4">
-    <app-nav class="block max-w-364 mx-auto"></app-nav>
+<app-nav> </app-nav>
+<div class="flex max-sm:flex-col">
+  <app-aside [header]="'product-module.product-module-component.menu' | translate" [items]="items"></app-aside>
+  <div class="flex-auto">
+    <router-outlet></router-outlet>
   </div>
-</header>
-<main class="max-w-364 mx-auto mt-4">
-  <div class="flex h-full gap-4">
-    <app-aside [header]="'product-module.product-module-component.menu' | translate" [items]="items"></app-aside>
-    <div class="flex-auto">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</main>
+</div>

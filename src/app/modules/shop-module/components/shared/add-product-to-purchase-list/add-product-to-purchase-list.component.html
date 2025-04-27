@@ -1,11 +1,13 @@
-<div class="flex flex-col w-72 bg-white">
-  <div class="flex w-full justify-between pb-4 border-b">
-    <span class="font-semibold">
+<div class="flex flex-col w-72 bg-neutral-900">
+  <div class="flex w-full justify-between items-center pb-4 border-b border-neutral-700">
+    <span class="text-white font-semibold">
       {{ 'shop-module.add-product-to-purchase-list-component.save-on-a-list' | translate }}
     </span>
-    <button class="rounded-md hover:bg-gray-200" (click)="close()">
-      <app-icon [iconName]="IconType.xMark"></app-icon>
-    </button>
+    <app-button-icon
+      [icon]="IconType.xMark"
+      [iconStyle]="'size-5'"
+      [layout]="ButtonLayout.outline"
+      (click)="close()"></app-button-icon>
   </div>
   @if (authService.user$ | async) {
     @if (isOpenAddForm()) {
@@ -14,7 +16,6 @@
       <app-button
         class="mt-2"
         [label]="'shop-module.add-product-to-purchase-list-component.add-a-new-list' | translate"
-        [layout]="ButtonLayout.greenOutlineLayout"
         (onClick)="isOpenAddForm.set(true)">
       </app-button>
     }
@@ -24,7 +25,7 @@
       @for (purchaseList of purchaseListsForm().controls; track $index) {
         <div class="py-2">
           <input type="checkbox" [formControlName]="$index" />
-          <span class="ml-2">{{
+          <span class="text-white ml-2">{{
             purchaseLists()[$index].isFavourite
               ? ('shop-module.add-product-to-purchase-list-component.favourite' | translate)
               : purchaseLists()[$index].name
@@ -33,10 +34,8 @@
       }
     </div>
   </form>
-  <div class="pt-4 border-t">
-    <app-button
-      [label]="'shop-module.add-product-to-purchase-list-component.ready' | translate"
-      [layout]="ButtonLayout.greenLayout"
-      (onClick)="submit()"></app-button>
+  <div class="pt-4 border-t border-neutral-700">
+    <app-button [label]="'shop-module.add-product-to-purchase-list-component.ready' | translate" (onClick)="submit()">
+    </app-button>
   </div>
 </div>

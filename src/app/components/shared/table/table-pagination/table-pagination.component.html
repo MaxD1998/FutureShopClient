@@ -1,10 +1,10 @@
-<ul class="flex justify-center gap-2 py-2">
+<ul class="flex justify-center gap-2 mt-2">
   @for (item of items(); track $index) {
     <li>
       <button
-        class="border border-green-300 h-9 min-w-9 rounded
-        {{ !item.isDisabled ? 'hover:bg-green-300 ' : '' }}
-        {{ page().currentPage.toString() == item.name ? 'bg-green-300' : '' }}"
+        class="border border-sky-600 h-9 min-w-9 rounded text-neutral-100 font-semibold
+        {{ !item.isDisabled ? 'hover:bg-sky-600 ' : '' }}
+        {{ page().currentPage.toString() == item.name ? 'bg-sky-600' : '' }}"
         [disabled]="item.isDisabled"
         (click)="action(item.name)">
         {{ item.name }}

@@ -1,11 +1,5 @@
-<div class="relative hover:bg-green-300">
-  <div class="p-2 cursor-pointer">
-    <a class="grid" [routerLink]="routeLink()">
-      <div class="flex justify-center">
-        <app-icon [iconName]="iconName()"></app-icon>
-      </div>
-      <p class="text-center">{{ label() }}</p>
-    </a>
-  </div>
-  <ng-content></ng-content>
-</div>
+<a
+  class="block p-2 my-3 rounded-md text-neutral-300 cursor-pointer hover:bg-sky-600 hover:text-white"
+  [routerLink]="routeLink()">
+  <app-icon [iconName]="iconName()"></app-icon>
+</a>

@@ -1,0 +1,15 @@
+<app-table
+  class="block h-[calc(100vh-6rem)] bg-neutral-900 p-4 rounded-tl-xl"
+  header="shop-module.ad-campaign-list-component.ad-campaigns"
+  [buttonLabel]="'shop-module.ad-campaign-list-component.create-new-ad-campaign'"
+  [columns]="columns"
+  [idName]="'id'"
+  [items]="adCampaigns()"
+  [isEditAction]="true"
+  [isRemoveAction]="true"
+  [page]="pagination()"
+  (onButtonAction)="navigateToCreate()"
+  (onEditAction)="navigateToEdit($event)"
+  (onPageClick)="changePage($event)"
+  (onRemoveAction)="removeRecord($event)">
+</app-table>

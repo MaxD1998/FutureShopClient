@@ -5,7 +5,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../../core/dtos/page.dto';
-import { ModuleType } from '../../../../../../core/enums/module-type';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
@@ -22,8 +21,6 @@ export class ProductListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
-
-  ModuleType: typeof ModuleType = ModuleType;
 
   pagination = signal<PaginationModel>({
     currentPage: 1,

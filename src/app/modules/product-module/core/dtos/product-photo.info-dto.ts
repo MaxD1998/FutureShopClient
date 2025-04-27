@@ -1,6 +1,3 @@
-export interface ProductPhotoInfoDto {
-  id: string;
-  name: string;
-  size: string;
-  type: string;
-}
+import { FileModel } from '../../../../core/models/file.model';
+
+export interface ProductPhotoInfoDto extends FileModel {}

@@ -41,6 +41,7 @@ export class ProductBaseFormComponent extends BaseFormComponent {
       this.form.controls['categoryId'].setValue(this.productBase.categoryId);
     }
   }
+
   submit(): void {
     if (!this.form.valid) {
       this.form.markAllAsTouched();

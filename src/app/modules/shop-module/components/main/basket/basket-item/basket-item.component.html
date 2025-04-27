@@ -1,0 +1,33 @@
+<div class="flex justify-between items-center px-4 py-2 bg-neutral-900 rounded-xl">
+  <div class="flex items-center gap-2">
+    @if (basketItem().productFileId) {
+      <img class="object-contain h-20 w-20 rounded-xl" [src]="image()" />
+    }
+    <span class="text-white font-semibold">{{ basketItem().productName }}</span>
+  </div>
+  <div class="flex gap-2 items-center">
+    <span class="text-white font-semibold">{{ basketItem().productPrice }}</span>
+    <app-input-plus-minus
+      [minValue]="1"
+      [(value)]="basketItem().quantity"
+      (valueChange)="quantityChange.emit(basketItem())"></app-input-plus-minus>
+    <app-button-icon
+      [icon]="basketItem().productIsInPurchaseList ? IconType.fillHeart : IconType.heart"
+      [layout]="ButtonLayout.outline"
+      (onClick)="setIsFavouriteOpen()">
+      <app-drop-down [(isVisible)]="isFavouriteOpen">
+        <app-add-product-to-purchase-list
+          [isVisible]="isFavouriteOpen()"
+          [productId]="basketItem().productId"
+          (isInPurchaseListChange)="onInPurchaseListChange($event)"
+          (onClose)="isFavouriteOpen.set($event)">
+        </app-add-product-to-purchase-list>
+      </app-drop-down>
+    </app-button-icon>
+    <app-button-icon
+      [icon]="IconType.trash"
+      [layout]="ButtonLayout.outline"
+      (onClick)="basketService.deleteFromBasket(basketItem().id)">
+    </app-button-icon>
+  </div>
+</div>

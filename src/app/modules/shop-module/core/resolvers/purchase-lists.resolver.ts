@@ -6,7 +6,7 @@ import { PurchaseListDto } from '../dtos/purchase-list.dto';
 import { PurchaseListModel } from '../models/purchase-list.model';
 import { PurchaseListService } from '../services/purchase-list.service';
 
-export const purchaseListResolver: ResolveFn<PurchaseListModel[]> = (route, state) => {
+export const purchaseListsResolver: ResolveFn<PurchaseListModel[]> = (route, state) => {
   const productPhotoDataService = inject(ProductPhotoDataService);
   const purchaseListService = inject(PurchaseListService);
   return purchaseListService.purchaseLists$.pipe(

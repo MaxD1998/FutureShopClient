@@ -1,6 +1,18 @@
-<div class="flex h-full gap-4 max-sm:flex-col">
-  <app-menu-aside></app-menu-aside>
-  <div class="flex-auto">
-    <router-outlet></router-outlet>
+<app-nav [setMenuButton]="true" (onClickMenuButton)="isOpenedMenu.set(true)">
+  <app-nav-button [iconName]="IconType.shoppingBag" [routerLink]="ClientRoute.basket"> </app-nav-button>
+  <app-nav-button [iconName]="IconType.heart" [routerLink]="ClientRoute.purchaseLists"> </app-nav-button>
+  @if (isLocalAdmin$ | async) {
+    <app-nav-button [iconName]="IconType.cog8Tooth" [routerLink]="ClientRoute.shopModule + '/' + ClientRoute.settings">
+    </app-nav-button>
+  }
+</app-nav>
+<div>
+  <div class="flex max-sm:flex-col max-w-360 mx-auto">
+    <div class="flex-auto">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
+@if (isOpenedMenu()) {
+  <app-menu-aside (onCloseMenu)="isOpenedMenu.set(false)"></app-menu-aside>
+}

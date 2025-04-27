@@ -1,0 +1,32 @@
+<div class="relative flex rounded-xl bg-neutral-900 h-100 overflow-hidden justify-center">
+  <div class="flex items-center absolute left-0 top-0 bottom-0 px-2"></div>
+  <img class="object-cover" [src]="ads()[currentIndex()]" />
+  <div class="flex justify-between items-center px-2 absolute bottom-2 left-0 right-0 z-20">
+    <app-button-icon
+      [icon]="IconType.arrowLeftCircleFilled"
+      [layout]="ButtonLayout.roundedSmall"
+      (onClick)="prevImage()">
+    </app-button-icon>
+    <div class="flex gap-2">
+      @for (item of ads(); track $index) {
+        <button
+          class="size-3 rounded-full {{ $index === currentIndex() ? 'bg-sky-600' : 'bg-neutral-900' }}  cursor-pointer"
+          (click)="goToImage($index)">
+          <div class="size-2 m-auto rounded-full bg-white"></div>
+        </button>
+      }
+    </div>
+    <div class="flex gap-1">
+      <app-button-icon
+        [icon]="timer ? IconType.solidPauseCircle : IconType.solidPlayCircle"
+        [layout]="ButtonLayout.roundedSmall"
+        (onClick)="timer ? stopAutoNextImage() : setAutoNextImage()">
+      </app-button-icon>
+      <app-button-icon
+        [icon]="IconType.arrowRightCircleFilled"
+        [layout]="ButtonLayout.roundedSmall"
+        (onClick)="nextImage()">
+      </app-button-icon>
+    </div>
+  </div>
+</div>

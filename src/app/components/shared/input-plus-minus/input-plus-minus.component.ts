@@ -10,6 +10,8 @@ import { IconComponent } from '../icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputPlusMinusComponent {
+  readonly buttonClasses = 'cursor-pointer p-2 hover:bg-green-300';
+
   minValue = input<number>(0);
 
   value = model<number>(this.minValue());

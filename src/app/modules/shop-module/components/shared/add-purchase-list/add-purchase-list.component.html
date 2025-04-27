@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <app-input
     formControlName="name"
-    [errorCode]="errorCode('name')"
+    [errorCode]="errorCode('name') | translate"
     [label]="'shop-module.add-purchase-list-component.name' | translate">
   </app-input>
   <app-button [label]="'shop-module.add-purchase-list-component.add' | translate" (onClick)="submit()"></app-button>

@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
@@ -12,6 +13,8 @@ export const categoryFormResolver: ResolveFn<{
   parentItems: SelectItemModel[];
 }> = (route, state) => {
   const categoryDataService = inject(CategoryDataService);
+  const translateService = inject(TranslateService);
+  const selectOption = [{ value: translateService.instant('common.input-select.select-option') }];
   const id = route.params['id'];
   if (id) {
     return categoryDataService.getById(id).pipe(
@@ -31,8 +34,8 @@ export const categoryFormResolver: ResolveFn<{
           map(response => {
             return {
               category: response.category,
-              subCategoryItems: response.subCategoryItems.map(x => mapToSelectItemModel(x)),
-              parentItems: response.parentItems.map(x => mapToSelectItemModel(x)),
+              subCategoryItems: selectOption.concat(response.subCategoryItems.map(x => mapToSelectItemModel(x))),
+              parentItems: selectOption.concat(response.parentItems.map(x => mapToSelectItemModel(x))),
             };
           }),
         );
@@ -46,8 +49,8 @@ export const categoryFormResolver: ResolveFn<{
   }).pipe(
     map(response => {
       return {
-        subCategoryItems: response.subCategoryItems.map(x => mapToSelectItemModel(x)),
-        parentItems: response.parentItems.map(x => mapToSelectItemModel(x)),
+        subCategoryItems: selectOption.concat(response.subCategoryItems.map(x => mapToSelectItemModel(x))),
+        parentItems: selectOption.concat(response.parentItems.map(x => mapToSelectItemModel(x))),
       };
     }),
   );

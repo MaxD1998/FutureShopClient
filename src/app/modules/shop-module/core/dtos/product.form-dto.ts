@@ -3,6 +3,7 @@ import { ProductTranslationFormDto } from './product-translation.form-dto';
 
 export interface ProductFormDto {
   description: string;
+  isActive: boolean;
   name: string;
   price: number;
   productBaseId: string;

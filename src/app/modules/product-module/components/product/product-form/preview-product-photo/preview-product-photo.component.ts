@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Injector, input, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
-import { ProductPhotoDataService } from '../../../../../shop-module/core/data-services/product-photo.data-service';
+import { ProductPhotoDataService } from '../../../../core/data-service/product-photo.data-service';
 
 @Component({
   selector: 'app-preview-product-photo',

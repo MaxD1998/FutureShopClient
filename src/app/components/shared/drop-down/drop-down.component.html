@@ -1,7 +1,11 @@
 @if (isVisible()) {
   <div #parentDiv class="w-full relative">
     <div class="absolute w-full mt-4">
-      <div #dropdown class="p-2 bg-white absolute border rounded-md z-30 {{ style() }}">
+      <div
+        #dropdown
+        class="p-2 bg-neutral-900 outline-1 -outline-offset-1 outline-neutral-700 absolute rounded-xl z-30 {{
+          style()
+        }}">
         <ng-content></ng-content>
       </div>
     </div>

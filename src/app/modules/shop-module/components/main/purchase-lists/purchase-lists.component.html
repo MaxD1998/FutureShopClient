@@ -1,0 +1,46 @@
+<div class="flex flex-col h-full gap-4 px-1">
+  <div class="flex justify-between items-center bg-neutral-900 rounded-xl px-4 py-2">
+    <h1 class="text-xl text-white font-semibold">
+      {{ 'shop-module.purchase-lists-component.purchase-lists' | translate }}
+    </h1>
+    <app-button
+      [label]="'shop-module.purchase-lists-component.add-list' | translate"
+      (onClick)="this.isDialogActive.set(true)">
+    </app-button>
+  </div>
+  @for (purchaseList of purchaseLists(); track $index) {
+    <div class="flex justify-between items-center bg-neutral-900 p-4 rounded-xl w-full">
+      <div>
+        <p class="text-white font-semibold">
+          {{
+            purchaseList.isFavourite
+              ? ('shop-module.purchase-lists-component.favourite' | translate)
+              : purchaseList.name
+          }}
+        </p>
+        <span class="text-sm text-neutral-400"
+          >{{ purchaseList.lastUpdateDate }} ({{ 'shop-module.purchase-lists-component.last-change' | translate }})
+        </span>
+        <div class="flex flex-wrap gap-2">
+          @for (purchaseListItem of purchaseList.purchaseListItems; track $index) {
+            <a [routerLink]="createLink(purchaseListItem.productId)">
+              <img class="object-contain w-20 h-20" [src]="purchaseListItem.productPhoto" />
+            </a>
+          }
+        </div>
+      </div>
+      @if (!purchaseList.isFavourite) {
+        <app-button-icon
+          [icon]="IconType.xMark"
+          [iconStyle]="'size-5'"
+          (click)="remove(purchaseList.id)"></app-button-icon>
+      }
+    </div>
+  }
+</div>
+<app-dialog-window
+  [isDialogActive]="isDialogActive()"
+  [title]="'shop-module.purchase-lists-component.add-purchase-list' | translate"
+  (onCloseDialog)="this.isDialogActive.set(false)">
+  <app-add-purchase-list [isDialogActive]="isDialogActive()" (onSubmit)="create($event)"></app-add-purchase-list>
+</app-dialog-window>

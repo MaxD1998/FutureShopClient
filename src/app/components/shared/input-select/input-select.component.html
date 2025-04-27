@@ -1,31 +1,26 @@
 <div class="relative pb-6">
   @if (label()) {
     <label class="block my-1">
-      {{ label() }}
+      <span class="text-neutral-100 font-semibold">{{ label() }}</span>
       @if (required()) {
         <sup class="text-red-600">*</sup>
       }
     </label>
   }
-  <div #selectBox class="relative {{ isDisabled() ? 'cursor-default' : 'cursor-pointer' }}">
-    <div
-      class="border rounded-md p-2 w-full h-[2.625rem] 
-      {{ isFocus() ? 'border-blue-600' : '' }} 
-      {{ errorCode() ? 'border-red-600' : '' }}"
-      (click)="onClick()">
-      <p class="{{ isDisabled() ? 'text-gray-500' : '' }}">{{ selectedItem().value | translate }}</p>
-    </div>
-    @if (isDropdownVisible()) {
-      <div class="absolute z-10 border rounded-md w-full max-h-60 bg-white overflow-y-auto">
-        @for (dropdownItem of dropdownItems; track dropdownItem.id) {
-          <div class="p-2 hover:bg-green-50" (click)="setItem(dropdownItem)">
-            <p>{{ dropdownItem.value | translate }}</p>
-          </div>
-        }
-      </div>
+  <select
+    #select
+    class="block p-2 h-10 w-full bg-neutral-800 text-neutral-100 font-semibold rounded-md outline-1 -outline-offset-1 outline-neutral-700 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600"
+    [disabled]="isDisabled()"
+    [value]="value()"
+    (change)="onValueChange(select)"
+    (blur)="onValueChange(select)">
+    @for (dropdownItem of items(); track $index) {
+      <option [value]="dropdownItem.id ?? ''" [selected]="dropdownItem.id == value() ? 'selected' : ''">
+        {{ dropdownItem.value }}
+      </option>
     }
-  </div>
+  </select>
   @if (errorCode()) {
-    <span class="absolute text-red-600">{{ errorCode() ?? '' | translate }}</span>
+    <span class="absolute text-red-600">{{ errorCode() }}</span>
   }
 </div>

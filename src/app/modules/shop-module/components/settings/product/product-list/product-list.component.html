@@ -1,17 +1,11 @@
-<div class="flex flex-col h-full gap-4">
-  <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ 'shop-module.product-list-component.products' | translate }}</h1>
-  </div>
-  <div class="border-t"></div>
-  <div class="flex-auto overflow-hidden">
-    <app-table
-      [columns]="columns"
-      [idName]="'id'"
-      [items]="products()"
-      [isEditAction]="true"
-      [page]="pagination()"
-      (onEditAction)="navigateToEdit($event)"
-      (onPageClick)="changePage($event)">
-    </app-table>
-  </div>
-</div>
+<app-table
+  class="block h-[calc(100vh-6rem)] bg-neutral-900 p-4 rounded-tl-xl"
+  [header]="'shop-module.product-list-component.products'"
+  [columns]="columns"
+  [idName]="'id'"
+  [items]="products()"
+  [isEditAction]="true"
+  [page]="pagination()"
+  (onEditAction)="navigateToEdit($event)"
+  (onPageClick)="changePage($event)">
+</app-table>

@@ -1,32 +1,14 @@
-<nav class="flex justify-between items-center py-2">
-  <a [routerLink]="ClientRoute.main">
-    <img class="h-[5rem]" src="assets/logo.png" alt="logo" />
-  </a>
-  <div>
-    <div class="flex">
-      <ng-content></ng-content>
-      <app-nav-button
-        [iconName]="IconType.globeAlt"
-        label="{{ 'nav-component.language' | translate }}"
-        (mouseenter)="setDropdownLanguageVisible()"
-        (mouseleave)="setDropdownLanguageVisible()">
-        <app-drop-down-list
-          [isVisible]="isDropdownLanguageVisible()"
-          [items]="langItems()"
-          [orientation]="DropDownListOrientation.right">
-        </app-drop-down-list>
-      </app-nav-button>
-      <app-nav-button
-        [iconName]="IconType.userCircle"
-        label="{{ 'nav-component.account' | translate }}"
-        (mouseenter)="setDropdownAccountVisible(true)"
-        (mouseleave)="setDropdownAccountVisible(false)">
-        <app-drop-down-list
-          [isVisible]="isDropdownAccountVisible()"
-          [orientation]="DropDownListOrientation.right"
-          [items]="userItems()">
-        </app-drop-down-list>
-      </app-nav-button>
-    </div>
+<nav class="px-4 flex justify-between bg-neutral-900 mb-8">
+  <div class="flex my-auto gap-2">
+    @if (setMenuButton()) {
+      <app-button-icon [icon]="IconType.bars3" [layout]="ButtonLayout.outline" (onClick)="onClickMenuButton.emit()">
+      </app-button-icon>
+    }
+    <a class="my-auto text-2xl text-white font-bold italic" [routerLink]="ClientRoute.main">Future Shop</a>
+  </div>
+  <div class="flex">
+    <ng-content></ng-content>
+    <app-nav-button-dropdown [iconName]="IconType.language" [items]="langItems()"> </app-nav-button-dropdown>
+    <app-nav-button-dropdown [iconName]="IconType.userCircle" [items]="userItems()"> </app-nav-button-dropdown>
   </div>
 </nav>

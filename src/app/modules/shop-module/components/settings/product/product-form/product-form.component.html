@@ -1,68 +1,68 @@
-<div class="flex flex-col h-full gap-4">
-  <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ 'shop-module.product-form-component.edit-product' | translate }}</h1>
-    <app-button
-      [label]="'shop-module.product-form-component.save' | translate"
-      [width]="'w-32'"
-      [layout]="ButtonLayout.greenLayout"
-      (onClick)="submit()">
-    </app-button>
+<div class="flex flex-col h-full bg-neutral-900 rounded-tl-xl">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">
+      {{ 'shop-module.product-form-component.edit-product' | translate }}
+    </h1>
+    <app-button [label]="'shop-module.product-form-component.save' | translate" (onClick)="submit()"></app-button>
   </div>
-  <div class="border-t"></div>
-  <form class="flex flex-col gap-4" [formGroup]="form">
-    <div class="flex flex-row gap-4">
-      <div class="flex flex-col flex-auto gap-4">
-        <div class="flex items-center h-11">
-          <h2 class="text-xl">{{ 'shop-module.product-form-component.properties' | translate }}</h2>
+  <div class="flex flex-col p-4">
+    <form class="flex flex-col gap-4" [formGroup]="form">
+      <div class="flex flex-row gap-4">
+        <div class="flex flex-col flex-auto gap-4">
+          <h2 class="text-xl font-semibold text-white mb-4">
+            {{ 'shop-module.product-form-component.properties' | translate }}
+          </h2>
+          <div class="flex flex-col flex-wrap">
+            <app-input
+              formControlName="name"
+              [errorCode]="errorCode('name') | translate"
+              [label]="'shop-module.product-form-component.name' | translate"
+              [isDisabled]="true"
+              [required]="true">
+            </app-input>
+            <app-input-select
+              formControlName="productBaseId"
+              [errorCode]="errorCode('productBaseId') | translate"
+              [label]="'shop-module.product-form-component.product-base' | translate"
+              [isDisabled]="true"
+              [items]="productBaseItems"
+              [required]="true">
+            </app-input-select>
+            <app-input-number
+              formControlName="price"
+              [errorCode]="errorCode('price') | translate"
+              [label]="'shop-module.product-form-component.price' | translate"
+              [required]="true">
+            </app-input-number>
+            <app-toggle
+              formControlName="isActive"
+              [errorCode]="errorCode('isActive') | translate"
+              [label]="'shop-module.product-form-component.active' | translate">
+            </app-toggle>
+          </div>
         </div>
-        <div class="flex flex-col flex-wrap">
-          <app-input
-            formControlName="name"
-            [errorCode]="errorCode('name')"
-            [label]="'shop-module.product-form-component.name' | translate"
-            [isDisabled]="true"
-            [required]="true">
-          </app-input>
-          <app-input-select
-            formControlName="productBaseId"
-            [errorCode]="errorCode('productBaseId')"
-            [label]="'shop-module.product-form-component.product-base' | translate"
-            [isDisabled]="true"
-            [items]="productBaseItems"
-            [required]="true">
-          </app-input-select>
-          <app-input-number
-            formControlName="price"
-            [errorCode]="errorCode('price')"
-            [label]="'shop-module.product-form-component.price' | translate"
-            [required]="true">
-          </app-input-number>
+        <div class="flex flex-col flex-auto gap-4" formArrayName="translations">
+          <h2 class="text-xl font-semibold text-white mb-4">
+            {{ 'shop-module.product-form-component.translations' | translate }}
+          </h2>
+          <div>
+            @for (translation of translations.controls; track $index) {
+              <div [formGroupName]="$index">
+                <app-input
+                  formControlName="translation"
+                  [label]="'common.languages.' + translation.value.lang | translate">
+                </app-input>
+              </div>
+            }
+          </div>
         </div>
       </div>
-      <div class="flex flex-col flex-auto gap-4" formArrayName="translations">
-        <div class="flex items-center h-11">
-          <h2 class="text-xl">{{ 'shop-module.product-form-component.translations' | translate }}</h2>
-        </div>
-        <div>
-          @for (translation of translations.controls; track $index) {
-            <div [formGroupName]="$index">
-              <app-input
-                formControlName="translation"
-                [label]="'common.languages.' + translation.value.lang | translate">
-              </app-input>
-            </div>
-          }
-        </div>
-      </div>
-    </div>
-  </form>
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center h-11 justify-between">
-      <h2 class="text-xl">{{ 'shop-module.product-form-component.product-parameters' | translate }}</h2>
-    </div>
+    </form>
     <app-table
+      class="flex-1"
       idName="id"
       [columns]="productParameterColumns"
+      [header]="'shop-module.product-form-component.product-parameters'"
       [isEditAction]="true"
       [isRemoveAction]="true"
       [items]="productParameters"

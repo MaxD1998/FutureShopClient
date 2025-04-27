@@ -14,8 +14,8 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, Subject, takeUntil } from 'rxjs';
+import { ButtonIconComponent } from '../../../../../components/shared/button-icon/button-icon.component';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
-import { IconComponent } from '../../../../../components/shared/icon/icon.component';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { IconType } from '../../../../../core/enums/icon-type';
@@ -29,10 +29,10 @@ import { SmallPurchaseListFormComponent } from './small-purchase-list-form/small
   imports: [
     ReactiveFormsModule,
     TranslateModule,
-    IconComponent,
     ButtonComponent,
     SmallPurchaseListFormComponent,
     AsyncPipe,
+    ButtonIconComponent,
   ],
   templateUrl: './add-product-to-purchase-list.component.html',
   styleUrl: './add-product-to-purchase-list.component.css',
@@ -113,8 +113,8 @@ export class AddProductToPurchaseListComponent extends BaseFormComponent impleme
           .flatMap(x => x.purchaseListItems)
           .some(x => x.productId == this.productId()),
       );
+      this.close();
     });
-    this.close();
   }
 
   protected override setFormControls(): {} {

@@ -1,4 +1,5 @@
 export enum ButtonLayout {
-  greenLayout,
-  greenOutlineLayout,
+  filled,
+  outline,
+  roundedSmall,
 }

@@ -8,6 +8,10 @@ export const settingsRoutes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: ClientRoute.adCampaign,
+    loadChildren: () => import('./ad-campaign/ad-campaign.routes').then(x => x.adCampaignRoutes),
+  },
+  {
     path: ClientRoute.category,
     loadChildren: () => import('./category/category.routes').then(x => x.categoryRoutes),
   },

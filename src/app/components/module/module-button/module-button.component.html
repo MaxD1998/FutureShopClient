@@ -1,0 +1,8 @@
+<div class="flex justify-center">
+  <button class="cursor-pointer p-8 border border-black rounded-md hover:bg-green-400" (click)="onClick.emit()">
+    <app-icon [iconName]="iconName()"></app-icon>
+  </button>
+</div>
+<div class="flex justify-center">
+  <span>{{ name() }}</span>
+</div>

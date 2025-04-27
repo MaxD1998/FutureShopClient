@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable, Subject, map, switchMap, takeUntil, tap } from 'rxjs';
-import { ButtonComponent } from '../../../../../components/shared/button/button.component';
+import { map, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { CanEditDirective } from '../../../../../core/directives/can-edit.directive';
 import { PageDto } from '../../../../../core/dtos/page.dto';
 import { ModuleType } from '../../../../../core/enums/module-type';
 import { TableTemplate } from '../../../../../core/enums/table-template';
@@ -13,14 +11,13 @@ import { DataTableColumnModel } from '../../../../../core/models/data-table-colu
 import { PaginationModel } from '../../../../../core/models/pagination.model';
 import { CategoryDataService } from '../../../core/data-service/category.data-service';
 import { CategoryListDto } from '../../../core/dtos/category.list-dto';
-import { CategoryGridModel } from '../../../core/models/category-grid-model';
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CanEditDirective, TranslateModule, ButtonComponent, TableComponent],
+  imports: [TranslateModule, TableComponent],
 })
 export class CategoryListComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
@@ -30,7 +27,7 @@ export class CategoryListComponent {
 
   ModuleType: typeof ModuleType = ModuleType;
 
-  categories = signal<CategoryGridModel[]>([]);
+  categories = signal<CategoryListDto[]>([]);
   pagination = signal<PaginationModel>({
     currentPage: 1,
     totalPages: 1,
@@ -48,9 +45,9 @@ export class CategoryListComponent {
       template: TableTemplate.boolean,
     },
     {
-      field: 'hasSubCategories',
-      headerText: 'product-module.category-list-component.has-subcategories',
-      template: TableTemplate.boolean,
+      field: 'subCategoryQuantity',
+      headerText: 'product-module.category-list-component.number-of-subcategories',
+      template: TableTemplate.text,
     },
     {
       field: 'actions',
@@ -91,16 +88,7 @@ export class CategoryListComponent {
   private initCategories(): void {
     this._activatedRoute.paramMap.pipe(takeUntil(this._unsubscribe)).subscribe(() => {
       const pageCategories: PageDto<CategoryListDto> = this._activatedRoute.snapshot.data['pageCategories'];
-      this.categories.set(
-        pageCategories.items.map<CategoryGridModel>(x => {
-          return {
-            id: x.id,
-            name: x.name,
-            isSubCategory: !!x.parentCategoryId,
-            hasSubCategories: x.hasSubCategories,
-          };
-        }),
-      );
+      this.categories.set(pageCategories.items);
       this.pagination.set({
         currentPage: pageCategories.currentPage,
         totalPages: pageCategories.totalPages,
@@ -108,19 +96,12 @@ export class CategoryListComponent {
     });
   }
 
-  private getCategories$(): Observable<PageDto<CategoryGridModel>> {
+  private getCategories$(): Observable<PageDto<CategoryListDto>> {
     const pageNumber = this._activatedRoute.snapshot.params['pageNumber'];
     return this._categoryDataService.getPage(pageNumber ?? 1).pipe(
       map(response => {
         return {
-          items: response.items.map<CategoryGridModel>(x => {
-            return {
-              id: x.id,
-              name: x.name,
-              isSubCategory: !!x.parentCategoryId,
-              hasSubCategories: x.hasSubCategories,
-            };
-          }),
+          items: response.items,
           currentPage: response.currentPage,
           totalPages: response.totalPages,
         };

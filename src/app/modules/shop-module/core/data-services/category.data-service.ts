@@ -6,6 +6,7 @@ import { PageDto } from '../../../../core/dtos/page.dto';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
 import { CategoryFormDto } from '../dtos/category.form-dto';
 import { CategoryListDto } from '../dtos/category.list-dto';
+import { CategoryPageListDto } from '../dtos/category.page-list-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -22,13 +23,13 @@ export class CategoryDataService {
     return this._httpClient.get<IdNameDto>(url);
   }
 
-  getPage(pageNumber: number): Observable<PageDto<CategoryListDto>> {
+  getPage(pageNumber: number): Observable<PageDto<CategoryPageListDto>> {
     const url = `${CategoryControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<CategoryListDto>>(url);
+    return this._httpClient.get<PageDto<CategoryPageListDto>>(url);
   }
 
-  getsByCategoryParentId(categoryParentId?: string): Observable<CategoryListDto[]> {
-    const url = `${CategoryControllerRoute.categoryParentId}${categoryParentId ?? ''}`;
+  getList(categoryParentId?: string): Observable<CategoryListDto[]> {
+    const url = `${CategoryControllerRoute.list}${categoryParentId ?? ''}`;
     return this._httpClient.get<CategoryListDto[]>(url);
   }
 

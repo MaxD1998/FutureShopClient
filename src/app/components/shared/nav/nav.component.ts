@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, output, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -6,21 +6,21 @@ import { environment } from '../../../../environments/environment';
 import { ClientRoute } from '../../../core/constants/client-routes/client.route';
 import { LocalStorageConst } from '../../../core/constants/localstorage/localstorage.const';
 import { AuthorizeDto } from '../../../core/dtos/authorize.dto';
-import { DropDownListOrientation } from '../../../core/enums/drop-down-list-orientation';
+import { ButtonLayout } from '../../../core/enums/button-layout';
 import { IconType } from '../../../core/enums/icon-type';
 import { UserType } from '../../../core/enums/user-type';
 import { DropDownListItemModel } from '../../../core/models/drop-down-list-item.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../modules/auth-module/core/services/user.service';
-import { DropDownListComponent } from '../drop-down-list/drop-down-list.component';
-import { NavButtonComponent } from './nav-button/nav-button.component';
+import { ButtonIconComponent } from '../button-icon/button-icon.component';
+import { NavButtonDropdownComponent } from './nav-button-dropdown/nav-button-dropdown.component';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NavButtonComponent, TranslateModule, DropDownListComponent, RouterModule, DropDownListComponent],
+  imports: [TranslateModule, RouterModule, NavButtonDropdownComponent, ButtonIconComponent],
 })
 export class NavComponent implements OnDestroy {
   private readonly _authService = inject(AuthService);
@@ -29,8 +29,12 @@ export class NavComponent implements OnDestroy {
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   ClientRoute: typeof ClientRoute = ClientRoute;
-  DropDownListOrientation: typeof DropDownListOrientation = DropDownListOrientation;
   IconType: typeof IconType = IconType;
+  ButtonLayout: typeof ButtonLayout = ButtonLayout;
+
+  setMenuButton = input<boolean>(false);
+
+  onClickMenuButton = output<void>();
 
   isDropdownAccountVisible = signal<boolean>(false);
   isDropdownLanguageVisible = signal<boolean>(false);

@@ -1,31 +1,26 @@
-<div class="flex flex-col h-full gap-4">
-  <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ header | translate }}</h1>
-    <app-button
-      [label]="'product-module.product-base-form-component.save' | translate"
-      [width]="'w-32'"
-      [layout]="ButtonLayout.greenLayout"
-      (onClick)="submit()">
+<div class="flex flex-col h-full bg-neutral-900 rounded-tl-xl">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">{{ header | translate }}</h1>
+    <app-button [label]="'product-module.product-base-form-component.save' | translate" (onClick)="submit()">
     </app-button>
   </div>
-  <div class="border-t"></div>
-  <form class="flex flex-col" [formGroup]="form">
-    <div class="flex items-center h-11">
-      <h2 class="text-xl">{{ 'product-module.product-base-form-component.properties' | translate }}</h2>
-    </div>
+  <form class="flex flex-col p-4" [formGroup]="form">
+    <h2 class="text-xl font-semibold text-white mb-4">
+      {{ 'product-module.product-base-form-component.properties' | translate }}
+    </h2>
     <div class="flex flex-row flex-wrap gap-4">
-      <div class="flex flex-col flex-auto">
+      <div class="flex flex-col flex-1">
         <app-input
           formControlName="name"
-          [errorCode]="errorCode('name')"
+          [errorCode]="errorCode('name') | translate"
           [label]="'product-module.product-base-form-component.name' | translate"
           [required]="true">
         </app-input>
       </div>
-      <div class="flex flex-col flex-auto">
+      <div class="flex flex-col flex-1">
         <app-input-select
           formControlName="categoryId"
-          [errorCode]="errorCode('categoryId')"
+          [errorCode]="errorCode('categoryId') | translate"
           [label]="'product-module.product-base-form-component.choose-category' | translate"
           [items]="categoryItems"
           [required]="true">

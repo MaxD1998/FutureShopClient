@@ -1,16 +1,53 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  afterRender,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  Injector,
+  input,
+  ViewChild,
+} from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
 import { IconType } from '../../../core/enums/icon-type';
 
 @Component({
-    selector: 'app-icon',
-    imports: [],
-    templateUrl: './icon.component.html',
-    styleUrl: './icon.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-icon',
+  imports: [],
+  templateUrl: './icon.component.html',
+  styleUrl: './icon.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
-  iconName = input.required<string>();
-  iconStyle = input<string>('w-6 h-6');
+  private readonly _injector = inject(Injector);
+
+  iconName = input.required<IconType>();
+  iconStyle = input<string>();
+
+  @ViewChild('svg') svg: ElementRef;
 
   IconType: typeof IconType = IconType;
+
+  style$ = toObservable(this.iconStyle, { injector: this._injector }).pipe(
+    tap(style => {
+      if (!style) {
+        return;
+      }
+
+      this.svg.nativeElement.classList.remove('size-6');
+
+      const classes = style.split(' ');
+
+      classes.forEach(x => {
+        this.svg.nativeElement.classList.add(x);
+      });
+    }),
+  );
+
+  constructor() {
+    afterRender(() => {
+      this.style$.subscribe();
+    });
+  }
 }

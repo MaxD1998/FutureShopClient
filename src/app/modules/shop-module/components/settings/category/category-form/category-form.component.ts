@@ -7,6 +7,7 @@ import { ButtonComponent } from '../../../../../../components/shared/button/butt
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
+import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
@@ -25,11 +26,12 @@ import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     InputComponent,
-    ButtonComponent,
     InputSelectComponent,
     ReactiveFormsModule,
     TranslateModule,
     TableComponent,
+    ButtonComponent,
+    ToggleComponent,
   ],
 })
 export class CategoryFormComponent extends BaseFormComponent {
@@ -58,6 +60,7 @@ export class CategoryFormComponent extends BaseFormComponent {
     super();
 
     const controls = this.form.controls;
+    controls['isActive'].setValue(this.category.isActive);
     controls['name'].setValue(this.category.name);
     controls['parentCategoryId'].setValue(this.category.parentCategoryId);
 
@@ -92,6 +95,7 @@ export class CategoryFormComponent extends BaseFormComponent {
 
   protected override setFormControls(): {} {
     return {
+      isActive: [false],
       name: [null, [Validators.required]],
       parentCategoryId: [null],
       subCategories: new FormArray([]),

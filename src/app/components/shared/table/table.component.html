@@ -1,24 +1,26 @@
-<div class="flex flex-col h-full justify-between rounded-t overflow-hidden">
-  <div class="flex overflow-y-auto">
-    <table class="flex-auto table-fixed relative">
-      <thead class="sticky top-0">
-        <tr>
+<div class="h-full flex flex-col bg-neutral-900 overflow-hidden">
+  <div class="flex justify-between items-center h-10 mb-2">
+    <h1 class="text-xl font-semibold text-neutral-100">
+      {{ header() | translate }}
+    </h1>
+    @if (buttonLabel()) {
+      <app-button [label]="buttonLabel() | translate" (onClick)="onButtonAction.emit()"></app-button>
+    }
+  </div>
+  <div class="flex-1 overflow-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-neutral-700 text-left">
           @for (column of columns(); track column) {
             @switch (column.template) {
               @case (TableTemplate.action) {
-                <th class="p-2 bg-green-300 {{ actionColumnWidth() }}">
-                  <div class="flex justify-center">
-                    <app-icon [iconName]="IconType.ellipsisHorizontal"></app-icon>
-                  </div>
+                <th class="p-4 text-neutral-100 float-right">
+                  <app-icon [iconName]="IconType.ellipsisHorizontal"></app-icon>
                 </th>
               }
               @default {
-                <th class="p-2 bg-green-300">
-                  <div class="flex {{ headerFloat(column.headerFloat) }}">
-                    <span class="font-medium">
-                      {{ column.headerText | translate }}
-                    </span>
-                  </div>
+                <th class="p-4 text-neutral-100 font-semibold">
+                  {{ column.headerText | translate }}
                 </th>
               }
             }
@@ -26,56 +28,36 @@
         </tr>
       </thead>
       <tbody (mouseleave)="rowId = ''">
-        @if (items().length == 0) {
-          <tr>
-            <td [colSpan]="columns().length">
-              <div class="flex justify-center">
-                <span class="text-gray-300">{{ 'common.table.no-results' | translate }}</span>
-              </div>
-            </td>
-          </tr>
-        }
         @for (item of items(); track item[idName()]) {
-          <tr class="bg-white hover:bg-green-50" (mouseover)="rowId = item[idName()]">
+          <tr class="border-b border-neutral-800 hover:bg-neutral-800" (mouseover)="rowId = item[idName()]">
             @for (column of columns(); track column) {
               @switch (column.template) {
                 @case (TableTemplate.action) {
-                  <td class="{{ actionColumnWidth() }}">
-                    <div class="flex justify-center">
-                      <app-table-action-field
-                        class="{{ rowId == item[idName()] ? 'block' : 'hidden' }}"
-                        [id]="item[idName()]"
-                        [isDetailAction]="isDetailAction()"
-                        [isEditAction]="isEditAction()"
-                        [isRemoveAction]="isRemoveAction()"
-                        (onDetailAction)="detailAction($event)"
-                        (onEditAction)="editAction($event)"
-                        (onRemoveAction)="removeAction($event)">
-                      </app-table-action-field>
+                  <td class="w-29 px-4 text-neutral-100">
+                    <div class="flex">
+                      @if (rowId == item[idName()]) {
+                        <app-table-action-field
+                          class="ml-auto"
+                          [id]="item[idName()]"
+                          [isDetailAction]="isDetailAction()"
+                          [isEditAction]="isEditAction()"
+                          [isRemoveAction]="isRemoveAction()"
+                          (onDetailAction)="detailAction($event)"
+                          (onEditAction)="editAction($event)"
+                          (onRemoveAction)="removeAction($event)">
+                        </app-table-action-field>
+                      }
                     </div>
                   </td>
                 }
                 @case (TableTemplate.boolean) {
-                  <td class="p-2">
-                    <div class="flex justify-center items-center">
-                      <app-table-boolean-field [value]="item[column.field]"></app-table-boolean-field>
-                    </div>
-                  </td>
-                }
-                @case (TableTemplate.text) {
-                  <td class="max-w-0 p-2">
-                    <app-table-text-field
-                      [justify]="headerFloat(column.headerFloat)"
-                      [value]="item[column.field]"></app-table-text-field>
+                  <td class="px-4 text-neutral-100">
+                    <app-table-boolean-field [value]="item[column.field]"></app-table-boolean-field>
                   </td>
                 }
                 @default {
-                  <td class="p-2">
-                    <div class="flex h-full justify-center">
-                      <span>
-                        {{ item[column.field] }}
-                      </span>
-                    </div>
+                  <td class="p-4 text-neutral-100 text-sm font-medium">
+                    {{ item[column.field] }}
                   </td>
                 }
               }

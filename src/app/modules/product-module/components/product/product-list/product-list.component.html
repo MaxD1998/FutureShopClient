@@ -1,24 +1,15 @@
-<div class="flex flex-col h-full gap-4">
-  <div class="flex justify-between items-center h-11">
-    <h1 class="text-xl">{{ 'product-module.product-list-component.products' | translate }}</h1>
-    <app-button
-      *canEdit="ModuleType.productModule"
-      [label]="'product-module.product-list-component.create-new-product' | translate"
-      (click)="navigateToCreate()">
-    </app-button>
-  </div>
-  <div class="border-t"></div>
-  <div class="flex-auto overflow-hidden">
-    <app-table
-      [columns]="columns"
-      [idName]="'id'"
-      [items]="products()"
-      [isEditAction]="true"
-      [isRemoveAction]="true"
-      [page]="pagination()"
-      (onEditAction)="navigateToEdit($event)"
-      (onPageClick)="changePage($event)"
-      (onRemoveAction)="removeRecord($event)">
-    </app-table>
-  </div>
-</div>
+<app-table
+  class="block h-[calc(100vh-6rem)] bg-neutral-900 p-4 rounded-tl-xl"
+  [buttonLabel]="'product-module.product-list-component.create-new-product'"
+  [columns]="columns"
+  [header]="'product-module.product-list-component.products'"
+  [idName]="'id'"
+  [items]="products()"
+  [isEditAction]="true"
+  [isRemoveAction]="true"
+  [page]="pagination()"
+  (onButtonAction)="navigateToCreate()"
+  (onEditAction)="navigateToEdit($event)"
+  (onPageClick)="changePage($event)"
+  (onRemoveAction)="removeRecord($event)">
+</app-table>

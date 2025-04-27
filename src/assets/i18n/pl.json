@@ -74,9 +74,9 @@
     "category-list-component": {
       "categories": "Kategorie",
       "create-new-category": "Stwórz nową kategorię",
-      "has-subcategories": "Posiada podkategorie",
       "is-subcategory": "Jest podkategorią",
-      "name": "Nazwa"
+      "name": "Nazwa",
+      "number-of-subcategories": "Liczba podkategorii"
     },
     "product-base-form-component": {
       "choose-category": "Wybierz kategorię",
@@ -140,6 +140,33 @@
     }
   },
   "shop-module": {
+    "ad-campaign-form-component": {
+      "active": "Aktywny",
+      "add": "Dodaj",
+      "ads": "Reklamy",
+      "create-ad-campaign": "Stwórz kampanię reklamową",
+      "edit-ad-campaign": "Edytuj kampanię reklamową",
+      "end": "Zakończenie",
+      "name": "Nazwa",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "start": "Początek",
+      "table-columns": {
+        "language": "Język",
+        "name": "Nazwa",
+        "size": "Rozmiar",
+        "type": "Typ"
+      }
+    },
+    "ad-campaign-list-component": {
+      "ad-campaigns": "Kampanie reklamowe",
+      "create-new-ad-campaign": "Stwórz kampanię reklamową",
+      "end": "Zakończenie",
+      "is-active": "Aktywny",
+      "name": "Nazwa",
+      "number-of-ad-campaign-items": "Liczba reklam w kampanii",
+      "start": "Początek"
+    },
     "add-product-to-purchase-list-component": {
       "add-a-new-list": "Dodaj nową listę",
       "favourite": "Ulubione",
@@ -164,6 +191,7 @@
       "to-pay": "Do zapłaty"
     },
     "category-form-component": {
+      "active": "Aktywny",
       "add-translation": "Dodaj tłumaczenie",
       "edit-category": "Edytuj kategorię",
       "name": "Nazwa",
@@ -180,9 +208,9 @@
     },
     "category-list-component": {
       "categories": "Kategorie",
-      "has-subcategories": "Posiada podkategorie",
       "is-subcategory": "Jest podkategorią",
-      "name": "Nazwa"
+      "name": "Nazwa",
+      "number-of-subcategories": "Liczba podkategorii"
     },
     "menu-aside-component": {
       "categories": "Kategorie"
@@ -220,6 +248,7 @@
       "add-to-basket": "Dodaj do koszyka"
     },
     "product-form-component": {
+      "active": "Aktywny",
       "edit-product": "Edytuj produkt",
       "name": "Nazwa",
       "price": "Cena",
@@ -271,11 +300,17 @@
     },
     "settings-component": {
       "items": {
+        "ad-campaigns": "Kampanie reklamowe",
         "categories": "Kategorie",
         "products": "Produkty",
         "products-bases": "Bazy produktów"
       },
       "menu": "Menu"
+    },
+    "set-ad-campaign-item-component": {
+      "choose-file": "Wybierz plik",
+      "file-is-empty": "Plik jest pusty",
+      "save": "Zapisz"
     },
     "small-purchase-list-form-component": {
       "add": "Dodaj"
