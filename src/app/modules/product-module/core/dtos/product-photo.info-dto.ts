@@ -1,3 +1,3 @@
-import { FileModel } from '../../../../core/models/file.model';
+import { FileDto } from '../../../../core/dtos/file.dto';
 
-export interface ProductPhotoInfoDto extends FileModel {}
+export interface ProductPhotoInfoDto extends FileDto {}

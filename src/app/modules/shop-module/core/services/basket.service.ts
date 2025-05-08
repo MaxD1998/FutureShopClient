@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { BasketDataService } from '../data-services/basket.data-service';
-import { ProductPhotoDataService } from '../data-services/product-photo.data-service';
 import { BasketItemDto } from '../dtos/basket-item.dto';
 import { BasketItemFormDto } from '../dtos/basket-item.form-dto';
 import { BasketDto } from '../dtos/basket.dto';
@@ -14,7 +14,7 @@ import { BasketFormDto } from '../dtos/basket.form-dto';
 export class BasketService {
   private readonly _userService = inject(UserService);
   private readonly _basketDataService = inject(BasketDataService);
-  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
+  private readonly _fileDataService = inject(FileDataService);
 
   readonly basket$: BehaviorSubject<BasketDto | undefined> = new BehaviorSubject<BasketDto | undefined>(undefined);
 
@@ -190,7 +190,7 @@ export class BasketService {
                 .map(x =>
                   forkJoin({
                     fileId: of(x.productFileId as string),
-                    image: this._productPhotoDataService
+                    image: this._fileDataService
                       .getById(x.productFileId as string)
                       .pipe(map(blob => URL.createObjectURL(blob))),
                   }),

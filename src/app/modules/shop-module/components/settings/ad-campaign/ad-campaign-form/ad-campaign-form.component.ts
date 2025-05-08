@@ -11,11 +11,11 @@ import { TableComponent } from '../../../../../../components/shared/table/table.
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
+import { FileDataService } from '../../../../../../core/data-services/file.data-service';
 import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { TempIdGenerator } from '../../../../../../core/utils/temp-id-generator';
-import { AdCampaignItemDataService } from '../../../../core/data-services/ad-campaign-item.data-service';
 import { AdCampaignDataService } from '../../../../core/data-services/ad-campaign.data-service';
 import { AdCampaignItemInfoDto } from '../../../../core/dtos/ad-campaign-item.info-dto';
 import { AdCampaignFormDto } from '../../../../core/dtos/ad-campaign.form-dto';
@@ -41,7 +41,7 @@ import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campai
 export class AdCampaignFormComponent extends BaseFormComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _adCampaignDataService = inject(AdCampaignDataService);
-  private readonly _adCampaignItemDataService = inject(AdCampaignItemDataService);
+  private readonly _fileDataService = inject(FileDataService);
   private readonly _router = inject(Router);
   private readonly _tempIdGenerator = new TempIdGenerator();
 
@@ -144,7 +144,7 @@ export class AdCampaignFormComponent extends BaseFormComponent {
 
     const result$ =
       filesToAdd.length > 0
-        ? this._adCampaignItemDataService.addList(filesToAdd.map(x => x.file as Blob)).pipe(
+        ? this._fileDataService.addList(filesToAdd.map(x => x.file as Blob)).pipe(
             switchMap(fileIds => {
               fileIds.forEach((flieId, index) => {
                 const file = filesToAdd[index];
