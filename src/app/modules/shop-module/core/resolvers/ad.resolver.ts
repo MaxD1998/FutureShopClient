@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { forkJoin, map, switchMap } from 'rxjs';
+import { forkJoin, map, of, switchMap } from 'rxjs';
 import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { AdCampaignDataService } from '../data-services/ad-campaign.data-service';
 
@@ -10,8 +10,11 @@ export const adResolver: ResolveFn<string[]> = (route, state) => {
   return inject(AdCampaignDataService)
     .getActual()
     .pipe(
-      switchMap(dto =>
-        forkJoin(dto.fileIds.map(x => fileDataService.getById(x).pipe(map(blob => URL.createObjectURL(blob))))),
-      ),
+      switchMap(fileIds => {
+        console.log(fileIds);
+        return fileIds.length > 0
+          ? forkJoin(fileIds.map(x => fileDataService.getById(x).pipe(map(blob => URL.createObjectURL(blob)))))
+          : of([]);
+      }),
     );
 };
