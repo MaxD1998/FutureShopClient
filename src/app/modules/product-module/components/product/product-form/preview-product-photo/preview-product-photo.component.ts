@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Injector, input, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { of, switchMap } from 'rxjs';
-import { ProductPhotoDataService } from '../../../../core/data-service/product-photo.data-service';
+import { FileDataService } from '../../../../../../core/data-services/file.data-service';
 
 @Component({
   selector: 'app-preview-product-photo',
@@ -12,7 +12,7 @@ import { ProductPhotoDataService } from '../../../../core/data-service/product-p
 })
 export class PreviewProductPhotoComponent {
   private readonly _injector = inject(Injector);
-  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
+  private readonly _fileDataService = inject(FileDataService);
   id = input<string>();
 
   imageUrl = signal<string>('');
@@ -23,7 +23,7 @@ export class PreviewProductPhotoComponent {
       .pipe(
         switchMap(id => {
           this.isLoaded.set(false);
-          return id ? this._productPhotoDataService.getById(id) : of(null);
+          return id ? this._fileDataService.getById(id) : of(null);
         }),
       )
       .subscribe({

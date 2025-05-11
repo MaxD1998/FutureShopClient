@@ -10,13 +10,13 @@ import { DialogWindowComponent } from '../../../../../components/shared/modals/d
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
+import { FileDataService } from '../../../../../core/data-services/file.data-service';
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { TempIdGenerator } from '../../../../../core/utils/temp-id-generator';
-import { ProductPhotoDataService } from '../../../core/data-service/product-photo.data-service';
 import { ProductDataService } from '../../../core/data-service/product.data-service';
 import { ProductPhotoFormDto } from '../../../core/dtos/product-photo.form-dto';
 import { ProductPhotoInfoDto } from '../../../core/dtos/product-photo.info-dto';
@@ -44,7 +44,7 @@ import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.
 export class ProductFormComponent extends BaseFormComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productDataService = inject(ProductDataService);
-  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
+  private readonly _fileDataService = inject(FileDataService);
   private readonly _router = inject(Router);
   private readonly _tempIdGenerator = new TempIdGenerator();
 
@@ -163,7 +163,7 @@ export class ProductFormComponent extends BaseFormComponent {
 
     const result$ =
       files.length > 0
-        ? this._productPhotoDataService.addList(files).pipe(
+        ? this._fileDataService.addList(files).pipe(
             switchMap(response => {
               return this.addOrUpdateProduct$(response);
             }),

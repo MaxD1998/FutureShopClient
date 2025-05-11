@@ -1,5 +1,5 @@
-import { FileModel } from '../../../../core/models/file.model';
+import { FileDto } from '../../../../core/dtos/file.dto';
 
-export interface AdCampaignItemInfoDto extends FileModel {
+export interface AdCampaignItemInfoDto extends FileDto {
   lang: string;
 }

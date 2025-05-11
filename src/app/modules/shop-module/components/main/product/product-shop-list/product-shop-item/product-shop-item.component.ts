@@ -7,8 +7,8 @@ import { ButtonComponent } from '../../../../../../../components/shared/button/b
 import { DropDownComponent } from '../../../../../../../components/shared/drop-down/drop-down.component';
 import { IconComponent } from '../../../../../../../components/shared/icon/icon.component';
 import { ClientRoute } from '../../../../../../../core/constants/client-routes/client.route';
+import { FileDataService } from '../../../../../../../core/data-services/file.data-service';
 import { IconType } from '../../../../../../../core/enums/icon-type';
-import { ProductPhotoDataService } from '../../../../../core/data-services/product-photo.data-service';
 import { ProductListModel } from '../../../../../core/models/product-shop.list-model';
 import { BasketService } from '../../../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
@@ -23,7 +23,7 @@ import { AddProductToPurchaseListComponent } from '../../../../shared/add-produc
 export class ProductShopItemComponent {
   private readonly _basketService = inject(BasketService);
   private readonly _injector = inject(Injector);
-  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
+  private readonly _fileDataService = inject(FileDataService);
   private readonly _router = inject(Router);
 
   IconType: typeof IconType = IconType;
@@ -33,7 +33,7 @@ export class ProductShopItemComponent {
   image = toSignal<string>(
     toObservable(this.product, { injector: this._injector }).pipe(
       switchMap(product => {
-        return product.image.fileId ? this._productPhotoDataService.getById(product.image.fileId) : of(null);
+        return product.image.fileId ? this._fileDataService.getById(product.image.fileId) : of(null);
       }),
       map(response => (response ? URL.createObjectURL(response) : '')),
     ),
