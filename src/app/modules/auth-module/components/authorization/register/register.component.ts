@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
@@ -12,6 +12,16 @@ import { AuthService } from '../../../../../core/services/auth.service';
 import { CustomValidators } from '../../../../../core/utils/custom-validators';
 import { UserInputDto } from '../../../../shop-module/core/dtos/user-input.dto';
 
+interface IRegisterForm {
+  dateOfBirth: FormControl<Date | null>;
+  email: FormControl<string>;
+  firstName: FormControl<string>;
+  lastName: FormControl<string>;
+  password: FormControl<string>;
+  phoneNumber: FormControl<string | null>;
+  repeatPassword: FormControl<string>;
+}
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,7 +29,7 @@ import { UserInputDto } from '../../../../shop-module/core/dtos/user-input.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent, InputDateComponent],
 })
-export class RegisterComponent extends BaseFormComponent {
+export class RegisterComponent extends BaseFormComponent<IRegisterForm> {
   private readonly _authService = inject(AuthService);
   private readonly _router = inject(Router);
 
@@ -31,14 +41,14 @@ export class RegisterComponent extends BaseFormComponent {
       return;
     }
 
-    const controls = this.form.controls;
+    const value = this.form.getRawValue();
     const dto: UserInputDto = {
-      dateOfBirth: controls['dateOfBirth'].value,
-      email: controls['email'].value,
-      firstName: controls['firstName'].value,
-      lastName: controls['lastName'].value,
-      password: controls['password'].value,
-      phoneNumber: controls['phoneNumber'].value,
+      dateOfBirth: value.dateOfBirth!,
+      email: value.email,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      password: value.password,
+      phoneNumber: value.phoneNumber ?? undefined,
     };
 
     this._authService.register(dto, () => {
@@ -46,15 +56,27 @@ export class RegisterComponent extends BaseFormComponent {
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      dateOfBirth: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      firstName: [null, [Validators.required, CustomValidators.notWhiteCharackters]],
-      lastName: [null, [Validators.required, CustomValidators.notWhiteCharackters]],
-      password: [null, [Validators.required, CustomValidators.notWhiteCharackters]],
-      phoneNumber: [null],
-      repeatPassword: [null, [Validators.required, CustomValidators.equal('password')]],
-    };
+  protected override setGroup(): FormGroup<IRegisterForm> {
+    return this._formBuilder.group<IRegisterForm>({
+      dateOfBirth: new FormControl(null, [Validators.required]),
+      email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+      firstName: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, CustomValidators.notWhiteCharackters],
+      }),
+      lastName: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, CustomValidators.notWhiteCharackters],
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, CustomValidators.notWhiteCharackters],
+      }),
+      phoneNumber: new FormControl(null),
+      repeatPassword: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, CustomValidators.equal('password')],
+      }),
+    });
   }
 }

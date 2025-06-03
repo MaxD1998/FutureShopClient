@@ -1,4 +1,4 @@
-import { ProductParameterFormDto } from '../../../product-module/core/dtos/product-parameter.form-dto';
+import { ProductParameterFormDto } from './product-parameter.form-dto';
 
 export interface ProductBaseFormDto {
   categoryId: string;

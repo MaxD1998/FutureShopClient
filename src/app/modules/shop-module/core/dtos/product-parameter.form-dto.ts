@@ -1,7 +1,7 @@
-import { ProductParameterTranslationFormDto } from './product-parameter-translation.form-dto';
+import { TranslationFormDto } from './translation.form-dto';
 
 export interface ProductParameterFormDto {
   id?: string;
   name: string;
-  translations: ProductParameterTranslationFormDto[];
+  translations: TranslationFormDto[];
 }

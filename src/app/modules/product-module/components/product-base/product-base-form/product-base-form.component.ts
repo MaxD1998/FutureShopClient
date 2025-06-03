@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
@@ -12,6 +12,11 @@ import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../../../core/data-service/product-base.data-service';
 import { ProductBaseFormDto } from '../../../core/dtos/product-base.form-dto';
 
+interface IProductBaseForm {
+  categoryId: FormControl<string>;
+  name: FormControl<string>;
+}
+
 @Component({
   selector: 'app-product-base-form',
   templateUrl: './product-base-form.component.html',
@@ -19,26 +24,29 @@ import { ProductBaseFormDto } from '../../../core/dtos/product-base.form-dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslateModule, ReactiveFormsModule, ButtonComponent, InputComponent, InputSelectComponent],
 })
-export class ProductBaseFormComponent extends BaseFormComponent {
+export class ProductBaseFormComponent extends BaseFormComponent<IProductBaseForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productBaseDataService = inject(ProductBaseDataService);
   private readonly _router = inject(Router);
 
+  private readonly _snapshot = this._activatedRoute.snapshot;
+  private readonly _resolverData = this._snapshot.data['form'];
+  private readonly _id?: string = this._snapshot.params['id'];
+  private _productBase?: ProductBaseFormDto = this._resolverData['productBase'];
+
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 
   categoryItems = this._activatedRoute.snapshot.data['form']['categories'] as SelectItemModel[];
-  header = this.id
+  header = this._id
     ? 'product-module.product-base-form-component.edit-product-base'
     : 'product-module.product-base-form-component.create-product-base';
-  id?: string = this._activatedRoute.snapshot.params['id'];
-  productBase = this._activatedRoute.snapshot.data['form']['productBase'] as ProductBaseFormDto | undefined;
 
   constructor() {
     super();
 
-    if (this.productBase) {
-      this.form.controls['name'].setValue(this.productBase.name);
-      this.form.controls['categoryId'].setValue(this.productBase.categoryId);
+    if (this._productBase) {
+      const { categoryId, name } = this._productBase;
+      this.form.patchValue({ categoryId, name });
     }
   }
 
@@ -48,11 +56,12 @@ export class ProductBaseFormComponent extends BaseFormComponent {
       return;
     }
 
-    const value = this.form.value as ProductBaseFormDto;
+    const { categoryId, name } = this.form.getRawValue();
+    this._productBase = { categoryId, name };
 
-    const productBase$ = !this.id
-      ? this._productBaseDataService.add(value)
-      : this._productBaseDataService.update(this.id, value);
+    const productBase$ = !this._id
+      ? this._productBaseDataService.add(this._productBase)
+      : this._productBaseDataService.update(this._id, this._productBase);
 
     productBase$.subscribe({
       next: () => {
@@ -61,10 +70,10 @@ export class ProductBaseFormComponent extends BaseFormComponent {
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      categoryId: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-    };
+  protected override setGroup(): FormGroup<IProductBaseForm> {
+    return this._formBuilder.group<IProductBaseForm>({
+      categoryId: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    });
   }
 }

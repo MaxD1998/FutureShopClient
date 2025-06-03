@@ -1,17 +1,17 @@
 import { inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
-export abstract class BaseFormComponent {
+export abstract class BaseFormComponent<T extends { [K in keyof T]: AbstractControl<any> } = any> {
   protected readonly _formBuilder = inject(FormBuilder);
 
-  form: FormGroup = this._formBuilder.group(this.setFormControls());
+  form: FormGroup<T> = this.setGroup();
 
   errorCode(field: string, arrayName?: string, formGroupName?: string): string {
     const control = !arrayName
-      ? this.form.controls[field]
+      ? this.form.get(field)
       : !formGroupName
-        ? (this.form.controls[arrayName] as FormArray).get(field)
-        : ((this.form.controls[arrayName] as FormArray).get(formGroupName) as FormGroup).get(field);
+        ? (this.form.get(arrayName) as FormArray).get(field)
+        : ((this.form.get(arrayName) as FormArray).get(formGroupName) as FormGroup).get(field);
 
     const error = control?.errors;
 
@@ -24,5 +24,5 @@ export abstract class BaseFormComponent {
     return '';
   }
 
-  protected abstract setFormControls(): {};
+  protected abstract setGroup(): FormGroup<T>;
 }

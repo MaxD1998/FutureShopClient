@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
@@ -16,6 +16,13 @@ import { ProductShopLisRequestDto } from '../../../../core/dtos/product-shop.lis
 import { ProductListModel } from '../../../../core/models/product-shop.list-model';
 import { ProductShopItemComponent } from './product-shop-item/product-shop-item.component';
 
+interface IProductShopListForm {
+  name: FormControl<string | null>;
+  priceFrom: FormControl<number | null>;
+  priceTo: FormControl<number | null>;
+  sortType: FormControl<string>;
+}
+
 @Component({
   selector: 'app-product-shop-list',
   imports: [
@@ -31,7 +38,7 @@ import { ProductShopItemComponent } from './product-shop-item/product-shop-item.
   styleUrl: './product-shop-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductShopListComponent extends BaseFormComponent {
+export class ProductShopListComponent extends BaseFormComponent<IProductShopListForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productDataService = inject(ProductDataService);
   private readonly _translateService = inject(TranslateService);
@@ -56,7 +63,7 @@ export class ProductShopListComponent extends BaseFormComponent {
           return;
         }
 
-        const result = data['data'] as { category: IdNameDto; products: ProductShopListDto[] };
+        const result: { category: IdNameDto; products: ProductShopListDto[] } = data['data'];
         this.categoryName.set(result.category.name);
         this.products.set(result.products.map(x => new ProductListModel(x)));
       },
@@ -66,11 +73,13 @@ export class ProductShopListComponent extends BaseFormComponent {
   filter(): void {
     this.products.set([]);
 
+    const { name, priceFrom, priceTo, sortType } = this.form.getRawValue();
+
     const request: ProductShopLisRequestDto = {
-      name: this.form.value['name'],
-      priceFrom: this.form.value['priceFrom'],
-      priceTo: this.form.value['priceTo'],
-      sortType: Number(this.form.value['sortType']),
+      name: name ?? undefined,
+      priceFrom: priceFrom ?? undefined,
+      priceTo: priceTo ?? undefined,
+      sortType: Number(sortType),
     };
 
     this._productDataService
@@ -82,12 +91,15 @@ export class ProductShopListComponent extends BaseFormComponent {
       });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      name: [null],
-      sortType: ['0'],
-      priceFrom: [null],
-      priceTo: [null],
-    };
+  protected override setGroup(): FormGroup<IProductShopListForm> {
+    return (
+      this,
+      this._formBuilder.group<IProductShopListForm>({
+        name: new FormControl(null),
+        priceFrom: new FormControl(null),
+        priceTo: new FormControl(null),
+        sortType: new FormControl('0', { nonNullable: true }),
+      })
+    );
   }
 }

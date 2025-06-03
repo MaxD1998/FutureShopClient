@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, switchMap } from 'rxjs';
@@ -10,19 +10,24 @@ import { DialogWindowComponent } from '../../../../../components/shared/modals/d
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
+import { FileDataService } from '../../../../../core/data-services/file.data-service';
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { TempIdGenerator } from '../../../../../core/utils/temp-id-generator';
-import { ProductPhotoDataService } from '../../../core/data-service/product-photo.data-service';
 import { ProductDataService } from '../../../core/data-service/product.data-service';
-import { ProductPhotoFormDto } from '../../../core/dtos/product-photo.form-dto';
 import { ProductPhotoInfoDto } from '../../../core/dtos/product-photo.info-dto';
 import { ProductFormDto } from '../../../core/dtos/product.form-dto';
 import { PreviewProductPhotoComponent } from './preview-product-photo/preview-product-photo.component';
 import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.component';
+
+interface IProductForm {
+  name: FormControl<string>;
+  productBaseId: FormControl<string>;
+  productPhotos: FormArray<FormControl<{ id?: string; fileId: string }>>;
+}
 
 @Component({
   selector: 'app-product-form',
@@ -41,23 +46,26 @@ import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.
     PreviewProductPhotoComponent,
   ],
 })
-export class ProductFormComponent extends BaseFormComponent {
+export class ProductFormComponent extends BaseFormComponent<IProductForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productDataService = inject(ProductDataService);
-  private readonly _productPhotoDataService = inject(ProductPhotoDataService);
+  private readonly _fileDataService = inject(FileDataService);
   private readonly _router = inject(Router);
   private readonly _tempIdGenerator = new TempIdGenerator();
+
+  private readonly _snapshot = this._activatedRoute.snapshot;
+  private readonly _resolverData = this._snapshot.data['form'];
+  private readonly _id?: string = this._snapshot.params['id'];
+  private _product?: ProductFormDto = this._resolverData['product'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   DialogType: typeof DialogType = DialogType;
 
-  header = this.id
+  header = this._id
     ? 'product-module.product-form-component.edit-product'
     : 'product-module.product-form-component.create-product';
 
-  id?: string = this._activatedRoute.snapshot.params['id'];
-  product?: ProductFormDto = this._activatedRoute.snapshot.data['form']['product'];
-  productBaseItems: SelectItemModel[] = this._activatedRoute.snapshot.data['form']['productBases'] ?? [];
+  productBaseItems: SelectItemModel[] = this._resolverData['productBases'] ?? [];
   productPhotoColumns: DataTableColumnModel[] = [
     {
       field: 'name',
@@ -87,18 +95,13 @@ export class ProductFormComponent extends BaseFormComponent {
   dialogType = signal<DialogType>(DialogType.productPhoto);
   isDialogActive = signal<boolean>(false);
   fileId = signal<string>('');
-  productPhotos = signal<ProductPhotoInfoDto[]>(this._activatedRoute.snapshot.data['form']['files'] ?? []);
+  productPhotos = signal<ProductPhotoInfoDto[]>(this._resolverData['files'] ?? []);
 
   constructor() {
     super();
-    if (this.product) {
-      const form = this.form.controls;
-      form['name'].setValue(this.product.name);
-      form['productBaseId'].setValue(this.product.productBaseId);
-
-      this.product.productPhotos.forEach(x => {
-        (form['productPhotos'] as FormArray).push(new FormControl(x));
-      });
+    if (this._product) {
+      const { name, productBaseId, productPhotos } = this._product;
+      this.form.patchValue({ name, productBaseId, productPhotos });
     }
   }
 
@@ -129,13 +132,6 @@ export class ProductFormComponent extends BaseFormComponent {
 
   removeProductPhoto(id: string) {
     this.productPhotos.set(this.productPhotos().filter(x => x.id != id));
-    const array = this.form.controls['productPhotos'] as FormArray;
-    const arrayValues = array.value as ProductPhotoFormDto[];
-    const index = arrayValues.findIndex(x => x.fileId == id);
-
-    if (index > -1) {
-      array.removeAt(index);
-    }
   }
 
   setProductPhoto(file: File): void {
@@ -157,15 +153,19 @@ export class ProductFormComponent extends BaseFormComponent {
       return;
     }
 
-    const files = this.productPhotos()
-      .filter(x => x.id.includes('temp') && x.file)
-      .map(x => x.file) as Blob[];
+    const { name, productBaseId, productPhotos } = this.form.getRawValue();
+    this._product = { name, productBaseId, productPhotos };
 
+    const files = this.productPhotos().filter(x => x.id.includes('temp') && x.file);
     const result$ =
       files.length > 0
-        ? this._productPhotoDataService.addList(files).pipe(
-            switchMap(response => {
-              return this.addOrUpdateProduct$(response);
+        ? this._fileDataService.addList(files.map(x => x.file as Blob)).pipe(
+            switchMap(fileIds => {
+              fileIds.forEach((flieId, index) => {
+                const file = files[index];
+                file.id = flieId;
+              });
+              return this.addOrUpdateProduct$();
             }),
           )
         : this.addOrUpdateProduct$();
@@ -177,48 +177,26 @@ export class ProductFormComponent extends BaseFormComponent {
     });
   }
 
-  private addOrUpdateProduct$(fileIds?: string[]): Observable<ProductFormDto> {
-    this.updateFormProductPhoto(fileIds);
+  private addOrUpdateProduct$(): Observable<ProductFormDto> {
+    const product = this._product!;
+    const productPhotos = this.productPhotos();
 
-    const value = this.form.value as ProductFormDto;
-    return !this.id ? this._productDataService.add(value) : this._productDataService.update(this.id, value);
+    product.productPhotos = product.productPhotos.filter(productPhoto =>
+      productPhotos.map(x => x.id).includes(productPhoto.fileId),
+    );
+    product.productPhotos = productPhotos
+      .filter(productPhoto => !product.productPhotos.map(x => x.fileId).includes(productPhoto.id))
+      .map(x => ({ fileId: x.id }));
+
+    return !this._id ? this._productDataService.add(product) : this._productDataService.update(this._id, product);
   }
 
-  private updateFormProductPhoto(fileIds?: string[]): void {
-    if (fileIds && fileIds.length > 0) {
-      const files = this.productPhotos().filter(x => x.id.includes('temp') && x.file);
-
-      if (fileIds.length == files.length) {
-        fileIds.forEach((x, index) => {
-          files[index].id = x;
-        });
-      }
-    }
-
-    if (this.productPhotos().length > 0) {
-      const form = this.form.controls;
-      const productPhotos = form['productPhotos'] as FormArray;
-      const productPhotoValues = productPhotos.controls as FormControl[];
-
-      this.productPhotos().forEach(x => {
-        if (!productPhotoValues.some(y => y.value['fileId'] == x.id)) {
-          productPhotos.push(
-            new FormControl({
-              id: null,
-              fileId: x.id,
-            }),
-          );
-        }
-      });
-    }
-  }
-
-  protected override setFormControls(): {} {
-    return {
-      name: [null, [Validators.required]],
-      productBaseId: [null, [Validators.required]],
-      productPhotos: new FormArray([]),
-    };
+  protected override setGroup(): FormGroup<IProductForm> {
+    return this._formBuilder.group<IProductForm>({
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      productBaseId: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      productPhotos: new FormArray<FormControl<{ id?: string; fileId: string }>>([]),
+    });
   }
 }
 

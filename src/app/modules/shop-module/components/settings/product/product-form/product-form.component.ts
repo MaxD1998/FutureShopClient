@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { environment } from '../../../../../../../environments/environment';
@@ -19,9 +19,19 @@ import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
-import { ProductParameterFlatDto } from '../../../../core/dtos/product-parameter-flat.dto copy';
+import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
+import { ITranslationForm } from '../../../../core/form/i-translation.form';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
+
+interface IProductForm {
+  isActive: FormControl<boolean>;
+  name: FormControl<string>;
+  productBaseId: FormControl<string>;
+  price: FormControl<number | null>;
+  productParameterValues: FormArray<FormControl<ProductParameterValueFormDto>>;
+  translations: FormArray<FormGroup<ITranslationForm>>;
+}
 
 @Component({
   selector: 'app-product-form',
@@ -41,25 +51,26 @@ import { SetProductParameterValueComponent } from './set-product-parameter-value
     SetProductParameterValueComponent,
   ],
 })
-export class ProductFormComponent extends BaseFormComponent {
+export class ProductFormComponent extends BaseFormComponent<IProductForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productDataService = inject(ProductDataService);
   private readonly _router = inject(Router);
 
+  private readonly _snapshot = this._activatedRoute.snapshot;
+  private readonly _resolverData = this._activatedRoute.snapshot.data['form'];
+  private _id: string = this._snapshot.params['id'];
+  private _product: ProductFormDto = this._resolverData['product'];
+
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 
-  id: string = this._activatedRoute.snapshot.params['id'];
-  product: ProductFormDto = this._activatedRoute.snapshot.data['form']['product'];
-  productBaseItems: SelectItemModel[] = this._activatedRoute.snapshot.data['form']['productBases'] ?? [];
-  productParameters: ProductParameterFlatDto[] = this._activatedRoute.snapshot.data['form']['productParameters'] ?? [];
-  translations = this.form.controls['translations'] as FormArray;
+  productBaseItems: SelectItemModel[] = this._resolverData['productBases'];
 
   isDialogActive = signal<boolean>(false);
   productParameter = signal<IdValueDto | undefined>(undefined);
 
   productParameterColumns: DataTableColumnModel[] = [
     {
-      field: 'name',
+      field: 'productParameterName',
       headerFloat: TableHeaderFloat.left,
       headerText: 'shop-module.product-form-component.product-parameter-table-columns.name',
       template: TableTemplate.text,
@@ -80,30 +91,38 @@ export class ProductFormComponent extends BaseFormComponent {
   constructor() {
     super();
 
-    const form = this.form.controls;
-    form['isActive'].setValue(this.product.isActive);
-    form['name'].setValue(this.product.name);
-    form['productBaseId'].setValue(this.product.productBaseId);
-    form['price'].setValue(this.product.price);
+    const { isActive, name, productBaseId, price, productParameterValues, translations } = this._product;
+    this.form.patchValue({
+      isActive,
+      name,
+      productBaseId,
+      price,
+    });
 
-    environment.availableLangs.forEach(x => {
-      const translation = this.product.translations.find(y => y.lang == x);
-      this.translations.push(
-        this._formBuilder.group({
-          id: [translation?.id],
-          lang: [x, [Validators.required]],
-          translation: [translation?.translation],
-        }),
+    environment.availableLangs.forEach(lang => {
+      const translation = translations.find(x => x.lang === lang);
+      const translationFormGroup = this._formBuilder.group<ITranslationForm>({
+        id: new FormControl(translation?.id ?? null),
+        lang: new FormControl(lang, { nonNullable: true, validators: [Validators.required] }),
+        translation: new FormControl(translation?.translation ?? null),
+      });
+
+      this.form.controls.translations.push(translationFormGroup);
+    });
+
+    productParameterValues.forEach(x => {
+      this.form.controls.productParameterValues.push(
+        new FormControl<ProductParameterValueFormDto>(x, { nonNullable: true }),
       );
     });
   }
 
   openSetParameterValueDialog(id: string): void {
-    const productParameter = this.productParameters.find(x => x.id == id);
+    const productParameter = this.form.getRawValue().productParameterValues.find(x => x.productParameterId === id);
 
     if (productParameter) {
       this.productParameter.set({
-        id: productParameter.id,
+        id: productParameter.productParameterId,
         value: productParameter.value ?? '',
       });
 
@@ -112,18 +131,22 @@ export class ProductFormComponent extends BaseFormComponent {
   }
 
   removeParameterValue(id: string): void {
-    const productParameter = this.productParameters.find(x => x.id == id);
-    if (productParameter) {
-      productParameter.value = undefined;
-      this.productParameters = this.productParameters.slice();
+    const index = this.form.getRawValue().productParameterValues.findIndex(x => x.productParameterId === id);
+
+    if (index >= 0) {
+      const record = this.form.controls.productParameterValues.controls.at(index)!;
+      const { id, productParameterId, productParameterName } = record.getRawValue();
+      record.patchValue({ id, productParameterId, productParameterName, value: undefined });
     }
   }
 
   setProductParameterValue(dto: IdValueDto): void {
-    const productParameter = this.productParameters.find(x => x.id == dto.id);
-    if (productParameter) {
-      productParameter.value = dto.value;
-      this.productParameters = this.productParameters.slice();
+    const index = this.form.getRawValue().productParameterValues.findIndex(x => x.productParameterId === dto.id);
+
+    if (index >= 0) {
+      const record = this.form.controls.productParameterValues.controls.at(index)!;
+      const { id, productParameterId, productParameterName } = record.getRawValue();
+      record.patchValue({ id, productParameterId, productParameterName, value: dto.value });
     }
 
     this.isDialogActive.set(false);
@@ -136,21 +159,19 @@ export class ProductFormComponent extends BaseFormComponent {
       return;
     }
 
-    const value = this.form.value as ProductFormDto;
+    const { isActive, name, productBaseId, price, productParameterValues, translations } = this.form.getRawValue();
+    this._product = {
+      isActive,
+      name,
+      productBaseId,
+      price: price ?? 0,
+      productParameterValues,
+      translations: translations
+        .filter(x => !!x.translation)
+        .map(x => ({ id: x.id ?? undefined, lang: x.lang, translation: x.translation! })),
+    };
 
-    value.productParameterValues = this.productParameters
-      .filter(x => x.value)
-      .map(x => {
-        return {
-          id: x.productParameterValueId,
-          productParameterId: x.id,
-          value: x.value,
-        };
-      });
-
-    value.translations = value.translations.filter(x => x.translation);
-
-    this._productDataService.update(this.id, value).subscribe({
+    this._productDataService.update(this._id, this._product).subscribe({
       next: () => {
         this._router.navigateByUrl(
           `${ClientRoute.shopModule}/${ClientRoute.settings}/${ClientRoute.product}/${ClientRoute.list}`,
@@ -159,13 +180,14 @@ export class ProductFormComponent extends BaseFormComponent {
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      isActive: [false],
-      name: [null, [Validators.required]],
-      price: [null, [Validators.required]],
-      productBaseId: [null, [Validators.required]],
-      translations: new FormArray([]),
-    };
+  protected override setGroup(): FormGroup<IProductForm> {
+    return this._formBuilder.group<IProductForm>({
+      isActive: new FormControl(false, { nonNullable: true }),
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      price: new FormControl(null, { validators: [Validators.required] }),
+      productBaseId: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      productParameterValues: new FormArray<FormControl<ProductParameterValueFormDto>>([]),
+      translations: new FormArray<FormGroup<ITranslationForm>>([]),
+    });
   }
 }

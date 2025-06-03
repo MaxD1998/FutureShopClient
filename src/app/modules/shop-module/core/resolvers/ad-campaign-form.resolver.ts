@@ -1,18 +1,18 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { forkJoin, of, switchMap } from 'rxjs';
-import { AdCampaignItemDataService } from '../data-services/ad-campaign-item.data-service';
+import { FileDataService } from '../../../../core/data-services/file.data-service';
+import { FileDto } from '../../../../core/dtos/file.dto';
 import { AdCampaignDataService } from '../data-services/ad-campaign.data-service';
-import { AdCampaignItemInfoDto } from '../dtos/ad-campaign-item.info-dto';
 import { AdCampaignFormDto } from '../dtos/ad-campaign.form-dto';
 
-export const adCampaignFormResolver: ResolveFn<{ adCampaign?: AdCampaignFormDto; files: AdCampaignItemInfoDto[] }> = (
+export const adCampaignFormResolver: ResolveFn<{ adCampaign?: AdCampaignFormDto; files: FileDto[] }> = (
   route,
   state,
 ) => {
   const id = route.params['id'];
   const adCampaignDataService = inject(AdCampaignDataService);
-  const adCampaignItemDataService = inject(AdCampaignItemDataService);
+  const fileDataService = inject(FileDataService);
 
   if (id) {
     return adCampaignDataService.getById(id).pipe(
@@ -21,7 +21,7 @@ export const adCampaignFormResolver: ResolveFn<{ adCampaign?: AdCampaignFormDto;
           adCampaign: of(response),
           files:
             response.adCampaignItems.length > 0
-              ? adCampaignItemDataService.getListInfoByIds(response.adCampaignItems.map(x => x.fileId))
+              ? fileDataService.getListInfoByIds(response.adCampaignItems.map(x => x.fileId))
               : of([]),
         });
       }),

@@ -11,7 +11,7 @@ import {
   signal,
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { ButtonIconComponent } from '../../../../../components/shared/button-icon/button-icon.component';
@@ -23,6 +23,10 @@ import { UserService } from '../../../../auth-module/core/services/user.service'
 import { PurchaseListDto } from '../../../core/dtos/purchase-list.dto';
 import { PurchaseListService } from '../../../core/services/purchase-list.service';
 import { SmallPurchaseListFormComponent } from './small-purchase-list-form/small-purchase-list-form.component';
+
+interface IAddProductToPurchaseListForm {
+  purchaseLists: FormArray<any>;
+}
 
 @Component({
   selector: 'app-add-product-to-purchase-list',
@@ -38,7 +42,10 @@ import { SmallPurchaseListFormComponent } from './small-purchase-list-form/small
   styleUrl: './add-product-to-purchase-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddProductToPurchaseListComponent extends BaseFormComponent implements OnDestroy {
+export class AddProductToPurchaseListComponent
+  extends BaseFormComponent<IAddProductToPurchaseListForm>
+  implements OnDestroy
+{
   private readonly _injector = inject(Injector);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
@@ -117,14 +124,14 @@ export class AddProductToPurchaseListComponent extends BaseFormComponent impleme
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      purchaseLists: new FormArray([]),
-    };
+  protected override setGroup(): FormGroup<IAddProductToPurchaseListForm> {
+    return this._formBuilder.group<IAddProductToPurchaseListForm>({
+      purchaseLists: new FormArray<any>([]),
+    });
   }
 
   private fillForm(): void {
-    this.form.setControl('purchaseLists', new FormArray([]));
+    this.form.setControl('purchaseLists', new FormArray<any>([]));
     this.purchaseListsForm.set(this.form.controls['purchaseLists'] as FormArray);
 
     const array = this.form.controls['purchaseLists'] as FormArray;

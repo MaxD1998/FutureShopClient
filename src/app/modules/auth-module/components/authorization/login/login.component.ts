@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
@@ -13,6 +13,11 @@ import { InputType } from '../../../../../core/enums/input-type';
 import { AuthService } from '../../../../../core/services/auth.service';
 import { LoginDto } from '../../../core/dtos/login.dto';
 
+interface ILoginForm {
+  email: FormControl<string | null>;
+  password: FormControl<string | null>;
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +25,7 @@ import { LoginDto } from '../../../core/dtos/login.dto';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TranslateModule, ReactiveFormsModule, InputComponent, ButtonComponent, IconComponent],
 })
-export class LoginComponent extends BaseFormComponent {
+export class LoginComponent extends BaseFormComponent<ILoginForm> {
   private readonly _authService = inject(AuthService);
   private readonly _router = inject(Router);
 
@@ -34,10 +39,10 @@ export class LoginComponent extends BaseFormComponent {
       return;
     }
 
-    const controls = this.form.controls;
+    const value = this.form.getRawValue();
     const dto: LoginDto = {
-      email: controls['email'].value,
-      password: controls['password'].value,
+      email: value.email!,
+      password: value.password!,
     };
 
     this._authService.login(dto, () => {
@@ -49,10 +54,10 @@ export class LoginComponent extends BaseFormComponent {
     this._router.navigateByUrl(`${ClientRoute.authModule}/${ClientRoute.auth}/${ClientRoute.register}`);
   }
 
-  protected setFormControls(): {} {
-    return {
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
-    };
+  protected setGroup(): FormGroup<ILoginForm> {
+    return this._formBuilder.group<ILoginForm>({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required]),
+    });
   }
 }

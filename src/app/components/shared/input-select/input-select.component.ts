@@ -75,8 +75,8 @@ export class InputSelectComponent implements ControlValueAccessor {
   }
 
   onValueChange(element: HTMLSelectElement): void {
-    this.value.set(element.value);
-    this.onChange(this.value());
+    this.value.set(element.value === '' ? undefined : element.value);
+    this.onChange(this.value() ?? null);
     this.onTouch();
   }
 

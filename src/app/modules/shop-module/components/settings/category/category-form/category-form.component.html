@@ -27,11 +27,9 @@
           {{ 'shop-module.category-form-component.translations' | translate }}
         </h2>
         <div>
-          @for (translation of translations.controls; track $index) {
+          @for (translation of translations; track $index) {
             <div [formGroupName]="$index">
-              <app-input
-                formControlName="translation"
-                [label]="'common.languages.' + translation.value.lang | translate">
+              <app-input formControlName="translation" [label]="'common.languages.' + translation.lang | translate">
               </app-input>
             </div>
           }

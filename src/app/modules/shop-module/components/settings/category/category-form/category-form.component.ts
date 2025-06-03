@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { environment } from '../../../../../../../environments/environment';
@@ -10,6 +10,7 @@ import { TableComponent } from '../../../../../../components/shared/table/table.
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
+import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
 import { IconType } from '../../../../../../core/enums/icon-type';
 import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
@@ -18,6 +19,15 @@ import { DataTableColumnModel } from '../../../../../../core/models/data-table-c
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
 import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
+import { ITranslationForm } from '../../../../core/form/i-translation.form';
+
+interface ICategoryForm {
+  isActive: FormControl<boolean>;
+  name: FormControl<string>;
+  parentCategoryId: FormControl<string | null>;
+  subCategories: FormArray<FormControl<IdNameDto>>;
+  translations: FormArray<FormGroup<ITranslationForm>>;
+}
 
 @Component({
   selector: 'app-category-form',
@@ -34,16 +44,19 @@ import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
     ToggleComponent,
   ],
 })
-export class CategoryFormComponent extends BaseFormComponent {
+export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
-  private readonly _resolverData = this._activatedRoute.snapshot.data['form'];
   private readonly _router = inject(Router);
+
+  private readonly _snapshot = this._activatedRoute.snapshot;
+  private readonly _resolverData = this._snapshot.data['form'];
+  private _category: CategoryFormDto = this._resolverData['category'];
+  private _id: string = this._snapshot.params['id'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   IconType: typeof IconType = IconType;
 
-  category = this._resolverData['category'] as CategoryFormDto;
   columns: DataTableColumnModel[] = [
     {
       field: 'name',
@@ -52,27 +65,25 @@ export class CategoryFormComponent extends BaseFormComponent {
       template: TableTemplate.text,
     },
   ];
-  parentCategoryItems = this._resolverData['parentCategoryItems'] as SelectItemModel[];
-  subCategories = this.category.subCategories;
-  translations = this.form.controls['translations'] as FormArray;
+  parentCategoryItems: SelectItemModel[] = this._resolverData['parentCategoryItems'];
+  subCategories = this._category.subCategories;
+  translations = this.form.getRawValue().translations;
 
   constructor() {
     super();
 
-    const controls = this.form.controls;
-    controls['isActive'].setValue(this.category.isActive);
-    controls['name'].setValue(this.category.name);
-    controls['parentCategoryId'].setValue(this.category.parentCategoryId);
+    const { isActive, name, parentCategoryId, subCategories, translations } = this._category;
+    this.form.patchValue({ isActive, name, parentCategoryId: parentCategoryId ?? null, subCategories });
 
-    environment.availableLangs.forEach(x => {
-      const translation = this.category.translations.find(y => y.lang == x);
-      this.translations.push(
-        this._formBuilder.group({
-          id: [translation?.id],
-          lang: [x, [Validators.required]],
-          translation: [translation?.translation],
-        }),
-      );
+    environment.availableLangs.forEach(lang => {
+      const translation = translations.find(x => x.lang === lang);
+      const translationFormGroup = this._formBuilder.group<ITranslationForm>({
+        id: new FormControl(translation?.id ?? null),
+        lang: new FormControl(lang, { nonNullable: true, validators: [Validators.required] }),
+        translation: new FormControl(translation?.translation ?? null),
+      });
+
+      this.form.controls.translations.push(translationFormGroup);
     });
   }
 
@@ -82,10 +93,18 @@ export class CategoryFormComponent extends BaseFormComponent {
       return;
     }
 
-    const value = this.form.value as CategoryFormDto;
-    value.translations = value.translations.filter(x => x.translation);
+    const { isActive, name, parentCategoryId, subCategories, translations } = this.form.getRawValue();
+    this._category = {
+      isActive,
+      name,
+      parentCategoryId: parentCategoryId ?? undefined,
+      subCategories,
+      translations: translations
+        .filter(x => !!x.translation)
+        .map(x => ({ id: x.id ?? undefined, lang: x.lang, translation: x.translation! })),
+    };
 
-    this._categoryDataService.update(this._activatedRoute.snapshot.params['id'], value).subscribe({
+    this._categoryDataService.update(this._id, this._category).subscribe({
       next: () =>
         this._router.navigateByUrl(
           `${ClientRoute.shopModule}/${ClientRoute.settings}/${ClientRoute.category}/${ClientRoute.list}`,
@@ -93,13 +112,13 @@ export class CategoryFormComponent extends BaseFormComponent {
     });
   }
 
-  protected override setFormControls(): {} {
-    return {
-      isActive: [false],
-      name: [null, [Validators.required]],
-      parentCategoryId: [null],
-      subCategories: new FormArray([]),
-      translations: new FormArray([]),
-    };
+  protected override setGroup(): FormGroup<ICategoryForm> {
+    return this._formBuilder.group<ICategoryForm>({
+      isActive: new FormControl(false, { nonNullable: true }),
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      parentCategoryId: new FormControl(null),
+      subCategories: new FormArray<FormControl<IdNameDto>>([]),
+      translations: new FormArray<FormGroup<ITranslationForm>>([]),
+    });
   }
 }

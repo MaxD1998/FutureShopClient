@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { AdCampaignControllerRoute } from '../constants/api-routes/ad-campaign-controller.route';
 import { AdCampaignListDto } from '../dtos/ad-campaign-list.dto';
-import { AdCampaignDto } from '../dtos/ad-campaign.dto';
 import { AdCampaignFormDto } from '../dtos/ad-campaign.form-dto';
 
 @Injectable({
@@ -21,9 +20,9 @@ export class AdCampaignDataService {
     return this._httpClient.delete<null>(`${AdCampaignControllerRoute.base}${id}`);
   }
 
-  getActual(): Observable<AdCampaignDto> {
+  getActual(): Observable<string[]> {
     const url = `${AdCampaignControllerRoute.actual}`;
-    return this._httpClient.get<AdCampaignDto>(url);
+    return this._httpClient.get<string[]>(url);
   }
 
   getById(id: string): Observable<AdCampaignFormDto> {

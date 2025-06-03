@@ -21,12 +21,12 @@ export const categoryFormResolver: ResolveFn<{
       switchMap(response => {
         return forkJoin({
           category: of(response),
-          subCategoryItems: categoryDataService.getsAvailableToBeChild(
+          subCategoryItems: categoryDataService.getListPotentialSubcategories(
             response.subCategories.map(x => x.id),
             response.parentCategoryId,
             id,
           ),
-          parentItems: categoryDataService.getsAvailableToBeParent(
+          parentItems: categoryDataService.getListPotentialParentCategories(
             response.subCategories.map(x => x.id),
             id,
           ),
@@ -44,8 +44,8 @@ export const categoryFormResolver: ResolveFn<{
   }
 
   return forkJoin({
-    subCategoryItems: categoryDataService.getsAvailableToBeChild([]),
-    parentItems: categoryDataService.getsAvailableToBeParent([]),
+    subCategoryItems: categoryDataService.getListPotentialSubcategories([]),
+    parentItems: categoryDataService.getListPotentialParentCategories([]),
   }).pipe(
     map(response => {
       return {

@@ -45,7 +45,7 @@
           [columns]="columns"
           [header]="'product-module.category-form-component.add-sub-category'"
           [isRemoveAction]="true"
-          [items]="subCategories().value"
+          [items]="form.controls.subCategories.value"
           (onRemoveAction)="removeSubCategory($event)">
         </app-table>
       </div>
@@ -56,9 +56,10 @@
   [isDialogActive]="isDialogActive()"
   [title]="'product-module.category-form-component.choose-sub-category' | translate"
   (onCloseDialog)="isDialogActive.set($event)">
-  <app-category-form-dialog-window-content
+  <app-sub-category-form-dialog
     [items]="subCategoryItems()"
     (onClose)="isDialogActive.set(false)"
     (onValueChange)="setSubCategory($event)">
-  </app-category-form-dialog-window-content>
+  </app-sub-category-form-dialog>
 </app-dialog-window>
+3

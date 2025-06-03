@@ -40,7 +40,7 @@
       [idName]="'index'"
       [isEditAction]="true"
       [isRemoveAction]="true"
-      [items]="productParameters()"
+      [items]="form.getRawValue().productParameters"
       (onButtonAction)="addParameter()"
       (onEditAction)="editParameter($event)"
       (onRemoveAction)="removeParamter($event)">

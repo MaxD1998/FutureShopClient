@@ -1,11 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, Injector, input, output } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../../components/shared/button/button.component';
 import { InputComponent } from '../../../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../../../core/bases/base-form.component';
 import { IdValueDto } from '../../../../../../../core/dtos/id-value.dto';
+
+interface IValueForm {
+  id: FormControl<string>;
+  value: FormControl<string>;
+}
 
 @Component({
   selector: 'app-set-product-parameter-value',
@@ -14,7 +19,7 @@ import { IdValueDto } from '../../../../../../../core/dtos/id-value.dto';
   styleUrl: './set-product-parameter-value.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SetProductParameterValueComponent extends BaseFormComponent {
+export class SetProductParameterValueComponent extends BaseFormComponent<IValueForm> {
   private readonly _injector = inject(Injector);
 
   productParameter = input<IdValueDto>();
@@ -27,11 +32,8 @@ export class SetProductParameterValueComponent extends BaseFormComponent {
     toObservable(this.productParameter, { injector: this._injector }).subscribe({
       next: productParameter => {
         if (productParameter) {
-          const value = productParameter.value;
-
-          if (value) {
-            this.form.controls['value'].setValue(value);
-          }
+          const { id, value } = productParameter;
+          this.form.patchValue({ id, value });
         } else {
           this.form.reset();
         }
@@ -47,18 +49,17 @@ export class SetProductParameterValueComponent extends BaseFormComponent {
 
     const productParameter = this.productParameter();
     if (productParameter) {
-      this.onSave.emit({
-        id: productParameter.id,
-        value: this.form.controls['value'].value,
-      });
+      const { id, value } = this.form.getRawValue();
+      this.onSave.emit({ id, value });
     }
 
     this.form.reset();
   }
 
-  protected override setFormControls(): {} {
-    return {
-      value: [null, [Validators.required]],
-    };
+  protected override setGroup(): FormGroup<IValueForm> {
+    return this._formBuilder.group<IValueForm>({
+      id: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      value: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    });
   }
 }

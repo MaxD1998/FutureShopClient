@@ -31,8 +31,8 @@ export class CategoryDataService {
     return this._httpClient.get<PageDto<CategoryListDto>>(url);
   }
 
-  getsAvailableToBeChild(exceptionIds: string[], parentId?: string, id?: string): Observable<IdNameDto[]> {
-    const url = `${CategoryControllerRoute.availableToBeChild}${id ?? ''}`;
+  getListPotentialSubcategories(exceptionIds: string[], parentId?: string, id?: string): Observable<IdNameDto[]> {
+    const url = `${CategoryControllerRoute.potentialSubcategories}${id ?? ''}`;
     let params = new HttpParams();
 
     if (parentId) {
@@ -44,8 +44,8 @@ export class CategoryDataService {
     return this._httpClient.get<IdNameDto[]>(url, { params: params });
   }
 
-  getsAvailableToBeParent(exceptionIds: string[], id?: string): Observable<IdNameDto[]> {
-    const url = `${CategoryControllerRoute.availableToBeParent}${id ?? ''}`;
+  getListPotentialParentCategories(exceptionIds: string[], id?: string): Observable<IdNameDto[]> {
+    const url = `${CategoryControllerRoute.potentialParentCategories}${id ?? ''}`;
     let params = new HttpParams();
     exceptionIds.forEach(x => (params = params.append('childIds', x)));
 

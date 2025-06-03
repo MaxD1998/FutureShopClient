@@ -16,9 +16,9 @@
     </h2>
   </div>
   <div formArrayName="translations">
-    @for (translation of translations().controls; track $index) {
+    @for (translation of form.getRawValue().translations; track $index) {
       <div [formGroupName]="$index">
-        <app-input formControlName="translation" [label]="'common.languages.' + translation.value.lang | translate">
+        <app-input formControlName="translation" [label]="'common.languages.' + translation.lang | translate">
         </app-input>
       </div>
     }

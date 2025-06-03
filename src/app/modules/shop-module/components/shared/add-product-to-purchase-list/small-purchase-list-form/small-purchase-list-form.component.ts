@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { PurchaseListFormDto } from '../../../../core/dtos/purchase-list.from-dto';
 import { PurchaseListService } from '../../../../core/services/purchase-list.service';
+
+interface ISmallPurchaseListForm {
+  name: FormControl<string>;
+}
 
 @Component({
   selector: 'app-small-purchase-list-form',
@@ -14,7 +18,7 @@ import { PurchaseListService } from '../../../../core/services/purchase-list.ser
   styleUrl: './small-purchase-list-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SmallPurchaseListFormComponent extends BaseFormComponent {
+export class SmallPurchaseListFormComponent extends BaseFormComponent<ISmallPurchaseListForm> {
   private readonly _purchaseListService = inject(PurchaseListService);
 
   onClick = output<void>();
@@ -27,7 +31,7 @@ export class SmallPurchaseListFormComponent extends BaseFormComponent {
 
     const value: PurchaseListFormDto = {
       isFavourite: false,
-      name: this.form.value['name'],
+      name: this.form.getRawValue().name,
       purchaseListItems: [],
     };
 
@@ -36,9 +40,9 @@ export class SmallPurchaseListFormComponent extends BaseFormComponent {
     this.onClick.emit();
   }
 
-  protected override setFormControls(): {} {
-    return {
-      name: [null, [Validators.required]],
-    };
+  protected override setGroup(): FormGroup<ISmallPurchaseListForm> {
+    return this._formBuilder.group<ISmallPurchaseListForm>({
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    });
   }
 }

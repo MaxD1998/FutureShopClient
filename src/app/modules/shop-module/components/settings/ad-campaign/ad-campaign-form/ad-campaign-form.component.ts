@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, switchMap } from 'rxjs';
@@ -11,15 +11,23 @@ import { TableComponent } from '../../../../../../components/shared/table/table.
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
+import { FileDataService } from '../../../../../../core/data-services/file.data-service';
 import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { TempIdGenerator } from '../../../../../../core/utils/temp-id-generator';
-import { AdCampaignItemDataService } from '../../../../core/data-services/ad-campaign-item.data-service';
 import { AdCampaignDataService } from '../../../../core/data-services/ad-campaign.data-service';
 import { AdCampaignItemInfoDto } from '../../../../core/dtos/ad-campaign-item.info-dto';
 import { AdCampaignFormDto } from '../../../../core/dtos/ad-campaign.form-dto';
 import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campaign-item.component';
+
+interface IAdCampaignForm {
+  adCampaignItems: FormArray<FormControl<{ id?: string; lang: string; fileId: string }>>;
+  end: FormControl<Date | null>;
+  isActive: FormControl<boolean>;
+  name: FormControl<string>;
+  start: FormControl<Date | null>;
+}
 
 @Component({
   selector: 'app-ad-campaign-form',
@@ -38,10 +46,10 @@ import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campai
   styleUrl: './ad-campaign-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdCampaignFormComponent extends BaseFormComponent {
+export class AdCampaignFormComponent extends BaseFormComponent<IAdCampaignForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _adCampaignDataService = inject(AdCampaignDataService);
-  private readonly _adCampaignItemDataService = inject(AdCampaignItemDataService);
+  private readonly _fileDataService = inject(FileDataService);
   private readonly _router = inject(Router);
   private readonly _tempIdGenerator = new TempIdGenerator();
 
@@ -93,14 +101,8 @@ export class AdCampaignFormComponent extends BaseFormComponent {
     super();
 
     if (this.adCampaign) {
-      const { end, isActive, name, start } = this.adCampaign;
-      this.form.patchValue({ end, isActive, name, start });
-
-      console.log(this.form.controls);
-
-      this.form.controls['adCampaignItems'] = new FormArray(
-        this.adCampaign.adCampaignItems.map(x => new FormControl(x)),
-      );
+      const { adCampaignItems, end, isActive, name, start } = this.adCampaign;
+      this.form.patchValue({ adCampaignItems, end, isActive, name, start });
     }
   }
 
@@ -140,11 +142,13 @@ export class AdCampaignFormComponent extends BaseFormComponent {
       return;
     }
 
-    const filesToAdd = this.adCampaignItems().filter(x => x.id.includes('temp') && x.file);
+    const { adCampaignItems, end, isActive, name, start } = this.form.getRawValue();
+    this.adCampaign = { adCampaignItems, end: end!, isActive, name, start: start! };
 
+    const filesToAdd = this.adCampaignItems().filter(x => x.id.includes('temp') && x.file);
     const result$ =
       filesToAdd.length > 0
-        ? this._adCampaignItemDataService.addList(filesToAdd.map(x => x.file as Blob)).pipe(
+        ? this._fileDataService.addList(filesToAdd.map(x => x.file as Blob)).pipe(
             switchMap(fileIds => {
               fileIds.forEach((flieId, index) => {
                 const file = filesToAdd[index];
@@ -169,29 +173,31 @@ export class AdCampaignFormComponent extends BaseFormComponent {
     this.adCampaignItems.set(this.adCampaignItems().filter(x => x.id != id));
   }
 
-  protected override setFormControls(): {} {
-    return {
-      adCampaignItems: new FormArray([]),
-      end: [null, [Validators.required]],
-      isActive: [false],
-      name: [null, [Validators.required]],
-      start: [null, [Validators.required]],
-    };
+  protected override setGroup(): FormGroup<IAdCampaignForm> {
+    return this._formBuilder.group<IAdCampaignForm>({
+      adCampaignItems: new FormArray<FormControl<{ id?: string; lang: string; fileId: string }>>([]),
+      end: new FormControl(null, [Validators.required]),
+      isActive: new FormControl(false, { nonNullable: true }),
+      name: new FormControl('', { nonNullable: true }),
+      start: new FormControl(null, [Validators.required]),
+    });
   }
 
   private addOrUpdate$(): Observable<AdCampaignFormDto> {
-    const value = this.form.value as AdCampaignFormDto;
-    this.adCampaignItems()
-      .filter(x => x.file)
-      .forEach(x => {
-        if (!value.adCampaignItems.some(item => item.fileId === x.id)) {
-          value.adCampaignItems.push({
-            fileId: x.id,
-            lang: x.lang,
-          });
-        }
-      });
-    return this.id ? this._adCampaignDataService.update(this.id, value) : this._adCampaignDataService.add(value);
+    const adCampaign = this.adCampaign!;
+    const adCampaignItems = this.adCampaignItems();
+
+    adCampaign.adCampaignItems = adCampaign.adCampaignItems.filter(adCampaignItem =>
+      adCampaignItems.map(x => x.id).includes(adCampaignItem.fileId),
+    );
+
+    adCampaign.adCampaignItems = adCampaignItems
+      .filter(adCampaignItem => !adCampaign.adCampaignItems.map(x => x.fileId).includes(adCampaignItem.id))
+      .map(x => ({ fileId: x.id, lang: x.lang }));
+
+    return this.id
+      ? this._adCampaignDataService.update(this.id, adCampaign)
+      : this._adCampaignDataService.add(adCampaign);
   }
 }
 

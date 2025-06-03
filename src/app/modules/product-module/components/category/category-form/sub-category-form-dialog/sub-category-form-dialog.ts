@@ -1,19 +1,23 @@
 import { ChangeDetectionStrategy, Component, input, OnDestroy, output } from '@angular/core';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 
+interface ISubCategoryForm {
+  subCategory: FormControl<string | null>;
+}
+
 @Component({
-  selector: 'app-category-form-dialog-window-content',
-  templateUrl: './category-form-dialog-window-content.component.html',
-  styleUrl: './category-form-dialog-window-content.component.css',
+  selector: 'app-sub-category-form-dialog',
+  templateUrl: './sub-category-form-dialog.html',
+  styleUrl: './sub-category-form-dialog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [InputSelectComponent, ReactiveFormsModule],
 })
-export class CategoryFormDialogWindowContentComponent extends BaseFormComponent implements OnDestroy {
+export class SubCategoryFormDialog extends BaseFormComponent<ISubCategoryForm> implements OnDestroy {
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
   items = input.required<SelectItemModel[]>();
@@ -24,16 +28,16 @@ export class CategoryFormDialogWindowContentComponent extends BaseFormComponent 
   constructor() {
     super();
 
-    this.form.controls['subCategory'].valueChanges.subscribe({
-      next: response => {
+    this.form.controls.subCategory.valueChanges.pipe(takeUntil(this._unsubscribe)).subscribe({
+      next: id => {
         this.onClose.emit(false);
 
-        if (response) {
-          const item = this.items().find(x => x.id == response);
-          if (item && item.id) {
+        if (id) {
+          const value = this.items().find(x => x.id == id);
+          if (value) {
             this.onValueChange.emit({
-              id: item.id,
-              name: item.value,
+              id: value.id!,
+              name: value.value,
             });
           }
           setTimeout(() => {
@@ -49,9 +53,9 @@ export class CategoryFormDialogWindowContentComponent extends BaseFormComponent 
     this._unsubscribe.complete();
   }
 
-  protected override setFormControls(): {} {
-    return {
-      subCategory: [null, Validators.required],
-    };
+  protected override setGroup(): FormGroup<ISubCategoryForm> {
+    return this._formBuilder.group<ISubCategoryForm>({
+      subCategory: new FormControl(null, [Validators.required]),
+    });
   }
 }

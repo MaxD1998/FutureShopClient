@@ -46,11 +46,9 @@
             {{ 'shop-module.product-form-component.translations' | translate }}
           </h2>
           <div>
-            @for (translation of translations.controls; track $index) {
+            @for (translation of form.getRawValue().translations; track $index) {
               <div [formGroupName]="$index">
-                <app-input
-                  formControlName="translation"
-                  [label]="'common.languages.' + translation.value.lang | translate">
+                <app-input formControlName="translation" [label]="'common.languages.' + translation.lang | translate">
                 </app-input>
               </div>
             }
@@ -60,12 +58,12 @@
     </form>
     <app-table
       class="flex-1"
-      idName="id"
+      idName="productParameterId"
       [columns]="productParameterColumns"
       [header]="'shop-module.product-form-component.product-parameters'"
       [isEditAction]="true"
       [isRemoveAction]="true"
-      [items]="productParameters"
+      [items]="form.getRawValue().productParameterValues"
       (onEditAction)="openSetParameterValueDialog($event)"
       (onRemoveAction)="removeParameterValue($event)">
     </app-table>

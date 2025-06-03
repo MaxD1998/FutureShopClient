@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
-import { FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { forkJoin, Subject, takeUntil, tap } from 'rxjs';
+import { combineLatest, forkJoin, of, Subject, takeUntil, tap } from 'rxjs';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../components/shared/input-select/input-select.component';
 import { InputComponent } from '../../../../../components/shared/input/input.component';
@@ -19,7 +19,13 @@ import { DataTableColumnModel } from '../../../../../core/models/data-table-colu
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { CategoryDataService } from '../../../core/data-service/category.data-service';
 import { CategoryFormDto } from '../../../core/dtos/category.form-dto';
-import { CategoryFormDialogWindowContentComponent } from './category-form-dialog-window-content/category-form-dialog-window-content.component';
+import { SubCategoryFormDialog } from './sub-category-form-dialog/sub-category-form-dialog';
+
+interface ICategoryForm {
+  name: FormControl<string>;
+  parentCategoryId: FormControl<string | null>;
+  subCategories: FormArray<FormControl<IdNameDto>>;
+}
 
 @Component({
   selector: 'app-category-form',
@@ -31,33 +37,35 @@ import { CategoryFormDialogWindowContentComponent } from './category-form-dialog
     ButtonComponent,
     InputSelectComponent,
     DialogWindowComponent,
-    CategoryFormDialogWindowContentComponent,
+    SubCategoryFormDialog,
     ReactiveFormsModule,
     TranslateModule,
     TableComponent,
   ],
 })
-export class CategoryFormComponent extends BaseFormComponent implements OnDestroy {
+export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _categoryDataService = inject(CategoryDataService);
   private readonly _router = inject(Router);
   private readonly _translateService = inject(TranslateService);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
+  private readonly _snapshot = this._activatedRoute.snapshot;
+  private readonly _resolverData = this._snapshot.data['form'];
+  private readonly _id?: string = this._snapshot.params['id'];
+  private _category?: CategoryFormDto = this._resolverData['category'];
+
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   IconType: typeof IconType = IconType;
 
-  header = this.id
+  header = this._id
     ? 'product-module.category-form-component.edit-category'
     : 'product-module.category-form-component.create-category';
-  id?: string = this._activatedRoute.snapshot.params['id'];
-
   isAddCategoryButtonDisabled = signal<boolean>(true);
   isAddTranslationButtonDisabled = signal<boolean>(true);
   isDialogActive = signal<boolean>(false);
-  parentItems = signal<SelectItemModel[]>([]);
-  subCategories = signal<FormArray>(this.form.controls['subCategories'] as FormArray);
-  subCategoryItems = signal<SelectItemModel[]>([]);
+  parentItems = signal<SelectItemModel[]>(this._resolverData['parentItems']);
+  subCategoryItems = signal<SelectItemModel[]>(this._resolverData['subCategoryItems']);
 
   columns: DataTableColumnModel[] = [
     {
@@ -75,11 +83,20 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
 
   constructor() {
     super();
-    const form = this._activatedRoute.snapshot.data['form'];
-    this.parentItems.set(form.parentItems);
-    this.subCategoryItems.set(form.subCategoryItems);
-    this.fillForm(form.category);
-    this.setValueChangeEvent();
+
+    if (this._category) {
+      const { name, parentCategoryId, subCategories } = this._category;
+      this.form.patchValue({ name, parentCategoryId, subCategories });
+    }
+
+    combineLatest([this.form.controls.parentCategoryId.valueChanges, this.form.controls.subCategories.valueChanges])
+      .pipe(
+        takeUntil(this._unsubscribe),
+        tap(() => {
+          this.setItems();
+        }),
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -88,15 +105,13 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
   }
 
   removeSubCategory(id: string): void {
-    const index = (this.subCategories().value as IdNameDto[]).findIndex(x => x.id == id);
-    this.subCategories().removeAt(index);
+    const subCategories = this.form.controls.subCategories;
+    const index = subCategories.value.findIndex(x => x.id === id);
+    subCategories.removeAt(index);
   }
 
   setSubCategory(value: IdNameDto): void {
-    this.subCategories.update(x => {
-      x.push(new FormControl(value));
-      return x;
-    });
+    this.form.controls.subCategories.push(new FormControl(value, { nonNullable: true }));
   }
 
   submit(): void {
@@ -105,10 +120,13 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
       return;
     }
 
-    const value = this.form.value as CategoryFormDto;
-    const category$ = !this.id
-      ? this._categoryDataService.add(value)
-      : this._categoryDataService.update(this.id, value);
+    const { name, parentCategoryId, subCategories } = this.form.getRawValue();
+
+    this._category = { name, parentCategoryId: parentCategoryId ?? undefined, subCategories };
+
+    const category$ = !this._id
+      ? this._categoryDataService.add(this._category)
+      : this._categoryDataService.update(this._id, this._category);
 
     category$.subscribe({
       next: () =>
@@ -116,86 +134,38 @@ export class CategoryFormComponent extends BaseFormComponent implements OnDestro
     });
   }
 
-  private fillForm(category: CategoryFormDto): void {
-    if (!category) {
-      return;
-    }
-
-    const controls = this.form.controls;
-
-    controls['name'].setValue(category.name);
-    controls['parentCategoryId'].setValue(category.parentCategoryId);
-
-    this.subCategories.update(x => {
-      category.subCategories.forEach(y => {
-        x.push(new FormControl(y));
-      });
-
-      return x;
-    });
-  }
-
   private setItems(): void {
-    const category = this.form.controls;
-    const parentCategoryId = category['parentCategoryId'].value;
-    const subCategoryIds = (category['subCategories'].value as IdNameDto[]).map(x => x.id);
+    const value = this.form.getRawValue();
+    const parentCategoryId = value.parentCategoryId ?? undefined;
+    const subCategoryIds = value.subCategories.map(x => x.id);
     const selectOption = [{ value: this._translateService.instant('common.input-select.select-option') }];
+    const mapToSelectItem = (items: IdNameDto[]) =>
+      items.map<SelectItemModel>(x => ({
+        id: x.id,
+        value: x.name,
+      }));
 
     forkJoin({
-      parentCategoryItems: this._categoryDataService.getsAvailableToBeParent(subCategoryIds, this.id),
-      subCategoryItems: this._categoryDataService.getsAvailableToBeChild(subCategoryIds, parentCategoryId, this.id),
+      parentCategoryItems: this._categoryDataService.getListPotentialParentCategories(subCategoryIds, this._id),
+      subCategoryItems: !!value.parentCategoryId
+        ? this._categoryDataService.getListPotentialSubcategories(subCategoryIds, parentCategoryId, this._id)
+        : of([]),
     }).subscribe({
       next: response => {
-        this.parentItems.set(
-          selectOption.concat(
-            response.parentCategoryItems.map(x => {
-              return {
-                id: x.id,
-                value: x.name,
-              };
-            }),
-          ),
-        );
+        this.parentItems.set(selectOption.concat(mapToSelectItem(response.parentCategoryItems)));
 
-        this.subCategoryItems.set(
-          selectOption.concat(
-            response.subCategoryItems.map(x => {
-              return {
-                id: x.id,
-                value: x.name,
-              };
-            }),
-          ),
-        );
+        if (!!value.parentCategoryId) {
+          this.subCategoryItems.set(selectOption.concat(mapToSelectItem(response.subCategoryItems)));
+        }
       },
     });
   }
 
-  private setValueChangeEvent(): void {
-    this.form.controls['parentCategoryId'].valueChanges
-      .pipe(
-        takeUntil(this._unsubscribe),
-        tap(() => {
-          this.setItems();
-        }),
-      )
-      .subscribe();
-
-    this.form.controls['subCategories'].valueChanges
-      .pipe(
-        takeUntil(this._unsubscribe),
-        tap(() => {
-          this.setItems();
-        }),
-      )
-      .subscribe();
-  }
-
-  protected override setFormControls(): {} {
-    return {
-      name: [null, [Validators.required]],
-      parentCategoryId: [null],
-      subCategories: new FormArray([]),
-    };
+  protected override setGroup(): FormGroup<ICategoryForm> {
+    return this._formBuilder.group<ICategoryForm>({
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      parentCategoryId: new FormControl(null),
+      subCategories: new FormArray<FormControl<IdNameDto>>([]),
+    });
   }
 }
