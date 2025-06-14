@@ -1,0 +1,9 @@
+<app-table
+  idName="lang"
+  [header]="'common.translate-table.translations' | translate"
+  [columns]="columns"
+  [items]="translations()">
+</app-table>
+<app-dialog-window>
+  <app-set-translation-dialog></app-set-translation-dialog>
+</app-dialog-window>

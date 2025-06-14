@@ -1,0 +1,10 @@
+<form class="flex flex-col gap-1" [formGroup]="form" (ngSubmit)="submit()">
+  <app-input-select [items]="langItems()"></app-input-select>
+  <app-input
+    formControlName="translation"
+    [errorCode]="errorCode('translation') | translate"
+    [label]="'product-module.set-product-parameter-value-component.value' | translate"
+    [required]="true">
+  </app-input>
+  <app-button [label]="'product-module.set-product-parameter-value-component.save' | translate"></app-button>
+</form>

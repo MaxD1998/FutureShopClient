@@ -15,6 +15,9 @@
     },
     "table": {
       "no-results": "Brak wyników"
+    },
+    "translate-table": {
+      "translations": "Tłumaczenia"
     }
   },
   "validation-errors": {

@@ -12,7 +12,6 @@ import { TableComponent } from '../../../../../../components/shared/table/table.
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
-import { IdValueDto } from '../../../../../../core/dtos/id-value.dto';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
@@ -24,7 +23,7 @@ import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
 import { ITranslationForm } from '../../../../core/form/i-translation.form';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
 
-interface IProductForm {
+export interface IProductForm {
   isActive: FormControl<boolean>;
   name: FormControl<string>;
   productBaseId: FormControl<string>;
@@ -66,7 +65,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
   productBaseItems: SelectItemModel[] = this._resolverData['productBases'];
 
   isDialogActive = signal<boolean>(false);
-  productParameter = signal<IdValueDto | undefined>(undefined);
+  productParameterId = signal<string | undefined>(undefined);
 
   productParameterColumns: DataTableColumnModel[] = [
     {
@@ -79,6 +78,25 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
       field: 'value',
       headerFloat: TableHeaderFloat.left,
       headerText: 'shop-module.product-form-component.product-parameter-table-columns.value',
+      template: TableTemplate.text,
+    },
+    {
+      field: 'actions',
+      headerText: '',
+      template: TableTemplate.action,
+    },
+  ];
+  translationColumns: DataTableColumnModel[] = [
+    {
+      field: 'lang',
+      headerFloat: TableHeaderFloat.left,
+      headerText: 'shop-module.product-form-component.translate-table-columns.language',
+      template: TableTemplate.text,
+    },
+    {
+      field: 'translate',
+      headerFloat: TableHeaderFloat.left,
+      headerText: 'shop-module.product-form-component.translate-table-columns.translation',
       template: TableTemplate.text,
     },
     {
@@ -121,10 +139,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
     const productParameter = this.form.getRawValue().productParameterValues.find(x => x.productParameterId === id);
 
     if (productParameter) {
-      this.productParameter.set({
-        id: productParameter.productParameterId,
-        value: productParameter.value ?? '',
-      });
+      this.productParameterId.set(productParameter.productParameterId);
 
       this.isDialogActive.set(true);
     }
@@ -140,17 +155,9 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
     }
   }
 
-  setProductParameterValue(dto: IdValueDto): void {
-    const index = this.form.getRawValue().productParameterValues.findIndex(x => x.productParameterId === dto.id);
-
-    if (index >= 0) {
-      const record = this.form.controls.productParameterValues.controls.at(index)!;
-      const { id, productParameterId, productParameterName } = record.getRawValue();
-      record.patchValue({ id, productParameterId, productParameterName, value: dto.value });
-    }
-
+  onSubmitProductParameterValue(): void {
     this.isDialogActive.set(false);
-    this.productParameter.set(undefined);
+    this.productParameterId.set(undefined);
   }
 
   submit(): void {

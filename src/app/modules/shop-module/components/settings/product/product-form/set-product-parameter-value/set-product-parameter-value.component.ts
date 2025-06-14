@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../../components/shared/button/button.component';
 import { InputComponent } from '../../../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../../../core/bases/base-form.component';
-import { IdValueDto } from '../../../../../../../core/dtos/id-value.dto';
+import { IProductForm } from '../product-form.component';
 
 interface IValueForm {
   id: FormControl<string>;
@@ -22,18 +22,21 @@ interface IValueForm {
 export class SetProductParameterValueComponent extends BaseFormComponent<IValueForm> {
   private readonly _injector = inject(Injector);
 
-  productParameter = input<IdValueDto>();
+  mainForm = input.required<FormGroup<IProductForm>>();
+  productParameterId = input<string>();
 
-  onSave = output<IdValueDto>();
+  onSave = output();
 
   constructor() {
     super();
 
-    toObservable(this.productParameter, { injector: this._injector }).subscribe({
-      next: productParameter => {
-        if (productParameter) {
-          const { id, value } = productParameter;
-          this.form.patchValue({ id, value });
+    toObservable(this.productParameterId, { injector: this._injector }).subscribe({
+      next: productParameterId => {
+        if (productParameterId) {
+          const productParameterValues = this.mainForm().getRawValue().productParameterValues;
+          const productParameterValue = productParameterValues.find(x => x.productParameterId == productParameterId);
+
+          this.form.patchValue({ id: productParameterValue?.productParameterId, value: productParameterValue?.value });
         } else {
           this.form.reset();
         }
@@ -47,12 +50,23 @@ export class SetProductParameterValueComponent extends BaseFormComponent<IValueF
       return;
     }
 
-    const productParameter = this.productParameter();
-    if (productParameter) {
-      const { id, value } = this.form.getRawValue();
-      this.onSave.emit({ id, value });
+    const productParameterId = this.productParameterId();
+
+    if (!productParameterId) {
+      return;
     }
 
+    const { productParameterValues } = this.mainForm().getRawValue();
+    const index = productParameterValues.findIndex(x => x.productParameterId == productParameterId);
+
+    if (index >= 0) {
+      const record = this.mainForm().controls.productParameterValues.controls.at(index)!;
+      const { id, productParameterId, productParameterName } = record.getRawValue();
+      const { value } = this.form.getRawValue();
+      record.patchValue({ id, productParameterId, productParameterName, value: value });
+    }
+
+    this.onSave.emit();
     this.form.reset();
   }
 
