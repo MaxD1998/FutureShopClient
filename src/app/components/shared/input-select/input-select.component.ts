@@ -5,7 +5,7 @@ import {
   Injector,
   Provider,
   ViewChild,
-  afterRender,
+  afterEveryRender,
   forwardRef,
   inject,
   input,
@@ -69,7 +69,7 @@ export class InputSelectComponent implements ControlValueAccessor {
   @ViewChild('select') select: ElementRef;
 
   constructor() {
-    afterRender(() => {
+    afterEveryRender(() => {
       this.error$.subscribe();
     });
   }
