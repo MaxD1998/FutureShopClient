@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { environment } from '../../../../../../../environments/environment';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputNumberComponent } from '../../../../../../components/shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
@@ -10,6 +9,7 @@ import { InputComponent } from '../../../../../../components/shared/input/input.
 import { DialogWindowComponent } from '../../../../../../components/shared/modals/dialog-window/dialog-window.component';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
+import { TranslateTableComponent } from '../../../../../../components/shared/translate-table/translate-table.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
@@ -20,7 +20,7 @@ import { SelectItemModel } from '../../../../../../core/models/select-item.model
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
-import { ITranslationForm } from '../../../../core/form/i-translation.form';
+import { TranslationFormDto } from '../../../../core/dtos/translation.form-dto';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
 
 export interface IProductForm {
@@ -29,7 +29,7 @@ export interface IProductForm {
   productBaseId: FormControl<string>;
   price: FormControl<number | null>;
   productParameterValues: FormArray<FormControl<ProductParameterValueFormDto>>;
-  translations: FormArray<FormGroup<ITranslationForm>>;
+  translations: FormArray<FormControl<TranslationFormDto>>;
 }
 
 @Component({
@@ -48,6 +48,7 @@ export interface IProductForm {
     DialogWindowComponent,
     TableComponent,
     SetProductParameterValueComponent,
+    TranslateTableComponent,
   ],
 })
 export class ProductFormComponent extends BaseFormComponent<IProductForm> {
@@ -117,17 +118,6 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
       price,
     });
 
-    environment.availableLangs.forEach(lang => {
-      const translation = translations.find(x => x.lang === lang);
-      const translationFormGroup = this._formBuilder.group<ITranslationForm>({
-        id: new FormControl(translation?.id ?? null),
-        lang: new FormControl(lang, { nonNullable: true, validators: [Validators.required] }),
-        translation: new FormControl(translation?.translation ?? null),
-      });
-
-      this.form.controls.translations.push(translationFormGroup);
-    });
-
     productParameterValues.forEach(x => {
       this.form.controls.productParameterValues.push(
         new FormControl<ProductParameterValueFormDto>(x, { nonNullable: true }),
@@ -194,7 +184,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
       price: new FormControl(null, { validators: [Validators.required] }),
       productBaseId: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       productParameterValues: new FormArray<FormControl<ProductParameterValueFormDto>>([]),
-      translations: new FormArray<FormGroup<ITranslationForm>>([]),
+      translations: new FormArray<FormControl<TranslationFormDto>>([]),
     });
   }
 }

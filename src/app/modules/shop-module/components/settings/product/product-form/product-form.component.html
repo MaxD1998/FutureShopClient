@@ -42,17 +42,7 @@
           </div>
         </div>
         <div class="flex flex-col flex-1">
-          <app-table
-            class="flex-1"
-            idName="lang"
-            [columns]="translationColumns"
-            [header]="'shop-module.product-form-component.translations'"
-            [isEditAction]="true"
-            [isRemoveAction]="true"
-            [items]="form.getRawValue().translations"
-            (onEditAction)="openSetParameterValueDialog($event)"
-            (onRemoveAction)="removeParameterValue($event)">
-          </app-table>
+          <app-translate-table [formArray]="form.controls.translations"></app-translate-table>
         </div>
         <!-- <div class="flex flex-col flex-auto gap-4" formArrayName="translations">
           <h2 class="text-xl font-semibold text-white mb-4">

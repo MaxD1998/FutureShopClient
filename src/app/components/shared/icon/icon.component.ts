@@ -1,5 +1,5 @@
 import {
-  afterEveryRender,
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -46,7 +46,7 @@ export class IconComponent {
   );
 
   constructor() {
-    afterEveryRender(() => {
+    afterNextRender(() => {
       this.style$.subscribe();
     });
   }

@@ -15,7 +15,7 @@
     (change)="onValueChange(select)"
     (blur)="onValueChange(select)">
     @for (dropdownItem of items(); track $index) {
-      <option [value]="dropdownItem.id ?? ''" [selected]="dropdownItem.id == value() ? 'selected' : ''">
+      <option [value]="dropdownItem.id ?? ''">
         {{ dropdownItem.value }}
       </option>
     }

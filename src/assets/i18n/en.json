@@ -17,6 +17,11 @@
       "no-results": "No results"
     },
     "translate-table": {
+      "add-translation": "Add translation",
+      "columns": {
+        "language": "Language",
+        "translation": "Translation"
+      },
       "translations": "Translations"
     }
   },
