@@ -116,6 +116,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
       name,
       productBaseId,
       price,
+      translations,
     });
 
     productParameterValues.forEach(x => {

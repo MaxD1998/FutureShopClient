@@ -22,18 +22,8 @@
         [errorCode]="errorCode('isActive') | translate"
         [label]="'shop-module.product-form-component.active' | translate">
       </app-toggle>
-      <div class="flex flex-col gap-4" formArrayName="translations">
-        <h2 class="text-xl text-neutral-100 font-semibold">
-          {{ 'shop-module.category-form-component.translations' | translate }}
-        </h2>
-        <div>
-          @for (translation of translations; track $index) {
-            <div [formGroupName]="$index">
-              <app-input formControlName="translation" [label]="'common.languages.' + translation.lang | translate">
-              </app-input>
-            </div>
-          }
-        </div>
+      <div class="flex flex-col flex-1">
+        <app-translate-table [formArray]="form.controls.translations"></app-translate-table>
       </div>
     </form>
     <div class="flex flex-col flex-1">

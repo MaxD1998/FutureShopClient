@@ -56,20 +56,11 @@ export class TranslateTableComponent implements OnDestroy {
 
   constructor() {
     afterNextRender(() => {
-      this.formArray()
-        .valueChanges.pipe(
-          takeUntil(this._unsubscribe),
-          tap(translations => {
-            const results = translations.map<TranslateModel>(x => ({
-              id: x.id,
-              lang: x.lang,
-              langTranslate: this._translateService.instant(`common.languages.${x.lang}`),
-              translation: x.translation,
-            }));
+      const translations = this.formArray().getRawValue();
+      this.setTranslations(translations);
 
-            this.translations.set(results);
-          }),
-        )
+      this.formArray()
+        .valueChanges.pipe(takeUntil(this._unsubscribe), tap(this.setTranslations.bind(this)))
         .subscribe();
     });
   }
@@ -92,5 +83,16 @@ export class TranslateTableComponent implements OnDestroy {
   remove(lang: string): void {
     const index = this.formArray().controls.findIndex(x => x.value.lang === lang);
     this.formArray().removeAt(index);
+  }
+
+  private setTranslations(translations: TranslationFormDto[]): void {
+    const results = translations.map<TranslateModel>(x => ({
+      id: x.id,
+      lang: x.lang,
+      langTranslate: this._translateService.instant(`common.languages.${x.lang}`),
+      translation: x.translation,
+    }));
+
+    this.translations.set(results);
   }
 }
