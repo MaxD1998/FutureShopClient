@@ -3,10 +3,10 @@ import { BehaviorSubject, filter, forkJoin, map, Observable, of, switchMap, take
 import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { BasketDataService } from '../data-services/basket.data-service';
-import { BasketItemDto } from '../dtos/basket-item.dto';
-import { BasketItemFormDto } from '../dtos/basket-item.form-dto';
-import { BasketDto } from '../dtos/basket.dto';
-import { BasketFormDto } from '../dtos/basket.form-dto';
+import { BasketItemDto } from '../dtos/basket/basket-item.dto';
+import { BasketItemFormDto } from '../dtos/basket/basket-item.form-dto';
+import { BasketDto } from '../dtos/basket/basket.dto';
+import { BasketFormDto } from '../dtos/basket/basket.form-dto';
 
 @Injectable({
   providedIn: 'root',

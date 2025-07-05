@@ -47,8 +47,6 @@ export class ProductPropertyFormComponent extends BaseFormComponent<IProductProp
           this.form.patchValue({ id, name });
         }
 
-        console.log(this.form.getRawValue());
-
         const translations = environment.availableLangs.map(lang => {
           const translation = parameter?.translations.find(x => x.lang === lang);
           return this._formBuilder.group<ITranslationForm>({

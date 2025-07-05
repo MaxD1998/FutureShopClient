@@ -1,0 +1,21 @@
+<app-table
+  idName="fakeId"
+  [buttonLabel]="'shop-module.product-form-component.prices.add-price'"
+  [columns]="columns"
+  [header]="'shop-module.product-form-component.prices.prices'"
+  [isEditAction]="true"
+  [isRemoveAction]="true"
+  [items]="formArray().getRawValue()"
+  (onButtonAction)="isDialogActive.set(true)"
+  (onEditAction)="setDialog($event)"
+  (onRemoveAction)="remove($event)">
+</app-table>
+<app-dialog-window
+  [isDialogActive]="isDialogActive()"
+  [title]="'shop-module.product-form-component.prices.set-price' | translate"
+  (onCloseDialog)="isDialogActive.set(false)">
+  <app-set-product-price
+    [formArray]="formArray()"
+    [(id)]="id"
+    [(isDialogActive)]="isDialogActive"></app-set-product-price>
+</app-dialog-window>

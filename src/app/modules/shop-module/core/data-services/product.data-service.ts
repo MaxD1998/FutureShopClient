@@ -9,6 +9,9 @@ import { ProductShopLisRequestDto } from '../dtos/product-shop.list-request-dto'
 import { ProductDto } from '../dtos/product.dto';
 import { ProductFormDto } from '../dtos/product.form-dto';
 import { ProductListDto } from '../dtos/product.list-dto';
+import { SimulatePriceFormDto } from '../dtos/simulate-price.form-dto';
+import { SimulatePriceRequestDto } from '../dtos/simulate-price.request-dto';
+import { SimulateRemovePriceRequestDto } from '../dtos/simulate-remove-price.request-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +80,21 @@ export class ProductDataService {
         return this._httpClient.get<ProductShopListDto[]>(url, { params: params });
       }),
     );
+  }
+
+  simulateAddProduct(dto: SimulatePriceRequestDto): Observable<SimulatePriceFormDto[]> {
+    const url = `${ProductControllerRoute.simulateAddPrice}`;
+    return this._httpClient.post<SimulatePriceFormDto[]>(url, dto);
+  }
+
+  simulateRemoveProduct(dto: SimulateRemovePriceRequestDto): Observable<SimulatePriceFormDto[]> {
+    const url = `${ProductControllerRoute.simulateRemovePrice}`;
+    return this._httpClient.post<SimulatePriceFormDto[]>(url, dto);
+  }
+
+  simulateUpdateProduct(dto: SimulatePriceRequestDto): Observable<SimulatePriceFormDto[]> {
+    const url = `${ProductControllerRoute.simulateUpdatePrice}`;
+    return this._httpClient.post<SimulatePriceFormDto[]>(url, dto);
   }
 
   update(id: string, dto: ProductFormDto): Observable<ProductFormDto> {

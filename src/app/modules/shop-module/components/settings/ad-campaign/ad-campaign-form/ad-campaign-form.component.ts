@@ -17,8 +17,8 @@ import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { TempIdGenerator } from '../../../../../../core/utils/temp-id-generator';
 import { AdCampaignDataService } from '../../../../core/data-services/ad-campaign.data-service';
-import { AdCampaignItemInfoDto } from '../../../../core/dtos/ad-campaign-item.info-dto';
-import { AdCampaignFormDto } from '../../../../core/dtos/ad-campaign.form-dto';
+import { AdCampaignItemInfoDto } from '../../../../core/dtos/ad-campaign/ad-campaign-item.info-dto';
+import { AdCampaignFormDto } from '../../../../core/dtos/ad-campaign/ad-campaign.form-dto';
 import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campaign-item.component';
 
 interface IAdCampaignForm {
