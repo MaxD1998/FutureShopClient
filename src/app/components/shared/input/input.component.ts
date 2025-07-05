@@ -5,7 +5,7 @@ import {
   Injector,
   Provider,
   ViewChild,
-  afterRender,
+  afterNextRender,
   forwardRef,
   inject,
   input,
@@ -64,7 +64,7 @@ export class InputComponent implements ControlValueAccessor {
   @ViewChild('input') input: ElementRef;
 
   constructor() {
-    afterRender(() => {
+    afterNextRender(() => {
       this.error$.subscribe();
     });
   }

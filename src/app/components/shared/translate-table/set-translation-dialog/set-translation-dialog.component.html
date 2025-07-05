@@ -1,0 +1,13 @@
+@if (isOpen()) {
+  <form class="flex flex-col gap-1" [formGroup]="form" (ngSubmit)="submit()">
+    <app-input-select formControlName="lang" [errorCode]="errorCode('lang') | translate" [items]="langItems()">
+    </app-input-select>
+    <app-input
+      formControlName="translation"
+      [errorCode]="errorCode('translation') | translate"
+      [label]="'common.translate-table.set-dialog.translation' | translate"
+      [required]="true">
+    </app-input>
+    <app-button [label]="'common.translate-table.set-dialog.save' | translate"></app-button>
+  </form>
+}

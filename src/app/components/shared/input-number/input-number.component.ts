@@ -1,5 +1,5 @@
 import {
-  afterRender,
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -63,7 +63,7 @@ export class InputNumberComponent {
   @ViewChild('input') input: ElementRef;
 
   constructor() {
-    afterRender(() => {
+    afterNextRender(() => {
       this.error$.subscribe();
     });
   }

@@ -9,7 +9,7 @@ import { DialogWindowComponent } from '../../../../../components/shared/modals/d
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
 import { IconType } from '../../../../../core/enums/icon-type';
 import { UserService } from '../../../../auth-module/core/services/user.service';
-import { BasketItemDto } from '../../../core/dtos/basket-item.dto';
+import { BasketItemDto } from '../../../core/dtos/basket/basket-item.dto';
 import { BasketService } from '../../../core/services/basket.service';
 import { ImportService } from '../../../core/services/import.service';
 import { AddPurchaseListComponent } from '../../shared/add-purchase-list/add-purchase-list.component';

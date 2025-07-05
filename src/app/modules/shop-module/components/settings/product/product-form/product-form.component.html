@@ -1,4 +1,4 @@
-<div class="flex flex-col h-full bg-neutral-900 rounded-tl-xl">
+<div class="flex flex-col h-workspace bg-neutral-900 rounded-tl-xl overflow-auto">
   <div class="flex justify-between items-center h-14.5 px-4 py-2">
     <h1 class="text-xl font-semibold text-white">
       {{ 'shop-module.product-form-component.edit-product' | translate }}
@@ -8,7 +8,7 @@
   <div class="flex flex-col p-4">
     <form class="flex flex-col gap-4" [formGroup]="form">
       <div class="flex flex-row gap-4">
-        <div class="flex flex-col flex-auto gap-4">
+        <div class="flex flex-col flex-1 gap-4">
           <h2 class="text-xl font-semibold text-white mb-4">
             {{ 'shop-module.product-form-component.properties' | translate }}
           </h2>
@@ -28,12 +28,6 @@
               [items]="productBaseItems"
               [required]="true">
             </app-input-select>
-            <app-input-number
-              formControlName="price"
-              [errorCode]="errorCode('price') | translate"
-              [label]="'shop-module.product-form-component.price' | translate"
-              [required]="true">
-            </app-input-number>
             <app-toggle
               formControlName="isActive"
               [errorCode]="errorCode('isActive') | translate"
@@ -41,38 +35,15 @@
             </app-toggle>
           </div>
         </div>
-        <div class="flex flex-col flex-auto gap-4" formArrayName="translations">
-          <h2 class="text-xl font-semibold text-white mb-4">
-            {{ 'shop-module.product-form-component.translations' | translate }}
-          </h2>
-          <div>
-            @for (translation of form.getRawValue().translations; track $index) {
-              <div [formGroupName]="$index">
-                <app-input formControlName="translation" [label]="'common.languages.' + translation.lang | translate">
-                </app-input>
-              </div>
-            }
-          </div>
+        <div class="flex flex-col flex-1">
+          <app-translate-table [formArray]="form.controls.translations"></app-translate-table>
         </div>
       </div>
     </form>
-    <app-table
-      class="flex-1"
-      idName="productParameterId"
-      [columns]="productParameterColumns"
-      [header]="'shop-module.product-form-component.product-parameters'"
-      [isEditAction]="true"
-      [isRemoveAction]="true"
-      [items]="form.getRawValue().productParameterValues"
-      (onEditAction)="openSetParameterValueDialog($event)"
-      (onRemoveAction)="removeParameterValue($event)">
-    </app-table>
+    <div class="flex gap-4">
+      <app-product-parameter-value-form class="flex-1" [formArray]="form.controls.productParameterValues">
+      </app-product-parameter-value-form>
+      <app-product-price-form class="flex-1" [formArray]="form.controls.prices"></app-product-price-form>
+    </div>
   </div>
 </div>
-<app-dialog-window
-  [isDialogActive]="isDialogActive()"
-  [title]="'shop-module.product-form-component.set-value' | translate"
-  (onCloseDialog)="isDialogActive.set(false)">
-  <app-set-product-parameter-value [productParameter]="productParameter()" (onSave)="setProductParameterValue($event)">
-  </app-set-product-parameter-value>
-</app-dialog-window>

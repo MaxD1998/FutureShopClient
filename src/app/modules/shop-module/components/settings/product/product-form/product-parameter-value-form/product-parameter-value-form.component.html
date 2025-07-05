@@ -1,0 +1,17 @@
+<app-table
+  idName="productParameterId"
+  [columns]="columns"
+  [header]="'shop-module.product-form-component.parameters.product-parameters'"
+  [isEditAction]="true"
+  [isRemoveAction]="true"
+  [items]="formArray().getRawValue()"
+  (onEditAction)="setDialog($event)"
+  (onRemoveAction)="remove($event)">
+</app-table>
+<app-dialog-window
+  [isDialogActive]="isDialogActive()"
+  [title]="'shop-module.product-form-component.parameters.set-value' | translate"
+  (onCloseDialog)="isDialogActive.set(false)">
+  <app-set-product-parameter-value [formArray]="formArray()" [id]="id()" (onSave)="clearParams()">
+  </app-set-product-parameter-value>
+</app-dialog-window>

@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { environment } from '../../../../../../../environments/environment';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
+import { TranslateTableComponent } from '../../../../../../components/shared/translate-table/translate-table.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
@@ -19,14 +19,14 @@ import { DataTableColumnModel } from '../../../../../../core/models/data-table-c
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
 import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
-import { ITranslationForm } from '../../../../core/form/i-translation.form';
+import { TranslationFormDto } from '../../../../core/dtos/translation.form-dto';
 
 interface ICategoryForm {
   isActive: FormControl<boolean>;
   name: FormControl<string>;
   parentCategoryId: FormControl<string | null>;
   subCategories: FormArray<FormControl<IdNameDto>>;
-  translations: FormArray<FormGroup<ITranslationForm>>;
+  translations: FormArray<FormControl<TranslationFormDto>>;
 }
 
 @Component({
@@ -42,6 +42,7 @@ interface ICategoryForm {
     TableComponent,
     ButtonComponent,
     ToggleComponent,
+    TranslateTableComponent,
   ],
 })
 export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
@@ -67,24 +68,12 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
   ];
   parentCategoryItems: SelectItemModel[] = this._resolverData['parentCategoryItems'];
   subCategories = this._category.subCategories;
-  translations = this.form.getRawValue().translations;
-
   constructor() {
     super();
 
     const { isActive, name, parentCategoryId, subCategories, translations } = this._category;
     this.form.patchValue({ isActive, name, parentCategoryId: parentCategoryId ?? null, subCategories });
-
-    environment.availableLangs.forEach(lang => {
-      const translation = translations.find(x => x.lang === lang);
-      const translationFormGroup = this._formBuilder.group<ITranslationForm>({
-        id: new FormControl(translation?.id ?? null),
-        lang: new FormControl(lang, { nonNullable: true, validators: [Validators.required] }),
-        translation: new FormControl(translation?.translation ?? null),
-      });
-
-      this.form.controls.translations.push(translationFormGroup);
-    });
+    translations.forEach(x => this.form.controls.translations.push(new FormControl(x, { nonNullable: true })));
   }
 
   submit(): void {
@@ -118,7 +107,7 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
       name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       parentCategoryId: new FormControl(null),
       subCategories: new FormArray<FormControl<IdNameDto>>([]),
-      translations: new FormArray<FormGroup<ITranslationForm>>([]),
+      translations: new FormArray<FormControl<TranslationFormDto>>([]),
     });
   }
 }

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { filter, forkJoin, of, switchMap, take, tap } from 'rxjs';
 import { BasketDataService } from '../data-services/basket.data-service';
 import { PurchaseListDataService } from '../data-services/purchase-list.data-service';
-import { BasketDto } from '../dtos/basket.dto';
+import { BasketDto } from '../dtos/basket/basket.dto';
 import { PurchaseListDto } from '../dtos/purchase-list.dto';
 import { BasketService } from './basket.service';
 import { PurchaseListService } from './purchase-list.service';

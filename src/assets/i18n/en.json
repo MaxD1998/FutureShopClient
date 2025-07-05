@@ -15,6 +15,18 @@
     },
     "table": {
       "no-results": "No results"
+    },
+    "translate-table": {
+      "add-translation": "Add translation",
+      "columns": {
+        "language": "Language",
+        "translation": "Translation"
+      },
+      "set-dialog": {
+        "translation": "Translation",
+        "save": "Save"
+      },
+      "translations": "Translations"
     }
   },
   "validation-errors": {
@@ -128,10 +140,6 @@
     "set-product-base-form-component": {
       "product-base": "Product base",
       "warning": "To go to the form, select the product base!"
-    },
-    "set-product-parameter-value-component": {
-      "save": "Save",
-      "value": "Value"
     },
     "set-product-photo-component": {
       "choose-file": "Choose file",
@@ -251,7 +259,30 @@
       "active": "Active",
       "edit-product": "Edit product",
       "name": "Name",
-      "price": "Price",
+      "parameters": {
+        "product-parameters": "Product parameters",
+        "save": "Save",
+        "set-value": "Set value",
+        "table-columns": {
+          "name": "Name",
+          "value": "Value"
+        },
+        "value": "Value"
+      },
+      "prices": {
+        "add-price": "Add price",
+        "end": "End",
+        "price": "Price",
+        "prices": "Prices",
+        "save": "Save",
+        "set-price": "Set price",
+        "start": "Start",
+        "table-columns": {
+          "end": "End",
+          "price": "Price",
+          "start": "Start"
+        }
+      },
       "product-base": "Product base",
       "product-parameters": "Product parameters",
       "product-parameter-table-columns": {

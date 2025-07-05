@@ -1,5 +1,5 @@
 import {
-  afterRender,
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -31,7 +31,7 @@ export class DropDownComponent {
   style = signal<string>('');
 
   constructor() {
-    afterRender(() => {
+    afterNextRender(() => {
       this.checkDropdownPosition();
     });
 

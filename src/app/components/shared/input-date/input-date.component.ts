@@ -5,10 +5,11 @@ import {
   Injector,
   Provider,
   ViewChild,
-  afterRender,
+  afterNextRender,
   forwardRef,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -37,7 +38,7 @@ export class InputDateComponent implements ControlValueAccessor {
   label = input<string>();
   required = input<boolean>(false);
 
-  internalValue: string = '';
+  internalValue = signal<string>('');
   value: Date | null = null;
 
   error$ = toObservable(this.errorCode, { injector: this._injector }).pipe(
@@ -63,7 +64,7 @@ export class InputDateComponent implements ControlValueAccessor {
   @ViewChild('input') input: ElementRef;
 
   constructor() {
-    afterRender(() => {
+    afterNextRender(() => {
       this.error$.subscribe();
     });
   }
@@ -77,13 +78,18 @@ export class InputDateComponent implements ControlValueAccessor {
   onChange: any = () => {};
   onTouch: any = () => {};
 
-  writeValue(obj: Date): void {
-    this.value = new Date(obj);
-    const date = new Date(obj);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    this.internalValue = `${day}-${month}-${year}`;
+  writeValue(obj: Date | null): void {
+    if (!!obj) {
+      this.value = new Date(obj);
+      const date = new Date(obj);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      this.internalValue.set(`${day}-${month}-${year}`);
+    } else {
+      this.value = null;
+      this.internalValue.set('');
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -105,12 +111,12 @@ export class InputDateComponent implements ControlValueAccessor {
     const regex = /^-?\d+$/; //tylko cyfry
 
     if (value.length != 0 && !regex.test(value.replaceAll('-', ''))) {
-      element.value = this.internalValue;
+      element.value = this.internalValue();
       return;
     }
 
     if (this.internalValue.length > value.length) {
-      this.internalValue = value;
+      this.internalValue.set(value);
       return;
     }
 
@@ -122,12 +128,12 @@ export class InputDateComponent implements ControlValueAccessor {
       const daysInMonth = this.getDaysInMonth(month, year);
       const day = tempDay > daysInMonth ? daysInMonth : tempDay;
 
-      this.internalValue = `${day > 9 ? day : '0' + day}-${month > 9 ? month : '0' + month}-${year}`;
+      this.internalValue.set(`${day > 9 ? day : '0' + day}-${month > 9 ? month : '0' + month}-${year}`);
       this.value = new Date(Date.UTC(year, month - 1, day));
       return;
     }
 
-    this.internalValue = value;
+    this.internalValue.set(value);
   }
 
   private getDaysInMonth(month: number, year: number) {
@@ -136,18 +142,18 @@ export class InputDateComponent implements ControlValueAccessor {
     }
 
     var days: number[] = [
-      31, //styczen
+      31, //styczeń
       this.isLeapYear(year) ? 29 : 28, //luty
       31, //marzec
       30, //kwiecien
       31, //maj
       30, //czerwiec
       31, //lipiec
-      31, //sierpien
+      31, //sierpień
       30, //wrzesień
-      31, //pażdzienik
+      31, //paździenik
       30, //listopad
-      31, //grudzien
+      31, //grudzień
     ];
 
     return days[month - 1];

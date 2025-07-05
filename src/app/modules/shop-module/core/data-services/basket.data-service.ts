@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BasketControllerRoute } from '../constants/api-routes/basket-controller.route';
-import { BasketDto } from '../dtos/basket.dto';
-import { BasketFormDto } from '../dtos/basket.form-dto';
+import { BasketDto } from '../dtos/basket/basket.dto';
+import { BasketFormDto } from '../dtos/basket/basket.form-dto';
 import { ImportPurchaseListToBasketDto } from '../dtos/import-basket-to-purchase-list.dto';
 
 @Injectable({

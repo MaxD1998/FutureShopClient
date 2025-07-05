@@ -1,0 +1,16 @@
+<app-table
+  idName="lang"
+  [buttonLabel]="'common.translate-table.add-translation'"
+  [header]="'common.translate-table.translations' | translate"
+  [columns]="columns"
+  [isEditAction]="true"
+  [isRemoveAction]="true"
+  [items]="translations()"
+  (onButtonAction)="onAdd()"
+  (onEditAction)="onEdit($event)"
+  (onRemoveAction)="remove($event)">
+</app-table>
+<app-dialog-window [(isDialogActive)]="isDialogActive">
+  <app-set-translation-dialog [formArray]="formArray()" [(editLang)]="editLang" [(isDialogActive)]="isDialogActive">
+  </app-set-translation-dialog>
+</app-dialog-window>

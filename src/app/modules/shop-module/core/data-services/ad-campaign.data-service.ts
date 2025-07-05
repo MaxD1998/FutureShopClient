@@ -3,8 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { AdCampaignControllerRoute } from '../constants/api-routes/ad-campaign-controller.route';
-import { AdCampaignListDto } from '../dtos/ad-campaign-list.dto';
-import { AdCampaignFormDto } from '../dtos/ad-campaign.form-dto';
+import { AdCampaignListDto } from '../dtos/ad-campaign/ad-campaign-list.dto';
+import { AdCampaignFormDto } from '../dtos/ad-campaign/ad-campaign.form-dto';
 
 @Injectable({
   providedIn: 'root',

@@ -1,36 +1,33 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { environment } from '../../../../../../../environments/environment';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
-import { InputNumberComponent } from '../../../../../../components/shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
-import { DialogWindowComponent } from '../../../../../../components/shared/modals/dialog-window/dialog-window.component';
-import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
+import { TranslateTableComponent } from '../../../../../../components/shared/translate-table/translate-table.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
-import { IdValueDto } from '../../../../../../core/dtos/id-value.dto';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
-import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
-import { TableTemplate } from '../../../../../../core/enums/table-template';
-import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
+import { CustomValidators } from '../../../../../../core/utils/custom-validators';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
 import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
-import { ITranslationForm } from '../../../../core/form/i-translation.form';
-import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
+import { SimulatePriceFormDto } from '../../../../core/dtos/simulate-price.form-dto';
+import { TranslationFormDto } from '../../../../core/dtos/translation.form-dto';
+import { ProductParameterValueFormComponent } from './product-parameter-value-form/product-parameter-value-form.component';
+import { ProductPriceFormComponent } from './product-price-form/product-price-form.component';
 
-interface IProductForm {
+export interface IProductForm {
   isActive: FormControl<boolean>;
   name: FormControl<string>;
   productBaseId: FormControl<string>;
-  price: FormControl<number | null>;
+  prices: FormArray<FormControl<SimulatePriceFormDto>>;
   productParameterValues: FormArray<FormControl<ProductParameterValueFormDto>>;
-  translations: FormArray<FormGroup<ITranslationForm>>;
+  translations: FormArray<FormControl<TranslationFormDto>>;
 }
 
 @Component({
@@ -43,16 +40,16 @@ interface IProductForm {
     TranslateModule,
     ButtonComponent,
     InputComponent,
-    InputNumberComponent,
     InputSelectComponent,
     ToggleComponent,
-    DialogWindowComponent,
-    TableComponent,
-    SetProductParameterValueComponent,
+    TranslateTableComponent,
+    ProductParameterValueFormComponent,
+    ProductPriceFormComponent,
   ],
 })
 export class ProductFormComponent extends BaseFormComponent<IProductForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _productDataService = inject(ProductDataService);
   private readonly _router = inject(Router);
 
@@ -65,49 +62,19 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
 
   productBaseItems: SelectItemModel[] = this._resolverData['productBases'];
 
-  isDialogActive = signal<boolean>(false);
-  productParameter = signal<IdValueDto | undefined>(undefined);
-
-  productParameterColumns: DataTableColumnModel[] = [
-    {
-      field: 'productParameterName',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.product-form-component.product-parameter-table-columns.name',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'value',
-      headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.product-form-component.product-parameter-table-columns.value',
-      template: TableTemplate.text,
-    },
-    {
-      field: 'actions',
-      headerText: '',
-      template: TableTemplate.action,
-    },
-  ];
-
   constructor() {
     super();
 
-    const { isActive, name, productBaseId, price, productParameterValues, translations } = this._product;
+    const { isActive, name, productBaseId, prices, productParameterValues, translations } = this._product;
     this.form.patchValue({
       isActive,
       name,
       productBaseId,
-      price,
     });
 
-    environment.availableLangs.forEach(lang => {
-      const translation = translations.find(x => x.lang === lang);
-      const translationFormGroup = this._formBuilder.group<ITranslationForm>({
-        id: new FormControl(translation?.id ?? null),
-        lang: new FormControl(lang, { nonNullable: true, validators: [Validators.required] }),
-        translation: new FormControl(translation?.translation ?? null),
-      });
-
-      this.form.controls.translations.push(translationFormGroup);
+    prices.forEach((x, i) => {
+      const row: SimulatePriceFormDto = { ...x, fakeId: i + 1, isNew: !x.id };
+      this.form.controls.prices.push(new FormControl<SimulatePriceFormDto>(row, { nonNullable: true }));
     });
 
     productParameterValues.forEach(x => {
@@ -115,42 +82,12 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
         new FormControl<ProductParameterValueFormDto>(x, { nonNullable: true }),
       );
     });
-  }
 
-  openSetParameterValueDialog(id: string): void {
-    const productParameter = this.form.getRawValue().productParameterValues.find(x => x.productParameterId === id);
+    translations.forEach(x => this.form.controls.translations.push(new FormControl(x, { nonNullable: true })));
 
-    if (productParameter) {
-      this.productParameter.set({
-        id: productParameter.productParameterId,
-        value: productParameter.value ?? '',
-      });
-
-      this.isDialogActive.set(true);
-    }
-  }
-
-  removeParameterValue(id: string): void {
-    const index = this.form.getRawValue().productParameterValues.findIndex(x => x.productParameterId === id);
-
-    if (index >= 0) {
-      const record = this.form.controls.productParameterValues.controls.at(index)!;
-      const { id, productParameterId, productParameterName } = record.getRawValue();
-      record.patchValue({ id, productParameterId, productParameterName, value: undefined });
-    }
-  }
-
-  setProductParameterValue(dto: IdValueDto): void {
-    const index = this.form.getRawValue().productParameterValues.findIndex(x => x.productParameterId === dto.id);
-
-    if (index >= 0) {
-      const record = this.form.controls.productParameterValues.controls.at(index)!;
-      const { id, productParameterId, productParameterName } = record.getRawValue();
-      record.patchValue({ id, productParameterId, productParameterName, value: dto.value });
-    }
-
-    this.isDialogActive.set(false);
-    this.productParameter.set(undefined);
+    this.form.controls.prices.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => {
+      this.form.controls.isActive.updateValueAndValidity();
+    });
   }
 
   submit(): void {
@@ -159,16 +96,14 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
       return;
     }
 
-    const { isActive, name, productBaseId, price, productParameterValues, translations } = this.form.getRawValue();
+    const { isActive, name, productBaseId, prices, productParameterValues, translations } = this.form.getRawValue();
     this._product = {
       isActive,
       name,
       productBaseId,
-      price: price ?? 0,
+      prices,
       productParameterValues,
-      translations: translations
-        .filter(x => !!x.translation)
-        .map(x => ({ id: x.id ?? undefined, lang: x.lang, translation: x.translation! })),
+      translations: translations.map(x => ({ id: x.id ?? undefined, lang: x.lang, translation: x.translation! })),
     };
 
     this._productDataService.update(this._id, this._product).subscribe({
@@ -182,12 +117,12 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
 
   protected override setGroup(): FormGroup<IProductForm> {
     return this._formBuilder.group<IProductForm>({
-      isActive: new FormControl(false, { nonNullable: true }),
+      isActive: new FormControl(false, { nonNullable: true, validators: CustomValidators.arrayIsNotEmpty('prices') }),
       name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      price: new FormControl(null, { validators: [Validators.required] }),
       productBaseId: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      prices: new FormArray<FormControl<SimulatePriceFormDto>>([]),
       productParameterValues: new FormArray<FormControl<ProductParameterValueFormDto>>([]),
-      translations: new FormArray<FormGroup<ITranslationForm>>([]),
+      translations: new FormArray<FormControl<TranslationFormDto>>([]),
     });
   }
 }

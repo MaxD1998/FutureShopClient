@@ -45,7 +45,7 @@
           [columns]="columns"
           [header]="'product-module.category-form-component.add-sub-category'"
           [isRemoveAction]="true"
-          [items]="form.controls.subCategories.value"
+          [items]="form.getRawValue().subCategories"
           (onRemoveAction)="removeSubCategory($event)">
         </app-table>
       </div>

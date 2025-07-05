@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { combineLatest, forkJoin, of, Subject, takeUntil, tap } from 'rxjs';
+import { forkJoin, merge, Subject, takeUntil, tap } from 'rxjs';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../components/shared/input-select/input-select.component';
 import { InputComponent } from '../../../../../components/shared/input/input.component';
@@ -86,10 +86,14 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> impl
 
     if (this._category) {
       const { name, parentCategoryId, subCategories } = this._category;
-      this.form.patchValue({ name, parentCategoryId, subCategories });
+      this.form.patchValue({ name, parentCategoryId });
+
+      subCategories.forEach(x => {
+        this.form.controls.subCategories.push(new FormControl(x, { nonNullable: true }));
+      });
     }
 
-    combineLatest([this.form.controls.parentCategoryId.valueChanges, this.form.controls.subCategories.valueChanges])
+    merge(this.form.controls.parentCategoryId.valueChanges, this.form.controls.subCategories.valueChanges)
       .pipe(
         takeUntil(this._unsubscribe),
         tap(() => {
@@ -147,16 +151,15 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> impl
 
     forkJoin({
       parentCategoryItems: this._categoryDataService.getListPotentialParentCategories(subCategoryIds, this._id),
-      subCategoryItems: !!value.parentCategoryId
-        ? this._categoryDataService.getListPotentialSubcategories(subCategoryIds, parentCategoryId, this._id)
-        : of([]),
+      subCategoryItems: this._categoryDataService.getListPotentialSubcategories(
+        subCategoryIds,
+        parentCategoryId,
+        this._id,
+      ),
     }).subscribe({
       next: response => {
         this.parentItems.set(selectOption.concat(mapToSelectItem(response.parentCategoryItems)));
-
-        if (!!value.parentCategoryId) {
-          this.subCategoryItems.set(selectOption.concat(mapToSelectItem(response.subCategoryItems)));
-        }
+        this.subCategoryItems.set(selectOption.concat(mapToSelectItem(response.subCategoryItems)));
       },
     });
   }

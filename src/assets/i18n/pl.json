@@ -15,6 +15,18 @@
     },
     "table": {
       "no-results": "Brak wyników"
+    },
+    "translate-table": {
+      "add-translation": "Dodaj tłumaczenie",
+      "columns": {
+        "language": "Język",
+        "translation": "Tłumaczenie"
+      },
+      "set-dialog": {
+        "translation": "Tłumaczenie",
+        "save": "Zapisz"
+      },
+      "translations": "Tłumaczenia"
     }
   },
   "validation-errors": {
@@ -128,10 +140,6 @@
     "set-product-base-form-component": {
       "product-base": "Baza produktu",
       "warning": "Aby przejść do formularza należy wybrać bazę produktu!"
-    },
-    "set-product-parameter-value-component": {
-      "save": "Zapisz",
-      "value": "Wartość"
     },
     "set-product-photo-component": {
       "choose-file": "Wybierz plik",
@@ -251,16 +259,33 @@
       "active": "Aktywny",
       "edit-product": "Edytuj produkt",
       "name": "Nazwa",
-      "price": "Cena",
-      "product-base": "Baza produktu",
-      "product-parameters": "Parametry produktu",
-      "product-parameter-table-columns": {
-        "name": "Nazwa",
+      "parameters": {
+        "product-parameters": "Parametry produktu",
+        "save": "Zapisz",
+        "set-value": "Ustaw wartość",
+        "table-columns": {
+          "name": "Nazwa",
+          "value": "Wartość"
+        },
         "value": "Wartość"
       },
+      "prices": {
+        "add-price": "Dodaj cenę",
+        "end": "Zakończenie",
+        "price": "Cena",
+        "prices": "Ceny",
+        "save": "Zapisz",
+        "set-price": "Ustaw cenę",
+        "start": "Początek",
+        "table-columns": {
+          "end": "Zakończenie",
+          "price": "Cena",
+          "start": "Początek"
+        }
+      },
+      "product-base": "Baza produktu",
       "properties": "Właściwości",
       "save": "Zapisz",
-      "set-value": "Ustaw wartość",
       "translations": "Tłumaczenia"
     },
     "product-list-component": {

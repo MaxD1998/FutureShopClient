@@ -4,7 +4,7 @@ import { DropDownComponent } from '../../../../../../components/shared/drop-down
 import { InputPlusMinusComponent } from '../../../../../../components/shared/input-plus-minus/input-plus-minus.component';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
 import { IconType } from '../../../../../../core/enums/icon-type';
-import { BasketItemDto } from '../../../../core/dtos/basket-item.dto';
+import { BasketItemDto } from '../../../../core/dtos/basket/basket-item.dto';
 import { BasketService } from '../../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
 

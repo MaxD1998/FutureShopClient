@@ -9,7 +9,7 @@ import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
 import { AdCampaignDataService } from '../../../../core/data-services/ad-campaign.data-service';
-import { AdCampaignListDto } from '../../../../core/dtos/ad-campaign-list.dto';
+import { AdCampaignListDto } from '../../../../core/dtos/ad-campaign/ad-campaign-list.dto';
 
 @Component({
   selector: 'app-ad-campaign-list',
