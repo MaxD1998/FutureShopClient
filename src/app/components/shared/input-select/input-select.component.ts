@@ -66,26 +66,11 @@ export class InputSelectComponent implements ControlValueAccessor {
     }),
   );
 
-  items$ = toObservable(this.items, { injector: this._injector }).pipe(
-    tap(items => {
-      if (items.length > 0) {
-        const id = items[0].id;
-        const value = this.value();
-
-        if (id !== value) {
-          this.value.set(id);
-          this.onChange(this.value());
-        }
-      }
-    }),
-  );
-
   @ViewChild('select') select: ElementRef;
 
   constructor() {
     afterNextRender(() => {
       this.error$.subscribe();
-      this.items$.subscribe();
     });
   }
 

@@ -1,10 +1,10 @@
-<header class="h-24 relative">
-  <div class="fixed w-full top-0 left-0 z-10 bg-white px-4">
+<header class="h-16 relative bg-neutral-900">
+  <div class="fixed w-full top-0 left-0 z-10 px-4">
     <app-nav class="block max-w-364 mx-auto"></app-nav>
   </div>
 </header>
-<main class="max-w-364 mx-auto mt-4">
-  <div class="flex justify-center">
+<main class="flex justify-center max-w-364 mx-auto mt-4">
+  <div class="flex justify-center bg-neutral-900 px-8 py-4 rounded-xl">
     <div class="grid grid-cols-2 gap-4">
       @if (canShowModule(ModuleType.shopModule) | async) {
         <app-module-button [iconName]="IconType.shoppingBag" [name]="'Sklep'" (onClick)="navigateToShopModule()">

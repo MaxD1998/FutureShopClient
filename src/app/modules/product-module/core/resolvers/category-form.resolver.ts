@@ -14,8 +14,12 @@ export const categoryFormResolver: ResolveFn<{
 }> = (route, state) => {
   const categoryDataService = inject(CategoryDataService);
   const translateService = inject(TranslateService);
-  const selectOption = [{ value: translateService.instant('common.input-select.select-option') }];
+  const selectOption: SelectItemModel[] = [
+    { id: '', value: translateService.instant('common.input-select.select-option') },
+  ];
+
   const id = route.params['id'];
+
   if (id) {
     return categoryDataService.getById(id).pipe(
       switchMap(response => {
