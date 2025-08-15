@@ -8,8 +8,8 @@ import { TableHeaderFloat } from '../../../../../../../core/enums/table-header-f
 import { TableTemplate } from '../../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../../core/models/data-table-column.model';
 import { ProductDataService } from '../../../../../core/data-services/product.data-service';
-import { SimulatePriceFormDto } from '../../../../../core/dtos/simulate-price.form-dto';
-import { SimulateRemovePriceRequestDto } from '../../../../../core/dtos/simulate-remove-price.request-dto';
+import { SimulatePriceFormDto } from '../../../../../core/dtos/product/simulate-price.form-dto';
+import { SimulateRemovePriceRequestDto } from '../../../../../core/dtos/product/simulate-remove-price.request-dto';
 import { SetProductPriceComponent } from './set-product-price/set-product-price.component';
 
 @Component({

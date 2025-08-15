@@ -3,7 +3,7 @@ import { ResolveFn } from '@angular/router';
 import { defaultIfEmpty, forkJoin, map, of, switchMap } from 'rxjs';
 import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { ProductDataService } from '../data-services/product.data-service';
-import { ProductDto } from '../dtos/product.dto';
+import { ProductDto } from '../dtos/product/product.dto';
 
 export const productDetailsResolver: ResolveFn<{
   product: ProductDto;

@@ -1,6 +1,6 @@
 import { ProductPhotoFormDto } from './product-photo.form-dto';
 
-export interface ProductFormDto {
+export interface ProductRequestFormDto {
   name: string;
   productBaseId: string;
   productPhotos: ProductPhotoFormDto[];

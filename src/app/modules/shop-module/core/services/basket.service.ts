@@ -6,7 +6,7 @@ import { BasketDataService } from '../data-services/basket.data-service';
 import { BasketItemDto } from '../dtos/basket/basket-item.dto';
 import { BasketItemFormDto } from '../dtos/basket/basket-item.form-dto';
 import { BasketDto } from '../dtos/basket/basket.dto';
-import { BasketFormDto } from '../dtos/basket/basket.form-dto';
+import { BasketRequestFormDto } from '../dtos/basket/basket.request-form-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class BasketService {
         take(1),
         filter(basket => !!basket),
         switchMap(basket => {
-          const dto: BasketFormDto = {
+          const dto: BasketRequestFormDto = {
             basketItems: basket.basketItems.map(x => {
               return {
                 id: x.id,
@@ -32,7 +32,6 @@ export class BasketService {
                 quantity: x.quantity,
               };
             }),
-            id: basket.id,
           };
 
           const basketItem = dto.basketItems.find(x => x.productId == item.productId);
@@ -64,7 +63,6 @@ export class BasketService {
         switchMap(basket =>
           this._basketDataService.update(basket?.id, {
             basketItems: [],
-            id: basket.id,
           }),
         ),
         switchMap(() => this.getBasket$()),
@@ -78,7 +76,7 @@ export class BasketService {
         take(1),
         filter(basket => !!basket),
         switchMap(basket => {
-          const dto: BasketFormDto = {
+          const dto: BasketRequestFormDto = {
             basketItems: basket.basketItems
               .filter(x => x.id != itemId)
               .map(x => {
@@ -88,7 +86,6 @@ export class BasketService {
                   quantity: x.quantity,
                 };
               }),
-            id: basket.id,
           };
 
           return this._basketDataService.update(basket.id, dto).pipe(switchMap(() => this.getBasket$()));
@@ -108,7 +105,7 @@ export class BasketService {
         filter(basket => !!basket),
         filter(basket => basket.basketItems.some(x => x.productId == item.productId)),
         switchMap(basket => {
-          const dto: BasketFormDto = {
+          const dto: BasketRequestFormDto = {
             basketItems: basket.basketItems.map(x => {
               return {
                 id: x.id,
@@ -116,7 +113,6 @@ export class BasketService {
                 quantity: x.quantity,
               };
             }),
-            id: basket.id,
           };
 
           const basketItem = dto.basketItems.find(x => x.productId == item.productId);

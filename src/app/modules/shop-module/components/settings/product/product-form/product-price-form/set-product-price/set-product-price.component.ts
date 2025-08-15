@@ -9,8 +9,8 @@ import { InputDateComponent } from '../../../../../../../../components/shared/in
 import { InputNumberComponent } from '../../../../../../../../components/shared/input-number/input-number.component';
 import { BaseFormComponent } from '../../../../../../../../core/bases/base-form.component';
 import { ProductDataService } from '../../../../../../core/data-services/product.data-service';
-import { SimulatePriceFormDto } from '../../../../../../core/dtos/simulate-price.form-dto';
-import { SimulatePriceRequestDto } from '../../../../../../core/dtos/simulate-price.request-dto';
+import { SimulatePriceFormDto } from '../../../../../../core/dtos/product/simulate-price.form-dto';
+import { SimulatePriceRequestDto } from '../../../../../../core/dtos/product/simulate-price.request-dto';
 
 interface IPriceForm {
   id: FormControl<string | null>;

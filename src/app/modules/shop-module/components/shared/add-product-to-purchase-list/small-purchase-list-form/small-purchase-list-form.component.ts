@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
-import { PurchaseListFormDto } from '../../../../core/dtos/purchase-list.from-dto';
+import { PurchaseListRequestFormDto } from '../../../../core/dtos/purchase-list/purchase-list.request-from-dto';
 import { PurchaseListService } from '../../../../core/services/purchase-list.service';
 
 interface ISmallPurchaseListForm {
@@ -29,7 +29,7 @@ export class SmallPurchaseListFormComponent extends BaseFormComponent<ISmallPurc
       return;
     }
 
-    const value: PurchaseListFormDto = {
+    const value: PurchaseListRequestFormDto = {
       isFavourite: false,
       name: this.form.getRawValue().name,
       purchaseListItems: [],

@@ -18,7 +18,7 @@ import { DataTableColumnModel } from '../../../../../../core/models/data-table-c
 import { TempIdGenerator } from '../../../../../../core/utils/temp-id-generator';
 import { AdCampaignDataService } from '../../../../core/data-services/ad-campaign.data-service';
 import { AdCampaignItemInfoDto } from '../../../../core/dtos/ad-campaign/ad-campaign-item.info-dto';
-import { AdCampaignFormDto } from '../../../../core/dtos/ad-campaign/ad-campaign.form-dto';
+import { AdCampaignRequestFormDto } from '../../../../core/dtos/ad-campaign/ad-campaign.request-form-dto';
 import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campaign-item.component';
 
 interface IAdCampaignForm {
@@ -55,7 +55,7 @@ export class AdCampaignFormComponent extends BaseFormComponent<IAdCampaignForm> 
 
   DialogType: typeof DialogType = DialogType;
 
-  adCampaign?: AdCampaignFormDto = this._activatedRoute.snapshot.data['form']['adCampaign'];
+  adCampaign?: AdCampaignRequestFormDto = this._activatedRoute.snapshot.data['form']['adCampaign'];
   adCampaignItems = signal<AdCampaignItemInfoDto[]>(this._activatedRoute.snapshot.data['form']['files']);
   columns: DataTableColumnModel[] = [
     {
@@ -183,7 +183,7 @@ export class AdCampaignFormComponent extends BaseFormComponent<IAdCampaignForm> 
     });
   }
 
-  private addOrUpdate$(): Observable<AdCampaignFormDto> {
+  private addOrUpdate$(): Observable<AdCampaignRequestFormDto> {
     const adCampaign = this.adCampaign!;
     const adCampaignItems = this.adCampaignItems();
 

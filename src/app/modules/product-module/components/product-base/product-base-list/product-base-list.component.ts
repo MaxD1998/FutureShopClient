@@ -10,7 +10,7 @@ import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../core/models/pagination.model';
 import { ProductBaseDataService } from '../../../core/data-service/product-base.data-service';
-import { ProductBaseListDto } from '../../../core/dtos/product-base.list-dto';
+import { ProductBaseListDto } from '../../../core/dtos/product-base/product-base.list-dto';
 
 @Component({
   selector: 'app-product-base-list',

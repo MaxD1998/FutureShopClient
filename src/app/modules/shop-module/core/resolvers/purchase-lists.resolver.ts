@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { defaultIfEmpty, forkJoin, Observable, of, switchMap, take } from 'rxjs';
 import { FileDataService } from '../../../../core/data-services/file.data-service';
-import { PurchaseListDto } from '../dtos/purchase-list.dto';
+import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
 import { PurchaseListModel } from '../models/purchase-list.model';
 import { PurchaseListService } from '../services/purchase-list.service';
 

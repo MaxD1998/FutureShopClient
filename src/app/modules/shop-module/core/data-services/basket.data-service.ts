@@ -3,8 +3,9 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BasketControllerRoute } from '../constants/api-routes/basket-controller.route';
 import { BasketDto } from '../dtos/basket/basket.dto';
-import { BasketFormDto } from '../dtos/basket/basket.form-dto';
-import { ImportPurchaseListToBasketDto } from '../dtos/import-basket-to-purchase-list.dto';
+import { BasketRequestFormDto } from '../dtos/basket/basket.request-form-dto';
+import { BasketResponseFormDto } from '../dtos/basket/basket.response-form-dto';
+import { ImportPurchaseListToBasketDto } from '../dtos/purchase-list/import-basket-to-purchase-list.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ import { ImportPurchaseListToBasketDto } from '../dtos/import-basket-to-purchase
 export class BasketDataService {
   private readonly _httpClient = inject(HttpClient);
 
-  create(dto: BasketFormDto): Observable<BasketFormDto> {
-    return this._httpClient.post<BasketFormDto>(BasketControllerRoute.base, dto);
+  create(dto: BasketRequestFormDto): Observable<BasketResponseFormDto> {
+    return this._httpClient.post<BasketResponseFormDto>(BasketControllerRoute.base, dto);
   }
 
   getById(id: string): Observable<BasketDto> {
@@ -33,7 +34,7 @@ export class BasketDataService {
     return this._httpClient.post<BasketDto>(BasketControllerRoute.importPurchaseList, dto);
   }
 
-  update(id: string, dto: BasketFormDto): Observable<BasketFormDto> {
-    return this._httpClient.put<BasketFormDto>(`${BasketControllerRoute.base}${id}`, dto);
+  update(id: string, dto: BasketRequestFormDto): Observable<BasketResponseFormDto> {
+    return this._httpClient.put<BasketResponseFormDto>(`${BasketControllerRoute.base}${id}`, dto);
   }
 }

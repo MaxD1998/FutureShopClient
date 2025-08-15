@@ -10,7 +10,7 @@ import { IconType } from '../../../../../../core/enums/icon-type';
 import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
-import { ProductDto } from '../../../../core/dtos/product.dto';
+import { ProductDto } from '../../../../core/dtos/product/product.dto';
 import { BasketService } from '../../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
 

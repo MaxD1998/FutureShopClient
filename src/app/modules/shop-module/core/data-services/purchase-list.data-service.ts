@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PurchaseListControllerRoute } from '../constants/api-routes/purchase-list-controller.route';
-import { ImportBasketToPurchaseListDto } from '../dtos/import-purchase-list-to-basket.dto';
-import { PurchaseListDto } from '../dtos/purchase-list.dto';
-import { PurchaseListFormDto } from '../dtos/purchase-list.from-dto';
+import { ImportBasketToPurchaseListDto } from '../dtos/basket/import-purchase-list-to-basket.dto';
+import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
+import { PurchaseListRequestFormDto } from '../dtos/purchase-list/purchase-list.request-from-dto';
+import { PurchaseListResponseFormDto } from '../dtos/purchase-list/purchase-list.response-from-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ import { PurchaseListFormDto } from '../dtos/purchase-list.from-dto';
 export class PurchaseListDataService {
   private readonly _httpClient = inject(HttpClient);
 
-  create(dto: PurchaseListFormDto): Observable<PurchaseListFormDto> {
-    return this._httpClient.post<PurchaseListFormDto>(PurchaseListControllerRoute.base, dto);
+  create(dto: PurchaseListRequestFormDto): Observable<PurchaseListResponseFormDto> {
+    return this._httpClient.post<PurchaseListResponseFormDto>(PurchaseListControllerRoute.base, dto);
   }
 
   dalete(id: string): Observable<null> {
@@ -34,7 +35,7 @@ export class PurchaseListDataService {
     return this._httpClient.post<PurchaseListDto>(PurchaseListControllerRoute.importBasket, dto);
   }
 
-  update(id: string, dto: PurchaseListFormDto): Observable<PurchaseListFormDto> {
-    return this._httpClient.put<PurchaseListFormDto>(`${PurchaseListControllerRoute.base}${id}`, dto);
+  update(id: string, dto: PurchaseListRequestFormDto): Observable<PurchaseListResponseFormDto> {
+    return this._httpClient.put<PurchaseListResponseFormDto>(`${PurchaseListControllerRoute.base}${id}`, dto);
   }
 }

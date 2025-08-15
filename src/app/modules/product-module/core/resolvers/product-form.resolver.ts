@@ -6,12 +6,12 @@ import { FileDataService } from '../../../../core/data-services/file.data-servic
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../data-service/product-base.data-service';
 import { ProductDataService } from '../data-service/product.data-service';
-import { ProductPhotoInfoDto } from '../dtos/product-photo.info-dto';
-import { ProductFormDto } from '../dtos/product.form-dto';
+import { ProductPhotoInfoDto } from '../dtos/product/product-photo.info-dto';
+import { ProductRequestFormDto } from '../dtos/product/product.request-form-dto';
 
 export const productFormResolver: ResolveFn<{
   files?: ProductPhotoInfoDto[];
-  product?: ProductFormDto;
+  product?: ProductRequestFormDto;
   productBases?: SelectItemModel[];
 }> = (route, state) => {
   const productDataService = inject(ProductDataService);

@@ -1,4 +1,4 @@
-import { ProductShopListDto } from '../dtos/product-shop.list-dto';
+import { ProductShopListDto } from '../dtos/product/product-shop.list-dto';
 
 export class ProductListModel {
   constructor(dto: ProductShopListDto) {

@@ -4,14 +4,15 @@ import { Observable, switchMap, take } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { ProductControllerRoute } from '../constants/api-routes/product-controller.route';
-import { ProductShopListDto } from '../dtos/product-shop.list-dto';
-import { ProductShopLisRequestDto } from '../dtos/product-shop.list-request-dto';
-import { ProductDto } from '../dtos/product.dto';
-import { ProductFormDto } from '../dtos/product.form-dto';
-import { ProductListDto } from '../dtos/product.list-dto';
-import { SimulatePriceFormDto } from '../dtos/simulate-price.form-dto';
-import { SimulatePriceRequestDto } from '../dtos/simulate-price.request-dto';
-import { SimulateRemovePriceRequestDto } from '../dtos/simulate-remove-price.request-dto';
+import { ProductShopListDto } from '../dtos/product/product-shop.list-dto';
+import { ProductShopLisRequestDto } from '../dtos/product/product-shop.list-request-dto';
+import { ProductDto } from '../dtos/product/product.dto';
+import { ProductListDto } from '../dtos/product/product.list-dto';
+import { ProductRequestFormDto } from '../dtos/product/product.request-form-dto';
+import { ProductResponseFormDto } from '../dtos/product/product.response-form-dto';
+import { SimulatePriceFormDto } from '../dtos/product/simulate-price.form-dto';
+import { SimulatePriceRequestDto } from '../dtos/product/simulate-price.request-dto';
+import { SimulateRemovePriceRequestDto } from '../dtos/product/simulate-remove-price.request-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +21,9 @@ export class ProductDataService {
   private readonly _authService = inject(UserService);
   private readonly _httpClient = inject(HttpClient);
 
-  getById(id: string): Observable<ProductFormDto> {
+  getById(id: string): Observable<ProductResponseFormDto> {
     const url = `${ProductControllerRoute.base}${id}`;
-    return this._httpClient.get<ProductFormDto>(url);
+    return this._httpClient.get<ProductResponseFormDto>(url);
   }
 
   getDetailsById(id: string): Observable<ProductDto> {
@@ -97,8 +98,8 @@ export class ProductDataService {
     return this._httpClient.post<SimulatePriceFormDto[]>(url, dto);
   }
 
-  update(id: string, dto: ProductFormDto): Observable<ProductFormDto> {
+  update(id: string, dto: ProductRequestFormDto): Observable<ProductResponseFormDto> {
     const url = `${ProductControllerRoute.base}${id}`;
-    return this._httpClient.put<ProductFormDto>(url, dto);
+    return this._httpClient.put<ProductResponseFormDto>(url, dto);
   }
 }

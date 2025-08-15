@@ -10,7 +10,7 @@ import { ClientRoute } from '../../../../../core/constants/client-routes/client.
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../../../core/data-service/product-base.data-service';
-import { ProductBaseFormDto } from '../../../core/dtos/product-base.form-dto';
+import { ProductBaseRequestFormDto } from '../../../core/dtos/product-base/product-base.request-form-dto';
 
 interface IProductBaseForm {
   categoryId: FormControl<string>;
@@ -32,7 +32,7 @@ export class ProductBaseFormComponent extends BaseFormComponent<IProductBaseForm
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resolverData = this._snapshot.data['form'];
   private readonly _id?: string = this._snapshot.params['id'];
-  private _productBase?: ProductBaseFormDto = this._resolverData['productBase'];
+  private _productBase?: ProductBaseRequestFormDto = this._resolverData['productBase'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 
@@ -60,7 +60,7 @@ export class ProductBaseFormComponent extends BaseFormComponent<IProductBaseForm
     this._productBase = { categoryId, name };
 
     const productBase$ = !this._id
-      ? this._productBaseDataService.add(this._productBase)
+      ? this._productBaseDataService.create(this._productBase)
       : this._productBaseDataService.update(this._id, this._productBase);
 
     productBase$.subscribe({

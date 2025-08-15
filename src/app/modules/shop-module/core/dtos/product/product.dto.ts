@@ -1,4 +1,4 @@
-import { IdNameValueDto } from '../../../../core/dtos/id-name-value.dto';
+import { IdNameValueDto } from '../../../../../core/dtos/id-name-value.dto';
 
 export interface ProductDto {
   fileIds: string[];

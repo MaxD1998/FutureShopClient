@@ -11,7 +11,7 @@ import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../core/models/pagination.model';
 import { ProductDataService } from '../../../core/data-service/product.data-service';
-import { ProductListDto } from '../../../core/dtos/product.list-dto';
+import { ProductListDto } from '../../../core/dtos/product/product.list-dto';
 
 @Component({
   selector: 'app-product-list',

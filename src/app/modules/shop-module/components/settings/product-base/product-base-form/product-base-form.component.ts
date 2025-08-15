@@ -15,7 +15,7 @@ import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../../../../core/data-services/product-base.data-service';
-import { ProductBaseFormDto } from '../../../../core/dtos/product-base.form-dto';
+import { ProductBaseRequestFormDto } from '../../../../core/dtos/product-base/product-base.request-form-dto';
 import { ProductParameterFormModel } from '../../../../core/models/product-parameter.form-model';
 import { ProductPropertyFormComponent } from './product-property-form/product-property-form.component';
 
@@ -49,7 +49,7 @@ export class ProductBaseFormComponent extends BaseFormComponent<IProductBaseForm
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resoverData = this._snapshot.data['form'];
   private _id: string = this._snapshot.params['id'];
-  private _productBase: ProductBaseFormDto = this._resoverData['productBase'];
+  private _productBase: ProductBaseRequestFormDto = this._resoverData['productBase'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 

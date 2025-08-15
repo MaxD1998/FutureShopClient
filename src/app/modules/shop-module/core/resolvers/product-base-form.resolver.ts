@@ -4,12 +4,12 @@ import { forkJoin, map, of, switchMap } from 'rxjs';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { CategoryDataService } from '../data-services/category.data-service';
 import { ProductBaseDataService } from '../data-services/product-base.data-service';
-import { ProductBaseFormDto } from '../dtos/product-base.form-dto';
+import { ProductBaseRequestFormDto } from '../dtos/product-base/product-base.request-form-dto';
 
-export const productBaseFormResolver: ResolveFn<{ productBase: ProductBaseFormDto; categories: SelectItemModel[] }> = (
-  route,
-  state,
-) => {
+export const productBaseFormResolver: ResolveFn<{
+  productBase: ProductBaseRequestFormDto;
+  categories: SelectItemModel[];
+}> = (route, state) => {
   const categoryDataService = inject(CategoryDataService);
   const productBaseDataService = inject(ProductBaseDataService);
   const id = route.params['id'];

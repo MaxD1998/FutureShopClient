@@ -3,9 +3,10 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
-import { CategoryFormDto } from '../../../product-module/core/dtos/category.form-dto';
-import { CategoryListDto } from '../../../product-module/core/dtos/category.list-dto';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
+import { CategoryListDto } from '../dtos/category/category.list-dto';
+import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
+import { CategoryResponseFormDto } from '../dtos/category/category.response-form-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -13,17 +14,17 @@ import { CategoryControllerRoute } from '../constants/api-routes/category-contro
 export class CategoryDataService {
   private readonly _httpClient = inject(HttpClient);
 
-  add(dto: CategoryFormDto): Observable<CategoryFormDto> {
-    return this._httpClient.post<CategoryFormDto>(CategoryControllerRoute.base, dto);
+  create(dto: CategoryRequestFormDto): Observable<CategoryResponseFormDto> {
+    return this._httpClient.post<CategoryResponseFormDto>(CategoryControllerRoute.base, dto);
   }
 
   delete(id: string): Observable<null> {
     return this._httpClient.delete<null>(`${CategoryControllerRoute.base}${id}`);
   }
 
-  getById(id: string): Observable<CategoryFormDto> {
+  getById(id: string): Observable<CategoryResponseFormDto> {
     const url = `${CategoryControllerRoute.base}${id}`;
-    return this._httpClient.get<CategoryFormDto>(url);
+    return this._httpClient.get<CategoryResponseFormDto>(url);
   }
 
   getPage(pageNumber: number): Observable<PageDto<CategoryListDto>> {
@@ -61,8 +62,8 @@ export class CategoryDataService {
     return this._httpClient.get<IdNameDto[]>(CategoryControllerRoute.all);
   }
 
-  update(id: string, dto: CategoryFormDto): Observable<CategoryFormDto> {
+  update(id: string, dto: CategoryRequestFormDto): Observable<CategoryResponseFormDto> {
     const url = `${CategoryControllerRoute.base}${id}`;
-    return this._httpClient.put<CategoryFormDto>(url, dto);
+    return this._httpClient.put<CategoryResponseFormDto>(url, dto);
   }
 }

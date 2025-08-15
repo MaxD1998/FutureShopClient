@@ -8,7 +8,7 @@ import { PageDto } from '../../../../../../core/dtos/page.dto';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
-import { CategoryPageListDto } from '../../../../core/dtos/category.page-list-dto';
+import { CategoryPageListDto } from '../../../../core/dtos/category/category.page-list-dto';
 
 @Component({
   selector: 'app-category-list',

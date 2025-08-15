@@ -20,7 +20,7 @@ import { BaseFormComponent } from '../../../../../core/bases/base-form.component
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { IconType } from '../../../../../core/enums/icon-type';
 import { UserService } from '../../../../auth-module/core/services/user.service';
-import { PurchaseListDto } from '../../../core/dtos/purchase-list.dto';
+import { PurchaseListDto } from '../../../core/dtos/purchase-list/purchase-list.dto';
 import { PurchaseListService } from '../../../core/services/purchase-list.service';
 import { SmallPurchaseListFormComponent } from './small-purchase-list-form/small-purchase-list-form.component';
 

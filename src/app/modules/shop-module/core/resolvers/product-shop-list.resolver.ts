@@ -5,7 +5,7 @@ import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { ProductSortType } from '../../../../core/enums/product-sort-type';
 import { CategoryDataService } from '../data-services/category.data-service';
 import { ProductDataService } from '../data-services/product.data-service';
-import { ProductShopListDto } from '../dtos/product-shop.list-dto';
+import { ProductShopListDto } from '../dtos/product/product-shop.list-dto';
 
 export const productShopListResolver: ResolveFn<{ category: IdNameDto; products: ProductShopListDto[] }> = (
   route,

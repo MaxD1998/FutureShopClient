@@ -1,5 +1,5 @@
-import { PurchaseListItemDto } from '../dtos/purchase-list-item.dto';
-import { PurchaseListDto } from '../dtos/purchase-list.dto';
+import { PurchaseListItemDto } from '../dtos/purchase-list/purchase-list-item.dto';
+import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
 import { PurchaseListItemModel } from './purchase-list-item.model';
 
 export class PurchaseListModel {

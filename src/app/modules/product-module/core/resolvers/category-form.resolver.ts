@@ -5,10 +5,10 @@ import { forkJoin, map, of, switchMap } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { CategoryDataService } from '../data-service/category.data-service';
-import { CategoryFormDto } from '../dtos/category.form-dto';
+import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
 
 export const categoryFormResolver: ResolveFn<{
-  category?: CategoryFormDto;
+  category?: CategoryRequestFormDto;
   subCategoryItems: SelectItemModel[];
   parentItems: SelectItemModel[];
 }> = (route, state) => {

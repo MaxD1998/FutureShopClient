@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { AdCampaignControllerRoute } from '../constants/api-routes/ad-campaign-controller.route';
 import { AdCampaignListDto } from '../dtos/ad-campaign/ad-campaign-list.dto';
-import { AdCampaignFormDto } from '../dtos/ad-campaign/ad-campaign.form-dto';
+import { AdCampaignRequestFormDto } from '../dtos/ad-campaign/ad-campaign.request-form-dto';
+import { AdCampaignResponseFormDto } from '../dtos/ad-campaign/ad-campaign.response-form-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ import { AdCampaignFormDto } from '../dtos/ad-campaign/ad-campaign.form-dto';
 export class AdCampaignDataService {
   private readonly _httpClient = inject(HttpClient);
 
-  add(dto: AdCampaignFormDto): Observable<AdCampaignFormDto> {
-    return this._httpClient.post<AdCampaignFormDto>(AdCampaignControllerRoute.base, dto);
+  add(dto: AdCampaignRequestFormDto): Observable<AdCampaignResponseFormDto> {
+    return this._httpClient.post<AdCampaignResponseFormDto>(AdCampaignControllerRoute.base, dto);
   }
 
   delete(id: string): Observable<null> {
@@ -25,9 +26,9 @@ export class AdCampaignDataService {
     return this._httpClient.get<string[]>(url);
   }
 
-  getById(id: string): Observable<AdCampaignFormDto> {
+  getById(id: string): Observable<AdCampaignResponseFormDto> {
     const url = `${AdCampaignControllerRoute.base}${id}`;
-    return this._httpClient.get<AdCampaignFormDto>(url);
+    return this._httpClient.get<AdCampaignResponseFormDto>(url);
   }
 
   getPage(pageNumber: number): Observable<PageDto<AdCampaignListDto>> {
@@ -35,8 +36,8 @@ export class AdCampaignDataService {
     return this._httpClient.get<PageDto<AdCampaignListDto>>(url);
   }
 
-  update(id: string, dto: AdCampaignFormDto): Observable<AdCampaignFormDto> {
+  update(id: string, dto: AdCampaignRequestFormDto): Observable<AdCampaignResponseFormDto> {
     const url = `${AdCampaignControllerRoute.base}${id}`;
-    return this._httpClient.put<AdCampaignFormDto>(url, dto);
+    return this._httpClient.put<AdCampaignResponseFormDto>(url, dto);
   }
 }

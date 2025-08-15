@@ -2,9 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { PurchaseListDataService } from '../data-services/purchase-list.data-service';
-import { PurchaseListItemFormDto } from '../dtos/purchase-list-item.from-dto';
-import { PurchaseListDto } from '../dtos/purchase-list.dto';
-import { PurchaseListFormDto } from '../dtos/purchase-list.from-dto';
+import { PurchaseListItemFormDto } from '../dtos/purchase-list/purchase-list-item.from-dto';
+import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
+import { PurchaseListRequestFormDto } from '../dtos/purchase-list/purchase-list.request-from-dto';
+import { PurchaseListResponseFormDto } from '../dtos/purchase-list/purchase-list.response-from-dto';
 import { BasketService } from './basket.service';
 
 @Injectable({
@@ -22,7 +23,7 @@ export class PurchaseListService {
       .pipe(
         take(1),
         switchMap(purchaseLists => {
-          const purchaseListForms = purchaseLists.map<PurchaseListFormDto>(purchaseList => {
+          const purchaseListForms = purchaseLists.map<PurchaseListResponseFormDto>(purchaseList => {
             return {
               id: purchaseList.id,
               isFavourite: purchaseList.isFavourite,
@@ -84,7 +85,7 @@ export class PurchaseListService {
       });
   }
 
-  create(dto: PurchaseListFormDto, callback?: (dto: PurchaseListDto) => void): void {
+  create(dto: PurchaseListRequestFormDto, callback?: (dto: PurchaseListDto) => void): void {
     this.create$(dto).subscribe({
       next: response => {
         this.purchaseLists$.next(response.list);
@@ -154,7 +155,7 @@ export class PurchaseListService {
     );
   }
 
-  private create$(dto: PurchaseListFormDto): Observable<{
+  private create$(dto: PurchaseListRequestFormDto): Observable<{
     list: PurchaseListDto[];
     newValue: PurchaseListDto;
   }> {

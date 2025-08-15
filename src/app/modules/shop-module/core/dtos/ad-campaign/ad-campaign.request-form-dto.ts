@@ -1,6 +1,6 @@
 import { AdCampaignItemFormDto } from './ad-campaign-item.form-dto';
 
-export interface AdCampaignFormDto {
+export interface AdCampaignRequestFormDto {
   adCampaignItems: AdCampaignItemFormDto[];
   end: Date;
   id?: string;

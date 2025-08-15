@@ -10,7 +10,7 @@ import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../core/models/pagination.model';
 import { CategoryDataService } from '../../../core/data-service/category.data-service';
-import { CategoryListDto } from '../../../core/dtos/category.list-dto';
+import { CategoryListDto } from '../../../core/dtos/category/category.list-dto';
 
 @Component({
   selector: 'app-category-list',

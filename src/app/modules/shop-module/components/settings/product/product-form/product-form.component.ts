@@ -14,9 +14,9 @@ import { ButtonLayout } from '../../../../../../core/enums/button-layout';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { CustomValidators } from '../../../../../../core/utils/custom-validators';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
-import { ProductParameterValueFormDto } from '../../../../core/dtos/product-parameter-value.form-dto';
-import { ProductFormDto } from '../../../../core/dtos/product.form-dto';
-import { SimulatePriceFormDto } from '../../../../core/dtos/simulate-price.form-dto';
+import { ProductParameterValueFormDto } from '../../../../core/dtos/product/product-parameter-value.form-dto';
+import { ProductRequestFormDto } from '../../../../core/dtos/product/product.request-form-dto';
+import { SimulatePriceFormDto } from '../../../../core/dtos/product/simulate-price.form-dto';
 import { TranslationFormDto } from '../../../../core/dtos/translation.form-dto';
 import { ProductParameterValueFormComponent } from './product-parameter-value-form/product-parameter-value-form.component';
 import { ProductPriceFormComponent } from './product-price-form/product-price-form.component';
@@ -56,7 +56,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resolverData = this._activatedRoute.snapshot.data['form'];
   private _id: string = this._snapshot.params['id'];
-  private _product: ProductFormDto = this._resolverData['product'];
+  private _product: ProductRequestFormDto = this._resolverData['product'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 

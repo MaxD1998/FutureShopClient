@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../../../components/shared/button/button.component';
 import { InputComponent } from '../../../../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../../../../core/bases/base-form.component';
-import { ProductParameterValueFormDto } from '../../../../../../core/dtos/product-parameter-value.form-dto';
+import { ProductParameterValueFormDto } from '../../../../../../core/dtos/product/product-parameter-value.form-dto';
 
 interface IValueForm {
   id: FormControl<string>;

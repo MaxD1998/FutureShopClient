@@ -6,7 +6,7 @@ import { TableComponent } from '../../../../../../../components/shared/table/tab
 import { TableHeaderFloat } from '../../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../../core/models/data-table-column.model';
-import { ProductParameterValueFormDto } from '../../../../../core/dtos/product-parameter-value.form-dto';
+import { ProductParameterValueFormDto } from '../../../../../core/dtos/product/product-parameter-value.form-dto';
 import { SetProductParameterValueComponent } from './set-product-parameter-value/set-product-parameter-value.component';
 
 @Component({

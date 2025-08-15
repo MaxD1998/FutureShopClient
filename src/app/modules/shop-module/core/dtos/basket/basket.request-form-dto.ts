@@ -1,6 +1,5 @@
 import { BasketItemFormDto } from './basket-item.form-dto';
 
-export interface BasketFormDto {
+export interface BasketRequestFormDto {
   basketItems: BasketItemFormDto[];
-  id?: string;
 }

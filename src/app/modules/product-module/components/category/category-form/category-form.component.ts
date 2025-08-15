@@ -19,7 +19,7 @@ import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { CategoryDataService } from '../../../core/data-service/category.data-service';
-import { CategoryFormDto } from '../../../core/dtos/category.form-dto';
+import { CategoryRequestFormDto } from '../../../core/dtos/category/category.request-form-dto';
 import { SubCategoryFormDialog } from './sub-category-form-dialog/sub-category-form-dialog';
 
 interface ICategoryForm {
@@ -54,7 +54,7 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resolverData = this._snapshot.data['form'];
   private readonly _id?: string = this._snapshot.params['id'];
-  private _category?: CategoryFormDto = this._resolverData['category'];
+  private _category?: CategoryRequestFormDto = this._resolverData['category'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   IconType: typeof IconType = IconType;
@@ -145,7 +145,7 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
     this._category = { name, parentCategoryId: parentCategoryId ?? undefined, subCategories };
 
     const category$ = !this._id
-      ? this._categoryDataService.add(this._category)
+      ? this._categoryDataService.create(this._category)
       : this._categoryDataService.update(this._id, this._category);
 
     category$.subscribe({

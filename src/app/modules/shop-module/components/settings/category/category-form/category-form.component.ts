@@ -18,7 +18,7 @@ import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { CategoryDataService } from '../../../../core/data-services/category.data-service';
-import { CategoryFormDto } from '../../../../core/dtos/category.form-dto';
+import { CategoryRequestFormDto } from '../../../../core/dtos/category/category.request-form-dto';
 import { TranslationFormDto } from '../../../../core/dtos/translation.form-dto';
 
 interface ICategoryForm {
@@ -52,7 +52,7 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
 
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resolverData = this._snapshot.data['form'];
-  private _category: CategoryFormDto = this._resolverData['category'];
+  private _category: CategoryRequestFormDto = this._resolverData['category'];
   private _id: string = this._snapshot.params['id'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;

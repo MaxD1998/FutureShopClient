@@ -3,12 +3,12 @@ import { ResolveFn } from '@angular/router';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { CategoryDataService } from '../data-services/category.data-service';
-import { CategoryFormDto } from '../dtos/category.form-dto';
+import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
 
-export const categoryFormResolver: ResolveFn<{ category: CategoryFormDto; parentCategoryItems: SelectItemModel[] }> = (
-  route,
-  state,
-) => {
+export const categoryFormResolver: ResolveFn<{
+  category: CategoryRequestFormDto;
+  parentCategoryItems: SelectItemModel[];
+}> = (route, state) => {
   const categoryDataService = inject(CategoryDataService);
   const id = route.params['id'] as string;
   return categoryDataService.getById(id).pipe(

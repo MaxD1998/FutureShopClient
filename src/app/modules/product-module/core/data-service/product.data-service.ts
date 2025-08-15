@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
-import { ProductFormDto } from '../../../product-module/core/dtos/product.form-dto';
-import { ProductListDto } from '../../../product-module/core/dtos/product.list-dto';
 import { ProductControllerRoute } from '../constants/api-routes/product-controller.route';
+import { ProductListDto } from '../dtos/product/product.list-dto';
+import { ProductRequestFormDto } from '../dtos/product/product.request-form-dto';
+import { ProductResponseFormDto } from '../dtos/product/product.response-form-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,17 +13,17 @@ import { ProductControllerRoute } from '../constants/api-routes/product-controll
 export class ProductDataService {
   private readonly _httpClient = inject(HttpClient);
 
-  add(dto: ProductFormDto): Observable<ProductFormDto> {
-    return this._httpClient.post<ProductFormDto>(ProductControllerRoute.base, dto);
+  create(dto: ProductRequestFormDto): Observable<ProductResponseFormDto> {
+    return this._httpClient.post<ProductResponseFormDto>(ProductControllerRoute.base, dto);
   }
 
   delete(id: string): Observable<null> {
     return this._httpClient.delete<null>(`${ProductControllerRoute.base}${id}`);
   }
 
-  getById(id: string): Observable<ProductFormDto> {
+  getById(id: string): Observable<ProductResponseFormDto> {
     const url = `${ProductControllerRoute.base}${id}`;
-    return this._httpClient.get<ProductFormDto>(url);
+    return this._httpClient.get<ProductResponseFormDto>(url);
   }
 
   getPage(pageNumber: number): Observable<PageDto<ProductListDto>> {
@@ -30,8 +31,8 @@ export class ProductDataService {
     return this._httpClient.get<PageDto<ProductListDto>>(url);
   }
 
-  update(id: string, dto: ProductFormDto): Observable<ProductFormDto> {
+  update(id: string, dto: ProductRequestFormDto): Observable<ProductResponseFormDto> {
     const url = `${ProductControllerRoute.base}${id}`;
-    return this._httpClient.put<ProductFormDto>(url, dto);
+    return this._httpClient.put<ProductResponseFormDto>(url, dto);
   }
 }

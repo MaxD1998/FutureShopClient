@@ -1,4 +1,4 @@
-import { PurchaseListItemDto } from '../dtos/purchase-list-item.dto';
+import { PurchaseListItemDto } from '../dtos/purchase-list/purchase-list-item.dto';
 
 export class PurchaseListItemModel {
   constructor(dto: PurchaseListItemDto, photo?: Blob) {

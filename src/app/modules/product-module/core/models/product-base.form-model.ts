@@ -1,8 +1,8 @@
 import { ProductParameterFormModel } from '../../core/models/product-parameter.form-model';
-import { ProductBaseFormDto } from '../dtos/product-base.form-dto';
+import { ProductBaseRequestFormDto } from '../dtos/product-base/product-base.request-form-dto';
 
 export class ProductBaseFormModel {
-  constructor(dto?: ProductBaseFormDto) {
+  constructor(dto?: ProductBaseRequestFormDto) {
     if (!dto) {
       return;
     }
@@ -16,7 +16,7 @@ export class ProductBaseFormModel {
   name: string;
   productParameters: ProductParameterFormModel[] = [];
 
-  mapToDto(): ProductBaseFormDto {
+  mapToDto(): ProductBaseRequestFormDto {
     return {
       categoryId: this.categoryId,
       name: this.name,

@@ -18,8 +18,8 @@ import { DataTableColumnModel } from '../../../../../core/models/data-table-colu
 import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { TempIdGenerator } from '../../../../../core/utils/temp-id-generator';
 import { ProductDataService } from '../../../core/data-service/product.data-service';
-import { ProductPhotoInfoDto } from '../../../core/dtos/product-photo.info-dto';
-import { ProductFormDto } from '../../../core/dtos/product.form-dto';
+import { ProductPhotoInfoDto } from '../../../core/dtos/product/product-photo.info-dto';
+import { ProductRequestFormDto } from '../../../core/dtos/product/product.request-form-dto';
 import { PreviewProductPhotoComponent } from './preview-product-photo/preview-product-photo.component';
 import { SetProductPhotoComponent } from './set-product-photo/set-product-photo.component';
 
@@ -56,7 +56,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resolverData = this._snapshot.data['form'];
   private readonly _id?: string = this._snapshot.params['id'];
-  private _product?: ProductFormDto = this._resolverData['product'];
+  private _product?: ProductRequestFormDto = this._resolverData['product'];
 
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
   DialogType: typeof DialogType = DialogType;
@@ -177,7 +177,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
     });
   }
 
-  private addOrUpdateProduct$(): Observable<ProductFormDto> {
+  private addOrUpdateProduct$(): Observable<ProductRequestFormDto> {
     const product = this._product!;
     const productPhotos = this.productPhotos();
 
@@ -188,7 +188,7 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
       .filter(productPhoto => !product.productPhotos.map(x => x.fileId).includes(productPhoto.id))
       .map(x => ({ fileId: x.id }));
 
-    return !this._id ? this._productDataService.add(product) : this._productDataService.update(this._id, product);
+    return !this._id ? this._productDataService.create(product) : this._productDataService.update(this._id, product);
   }
 
   protected override setGroup(): FormGroup<IProductForm> {

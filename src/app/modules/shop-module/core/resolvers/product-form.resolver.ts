@@ -4,10 +4,10 @@ import { forkJoin, map, of, switchMap } from 'rxjs';
 import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../data-services/product-base.data-service';
 import { ProductDataService } from '../data-services/product.data-service';
-import { ProductFormDto } from '../dtos/product.form-dto';
+import { ProductRequestFormDto } from '../dtos/product/product.request-form-dto';
 
 export const productFormResolver: ResolveFn<{
-  product: ProductFormDto;
+  product: ProductRequestFormDto;
   productBases: SelectItemModel[];
 }> = (route, state) => {
   const productBaseDataService = inject(ProductBaseDataService);

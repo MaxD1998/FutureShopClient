@@ -11,8 +11,8 @@ import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
 import { ProductSortType } from '../../../../../../core/enums/product-sort-type';
 import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
-import { ProductShopListDto } from '../../../../core/dtos/product-shop.list-dto';
-import { ProductShopLisRequestDto } from '../../../../core/dtos/product-shop.list-request-dto';
+import { ProductShopListDto } from '../../../../core/dtos/product/product-shop.list-dto';
+import { ProductShopLisRequestDto } from '../../../../core/dtos/product/product-shop.list-request-dto';
 import { ProductListModel } from '../../../../core/models/product-shop.list-model';
 import { ProductShopItemComponent } from './product-shop-item/product-shop-item.component';
 

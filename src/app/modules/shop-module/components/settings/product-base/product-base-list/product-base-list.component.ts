@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../../core/dtos/page.dto';
@@ -9,7 +9,7 @@ import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
 import { ProductBaseDataService } from '../../../../core/data-services/product-base.data-service';
-import { ProductBaseListDto } from '../../../../core/dtos/product-base.list-dto';
+import { ProductBaseListDto } from '../../../../core/dtos/product-base/product-base.list-dto';
 
 @Component({
   selector: 'app-product-base-list',
@@ -80,22 +80,6 @@ export class ProductBaseListComponent implements OnDestroy {
     this._router.navigateByUrl(
       `${ClientRoute.shopModule}/${ClientRoute.settings}/${ClientRoute.productBase}/${ClientRoute.form}/${id}`,
     );
-  }
-
-  removeRecord(id: string): void {
-    this._productBaseDataService
-      .delete(id)
-      .pipe(
-        switchMap(() => {
-          const pageNumber = this._activatedRoute.snapshot.params['pageNumber'];
-          return this._productBaseDataService.getPage(pageNumber ?? 1);
-        }),
-      )
-      .subscribe({
-        next: response => {
-          this.setPageProductBase(response);
-        },
-      });
   }
 
   private setPageProductBase(pageProductBases: PageDto<ProductBaseListDto>): void {
