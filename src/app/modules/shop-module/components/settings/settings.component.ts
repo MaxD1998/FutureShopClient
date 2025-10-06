@@ -51,5 +51,11 @@ export class SettingsComponent {
       subCategories: [],
       link: `${ClientRoute.adCampaign}/${ClientRoute.list}`,
     },
+    {
+      id: '5',
+      name: 'shop-module.settings-component.items.promotion',
+      subCategories: [],
+      link: `${ClientRoute.promotion}/${ClientRoute.list}`,
+    },
   ];
 }

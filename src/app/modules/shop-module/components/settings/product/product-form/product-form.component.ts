@@ -86,7 +86,10 @@ export class ProductFormComponent extends BaseFormComponent<IProductForm> {
     translations.forEach(x => this.form.controls.translations.push(new FormControl(x, { nonNullable: true })));
 
     this.form.controls.prices.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => {
-      this.form.controls.isActive.updateValueAndValidity();
+      const isActive = this.form.controls.isActive;
+
+      isActive.markAsTouched();
+      isActive.updateValueAndValidity();
     });
   }
 
