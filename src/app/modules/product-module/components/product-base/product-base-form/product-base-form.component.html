@@ -12,7 +12,7 @@
       <div class="flex flex-col flex-1">
         <app-input
           formControlName="name"
-          [errorCode]="errorCode('name') | translate"
+          [errorCode]="errorCode('name')"
           [label]="'product-module.product-base-form-component.name' | translate"
           [required]="true">
         </app-input>
@@ -20,7 +20,7 @@
       <div class="flex flex-col flex-1">
         <app-input-select
           formControlName="categoryId"
-          [errorCode]="errorCode('categoryId') | translate"
+          [errorCode]="errorCode('categoryId')"
           [label]="'product-module.product-base-form-component.choose-category' | translate"
           [items]="categoryItems"
           [required]="true">

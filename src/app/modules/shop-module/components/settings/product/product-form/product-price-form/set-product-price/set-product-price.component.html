@@ -1,17 +1,17 @@
 <form class="flex flex-col gap-1" [formGroup]="form" (ngSubmit)="submit()">
   <app-input-date
     formControlName="start"
-    [errorCode]="errorCode('start') | translate"
+    [errorCode]="errorCode('start')"
     [label]="'shop-module.product-form-component.prices.start' | translate">
   </app-input-date>
   <app-input-date
     formControlName="end"
-    [errorCode]="errorCode('end') | translate"
+    [errorCode]="errorCode('end')"
     [label]="'shop-module.product-form-component.prices.end' | translate">
   </app-input-date>
   <app-input-number
     formControlName="price"
-    [errorCode]="errorCode('price') | translate"
+    [errorCode]="errorCode('price')"
     [label]="'shop-module.product-form-component.prices.price' | translate">
   </app-input-number>
   <app-button [label]="'shop-module.product-form-component.prices.save' | translate"></app-button>

@@ -1,7 +1,7 @@
 <form class="flex flex-col gap-1" [formGroup]="form" (ngSubmit)="submit()">
   <app-input
     formControlName="value"
-    [errorCode]="errorCode('value') | translate"
+    [errorCode]="errorCode('value')"
     [label]="'shop-module.product-form-component.parameters.value' | translate"
     [required]="true">
   </app-input>

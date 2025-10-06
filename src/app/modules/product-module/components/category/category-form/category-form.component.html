@@ -11,7 +11,7 @@
         </h2>
         <app-input
           formControlName="name"
-          [errorCode]="errorCode('name') | translate"
+          [errorCode]="errorCode('name')"
           [label]="'product-module.category-form-component.name' | translate"
           [required]="true">
         </app-input>
@@ -24,7 +24,7 @@
         </h2>
         <app-input-select
           formControlName="parentCategoryId"
-          [errorCode]="errorCode('parentCategoryId') | translate"
+          [errorCode]="errorCode('parentCategoryId')"
           [label]="'product-module.category-form-component.choose-category' | translate"
           [items]="parentItems()">
         </app-input-select>

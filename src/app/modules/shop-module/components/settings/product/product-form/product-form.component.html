@@ -15,14 +15,14 @@
           <div class="flex flex-col flex-wrap">
             <app-input
               formControlName="name"
-              [errorCode]="errorCode('name') | translate"
+              [errorCode]="errorCode('name')"
               [label]="'shop-module.product-form-component.name' | translate"
               [isDisabled]="true"
               [required]="true">
             </app-input>
             <app-input-select
               formControlName="productBaseId"
-              [errorCode]="errorCode('productBaseId') | translate"
+              [errorCode]="errorCode('productBaseId')"
               [label]="'shop-module.product-form-component.product-base' | translate"
               [isDisabled]="true"
               [items]="productBaseItems"
@@ -30,7 +30,7 @@
             </app-input-select>
             <app-toggle
               formControlName="isActive"
-              [errorCode]="errorCode('isActive') | translate"
+              [errorCode]="errorCode('isActive')"
               [label]="'shop-module.product-form-component.active' | translate">
             </app-toggle>
           </div>

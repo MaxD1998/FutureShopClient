@@ -6,13 +6,13 @@
       </h1>
       <form [formGroup]="form" (ngSubmit)="login()">
         <app-input
-          [errorCode]="errorCode('email') | translate"
+          [errorCode]="errorCode('email')"
           label="{{ 'auth-module.login-component.email' | translate }}"
           formControlName="email"
           placeholder="{{ 'auth-module.login-component.enter-your-email' | translate }}"
           [type]="InputType.email"></app-input>
         <app-input
-          [errorCode]="errorCode('password') | translate"
+          [errorCode]="errorCode('password')"
           label="{{ 'auth-module.login-component.password' | translate }}"
           formControlName="password"
           placeholder="{{ 'auth-module.login-component.enter-your-password' | translate }}"

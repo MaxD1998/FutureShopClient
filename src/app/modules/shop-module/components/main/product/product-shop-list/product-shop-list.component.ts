@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputNumberComponent } from '../../../../../../components/shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
@@ -41,7 +41,6 @@ interface IProductShopListForm {
 export class ProductShopListComponent extends BaseFormComponent<IProductShopListForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _productDataService = inject(ProductDataService);
-  private readonly _translateService = inject(TranslateService);
 
   categoryName = signal<string>('');
   products = signal<ProductListModel[]>([]);

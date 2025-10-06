@@ -2,7 +2,7 @@ import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, inject
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputDateComponent } from '../../../../../../components/shared/input-date/input-date.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
@@ -58,7 +58,6 @@ export class PromotionFormComponent extends BaseFormComponent<IPromotionForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _promotionDataService = inject(PromotionDataService);
-  private readonly _translateService = inject(TranslateService);
 
   PromotionType: typeof PromotionType = PromotionType;
 

@@ -14,40 +14,40 @@
         <div class="flex flex-col flex-wrap">
           <app-input
             formControlName="name"
-            [errorCode]="errorCode('name') | translate"
+            [errorCode]="errorCode('name')"
             [label]="'shop-module.promotion-form-component.name' | translate"
             [required]="true">
           </app-input>
           <app-input
             formControlName="code"
-            [errorCode]="errorCode('code') | translate"
+            [errorCode]="errorCode('code')"
             [label]="'shop-module.promotion-form-component.promotion-code' | translate"
             [required]="true">
           </app-input>
           <app-toggle
             formControlName="isActive"
-            [errorCode]="errorCode('isActive') | translate"
+            [errorCode]="errorCode('isActive')"
             [label]="'shop-module.promotion-form-component.active' | translate">
           </app-toggle>
           <div class="flex flex-1 gap-4">
             <app-input-date
               class="w-full"
               formControlName="start"
-              [errorCode]="errorCode('start') | translate"
+              [errorCode]="errorCode('start')"
               [label]="'shop-module.promotion-form-component.start' | translate"
               [required]="true">
             </app-input-date>
             <app-input-date
               class="w-full"
               formControlName="end"
-              [errorCode]="errorCode('end') | translate"
+              [errorCode]="errorCode('end')"
               [label]="'shop-module.promotion-form-component.end' | translate"
               [required]="true">
             </app-input-date>
           </div>
           <app-input-select
             formControlName="type"
-            [errorCode]="errorCode('type') | translate"
+            [errorCode]="errorCode('type')"
             [items]="promotionTypeItems"
             [label]="'shop-module.promotion-form-component.promotion-type' | translate"
             [required]="true">

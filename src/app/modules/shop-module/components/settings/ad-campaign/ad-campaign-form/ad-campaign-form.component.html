@@ -14,26 +14,26 @@
         <div class="flex flex-col flex-wrap">
           <app-input
             formControlName="name"
-            [errorCode]="errorCode('name') | translate"
+            [errorCode]="errorCode('name')"
             [label]="'shop-module.ad-campaign-form-component.name' | translate"
             [required]="true">
           </app-input>
           <app-toggle
             formControlName="isActive"
-            [errorCode]="errorCode('isActive') | translate"
+            [errorCode]="errorCode('isActive')"
             [label]="'shop-module.ad-campaign-form-component.active' | translate">
           </app-toggle>
           <div class="flex flex-1 gap-4">
             <app-input-date
               class="w-full"
               formControlName="start"
-              [errorCode]="errorCode('start') | translate"
+              [errorCode]="errorCode('start')"
               [label]="'shop-module.ad-campaign-form-component.start' | translate">
             </app-input-date>
             <app-input-date
               class="w-full"
               formControlName="end"
-              [errorCode]="errorCode('end') | translate"
+              [errorCode]="errorCode('end')"
               [label]="'shop-module.ad-campaign-form-component.end' | translate">
             </app-input-date>
           </div>
