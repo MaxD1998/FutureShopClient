@@ -22,14 +22,14 @@ export abstract class BaseFormComponent<T extends { [K in keyof T]: AbstractCont
       const [key] = entries[0];
 
       switch (key) {
-        case 'min':
-          console.log(error);
-          console.log(entries);
-          return this._translateService.instant(`validation-errors.${key}`);
-        case 'max':
-          return this._translateService.instant(`validation-errors.${key}`);
+        case 'arrayEmpty': {
+          const arrayName = this._translateService.instant(
+            `validation-errors.arrayEmpty.table-names.${error[key].arrayEmpty}`,
+          );
+          return this._translateService.instant(`validation-errors.arrayEmpty.${key}`, { arrayName: arrayName });
+        }
         default:
-          return this._translateService.instant(`validation-errors.${key}`);
+          return this._translateService.instant(`validation-errors.${key}`, error[key]);
       }
     }
 

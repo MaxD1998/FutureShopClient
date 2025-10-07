@@ -30,8 +30,17 @@
     }
   },
   "validation-errors": {
+    "arrayEmpty": {
+      "arrayEmpty": "Table '{{arrayName}}' contains no records.",
+      "table-names": {
+        "prices": "Prices",
+        "promotionProducts": "Products"
+      }
+    },
     "email": "Invalid email format",
     "equal": "Values are not equal",
+    "max": "The value cannot be greater than: {{max}}.",
+    "min": "The value must be at least: {{min}}.",
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
   },

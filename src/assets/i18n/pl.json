@@ -30,8 +30,17 @@
     }
   },
   "validation-errors": {
+    "arrayEmpty": {
+      "arrayEmpty": "Tablica '{{arrayName}}' nie zawiera rekordów.",
+      "table-names": {
+        "prices": "Ceny",
+        "promotionProducts": "Produkty"
+      }
+    },
     "email": "Nieprawidłowy format adresu e-mail",
     "equal": "Wartości nie są równe",
+    "max": "Podana wartość nie może być większa niż: {{max}}.",
+    "min": "Podana wartość musi być co najmniej: {{min}}.",
     "not-white-charackters": "Białe znaki są zabronione",
     "required": "Pole jest wymagane"
   },

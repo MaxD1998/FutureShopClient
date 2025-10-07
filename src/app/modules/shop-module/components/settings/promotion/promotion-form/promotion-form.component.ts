@@ -120,6 +120,7 @@ export class PromotionFormComponent extends BaseFormComponent<IPromotionForm> {
       }
 
       this.form.controls.promotionProducts.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => {
+        this.form.controls.isActive.markAsTouched();
         this.form.controls.isActive.updateValueAndValidity();
       });
     }
