@@ -1,0 +1,91 @@
+<div class="flex flex-col h-full bg-neutral-900 rounded-tl-xl">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">
+      {{ header | translate }}
+    </h1>
+    <app-button [label]="'shop-module.promotion-form-component.save' | translate" (onClick)="submit()"></app-button>
+  </div>
+  <div class="flex flex-col p-4">
+    <form class="flex flex-row flex-auto gap-4" [formGroup]="form">
+      <div class="flex flex-col flex-1 gap-4">
+        <h2 class="text-xl font-semibold text-white mb-4">
+          {{ 'shop-module.promotion-form-component.properties' | translate }}
+        </h2>
+        <div class="flex flex-col flex-wrap">
+          <app-input
+            formControlName="name"
+            [errorCode]="errorCode('name')"
+            [label]="'shop-module.promotion-form-component.name' | translate"
+            [required]="true">
+          </app-input>
+          <app-input
+            formControlName="code"
+            [errorCode]="errorCode('code')"
+            [label]="'shop-module.promotion-form-component.promotion-code' | translate"
+            [required]="true">
+          </app-input>
+          @if (adCampaignItems && adCampaignItems.length > 1) {
+            <app-input-select
+              formControlName="adCampaignId"
+              [errorCode]="errorCode('adCampaignId')"
+              [items]="adCampaignItems"
+              [label]="'shop-module.promotion-form-component.ad-campaign' | translate">
+            </app-input-select>
+          }
+          <app-toggle
+            formControlName="isActive"
+            [errorCode]="errorCode('isActive')"
+            [label]="'shop-module.promotion-form-component.active' | translate">
+          </app-toggle>
+          <div class="flex flex-1 gap-4">
+            <app-input-date
+              class="w-full"
+              formControlName="start"
+              [errorCode]="errorCode('start')"
+              [label]="'shop-module.promotion-form-component.start' | translate"
+              [required]="true">
+            </app-input-date>
+            <app-input-date
+              class="w-full"
+              formControlName="end"
+              [errorCode]="errorCode('end')"
+              [label]="'shop-module.promotion-form-component.end' | translate"
+              [required]="true">
+            </app-input-date>
+          </div>
+          <app-input-select
+            formControlName="type"
+            [errorCode]="errorCode('type')"
+            [items]="promotionTypeItems"
+            [label]="'shop-module.promotion-form-component.promotion-type' | translate"
+            [required]="true">
+          </app-input-select>
+        </div>
+      </div>
+      <div class="flex-1">
+        <app-table
+          [buttonLabel]="'shop-module.promotion-form-component.add'"
+          [columns]="columns"
+          [header]="'shop-module.promotion-form-component.products'"
+          [idName]="'productId'"
+          [isRemoveAction]="true"
+          [items]="form.getRawValue().promotionProducts"
+          (onButtonAction)="isDialogActive.set(true)"
+          (onRemoveAction)="removeItem($event)">
+        </app-table>
+      </div>
+    </form>
+    @switch (this.form.controls.type.value) {
+      @case (PromotionType.Percent.toString()) {
+        <app-percent-value class="flex-1" [formGroup]="form" [isInit]="isInit()"></app-percent-value>
+      }
+      @default {}
+    }
+  </div>
+</div>
+<app-dialog-window
+  [isDialogActive]="isDialogActive()"
+  [title]="'shop-module.promotion-form-component.select-product' | translate"
+  (onCloseDialog)="isDialogActive.set(false)">
+  <app-set-promotion-product [formGroup]="form" [(isDialogActive)]="isDialogActive"></app-set-promotion-product>
+</app-dialog-window>

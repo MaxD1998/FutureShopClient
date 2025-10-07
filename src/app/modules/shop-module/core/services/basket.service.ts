@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, defaultIfEmpty, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { BasketDataService } from '../data-services/basket.data-service';
@@ -28,7 +28,7 @@ export class BasketService {
             basketItems: basket.basketItems.map(x => {
               return {
                 id: x.id,
-                productId: x.productId,
+                productId: x.product.id,
                 quantity: x.quantity,
               };
             }),
@@ -82,7 +82,7 @@ export class BasketService {
               .map(x => {
                 return {
                   id: x.id,
-                  productId: x.productId,
+                  productId: x.product.id,
                   quantity: x.quantity,
                 };
               }),
@@ -103,13 +103,13 @@ export class BasketService {
       .pipe(
         take(1),
         filter(basket => !!basket),
-        filter(basket => basket.basketItems.some(x => x.productId == item.productId)),
+        filter(basket => basket.basketItems.some(x => x.product.id == item.productId)),
         switchMap(basket => {
           const dto: BasketRequestFormDto = {
             basketItems: basket.basketItems.map(x => {
               return {
                 id: x.id,
-                productId: x.productId,
+                productId: x.product.id,
                 quantity: x.quantity,
               };
             }),
@@ -178,20 +178,22 @@ export class BasketService {
     return this.basket$.pipe(
       switchMap(basket => {
         if (basket && basket.basketItems.length > 0) {
+          const images = forkJoin(
+            basket.basketItems
+              .filter(x => !!x.product.fileId)
+              .map(x =>
+                forkJoin({
+                  fileId: of(x.product.fileId as string),
+                  image: this._fileDataService
+                    .getById(x.product.fileId as string)
+                    .pipe(map(blob => URL.createObjectURL(blob))),
+                }),
+              ),
+          ).pipe(defaultIfEmpty([]));
+
           return forkJoin({
             basketItems: of(basket.basketItems),
-            images: forkJoin(
-              basket.basketItems
-                .filter(x => !!x.productFileId)
-                .map(x =>
-                  forkJoin({
-                    fileId: of(x.productFileId as string),
-                    image: this._fileDataService
-                      .getById(x.productFileId as string)
-                      .pipe(map(blob => URL.createObjectURL(blob))),
-                  }),
-                ),
-            ),
+            images: images,
           }).pipe(
             map(response => {
               let images: Record<string, string> = {};

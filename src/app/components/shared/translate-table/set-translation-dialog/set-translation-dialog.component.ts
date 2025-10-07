@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Injector, input, model, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { tap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
@@ -21,7 +21,6 @@ import { InputComponent } from '../../input/input.component';
 })
 export class SetTranslationDialogComponent extends BaseFormComponent<ITranslationForm> {
   private readonly _injector = inject(Injector);
-  private readonly _translateService = inject(TranslateService);
 
   formArray = input.required<FormArray<FormControl<TranslationFormDto>>>();
 

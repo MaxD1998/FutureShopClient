@@ -12,14 +12,14 @@
       </h2>
       <app-input
         formControlName="name"
-        [errorCode]="errorCode('name') | translate"
+        [errorCode]="errorCode('name')"
         [label]="'shop-module.category-form-component.name' | translate"
         [isDisabled]="true"
         [required]="true">
       </app-input>
       <app-toggle
         formControlName="isActive"
-        [errorCode]="errorCode('isActive') | translate"
+        [errorCode]="errorCode('isActive')"
         [label]="'shop-module.product-form-component.active' | translate">
       </app-toggle>
       <div class="flex flex-col flex-1">
@@ -33,7 +33,7 @@
         </h2>
         <app-input-select
           formControlName="parentCategoryId"
-          [errorCode]="errorCode('parentCategoryId') | translate"
+          [errorCode]="errorCode('parentCategoryId')"
           [label]="'shop-module.category-form-component.parent-category' | translate"
           [items]="parentCategoryItems"
           [isDisabled]="true">

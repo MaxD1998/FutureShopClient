@@ -1,0 +1,11 @@
+<form class="flex gap-4" [formGroup]="form">
+  <div class="flex-1">
+    <app-input-number
+      formControlName="percent"
+      [errorCode]="errorCode('percent')"
+      [label]="'shop-module.percent-value-component.percent' | translate"
+      [required]="true">
+    </app-input-number>
+  </div>
+  <div class="flex-1"></div>
+</form>

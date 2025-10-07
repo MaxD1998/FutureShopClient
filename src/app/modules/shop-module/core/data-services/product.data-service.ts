@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, switchMap, take } from 'rxjs';
+import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { ProductControllerRoute } from '../constants/api-routes/product-controller.route';
@@ -41,6 +42,17 @@ export class ProductDataService {
         }
       }),
     );
+  }
+
+  getListIdName(excludedIds: string[]): Observable<IdNameDto[]> {
+    const url = `${ProductControllerRoute.list}`;
+    let params = new HttpParams();
+
+    excludedIds.forEach(x => {
+      params = params.append('excludedIds', x);
+    });
+
+    return this._httpClient.get<IdNameDto[]>(url, { params: params });
   }
 
   getPage(pageNumber: number): Observable<PageDto<ProductListDto>> {

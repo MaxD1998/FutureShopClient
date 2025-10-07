@@ -29,15 +29,7 @@ export class BasketItemComponent {
   IconType = IconType;
 
   onInPurchaseListChange(value: boolean): void {
-    this.basketItem.set({
-      id: this.basketItem().id,
-      productFileId: this.basketItem().productFileId,
-      productId: this.basketItem().productId,
-      productIsInPurchaseList: value,
-      productName: this.basketItem().productName,
-      productPrice: this.basketItem().productPrice,
-      quantity: this.basketItem().quantity,
-    });
+    this.basketItem().product.isInPurchaseList = value;
   }
 
   setIsFavouriteOpen(): void {

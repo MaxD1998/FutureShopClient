@@ -1,8 +1,10 @@
 import { inject } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 export abstract class BaseFormComponent<T extends { [K in keyof T]: AbstractControl<any> } = any> {
   protected readonly _formBuilder = inject(FormBuilder);
+  protected readonly _translateService = inject(TranslateService);
 
   form: FormGroup<T> = this.setGroup();
 
@@ -18,7 +20,17 @@ export abstract class BaseFormComponent<T extends { [K in keyof T]: AbstractCont
     if (control && control.touched && error) {
       const entries = Object.entries(error);
       const [key] = entries[0];
-      return `validation-errors.${key}`;
+
+      switch (key) {
+        case 'arrayEmpty': {
+          const arrayName = this._translateService.instant(
+            `validation-errors.arrayEmpty.table-names.${error[key].arrayEmpty}`,
+          );
+          return this._translateService.instant(`validation-errors.arrayEmpty.${key}`, { arrayName: arrayName });
+        }
+        default:
+          return this._translateService.instant(`validation-errors.${key}`, error[key]);
+      }
     }
 
     return '';

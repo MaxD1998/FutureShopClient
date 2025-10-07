@@ -49,7 +49,7 @@ export class BasketComponent implements OnDestroy {
 
   totalAmount = computed<number>(() => {
     const basketItems = this.basketItems();
-    return basketItems.map(item => item.productPrice * item.quantity).reduce((total, num) => total + num);
+    return basketItems.map(item => item.product.price * item.quantity).reduce((total, num) => total + num);
   });
 
   loginPath = `/${ClientRoute.auth}/${ClientRoute.login}`;
@@ -78,7 +78,7 @@ export class BasketComponent implements OnDestroy {
     const basketItem = this.basketItems().find(x => x.id == value.id);
     if (basketItem) {
       basketItem.quantity = value.quantity;
-      basketItem.productIsInPurchaseList = value.productIsInPurchaseList;
+      basketItem.product.isInPurchaseList = value.product.isInPurchaseList;
       this.basketItems.set(Array.from(this.basketItems()));
     }
   }
@@ -91,7 +91,7 @@ export class BasketComponent implements OnDestroy {
     this._timeout = setTimeout(() => {
       this.basketService.editBasketItem({
         id: basketItem.id,
-        productId: basketItem.productId,
+        productId: basketItem.product.id,
         quantity: basketItem.quantity,
       });
     }, 600);

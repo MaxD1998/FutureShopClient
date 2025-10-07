@@ -22,12 +22,14 @@ function getPhotos$(fileDataService: FileDataService, dto: PurchaseListDto): Obs
     purchaseList: of(dto),
     photos: of(dto.purchaseListItems).pipe(
       switchMap(purchaseListItems => {
-        const results = purchaseListItems.map(x => {
-          return forkJoin({
-            fileId: x.productFileId,
-            photo: fileDataService.getById(x.productFileId),
+        const results = purchaseListItems
+          .filter(x => !!x.productFileId)
+          .map(x => {
+            return forkJoin({
+              fileId: x.productFileId,
+              photo: fileDataService.getById(x.productFileId),
+            });
           });
-        });
 
         return forkJoin(results).pipe(defaultIfEmpty([]));
       }),

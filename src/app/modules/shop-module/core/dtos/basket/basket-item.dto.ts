@@ -1,9 +1,12 @@
 export interface BasketItemDto {
   id: string;
-  productFileId?: string;
-  productId: string;
-  productIsInPurchaseList: boolean;
-  productName: string;
-  productPrice: number;
+  product: {
+    fileId?: string;
+    id: string;
+    isInPurchaseList: boolean;
+    name: string;
+    originalPrice: number;
+    price: number;
+  };
   quantity: number;
 }

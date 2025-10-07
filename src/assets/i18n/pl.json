@@ -30,8 +30,17 @@
     }
   },
   "validation-errors": {
+    "arrayEmpty": {
+      "arrayEmpty": "Tablica '{{arrayName}}' nie zawiera rekordów.",
+      "table-names": {
+        "prices": "Ceny",
+        "promotionProducts": "Produkty"
+      }
+    },
     "email": "Nieprawidłowy format adresu e-mail",
     "equal": "Wartości nie są równe",
+    "max": "Podana wartość nie może być większa niż: {{max}}.",
+    "min": "Podana wartość musi być co najmniej: {{min}}.",
     "not-white-charackters": "Białe znaki są zabronione",
     "required": "Pole jest wymagane"
   },
@@ -223,6 +232,9 @@
     "menu-aside-component": {
       "categories": "Kategorie"
     },
+    "percent-value-component": {
+      "percent": "Procent"
+    },
     "product-base-form-component": {
       "add-parameter": "Dodaj parametr",
       "choose-category": "Wybierz kategorię",
@@ -316,6 +328,38 @@
         "3": "Cena malejąco"
       }
     },
+    "promotion-form-component": {
+      "active": "Aktywny",
+      "ad-campaign": "Kampania reklamowa",
+      "add": "Dodaj",
+      "create-promotion": "Stwórz promocję",
+      "edit-promotion": "Edytuj promocję",
+      "end": "Zakończenie",
+      "name": "Nazwa",
+      "products": "Produkty",
+      "promotion-code": "Kod promocyjny",
+      "promotion-type": "Typ promocji",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "select-product": "Wybierz produkt",
+      "start": "Początek",
+      "table-columns": {
+        "name": "Nazwa"
+      },
+      "type-items": {
+        "percent": "Procent"
+      }
+    },
+    "promotion-list-component": {
+      "create-new-promotion": "Stwórz promocję",
+      "end": "Zakończenie",
+      "is-active": "Aktywny",
+      "name": "Nazwa",
+      "number-of-promotion-items": "Liczba produktów w promocji",
+      "promotion-code": "Kod promocyjny",
+      "promotions": "Promocje",
+      "start": "Początek"
+    },
     "purchase-lists-component": {
       "add-list": "Dodaj listę",
       "add-purchase-list": "Dodaj listę zakupową",
@@ -328,13 +372,18 @@
         "ad-campaigns": "Kampanie reklamowe",
         "categories": "Kategorie",
         "products": "Produkty",
-        "products-bases": "Bazy produktów"
+        "products-bases": "Bazy produktów",
+        "promotion": "Promocje"
       },
       "menu": "Menu"
     },
     "set-ad-campaign-item-component": {
       "choose-file": "Wybierz plik",
       "file-is-empty": "Plik jest pusty",
+      "save": "Zapisz"
+    },
+    "set-promotion-product-component": {
+      "products": "Produkty",
       "save": "Zapisz"
     },
     "small-purchase-list-form-component": {

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { forkJoin, merge, Observable, switchMap } from 'rxjs';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../components/shared/input-select/input-select.component';
@@ -49,7 +49,6 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
   private readonly _categoryDataService = inject(CategoryDataService);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _router = inject(Router);
-  private readonly _translateService = inject(TranslateService);
 
   private readonly _snapshot = this._activatedRoute.snapshot;
   private readonly _resolverData = this._snapshot.data['form'];

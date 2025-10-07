@@ -12,10 +12,9 @@
     class="block p-2 h-10 w-full bg-neutral-800 text-neutral-100 font-semibold rounded-md outline-1 -outline-offset-1 outline-neutral-700 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600"
     [disabled]="isDisabled()"
     [value]="value()"
-    (change)="onValueChange(select)"
-    (blur)="onValueChange(select)">
+    (change)="onValueChange(select)">
     @for (dropdownItem of items(); track $index) {
-      <option [value]="dropdownItem.id ?? ''">
+      <option [value]="dropdownItem.id ?? ''" [selected]="dropdownItem.id === value()">
         {{ dropdownItem.value }}
       </option>
     }

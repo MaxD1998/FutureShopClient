@@ -30,8 +30,17 @@
     }
   },
   "validation-errors": {
+    "arrayEmpty": {
+      "arrayEmpty": "Table '{{arrayName}}' contains no records.",
+      "table-names": {
+        "prices": "Prices",
+        "promotionProducts": "Products"
+      }
+    },
     "email": "Invalid email format",
     "equal": "Values are not equal",
+    "max": "The value cannot be greater than: {{max}}.",
+    "min": "The value must be at least: {{min}}.",
     "not-white-charackters": "White charackters are forbidden",
     "required": "Field is required"
   },
@@ -223,6 +232,9 @@
     "menu-aside-component": {
       "categories": "Categories"
     },
+    "percent-value-component": {
+      "percent": "Percent"
+    },
     "product-base-form-component": {
       "add-parameter": "Add parameter",
       "choose-category": "Choose category",
@@ -284,14 +296,8 @@
         }
       },
       "product-base": "Product base",
-      "product-parameters": "Product parameters",
-      "product-parameter-table-columns": {
-        "name": "Name",
-        "value": "Value"
-      },
       "properties": "Properties",
       "save": "Save",
-      "set-value": "Set value",
       "translations": "Translations"
     },
     "product-list-component": {
@@ -322,6 +328,38 @@
         "3": "Price descending"
       }
     },
+    "promotion-form-component": {
+      "active": "Active",
+      "ad-campaign": "Ad campaign",
+      "add": "Add",
+      "create-promotion": "Create promotion",
+      "edit-promotion": "Edit promotion",
+      "end": "End",
+      "name": "Name",
+      "products": "Products",
+      "promotion-code": "Promotion code",
+      "promotion-type": "Promotion type",
+      "properties": "Properties",
+      "save": "Save",
+      "select-product": "Select product",
+      "start": "Start",
+      "table-columns": {
+        "name": "Nazwa"
+      },
+      "type-items": {
+        "percent": "Percent"
+      }
+    },
+    "promotion-list-component": {
+      "create-new-promotion": "Create new promotion",
+      "end": "End",
+      "is-active": "Active",
+      "name": "Name",
+      "number-of-ad-campaign-items": "Number of ad campaign items",
+      "promotion-code": "Promotion code",
+      "promotions": "promotions",
+      "start": "Start"
+    },
     "purchase-lists-component": {
       "add-list": "Add list",
       "add-purchase-list": "Add purchase list",
@@ -334,13 +372,18 @@
         "ad-campaigns": "Ad campaigns",
         "categories": "Categories",
         "products": "Products",
-        "products-bases": "Product bases"
+        "products-bases": "Product bases",
+        "promotion": "Promotion"
       },
       "menu": "Menu"
     },
     "set-ad-campaign-item-component": {
       "choose-file": "Choose file",
       "file-is-empty": "File is empty",
+      "save": "Save"
+    },
+    "set-promotion-product-component": {
+      "products": "Products",
       "save": "Save"
     },
     "small-purchase-list-form-component": {

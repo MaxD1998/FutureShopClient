@@ -14,6 +14,7 @@ export class ClientRoute {
   public static readonly product = 'product';
   public static readonly productModule = 'product-module';
   public static readonly productBase = 'product-base';
+  public static readonly promotion = 'promotion';
   public static readonly purchaseLists = 'purchase-lists';
   public static readonly register = 'register';
   public static readonly settings = 'settings';

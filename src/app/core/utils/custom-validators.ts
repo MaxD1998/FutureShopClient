@@ -20,7 +20,7 @@ export class CustomValidators {
   static arrayIsNotEmpty(arrayName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const array = control.parent?.get(arrayName) as FormArray;
-      return !control.value || array?.length > 0 ? null : { arrayEmpty: true };
+      return !control.value || array?.length > 0 ? null : { arrayEmpty: { arrayEmpty: arrayName } };
     };
   }
 }
