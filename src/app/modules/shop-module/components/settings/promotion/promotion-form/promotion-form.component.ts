@@ -154,7 +154,7 @@ export class PromotionFormComponent extends BaseFormComponent<IPromotionForm> {
       promotionProducts,
       start: start!,
       type: Number.parseInt(type!),
-      value: JSON.stringify(value),
+      value: value,
     };
 
     const request = !this.id ? this._promotionDataService.create(dto) : this._promotionDataService.update(this.id, dto);

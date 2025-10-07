@@ -9,5 +9,5 @@ export interface PromotionRequestFormDto {
   promotionProducts: PromotionProductFormDto[];
   start: Date;
   type: PromotionType;
-  value: string;
+  value: any;
 }

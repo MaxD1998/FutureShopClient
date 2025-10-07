@@ -28,7 +28,7 @@ export class BasketService {
             basketItems: basket.basketItems.map(x => {
               return {
                 id: x.id,
-                productId: x.productId,
+                productId: x.product.id,
                 quantity: x.quantity,
               };
             }),
@@ -82,7 +82,7 @@ export class BasketService {
               .map(x => {
                 return {
                   id: x.id,
-                  productId: x.productId,
+                  productId: x.product.id,
                   quantity: x.quantity,
                 };
               }),
@@ -103,13 +103,13 @@ export class BasketService {
       .pipe(
         take(1),
         filter(basket => !!basket),
-        filter(basket => basket.basketItems.some(x => x.productId == item.productId)),
+        filter(basket => basket.basketItems.some(x => x.product.id == item.productId)),
         switchMap(basket => {
           const dto: BasketRequestFormDto = {
             basketItems: basket.basketItems.map(x => {
               return {
                 id: x.id,
-                productId: x.productId,
+                productId: x.product.id,
                 quantity: x.quantity,
               };
             }),
@@ -180,12 +180,12 @@ export class BasketService {
         if (basket && basket.basketItems.length > 0) {
           const images = forkJoin(
             basket.basketItems
-              .filter(x => !!x.productFileId)
+              .filter(x => !!x.product.fileId)
               .map(x =>
                 forkJoin({
-                  fileId: of(x.productFileId as string),
+                  fileId: of(x.product.fileId as string),
                   image: this._fileDataService
-                    .getById(x.productFileId as string)
+                    .getById(x.product.fileId as string)
                     .pipe(map(blob => URL.createObjectURL(blob))),
                 }),
               ),

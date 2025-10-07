@@ -21,6 +21,11 @@ export class PromotionDataService {
     return this._httpClient.delete<null>(`${PromotionControllerRoute.base}${id}`);
   }
 
+  getActualCodes(): Observable<string[]> {
+    const url = `${PromotionControllerRoute.actualCodes}`;
+    return this._httpClient.get<string[]>(url);
+  }
+
   getById(id: string): Observable<PromotionResponseFormDto> {
     const url = `${PromotionControllerRoute.base}${id}`;
     return this._httpClient.get<PromotionResponseFormDto>(url);

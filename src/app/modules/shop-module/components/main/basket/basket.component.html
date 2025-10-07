@@ -43,7 +43,7 @@
       @for (basketItem of basketItems(); track $index) {
         <app-basket-item
           [basketItem]="basketItem"
-          [image]="images[basketItem.productFileId ?? '']"
+          [image]="images[basketItem.product.fileId ?? '']"
           (basketItemChange)="changeBasketItem($event)"
           (quantityChange)="changeQuantity($event)">
         </app-basket-item>
@@ -53,7 +53,7 @@
       <div class="px-4 py-2 bg-neutral-900 rounded-xl">
         <div class="flex justify-between">
           <span class="text-white font-semibold"> {{ 'shop-module.basket-component.to-pay' | translate }} </span>
-          <span class="text-xl text-white font-semibold"> {{ totalAmount() }} </span>
+          <span class="text-xl text-white font-semibold"> {{ totalAmount() }} zł</span>
         </div>
         <app-button
           class="block my-4"
