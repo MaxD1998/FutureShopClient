@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { AdCampaignControllerRoute } from '../constants/api-routes/ad-campaign-controller.route';
 import { AdCampaignListDto } from '../dtos/ad-campaign/ad-campaign-list.dto';
@@ -29,6 +30,11 @@ export class AdCampaignDataService {
   getById(id: string): Observable<AdCampaignResponseFormDto> {
     const url = `${AdCampaignControllerRoute.base}${id}`;
     return this._httpClient.get<AdCampaignResponseFormDto>(url);
+  }
+
+  getListIdName(): Observable<IdNameDto[]> {
+    const url = `${AdCampaignControllerRoute.all}`;
+    return this._httpClient.get<IdNameDto[]>(url);
   }
 
   getPage(pageNumber: number): Observable<PageDto<AdCampaignListDto>> {

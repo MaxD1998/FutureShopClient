@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PromotionControllerRoute } from '../constants/api-routes/promotion-controller.route';
 import { PromotionListDto } from '../dtos/promotion/promotion-list.dto';
@@ -29,6 +30,11 @@ export class PromotionDataService {
   getById(id: string): Observable<PromotionResponseFormDto> {
     const url = `${PromotionControllerRoute.base}${id}`;
     return this._httpClient.get<PromotionResponseFormDto>(url);
+  }
+
+  getListIdName(): Observable<IdNameDto[]> {
+    const url = `${PromotionControllerRoute.all}`;
+    return this._httpClient.get<IdNameDto[]>(url);
   }
 
   getPage(pageNumber: number): Observable<PageDto<PromotionListDto>> {

@@ -330,6 +330,7 @@
     },
     "promotion-form-component": {
       "active": "Aktywny",
+      "ad-campaign": "Kampania reklamowa",
       "add": "Dodaj",
       "create-promotion": "Stwórz promocję",
       "edit-promotion": "Edytuj promocję",

@@ -330,6 +330,7 @@
     },
     "promotion-form-component": {
       "active": "Active",
+      "ad-campaign": "Ad campaign",
       "add": "Add",
       "create-promotion": "Create promotion",
       "edit-promotion": "Edit promotion",

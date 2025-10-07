@@ -24,6 +24,14 @@
             [label]="'shop-module.promotion-form-component.promotion-code' | translate"
             [required]="true">
           </app-input>
+          @if (adCampaignItems && adCampaignItems.length > 1) {
+            <app-input-select
+              formControlName="adCampaignId"
+              [errorCode]="errorCode('adCampaignId')"
+              [items]="adCampaignItems"
+              [label]="'shop-module.promotion-form-component.ad-campaign' | translate">
+            </app-input-select>
+          }
           <app-toggle
             formControlName="isActive"
             [errorCode]="errorCode('isActive')"
