@@ -4,7 +4,7 @@ import { forkJoin, map, of, switchMap } from 'rxjs';
 import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { AdCampaignDataService } from '../data-services/ad-campaign.data-service';
 
-export const adResolver: ResolveFn<string[]> = (route, state) => {
+export const mainAdResolver: ResolveFn<string[]> = (route, state) => {
   const fileDataService = inject(FileDataService);
 
   return inject(AdCampaignDataService)

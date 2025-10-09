@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
-import { adResolver } from '../../core/resolvers/ad.resolver';
 import { basketResolver } from '../../core/resolvers/basket.resolver';
+import { mainAdResolver } from '../../core/resolvers/main-ad.resolver';
 import { productDetailsResolver } from '../../core/resolvers/product-details.resolver';
 import { productShopListResolver } from '../../core/resolvers/product-shop-list.resolver';
 import { purchaseListsResolver } from '../../core/resolvers/purchase-lists.resolver';
@@ -11,7 +11,7 @@ export const mainRoutes: Routes = [
     path: ClientRoute.main,
     loadComponent: () => import('./main-content/main-content.component').then(x => x.MainContentComponent),
     resolve: {
-      ad: adResolver,
+      ad: mainAdResolver,
     },
   },
   {

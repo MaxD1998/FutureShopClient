@@ -1,4 +1,5 @@
 export class ClientRoute {
+  public static readonly ad = 'ad';
   public static readonly adCampaign = 'ad-campaign';
   public static readonly auth = 'auth';
   public static readonly authModule = 'auth-module';
