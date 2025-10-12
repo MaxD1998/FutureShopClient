@@ -159,15 +159,17 @@
   "shop-module": {
     "ad-campaign-form-component": {
       "active": "Active",
-      "add": "Add",
-      "ads": "Ads",
       "create-ad-campaign": "Create ad campaign",
       "edit-ad-campaign": "Edit ad campaign",
       "end": "End",
       "name": "Name",
       "properties": "Properties",
       "save": "Save",
-      "start": "Start",
+      "start": "Start"
+    },
+    "ad-campaign-items-table-component": {
+      "add": "Add",
+      "ads": "Ads",
       "table-columns": {
         "language": "Language",
         "name": "Name",

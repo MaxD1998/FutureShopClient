@@ -7,7 +7,6 @@ import { TableComponent } from '../../../../../../../components/shared/table/tab
 import { TableHeaderFloat } from '../../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../../core/models/data-table-column.model';
-import { TempIdGenerator } from '../../../../../../../core/utils/temp-id-generator';
 import { AdCampaignItemInfoDto } from '../../../../../core/dtos/ad-campaign/ad-campaign-item.info-dto';
 import { IAdCampaignForm } from '../ad-campaign-form.component';
 import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campaign-item.component';
@@ -21,7 +20,6 @@ import { SetAdCampaignItemComponent } from './set-ad-campaign-item/set-ad-campai
 })
 export class AdCampaignItemsTableComponent {
   private readonly destroyRef = inject(DestroyRef);
-  private readonly _tempIdGenerator = new TempIdGenerator();
   private readonly _translateService = inject(TranslateService);
 
   formGroup = input.required<FormGroup<IAdCampaignForm>>();
@@ -30,25 +28,25 @@ export class AdCampaignItemsTableComponent {
     {
       field: 'name',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.ad-campaign-form-component.table-columns.name',
+      headerText: 'shop-module.ad-campaign-items-table-component.table-columns.name',
       template: TableTemplate.text,
     },
     {
       field: 'lang',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.ad-campaign-form-component.table-columns.language',
+      headerText: 'shop-module.ad-campaign-items-table-component.table-columns.language',
       template: TableTemplate.text,
     },
     {
       field: 'type',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.ad-campaign-form-component.table-columns.type',
+      headerText: 'shop-module.ad-campaign-items-table-component.table-columns.type',
       template: TableTemplate.text,
     },
     {
       field: 'size',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.ad-campaign-form-component.table-columns.size',
+      headerText: 'shop-module.ad-campaign-items-table-component.table-columns.size',
       template: TableTemplate.text,
     },
     {

@@ -159,15 +159,17 @@
   "shop-module": {
     "ad-campaign-form-component": {
       "active": "Aktywny",
-      "add": "Dodaj",
-      "ads": "Reklamy",
       "create-ad-campaign": "Stwórz kampanię reklamową",
       "edit-ad-campaign": "Edytuj kampanię reklamową",
       "end": "Zakończenie",
       "name": "Nazwa",
       "properties": "Właściwości",
       "save": "Zapisz",
-      "start": "Początek",
+      "start": "Początek"
+    },
+    "ad-campaign-items-table-component": {
+      "add": "Dodaj",
+      "ads": "Reklamy",
       "table-columns": {
         "language": "Język",
         "name": "Nazwa",
