@@ -14,7 +14,7 @@ import { ProductDataService } from '../../../../core/data-services/product.data-
 import { ProductShopListDto } from '../../../../core/dtos/product/product-shop.list-dto';
 import { ProductShopLisRequestDto } from '../../../../core/dtos/product/product-shop.list-request-dto';
 import { ProductListModel } from '../../../../core/models/product-shop.list-model';
-import { ProductShopItemComponent } from './product-shop-item/product-shop-item.component';
+import { ProductShopItemComponent } from '../../../shared/product-shop-item/product-shop-item.component';
 
 interface IProductShopListForm {
   name: FormControl<string | null>;

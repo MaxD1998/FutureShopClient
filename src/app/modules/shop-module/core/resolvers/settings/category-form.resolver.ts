@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { forkJoin, map, of, switchMap } from 'rxjs';
-import { SelectItemModel } from '../../../../core/models/select-item.model';
-import { CategoryDataService } from '../data-services/category.data-service';
-import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
+import { SelectItemModel } from '../../../../../core/models/select-item.model';
+import { CategoryDataService } from '../../data-services/category.data-service';
+import { CategoryRequestFormDto } from '../../dtos/category/category.request-form-dto';
 
 export const categoryFormResolver: ResolveFn<{
   category: CategoryRequestFormDto;

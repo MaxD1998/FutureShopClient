@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonIconComponent } from '../../../../../../components/shared/button-icon/button-icon.component';
+import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
+import { IdFileDto } from '../../../../../../core/dtos/id-file.dto';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
 import { IconType } from '../../../../../../core/enums/icon-type';
 
@@ -13,12 +15,12 @@ import { IconType } from '../../../../../../core/enums/icon-type';
 })
 export class AdComponentComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
+  private readonly _router = inject(Router);
 
   ButtonLayout = ButtonLayout;
   IconType = IconType;
 
-  ads = signal<string[]>(this._activatedRoute.snapshot.data['ad']);
-
+  ads = signal<IdFileDto[]>(this._activatedRoute.snapshot.data['data']);
   currentIndex = signal<number>(0);
   timer?: NodeJS.Timeout;
 
@@ -26,8 +28,19 @@ export class AdComponentComponent {
     this.setAutoNextImage();
   }
 
+  getFile(index: number): string {
+    const file = this.ads()[index]?.file ?? '';
+    return file;
+  }
+
   goToImage(index: number): void {
     this.currentIndex.set(index);
+  }
+
+  navigateToAd(index: number): void {
+    const ad = this.ads()[index];
+
+    this._router.navigateByUrl(`${ClientRoute.ad}/${ad.id}`);
   }
 
   nextImage(): void {

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IdFileIdDto } from '../../../../core/dtos/id-fileId.dto';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { AdCampaignControllerRoute } from '../constants/api-routes/ad-campaign-controller.route';
@@ -22,9 +23,14 @@ export class AdCampaignDataService {
     return this._httpClient.delete<null>(`${AdCampaignControllerRoute.base}${id}`);
   }
 
-  getActual(): Observable<string[]> {
+  getActual(): Observable<IdFileIdDto[]> {
     const url = `${AdCampaignControllerRoute.actual}`;
-    return this._httpClient.get<string[]>(url);
+    return this._httpClient.get<IdFileIdDto[]>(url);
+  }
+
+  getActualById(id: string): Observable<IdFileIdDto> {
+    const url = `${AdCampaignControllerRoute.actualById}${id}`;
+    return this._httpClient.get<IdFileIdDto>(url);
   }
 
   getById(id: string): Observable<AdCampaignResponseFormDto> {

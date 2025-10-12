@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { categoryFormResolver } from '../../../core/resolvers/category-form.resolver';
-import { categoryListResolver } from '../../../core/resolvers/category-list.resolver';
+import { categoryFormResolver } from '../../../core/resolvers/settings/category-form.resolver';
+import { categoryListResolver } from '../../../core/resolvers/settings/category-list.resolver';
 export const categoryRoutes: Routes = [
   {
     path: '',

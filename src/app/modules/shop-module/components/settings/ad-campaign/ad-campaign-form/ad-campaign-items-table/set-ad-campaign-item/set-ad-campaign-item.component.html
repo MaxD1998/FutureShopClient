@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-2">
-  <app-input-select [items]="languages" (valueChange)="onLangSet($event)"></app-input-select>
+  <app-input-select [items]="languages()" (valueChange)="onLangSet($event)"></app-input-select>
   <div class="relative pb-6">
     <app-input-file
       [label]="'shop-module.set-ad-campaign-item-component.choose-file' | translate"

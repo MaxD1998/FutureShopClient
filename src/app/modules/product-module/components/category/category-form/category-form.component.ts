@@ -93,13 +93,6 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
       });
     }
 
-    // this.form.controls.parentCategoryId.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe({
-    //   next: () => {
-    //     console.log(1);
-    //     console.log(this.parentItems());
-    //   },
-    // });
-
     merge(this.form.controls.parentCategoryId.valueChanges, this.form.controls.subCategories.valueChanges)
       .pipe(
         takeUntilDestroyed(this._destroyRef),

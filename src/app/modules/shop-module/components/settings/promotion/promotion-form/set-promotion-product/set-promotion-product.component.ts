@@ -100,8 +100,6 @@ export class SetPromotionProductComponent {
 
     promotionProducts.clear();
     this._array.forEach(x => promotionProducts.push(new FormControl(x, { nonNullable: true })));
-
-    console.log();
     this.isDialogActive.set(false);
     this.selectValue.set('');
   }

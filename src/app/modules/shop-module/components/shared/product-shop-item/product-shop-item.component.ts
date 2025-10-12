@@ -3,15 +3,15 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { map, of, switchMap } from 'rxjs';
-import { ButtonComponent } from '../../../../../../../components/shared/button/button.component';
-import { DropDownComponent } from '../../../../../../../components/shared/drop-down/drop-down.component';
-import { IconComponent } from '../../../../../../../components/shared/icon/icon.component';
-import { ClientRoute } from '../../../../../../../core/constants/client-routes/client.route';
-import { FileDataService } from '../../../../../../../core/data-services/file.data-service';
-import { IconType } from '../../../../../../../core/enums/icon-type';
-import { ProductListModel } from '../../../../../core/models/product-shop.list-model';
-import { BasketService } from '../../../../../core/services/basket.service';
-import { AddProductToPurchaseListComponent } from '../../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
+import { ButtonComponent } from '../../../../../components/shared/button/button.component';
+import { DropDownComponent } from '../../../../../components/shared/drop-down/drop-down.component';
+import { IconComponent } from '../../../../../components/shared/icon/icon.component';
+import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
+import { FileDataService } from '../../../../../core/data-services/file.data-service';
+import { IconType } from '../../../../../core/enums/icon-type';
+import { ProductListModel } from '../../../core/models/product-shop.list-model';
+import { BasketService } from '../../../core/services/basket.service';
+import { AddProductToPurchaseListComponent } from '../add-product-to-purchase-list/add-product-to-purchase-list.component';
 
 @Component({
   selector: 'app-product-shop-item',
