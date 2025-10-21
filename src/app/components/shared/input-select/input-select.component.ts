@@ -16,7 +16,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { tap } from 'rxjs';
-import { SelectItemModel } from '../../../core/models/select-item.model';
+import { SelectItemModel } from './models/select-item.model';
 
 const CUSTOM_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,

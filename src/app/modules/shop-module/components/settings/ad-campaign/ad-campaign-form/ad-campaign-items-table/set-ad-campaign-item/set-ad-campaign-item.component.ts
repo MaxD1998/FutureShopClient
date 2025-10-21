@@ -5,7 +5,7 @@ import { environment } from '../../../../../../../../../environments/environment
 import { ButtonComponent } from '../../../../../../../../components/shared/button/button.component';
 import { InputFileComponent } from '../../../../../../../../components/shared/input-file/input-file.component';
 import { InputSelectComponent } from '../../../../../../../../components/shared/input-select/input-select.component';
-import { SelectItemModel } from '../../../../../../../../core/models/select-item.model';
+import { SelectItemModel } from '../../../../../../../../components/shared/input-select/models/select-item.model';
 import { IAdCampaignForm } from '../../ad-campaign-form.component';
 
 @Component({

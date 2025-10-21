@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { forkJoin, map, of, switchMap } from 'rxjs';
-import { SelectItemModel } from '../../../../../core/models/select-item.model';
+import { SelectItemModel } from '../../../../../components/shared/input-select/models/select-item.model';
 import { ProductBaseDataService } from '../../data-services/product-base.data-service';
 import { ProductDataService } from '../../data-services/product.data-service';
 import { ProductRequestFormDto } from '../../dtos/product/product.request-form-dto';

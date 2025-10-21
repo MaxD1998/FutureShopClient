@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
+import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { PromotionControllerRoute } from '../constants/api-routes/promotion-controller.route';
 import { PromotionListDto } from '../dtos/promotion/promotion-list.dto';
 import { PromotionRequestFormDto } from '../dtos/promotion/promotion.request-form-dto';
@@ -38,8 +39,15 @@ export class PromotionDataService {
   }
 
   getPage(pageNumber: number): Observable<PageDto<PromotionListDto>> {
-    const url = `${PromotionControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<PromotionListDto>>(url);
+    const dto: PaginationDto = {
+      pageNumber: pageNumber,
+      pageSize: 25,
+    };
+
+    const params = new HttpParams().append('pageNumber', dto.pageNumber).append('pageSize', dto.pageSize);
+    const url = `${PromotionControllerRoute.page}`;
+
+    return this._httpClient.get<PageDto<PromotionListDto>>(url, { params: params });
   }
 
   update(id: string, dto: PromotionRequestFormDto): Observable<PromotionResponseFormDto> {

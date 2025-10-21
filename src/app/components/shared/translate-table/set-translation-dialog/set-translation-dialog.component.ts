@@ -5,11 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { tap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { BaseFormComponent } from '../../../../core/bases/base-form.component';
-import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { TranslationFormDto } from '../../../../modules/shop-module/core/dtos/translation.form-dto';
 import { ITranslationForm } from '../../../../modules/shop-module/core/form/i-translation.form';
 import { ButtonComponent } from '../../button/button.component';
 import { InputSelectComponent } from '../../input-select/input-select.component';
+import { SelectItemModel } from '../../input-select/models/select-item.model';
 import { InputComponent } from '../../input/input.component';
 
 @Component({

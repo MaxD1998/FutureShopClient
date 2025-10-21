@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of } from 'rxjs';
-import { SelectItemModel } from '../../../../../core/models/select-item.model';
+import { SelectItemModel } from '../../../../../components/shared/input-select/models/select-item.model';
 import { AdCampaignDataService } from '../../data-services/ad-campaign.data-service';
 import { PromotionDataService } from '../../data-services/promotion.data-service';
 import { PromotionResponseFormDto } from '../../dtos/promotion/promotion.response-form-dto';

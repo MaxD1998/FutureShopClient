@@ -1,0 +1,11 @@
+@if (isLoaded()) {
+  <form class="flex flex-col gap-2" [formGroup]="form">
+    <app-input-select
+      formControlName="productId"
+      [label]="'shop-module.set-ad-campaign-product-component.product' | translate"
+      [items]="items()">
+    </app-input-select>
+    <app-button [label]="'shop-module.set-ad-campaign-product-component.save' | translate" (onClick)="submit()">
+    </app-button>
+  </form>
+}

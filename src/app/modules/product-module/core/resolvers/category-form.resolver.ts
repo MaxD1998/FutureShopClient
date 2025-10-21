@@ -2,8 +2,8 @@ import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
+import { SelectItemModel } from '../../../../components/shared/input-select/models/select-item.model';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
-import { SelectItemModel } from '../../../../core/models/select-item.model';
 import { CategoryDataService } from '../data-service/category.data-service';
 import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
 

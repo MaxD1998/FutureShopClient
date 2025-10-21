@@ -2,29 +2,29 @@ import { afterNextRender, ChangeDetectionStrategy, Component, inject, input, out
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { finalize, map } from 'rxjs';
-import { ButtonComponent } from '../../../../../../../components/shared/button/button.component';
-import { InputSelectComponent } from '../../../../../../../components/shared/input-select/input-select.component';
-import { SelectItemModel } from '../../../../../../../components/shared/input-select/models/select-item.model';
-import { BaseFormComponent } from '../../../../../../../core/bases/base-form.component';
-import { ProductDataService } from '../../../../../core/data-services/product.data-service';
-import { PromotionProductFormDto } from '../../../../../core/dtos/promotion/promotion-product.form-dto';
-import { IPromotionForm } from '../promotion-form.component';
+import { ButtonComponent } from '../../../../../../../../components/shared/button/button.component';
+import { InputSelectComponent } from '../../../../../../../../components/shared/input-select/input-select.component';
+import { SelectItemModel } from '../../../../../../../../components/shared/input-select/models/select-item.model';
+import { BaseFormComponent } from '../../../../../../../../core/bases/base-form.component';
+import { ProductDataService } from '../../../../../../core/data-services/product.data-service';
+import { AdCampaignProductFormDto } from '../../../../../../core/dtos/ad-campaign/ad-campaign-product.form-dto';
+import { IAdCampaignForm } from '../../ad-campaign-form.component';
 
 interface IProductForm {
   productId: FormControl<string | null>;
 }
 
 @Component({
-  selector: 'app-set-promotion-product',
+  selector: 'app-set-ad-campaign-product',
   imports: [ReactiveFormsModule, TranslateModule, InputSelectComponent, ButtonComponent],
-  templateUrl: './set-promotion-product.component.html',
-  styleUrl: './set-promotion-product.component.css',
+  templateUrl: './set-ad-campaign-product.component.html',
+  styleUrl: './set-ad-campaign-product.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SetPromotionProductComponent extends BaseFormComponent<IProductForm> {
+export class SetAdCampaignProductComponent extends BaseFormComponent<IProductForm> {
   private readonly _productDataService = inject(ProductDataService);
 
-  formGroup = input.required<FormGroup<IPromotionForm>>();
+  formGroup = input.required<FormGroup<IAdCampaignForm>>();
   onSave = output<void>();
 
   isLoaded = signal<boolean>(false);
@@ -35,15 +35,13 @@ export class SetPromotionProductComponent extends BaseFormComponent<IProductForm
     afterNextRender(() => {
       const excludedIds = this.formGroup()
         .getRawValue()
-        .promotionProducts.map(x => x.productId);
+        .adCampaignProducts.map(x => x.productId);
 
       this._productDataService
         .getListIdName(excludedIds)
         .pipe(
           map(products => products.map(x => ({ id: x.id, value: x.name }))),
-          finalize(() => {
-            this.isLoaded.set(true);
-          }),
+          finalize(() => this.isLoaded.set(true)),
         )
         .subscribe({
           next: products => {
@@ -66,8 +64,8 @@ export class SetPromotionProductComponent extends BaseFormComponent<IProductForm
 
     const productId = this.form.getRawValue().productId!;
     const { id, value } = this.items().find(x => x.id === productId)!;
-    this.formGroup().controls.promotionProducts.push(
-      new FormControl<PromotionProductFormDto>(
+    this.formGroup().controls.adCampaignProducts.push(
+      new FormControl<AdCampaignProductFormDto>(
         {
           productId: id!,
           productName: value,

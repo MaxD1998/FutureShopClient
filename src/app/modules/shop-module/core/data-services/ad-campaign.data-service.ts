@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdFileIdDto } from '../../../../core/dtos/id-fileId.dto';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
+import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { AdCampaignControllerRoute } from '../constants/api-routes/ad-campaign-controller.route';
 import { AdCampaignListDto } from '../dtos/ad-campaign/ad-campaign-list.dto';
 import { AdCampaignRequestFormDto } from '../dtos/ad-campaign/ad-campaign.request-form-dto';
@@ -44,8 +45,15 @@ export class AdCampaignDataService {
   }
 
   getPage(pageNumber: number): Observable<PageDto<AdCampaignListDto>> {
-    const url = `${AdCampaignControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<AdCampaignListDto>>(url);
+    const dto: PaginationDto = {
+      pageNumber: pageNumber,
+      pageSize: 25,
+    };
+
+    const params = new HttpParams().append('pageNumber', dto.pageNumber).append('pageSize', dto.pageSize);
+    const url = `${AdCampaignControllerRoute.page}`;
+
+    return this._httpClient.get<PageDto<AdCampaignListDto>>(url, { params: params });
   }
 
   update(id: string, dto: AdCampaignRequestFormDto): Observable<AdCampaignResponseFormDto> {
