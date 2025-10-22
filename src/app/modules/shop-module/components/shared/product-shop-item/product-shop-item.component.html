@@ -1,8 +1,8 @@
 <div class="bg-neutral-800 rounded-xl cursor-pointer" (mouseenter)="setHover(true)" (mouseleave)="setHover(false)">
   <div class="relative">
     @if (product().isInPurchaseList || isHover()) {
-      <div class="absolute top-4 right-4">
-        <div class="rounded-md overflow-hidden bg-sky-500 hover:bg-sky-600">
+      <div class="absolute top-2 right-2">
+        <div class="rounded-md overflow-hidden bg-sky-600 hover:bg-sky-700">
           <a class="block p-1 text-white" (click)="addToFavourite()">
             <app-icon [iconName]="product().isInPurchaseList ? IconType.fillHeart : IconType.heart"></app-icon>
           </a>
