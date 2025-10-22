@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
+import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
 import { CategoryListDto } from '../dtos/category/category.list-dto';
 import { CategoryPageListDto } from '../dtos/category/category.page-list-dto';
@@ -25,8 +26,15 @@ export class CategoryDataService {
   }
 
   getPage(pageNumber: number): Observable<PageDto<CategoryPageListDto>> {
-    const url = `${CategoryControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<CategoryPageListDto>>(url);
+    const dto: PaginationDto = {
+      pageNumber: pageNumber,
+      pageSize: 25,
+    };
+
+    const params = new HttpParams().append('pageNumber', dto.pageNumber).append('pageSize', dto.pageSize);
+    const url = `${CategoryControllerRoute.page}`;
+
+    return this._httpClient.get<PageDto<CategoryPageListDto>>(url, { params: params });
   }
 
   getList(categoryParentId?: string): Observable<CategoryListDto[]> {

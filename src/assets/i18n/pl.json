@@ -159,8 +159,6 @@
   "shop-module": {
     "ad-campaign-form-component": {
       "active": "Aktywny",
-      "add": "Dodaj",
-      "ads": "Reklamy",
       "create-ad-campaign": "Stwórz kampanię reklamową",
       "edit-ad-campaign": "Edytuj kampanię reklamową",
       "end": "Zakończenie",
@@ -168,6 +166,15 @@
       "properties": "Właściwości",
       "save": "Zapisz",
       "start": "Początek",
+      "type": "Typ kampanii",
+      "types": {
+        "product": "Produkt",
+        "promotion": "Promocja"
+      }
+    },
+    "ad-campaign-items-table-component": {
+      "add": "Dodaj",
+      "ads": "Reklamy",
       "table-columns": {
         "language": "Język",
         "name": "Nazwa",
@@ -183,6 +190,16 @@
       "name": "Nazwa",
       "number-of-ad-campaign-items": "Liczba reklam w kampanii",
       "start": "Początek"
+    },
+    "ad-campaign-products-table-component": {
+      "add": "Dodaj",
+      "products-in-ad-campaign": "Produkty w kampanii reklamowej",
+      "table-colums": {
+        "name": "Nazwa"
+      }
+    },
+    "ad-campaign-promotion-component": {
+      "promotion": "Promocja"
     },
     "add-product-to-purchase-list-component": {
       "add-a-new-list": "Dodaj nową listę",
@@ -380,6 +397,10 @@
     "set-ad-campaign-item-component": {
       "choose-file": "Wybierz plik",
       "file-is-empty": "Plik jest pusty",
+      "save": "Zapisz"
+    },
+    "set-ad-campaign-product-component": {
+      "product": "Produkt",
       "save": "Zapisz"
     },
     "set-promotion-product-component": {

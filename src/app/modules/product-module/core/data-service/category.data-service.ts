@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
+import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
 import { CategoryListDto } from '../dtos/category/category.list-dto';
 import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
@@ -28,8 +29,15 @@ export class CategoryDataService {
   }
 
   getPage(pageNumber: number): Observable<PageDto<CategoryListDto>> {
-    const url = `${CategoryControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<CategoryListDto>>(url);
+    const dto: PaginationDto = {
+      pageNumber: pageNumber,
+      pageSize: 25,
+    };
+
+    const params = new HttpParams().append('pageNumber', dto.pageNumber).append('pageSize', dto.pageSize);
+    const url = `${CategoryControllerRoute.page}`;
+
+    return this._httpClient.get<PageDto<CategoryListDto>>(url, { params: params });
   }
 
   getListPotentialSubcategories(exceptionIds: string[], parentId?: string, id?: string): Observable<IdNameDto[]> {

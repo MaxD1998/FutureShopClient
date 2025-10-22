@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { promotionFormResolver } from '../../../core/resolvers/promotion-form.resolver';
-import { promotionListResolver } from '../../../core/resolvers/promotion-list.resolver';
+import { promotionFormResolver } from '../../../core/resolvers/settings/promotion-form.resolver';
+import { promotionListResolver } from '../../../core/resolvers/settings/promotion-list.resolver';
 
 export const promotionRoutes: Routes = [
   {

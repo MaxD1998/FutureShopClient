@@ -87,5 +87,7 @@
   [isDialogActive]="isDialogActive()"
   [title]="'shop-module.promotion-form-component.select-product' | translate"
   (onCloseDialog)="isDialogActive.set(false)">
-  <app-set-promotion-product [formGroup]="form" [(isDialogActive)]="isDialogActive"></app-set-promotion-product>
+  @if (isDialogActive()) {
+    <app-set-promotion-product [formGroup]="form" (onSave)="isDialogActive.set(false)"></app-set-promotion-product>
+  }
 </app-dialog-window>

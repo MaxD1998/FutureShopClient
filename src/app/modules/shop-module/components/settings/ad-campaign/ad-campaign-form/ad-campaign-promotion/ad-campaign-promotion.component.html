@@ -1,0 +1,11 @@
+@if (isLoaded()) {
+  <form [formGroup]="form">
+    <app-input-select
+      formControlName="promotionId"
+      [errorCode]="errorCode('promotionId')"
+      [label]="'shop-module.ad-campaign-promotion-component.promotion' | translate"
+      [items]="promotionItems()"
+      [required]="true">
+    </app-input-select>
+  </form>
+}

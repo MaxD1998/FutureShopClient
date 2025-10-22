@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../core/constants/client-routes/client.route';
-import { mainCategoryListResolver } from './core/resolvers/main-category-list.resolver';
-import { mainPromotionCodesResolver } from './core/resolvers/main-promotion-codes.resolver';
+import { mainCategoryListResolver } from './core/resolvers/main/main-category-list.resolver';
+import { mainPromotionCodesResolver } from './core/resolvers/main/main-promotion-codes.resolver';
 
 export const shopModuleRoutes: Routes = [
   {

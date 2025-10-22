@@ -5,16 +5,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputNumberComponent } from '../../../../../../components/shared/input-number/input-number.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
+import { SelectItemModel } from '../../../../../../components/shared/input-select/models/select-item.model';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
 import { ProductSortType } from '../../../../../../core/enums/product-sort-type';
-import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductShopListDto } from '../../../../core/dtos/product/product-shop.list-dto';
 import { ProductShopLisRequestDto } from '../../../../core/dtos/product/product-shop.list-request-dto';
 import { ProductListModel } from '../../../../core/models/product-shop.list-model';
-import { ProductShopItemComponent } from './product-shop-item/product-shop-item.component';
+import { ProductShopItemComponent } from '../../../shared/product-shop-item/product-shop-item.component';
 
 interface IProductShopListForm {
   name: FormControl<string | null>;

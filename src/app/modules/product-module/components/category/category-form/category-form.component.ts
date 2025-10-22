@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { forkJoin, merge, Observable, switchMap } from 'rxjs';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../components/shared/input-select/input-select.component';
+import { SelectItemModel } from '../../../../../components/shared/input-select/models/select-item.model';
 import { InputComponent } from '../../../../../components/shared/input/input.component';
 import { DialogWindowComponent } from '../../../../../components/shared/modals/dialog-window/dialog-window.component';
 import { TableComponent } from '../../../../../components/shared/table/table.component';
@@ -17,7 +18,6 @@ import { IconType } from '../../../../../core/enums/icon-type';
 import { TableHeaderFloat } from '../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
-import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { CategoryDataService } from '../../../core/data-service/category.data-service';
 import { CategoryRequestFormDto } from '../../../core/dtos/category/category.request-form-dto';
 import { SubCategoryFormDialog } from './sub-category-form-dialog/sub-category-form-dialog';
@@ -92,13 +92,6 @@ export class CategoryFormComponent extends BaseFormComponent<ICategoryForm> {
         this.form.controls.subCategories.push(new FormControl(x, { nonNullable: true }));
       });
     }
-
-    // this.form.controls.parentCategoryId.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe({
-    //   next: () => {
-    //     console.log(1);
-    //     console.log(this.parentItems());
-    //   },
-    // });
 
     merge(this.form.controls.parentCategoryId.valueChanges, this.form.controls.subCategories.valueChanges)
       .pipe(

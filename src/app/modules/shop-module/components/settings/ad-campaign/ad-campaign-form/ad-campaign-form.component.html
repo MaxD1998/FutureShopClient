@@ -5,9 +5,9 @@
     </h1>
     <app-button [label]="'shop-module.ad-campaign-form-component.save' | translate" (onClick)="submit()"></app-button>
   </div>
-  <div class="flex p-4">
-    <form class="flex flex-row flex-auto gap-4" [formGroup]="form">
-      <div class="flex flex-col flex-1 gap-4">
+  <div class="flex flex-col p-4">
+    <div class="flex flex-row flex-auto gap-4">
+      <form class="flex flex-col flex-1 gap-4" [formGroup]="form">
         <h2 class="text-xl font-semibold text-white mb-4">
           {{ 'shop-module.ad-campaign-form-component.properties' | translate }}
         </h2>
@@ -28,36 +28,41 @@
               class="w-full"
               formControlName="start"
               [errorCode]="errorCode('start')"
-              [label]="'shop-module.ad-campaign-form-component.start' | translate">
+              [label]="'shop-module.ad-campaign-form-component.start' | translate"
+              [required]="true">
             </app-input-date>
             <app-input-date
               class="w-full"
               formControlName="end"
               [errorCode]="errorCode('end')"
-              [label]="'shop-module.ad-campaign-form-component.end' | translate">
+              [label]="'shop-module.ad-campaign-form-component.end' | translate"
+              [required]="true">
             </app-input-date>
           </div>
+          <app-input-select
+            formControlName="type"
+            [errorCode]="errorCode('type')"
+            [label]="'shop-module.ad-campaign-form-component.type' | translate"
+            [items]="typeItems"
+            [required]="true">
+          </app-input-select>
         </div>
-      </div>
+      </form>
       <div class="flex-1">
-        <app-table
-          [buttonLabel]="'shop-module.ad-campaign-form-component.add'"
-          [columns]="columns"
-          [header]="'shop-module.ad-campaign-form-component.ads'"
-          [idName]="'id'"
-          [isRemoveAction]="true"
-          [items]="adCampaignItems()"
-          (onButtonAction)="openSetPhotoDialog()"
-          (onRemoveAction)="removeAdCampaignItem($event)">
-        </app-table>
+        <app-ad-campaign-items-table [formGroup]="form"></app-ad-campaign-items-table>
       </div>
-    </form>
+    </div>
+    @switch (mapToAdCampaignType(form.getRawValue().type)) {
+      @case (AdCampaignType.Product) {
+        <app-ad-campaign-products-table [formGroup]="form"></app-ad-campaign-products-table>
+      }
+      @case (AdCampaignType.Promotion) {
+        <div class="flex gap-4">
+          <app-ad-campaign-promotion class="block flex-1" [formGroup]="form"></app-ad-campaign-promotion>
+          <div class="flex-1"></div>
+        </div>
+      }
+      @default {}
+    }
   </div>
 </div>
-<app-dialog-window [isDialogActive]="isDialogActive()" (onCloseDialog)="dialogClose()">
-  @switch (dialogType()) {
-    @case (DialogType.adCampaignItem) {
-      <app-set-ad-campaign-item (onSave)="setAdCampaignItem($event)"></app-set-ad-campaign-item>
-    }
-  }
-</app-dialog-window>

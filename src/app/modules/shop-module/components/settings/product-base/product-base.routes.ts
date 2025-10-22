@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { productBaseFormResolver } from '../../../core/resolvers/product-base-form.resolver';
-import { productBaseListResolver } from '../../../core/resolvers/product-base-list.resolver';
+import { productBaseFormResolver } from '../../../core/resolvers/settings/product-base-form.resolver';
+import { productBaseListResolver } from '../../../core/resolvers/settings/product-base-list.resolver';
 export const productBaseRoutes: Routes = [
   {
     path: `${ClientRoute.form}/:id`,

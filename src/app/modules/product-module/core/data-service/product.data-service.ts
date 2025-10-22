@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
+import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { ProductControllerRoute } from '../constants/api-routes/product-controller.route';
 import { ProductListDto } from '../dtos/product/product.list-dto';
 import { ProductRequestFormDto } from '../dtos/product/product.request-form-dto';
@@ -27,8 +28,15 @@ export class ProductDataService {
   }
 
   getPage(pageNumber: number): Observable<PageDto<ProductListDto>> {
-    const url = `${ProductControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<ProductListDto>>(url);
+    const dto: PaginationDto = {
+      pageNumber: pageNumber,
+      pageSize: 25,
+    };
+
+    const params = new HttpParams().append('pageNumber', dto.pageNumber).append('pageSize', dto.pageSize);
+    const url = `${ProductControllerRoute.page}`;
+
+    return this._httpClient.get<PageDto<ProductListDto>>(url, { params: params });
   }
 
   update(id: string, dto: ProductRequestFormDto): Observable<ProductResponseFormDto> {

@@ -159,8 +159,6 @@
   "shop-module": {
     "ad-campaign-form-component": {
       "active": "Active",
-      "add": "Add",
-      "ads": "Ads",
       "create-ad-campaign": "Create ad campaign",
       "edit-ad-campaign": "Edit ad campaign",
       "end": "End",
@@ -168,6 +166,15 @@
       "properties": "Properties",
       "save": "Save",
       "start": "Start",
+      "type": "Type of campaign",
+      "types": {
+        "product": "Product",
+        "promotion": "Promotion"
+      }
+    },
+    "ad-campaign-items-table-component": {
+      "add": "Add",
+      "ads": "Ads",
       "table-columns": {
         "language": "Language",
         "name": "Name",
@@ -183,6 +190,16 @@
       "name": "Name",
       "number-of-ad-campaign-items": "Number of ad campaign items",
       "start": "Start"
+    },
+    "ad-campaign-products-table-component": {
+      "add": "Add",
+      "products-in-ad-campaign": "Products in ad campaign",
+      "table-colums": {
+        "name": "Name"
+      }
+    },
+    "ad-campaign-promotion-component": {
+      "promotion": "Promotion"
     },
     "add-product-to-purchase-list-component": {
       "add-a-new-list": "Add a new list",
@@ -380,6 +397,10 @@
     "set-ad-campaign-item-component": {
       "choose-file": "Choose file",
       "file-is-empty": "File is empty",
+      "save": "Save"
+    },
+    "set-ad-campaign-product-component": {
+      "product": "Product",
       "save": "Save"
     },
     "set-promotion-product-component": {

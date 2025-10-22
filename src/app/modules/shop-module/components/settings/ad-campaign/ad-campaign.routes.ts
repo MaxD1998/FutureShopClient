@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { adCampaignFormResolver } from '../../../core/resolvers/ad-campaign-form.resolver';
-import { adCampaignListResolver } from '../../../core/resolvers/ad-campaign-list.resolver';
+import { adCampaignFormResolver } from '../../../core/resolvers/settings/ad-campaign-form.resolver';
+import { adCampaignListResolver } from '../../../core/resolvers/settings/ad-campaign-list.resolver';
 export const adCampaignRoutes: Routes = [
   {
     path: '',

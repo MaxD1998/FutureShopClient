@@ -1,7 +1,8 @@
 <div class="relative flex rounded-xl bg-neutral-900 h-100 overflow-hidden justify-center">
-  <div class="flex items-center absolute left-0 top-0 bottom-0 px-2"></div>
-  <img class="object-cover" [src]="ads()[currentIndex()]" />
-  <div class="flex justify-between items-center px-2 absolute bottom-2 left-0 right-0 z-20">
+  <a class="flex flex-1 justify-center cursor-pointer" (click)="navigateToAd(currentIndex())">
+    <img class="object-cover" [src]="getFile(currentIndex())" />
+  </a>
+  <div class="flex h-0 justify-between items-center px-2 absolute bottom-5 left-0 right-0 z-20">
     <app-button-icon
       [icon]="IconType.arrowLeftCircleFilled"
       [layout]="ButtonLayout.roundedSmall"

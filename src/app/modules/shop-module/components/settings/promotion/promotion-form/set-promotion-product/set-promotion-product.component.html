@@ -1,13 +1,12 @@
 @if (isLoaded()) {
-  <div class="flex flex-col gap-2">
+  <form class="flex flex-col gap-2" [formGroup]="form">
     <app-input-select
-      [items]="products()"
-      [label]="'shop-module.set-promotion-product-component.products' | translate"
-      [(value)]="selectValue"></app-input-select>
-    <app-button
-      [isDisabled]="isDisabledButton()"
-      [label]="'shop-module.set-promotion-product-component.save' | translate"
-      (onClick)="submit()">
+      formControlName="productId"
+      [errorCode]="errorCode('productId')"
+      [items]="items()"
+      [label]="'shop-module.set-promotion-product-component.products' | translate">
+    </app-input-select>
+    <app-button [label]="'shop-module.set-promotion-product-component.save' | translate" (onClick)="submit()">
     </app-button>
-  </div>
+  </form>
 }

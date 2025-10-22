@@ -1,0 +1,15 @@
+<app-table
+  [buttonLabel]="'shop-module.ad-campaign-items-table-component.add'"
+  [columns]="columns"
+  [header]="'shop-module.ad-campaign-items-table-component.ads'"
+  [idName]="'originalLang'"
+  [isRemoveAction]="true"
+  [items]="adCampaignItems()"
+  (onButtonAction)="isDialogActive.set(true)"
+  (onRemoveAction)="removeAdCampaignItem($event)">
+</app-table>
+<app-dialog-window [(isDialogActive)]="isDialogActive">
+  @if (isDialogActive()) {
+    <app-set-ad-campaign-item [formGroup]="formGroup()" (onSave)="setAdCampaignItem($event)"></app-set-ad-campaign-item>
+  }
+</app-dialog-window>

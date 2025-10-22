@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
 import { InputDateComponent } from '../../../../../../components/shared/input-date/input-date.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
+import { SelectItemModel } from '../../../../../../components/shared/input-select/models/select-item.model';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
 import { DialogWindowComponent } from '../../../../../../components/shared/modals/dialog-window/dialog-window.component';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
@@ -15,7 +16,6 @@ import { ClientRoute } from '../../../../../../core/constants/client-routes/clie
 import { TableHeaderFloat } from '../../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
-import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 import { CustomValidators } from '../../../../../../core/utils/custom-validators';
 import { PromotionDataService } from '../../../../core/data-services/promotion.data-service';
 import { PromotionProductFormDto } from '../../../../core/dtos/promotion/promotion-product.form-dto';

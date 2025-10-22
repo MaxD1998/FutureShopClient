@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-2">
+  <app-input-select [items]="languages()" (valueChange)="onLangSet($event)"></app-input-select>
+  <div class="relative pb-6">
+    <app-input-file
+      [label]="'shop-module.set-ad-campaign-item-component.choose-file' | translate"
+      (onValueChange)="onFileLoaded($event)">
+    </app-input-file>
+    @if (isEmptyFile()) {
+      <span class="absolute text-red-600">
+        {{ 'shop-module.set-ad-campaign-item-component.file-is-empty' | translate }}
+      </span>
+    }
+  </div>
+  <app-button
+    [isDisabled]="isDisabledButton()"
+    [label]="'shop-module.set-ad-campaign-item-component.save' | translate"
+    (onClick)="submit()">
+  </app-button>
+</div>

@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, input, OnDestroy, output } from '@a
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
+import { SelectItemModel } from '../../../../../../components/shared/input-select/models/select-item.model';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
-import { SelectItemModel } from '../../../../../../core/models/select-item.model';
 
 interface ISubCategoryForm {
   subCategory: FormControl<string | null>;

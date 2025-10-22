@@ -1,108 +1,87 @@
-import { ChangeDetectionStrategy, Component, inject, Injector, input, model, signal } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { FormControl, FormGroup } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { filter, finalize, switchMap, tap } from 'rxjs';
+import { afterNextRender, ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { finalize, map } from 'rxjs';
 import { ButtonComponent } from '../../../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../../../components/shared/input-select/input-select.component';
-import { SelectItemModel } from '../../../../../../../core/models/select-item.model';
+import { SelectItemModel } from '../../../../../../../components/shared/input-select/models/select-item.model';
+import { BaseFormComponent } from '../../../../../../../core/bases/base-form.component';
 import { ProductDataService } from '../../../../../core/data-services/product.data-service';
 import { PromotionProductFormDto } from '../../../../../core/dtos/promotion/promotion-product.form-dto';
 import { IPromotionForm } from '../promotion-form.component';
 
+interface IProductForm {
+  productId: FormControl<string | null>;
+}
+
 @Component({
   selector: 'app-set-promotion-product',
-  imports: [TranslateModule, InputSelectComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, TranslateModule, InputSelectComponent, ButtonComponent],
   templateUrl: './set-promotion-product.component.html',
   styleUrl: './set-promotion-product.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SetPromotionProductComponent {
-  private readonly _injector = inject(Injector);
+export class SetPromotionProductComponent extends BaseFormComponent<IProductForm> {
   private readonly _productDataService = inject(ProductDataService);
-  private readonly _translateService = inject(TranslateService);
-
-  private _array: PromotionProductFormDto[] = [];
 
   formGroup = input.required<FormGroup<IPromotionForm>>();
-  isDialogActive = model.required<boolean>();
+  onSave = output<void>();
 
-  isDisabledButton = signal<boolean>(true);
   isLoaded = signal<boolean>(false);
-  products = signal<SelectItemModel[]>([]);
-  selectValue = signal<string | undefined>('');
+  items = signal<SelectItemModel[]>([]);
 
   constructor() {
-    toObservable(this.isDialogActive, { injector: this._injector })
-      .pipe(
-        filter(x => x),
-        switchMap(() => {
-          const excludedIds = this.formGroup()
-            .getRawValue()
-            .promotionProducts.map(x => x.productId);
-          return this._productDataService.getListIdName(excludedIds).pipe(
-            finalize(() => {
-              this.isLoaded.set(true);
-            }),
-          );
-        }),
-      )
-      .subscribe({
-        next: products => {
-          this.selectValue.set(undefined);
-          const mappedProducts = products.map(x => ({ id: x.id, value: x.name }));
-          const productItems = [
-            {
-              value: this._translateService.instant('common.input-select.select-option'),
-            },
-          ].concat(mappedProducts);
+    super();
+    afterNextRender(() => {
+      const excludedIds = this.formGroup()
+        .getRawValue()
+        .promotionProducts.map(x => x.productId);
 
-          this.products.set(Array.from(productItems));
-        },
-      });
+      this._productDataService
+        .getListIdName(excludedIds)
+        .pipe(
+          map(products => products.map(x => ({ id: x.id, value: x.name }))),
+          finalize(() => {
+            this.isLoaded.set(true);
+          }),
+        )
+        .subscribe({
+          next: products => {
+            const items = [
+              {
+                value: this._translateService.instant('common.input-select.select-option'),
+              },
+            ].concat(products);
 
-    toObservable(this.selectValue, { injector: this._injector })
-      .pipe(tap(this.onProductSet.bind(this)))
-      .subscribe();
-  }
-
-  onProductSet(id?: string): void {
-    if (!id) {
-      this.isDisabledButton.set(true);
-      return;
-    }
-
-    const product = this.products().find(x => x.id == id);
-
-    if (!product) {
-      return;
-    }
-
-    this._array = this.formGroup().getRawValue().promotionProducts.slice();
-    this._array.push({ productId: product.id!, productName: product.value });
-    this._array = this._array.sort((x, y) => {
-      {
-        if (x.productName < y.productName) {
-          return -1;
-        }
-        if (x.productName > y.productName) {
-          return 1;
-        }
-        return 0;
-      }
+            this.items.set(items);
+          },
+        });
     });
-
-    this.isDisabledButton.set(false);
   }
 
   submit(): void {
-    const promotionProducts = this.formGroup().controls.promotionProducts;
+    if (this.form.invalid) {
+      return;
+    }
 
-    promotionProducts.clear();
-    this._array.forEach(x => promotionProducts.push(new FormControl(x, { nonNullable: true })));
+    const productId = this.form.getRawValue().productId!;
+    const { id, value } = this.items().find(x => x.id === productId)!;
+    this.formGroup().controls.promotionProducts.push(
+      new FormControl<PromotionProductFormDto>(
+        {
+          productId: id!,
+          productName: value,
+        },
+        { nonNullable: true },
+      ),
+    );
 
-    console.log();
-    this.isDialogActive.set(false);
-    this.selectValue.set('');
+    this.onSave.emit();
+  }
+
+  protected override setGroup(): FormGroup<IProductForm> {
+    return this._formBuilder.group<IProductForm>({
+      productId: new FormControl<string | null>(null),
+    });
   }
 }

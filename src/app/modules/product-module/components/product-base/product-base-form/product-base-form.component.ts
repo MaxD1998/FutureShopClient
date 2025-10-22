@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
 import { InputSelectComponent } from '../../../../../components/shared/input-select/input-select.component';
+import { SelectItemModel } from '../../../../../components/shared/input-select/models/select-item.model';
 import { InputComponent } from '../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
-import { SelectItemModel } from '../../../../../core/models/select-item.model';
 import { ProductBaseDataService } from '../../../core/data-service/product-base.data-service';
 import { ProductBaseRequestFormDto } from '../../../core/dtos/product-base/product-base.request-form-dto';
 

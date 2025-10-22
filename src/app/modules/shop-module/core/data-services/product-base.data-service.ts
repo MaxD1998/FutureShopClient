@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
+import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { ProductBaseControllerRoute } from '../constants/api-routes/product-base-controller.route';
 import { ProductBaseListDto } from '../dtos/product-base/product-base.list-dto';
 import { ProductBaseRequestFormDto } from '../dtos/product-base/product-base.request-form-dto';
@@ -19,8 +20,15 @@ export class ProductBaseDataService {
   }
 
   getPage(pageNumber: number): Observable<PageDto<ProductBaseListDto>> {
-    const url = `${ProductBaseControllerRoute.page}${pageNumber}`;
-    return this._httpClient.get<PageDto<ProductBaseListDto>>(url);
+    const dto: PaginationDto = {
+      pageNumber: pageNumber,
+      pageSize: 25,
+    };
+
+    const params = new HttpParams().append('pageNumber', dto.pageNumber).append('pageSize', dto.pageSize);
+    const url = `${ProductBaseControllerRoute.page}`;
+
+    return this._httpClient.get<PageDto<ProductBaseListDto>>(url, { params: params });
   }
 
   getIdNameById(id: string): Observable<IdNameDto> {
