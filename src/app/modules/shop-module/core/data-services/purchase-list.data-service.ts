@@ -17,7 +17,7 @@ export class PurchaseListDataService {
     return this._httpClient.post<PurchaseListResponseFormDto>(PurchaseListControllerRoute.base, dto);
   }
 
-  dalete(id: string): Observable<null> {
+  delete(id: string): Observable<null> {
     return this._httpClient.delete<null>(`${PurchaseListControllerRoute.base}${id}`);
   }
 

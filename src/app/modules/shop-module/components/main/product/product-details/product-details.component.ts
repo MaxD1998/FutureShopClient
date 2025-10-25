@@ -13,6 +13,7 @@ import { DataTableColumnModel } from '../../../../../../core/models/data-table-c
 import { ProductDto } from '../../../../core/dtos/product/product.dto';
 import { BasketService } from '../../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../../../shared/add-product-to-purchase-list/add-product-to-purchase-list.component';
+import { ProductRatingComponent } from './product-rating/product-rating.component';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +25,7 @@ import { AddProductToPurchaseListComponent } from '../../../shared/add-product-t
     DropDownComponent,
     AddProductToPurchaseListComponent,
     ButtonIconComponent,
+    ProductRatingComponent,
   ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
