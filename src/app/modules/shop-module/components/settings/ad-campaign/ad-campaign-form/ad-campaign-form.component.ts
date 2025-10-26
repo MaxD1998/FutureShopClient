@@ -132,8 +132,6 @@ export class AdCampaignFormComponent extends BaseFormComponent<IAdCampaignForm> 
 
   submit(): void {
     if (!this.form.valid) {
-      console.log('Błąd', this.form);
-      console.log(this.form.errors);
       this.form.markAllAsTouched();
       return;
     }

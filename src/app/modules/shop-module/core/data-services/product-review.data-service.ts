@@ -12,22 +12,19 @@ import { ProductReviewResponseFormDto } from '../dtos/product/product-review/pro
 })
 export class ProductReviewDataService {
   private readonly _httpClient = inject(HttpClient);
-  create(dto: ProductReviewControllerRoute): Observable<ProductReviewResponseFormDto> {
+  create(dto: ProductReviewRequestFormDto): Observable<ProductReviewResponseFormDto> {
     const url = `${ProductReviewControllerRoute.base}`;
-    return this._httpClient.put<ProductReviewResponseFormDto>(url, dto);
+    return this._httpClient.post<ProductReviewResponseFormDto>(url, dto);
   }
 
   delete(id: string): Observable<null> {
     return this._httpClient.delete<null>(`${ProductReviewControllerRoute.base}${id}`);
   }
 
-  getPageByProductId(
-    productId: string,
-    pagination: PaginationDto,
-  ): Observable<PageDto<ProductReviewResponseFormDto[]>> {
+  getPageByProductId(productId: string, pagination: PaginationDto): Observable<PageDto<ProductReviewResponseFormDto>> {
     const params = new HttpParams().append('pageNumber', pagination.pageNumber).append('pageSize', pagination.pageSize);
     const url = `${ProductReviewControllerRoute.page}${productId}`;
-    return this._httpClient.get<PageDto<ProductReviewResponseFormDto[]>>(url, { params: params });
+    return this._httpClient.get<PageDto<ProductReviewResponseFormDto>>(url, { params: params });
   }
 
   update(id: string, dto: ProductReviewRequestFormDto): Observable<ProductReviewResponseFormDto> {

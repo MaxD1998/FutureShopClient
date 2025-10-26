@@ -1,0 +1,14 @@
+<div class="flex">
+  <div class="flex gap-4" (mouseleave)="hoveredIndex.set(0)">
+    @for (option of ratingOptions; track $index) {
+      <button
+        class="bg-neutral-800 text-white rounded-full border border-white cursor-pointer w-7 h-7 {{
+          setBgSky600($index)
+        }}"
+        (mouseenter)="hoveredIndex.set(isDisabled() ? rating() : $index + 1)"
+        (click)="setRating($index)">
+        {{ option }}
+      </button>
+    }
+  </div>
+</div>

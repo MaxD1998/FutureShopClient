@@ -9,4 +9,6 @@ export interface ProductDto {
   price: number;
   productParameters: IdNameValueDto[];
   rating: number;
+  reviewCount: number;
+  userWasReviewer: boolean;
 }

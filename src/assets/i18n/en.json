@@ -211,6 +211,9 @@
       "add": "Add",
       "name": "Name"
     },
+    "add-update-product-review-component": {
+      "add-review": "Add review"
+    },
     "basket-component": {
       "basket": "Basket",
       "basket-is-empty": "Basket is empty",
@@ -271,8 +274,9 @@
       "products-bases": "Product bases",
       "product-count": "Product count"
     },
-    "product-details.component": {
+    "product-details-component": {
       "add-to-basket": "Add to basket",
+      "no-data": "No data",
       "product-feedback": "Product feedback",
       "rating": "Rating",
       "specyfication": "Specyfication",
@@ -281,7 +285,7 @@
         "value": "Value"
       }
     },
-    "product-item.component": {
+    "product-shop-item-component": {
       "add-to-basket": "Add to basket"
     },
     "product-form-component": {
@@ -329,6 +333,9 @@
       "properties": "Properties",
       "save": "Save",
       "translations": "Translations"
+    },
+    "product-rating-component": {
+      "comments": "Comments"
     },
     "product-shop-list-component": {
       "filters-header": "Filters",

@@ -1,0 +1,23 @@
+<div class="relative pb-6">
+  @if (label()) {
+    <label class="block my-1">
+      <span class="text-neutral-100 font-semibold">{{ label() }}</span>
+      @if (required()) {
+        <sup class="text-red-600">*</sup>
+      }
+    </label>
+  }
+  <textarea
+    #textarea
+    class="block resize-none p-2 w-full bg-neutral-800 text-neutral-100 font-semibold rounded-md outline-1 -outline-offset-1 outline-neutral-700 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600"
+    [disabled]="isDisabled()"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    (change)="onValueChange(textarea)"
+    (blur)="onTouch()"
+    (input)="autoResize(textarea)">
+  </textarea>
+  @if (errorCode()) {
+    <span class="absolute text-red-600">{{ errorCode() }}</span>
+  }
+</div>

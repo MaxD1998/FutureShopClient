@@ -1,5 +1,5 @@
 export class ProductReviewRequestFormDto {
-  comment: string;
+  comment: string | undefined;
   productId: string;
   rating: number;
 }
