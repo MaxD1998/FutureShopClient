@@ -110,13 +110,13 @@ export class AdCampaignFormComponent extends BaseFormComponent<IAdCampaignForm> 
       adCampaignProducts.forEach(product => {
         this.form.controls.adCampaignProducts.push(new FormControl(product, { nonNullable: true }));
       });
-
-      this.form.controls.type.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe({
-        next: value => {
-          this.clearFormTypeDependencies();
-        },
-      });
     }
+
+    this.form.controls.type.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe({
+      next: value => {
+        this.clearFormTypeDependencies();
+      },
+    });
   }
 
   mapToAdCampaignType(value: string | null): AdCampaignType | undefined {
@@ -157,7 +157,11 @@ export class AdCampaignFormComponent extends BaseFormComponent<IAdCampaignForm> 
                 file.fileId = flieId;
               });
 
-              this.adCampaign!.adCampaignItems.map(x => ({ id: x.id, lang: x.lang, fileId: x.fileId! }));
+              this.adCampaign!.adCampaignItems = adCampaignItems.map(x => ({
+                id: x.id,
+                lang: x.lang,
+                fileId: x.fileId!,
+              }));
 
               return this.addOrUpdate$();
             }),

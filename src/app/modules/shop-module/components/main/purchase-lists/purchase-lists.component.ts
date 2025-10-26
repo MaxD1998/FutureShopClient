@@ -83,7 +83,7 @@ export class PurchaseListsComponent {
 
   remove(id: string): void {
     this._purchaseListDataService
-      .dalete(id)
+      .delete(id)
       .pipe(
         switchMap(() => {
           return this._purchaseListService.purchaseLists$.pipe(take(1));

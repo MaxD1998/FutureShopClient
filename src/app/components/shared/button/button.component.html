@@ -1,11 +1,20 @@
 @switch (layout()) {
   @case (ButtonLayout.filled) {
-    <button
-      class="block w-full p-2.5 bg-sky-600 text-sm text-white font-semibold cursor-pointer rounded-md hover:bg-sky-700"
-      [disabled]="isDisabled()"
-      (click)="onClick.emit($event)">
-      {{ label() }}
-    </button>
+    @if (!isDisabled()) {
+      <button
+        class="block w-full p-2.5 bg-sky-600 text-sm text-white font-semibold cursor-pointer rounded-md hover:bg-sky-700"
+        [disabled]="isDisabled()"
+        (click)="onClick.emit($event)">
+        {{ label() }}
+      </button>
+    } @else {
+      <button
+        class="block w-full p-2.5 bg-neutral-600 text-sm text-neutral-400 font-semibold rounded-md"
+        [disabled]="isDisabled()"
+        (click)="onClick.emit($event)">
+        {{ label() }}
+      </button>
+    }
   }
   @case (ButtonLayout.outline) {
     <button

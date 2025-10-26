@@ -5,6 +5,10 @@ export interface ProductDto {
   id: string;
   isInPurchaseList: boolean;
   name: string;
+  originalPrice: number;
   price: number;
   productParameters: IdNameValueDto[];
+  rating: number;
+  reviewCount: number;
+  userWasReviewer: boolean;
 }
