@@ -3,7 +3,7 @@ import { ResolveFn } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { SelectItemModel } from '../../../../components/shared/input-select/models/select-item.model';
-import { FileDataService } from '../../../../core/data-services/file.data-service';
+import { FileDataService } from '../../../../core/data-service/file.data-service';
 import { ProductBaseDataService } from '../data-service/product-base.data-service';
 import { ProductDataService } from '../data-service/product.data-service';
 import { ProductPhotoInfoDto } from '../dtos/product/product-photo.info-dto';

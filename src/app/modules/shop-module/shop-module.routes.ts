@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../core/constants/client-routes/client.route';
+import { authEmployeeGuard } from '../../core/guards/auth-employee.guard';
 import { mainCategoryListResolver } from './core/resolvers/main/main-category-list.resolver';
 import { mainPromotionCodesResolver } from './core/resolvers/main/main-promotion-codes.resolver';
 
@@ -17,5 +18,6 @@ export const shopModuleRoutes: Routes = [
     path: `${ClientRoute.shopModule}/${ClientRoute.settings}`,
     loadComponent: () => import('./components/settings/settings.component').then(x => x.SettingsComponent),
     loadChildren: () => import('./components/settings/settings.routes').then(x => x.settingsRoutes),
+    canMatch: [authEmployeeGuard],
   },
 ];

@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
+import { ProductPermission } from '../../../../core/enums/product-permission';
+import { productPermissionGuard } from '../../core/guards/product-permission.guard';
 import { productFormResolver } from '../../core/resolvers/product-form.resolver';
 import { productListResolver } from '../../core/resolvers/product-list.resolver';
 export const productRoutes: Routes = [
@@ -21,6 +23,7 @@ export const productRoutes: Routes = [
         },
       },
     ],
+    canMatch: [productPermissionGuard(ProductPermission.ProductAddUpdate)],
   },
   {
     path: ClientRoute.list,

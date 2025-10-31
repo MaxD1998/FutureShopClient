@@ -4,6 +4,7 @@
   [idName]="'productId'"
   [columns]="columns"
   [items]="items()"
+  [isButtonAction]="true"
   [isRemoveAction]="true"
   (onButtonAction)="isDialogActive.set(true)"
   (onRemoveAction)="removeItem($event)">

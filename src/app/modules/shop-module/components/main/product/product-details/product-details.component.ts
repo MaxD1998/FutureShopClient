@@ -52,13 +52,13 @@ export class ProductDetailsComponent {
     {
       field: 'name',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.product-details.component.table.name',
+      headerText: 'shop-module.product-details-component.table.name',
       template: TableTemplate.text,
     },
     {
       field: 'value',
       headerFloat: TableHeaderFloat.left,
-      headerText: 'shop-module.product-details.component.table.value',
+      headerText: 'shop-module.product-details-component.table.value',
       template: TableTemplate.text,
     },
   ];

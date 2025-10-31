@@ -4,7 +4,7 @@
   [columns]="columns"
   [idName]="'id'"
   [items]="categories()"
-  [isEditAction]="true"
+  [isEditAction]="(userService.hasShopPermission(ShopPermission.PromotionAddUpdate) | async)!"
   [page]="pagination()"
   (onEditAction)="navigateToEdit($event)"
   (onPageClick)="changePage($event)">

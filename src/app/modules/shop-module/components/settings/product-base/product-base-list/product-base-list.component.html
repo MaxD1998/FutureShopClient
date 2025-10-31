@@ -4,7 +4,7 @@
   [header]="'shop-module.product-base-list-component.products-bases'"
   [idName]="'id'"
   [items]="productBases()"
-  [isEditAction]="true"
+  [isEditAction]="(userService.hasShopPermission(ShopPermission.ProductBaseAddUpdate) | async)!"
   [page]="pagination()"
   (onEditAction)="navigateToEdit($event)"
   (onPageClick)="changePage($event)">

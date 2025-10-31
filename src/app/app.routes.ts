@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from './core/constants/client-routes/client.route';
 import { UserType } from './core/enums/user-type';
-import { authGuard } from './core/guards/auth.guard';
+import { authEmployeeGuard } from './core/guards/auth-employee.guard';
 
 export const routes: Routes = [
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
   {
     path: ClientRoute.module,
     loadComponent: () => import('./components/module/module.component').then(x => x.ModuleComponent),
-    canActivate: [authGuard],
-    data: { role: UserType.user },
+    canActivate: [authEmployeeGuard],
+    data: { role: UserType.employee },
   },
 ];

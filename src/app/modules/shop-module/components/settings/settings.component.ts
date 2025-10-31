@@ -2,7 +2,6 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { map } from 'rxjs';
 import { AsideComponent } from '../../../../components/shared/aside/aside.component';
 import { NavButtonComponent } from '../../../../components/shared/nav/nav-button/nav-button.component';
 import { NavComponent } from '../../../../components/shared/nav/nav.component';
@@ -20,12 +19,12 @@ import { UserService } from '../../../auth-module/core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent {
-  private readonly _userService = inject(UserService);
+  readonly userService = inject(UserService);
 
   ClientRoute: typeof ClientRoute = ClientRoute;
   IconType: typeof IconType = IconType;
+  UserType: typeof UserType = UserType;
 
-  isLocalAdmin$ = this._userService.user$.pipe(map(user => !!user && user.roles.includes(UserType.localAdmin)));
   items: AsideItemModel[] = [
     {
       id: '1',

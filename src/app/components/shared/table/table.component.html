@@ -1,9 +1,9 @@
 <div class="h-full flex flex-col bg-neutral-900 overflow-hidden">
   <div class="flex justify-between items-center h-10 mb-2">
     <h1 class="text-xl font-semibold text-neutral-100">
-      {{ header() | translate }}
+      {{ header() ?? '' | translate }}
     </h1>
-    @if (buttonLabel()) {
+    @if (isButtonAction()) {
       <app-button [label]="buttonLabel() | translate" (onClick)="onButtonAction.emit()"></app-button>
     }
   </div>

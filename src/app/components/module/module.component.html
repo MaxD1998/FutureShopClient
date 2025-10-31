@@ -6,21 +6,21 @@
 <main class="flex justify-center max-w-364 mx-auto mt-4">
   <div class="flex justify-center bg-neutral-900 px-8 py-4 rounded-xl">
     <div class="grid grid-cols-2 gap-4">
-      @if (canShowModule(ModuleType.shopModule) | async) {
+      @if (hasShopModule() | async) {
         <app-module-button [iconName]="IconType.shoppingBag" [name]="'Sklep'" (onClick)="navigateToShopModule()">
         </app-module-button>
       }
-      @if (canShowModule(ModuleType.productModule) | async) {
+      @if (hasProductModule() | async) {
         <app-module-button
           [iconName]="IconType.rectangleStack"
           [name]="'Produkty'"
           (onClick)="navigateToProductModule()">
         </app-module-button>
       }
-      @if (canShowModule(ModuleType.warehouseModule) | async) {
+      @if (hasWarehouseModule() | async) {
         <app-module-button [iconName]="IconType.buildingStorefront" [name]="'Magazyny'"></app-module-button>
       }
-      @if (canShowModule(ModuleType.authModule) | async) {
+      @if (hasAuthorizationModule() | async) {
         <app-module-button [iconName]="IconType.userGroup" [name]="'Użytkownicy'"></app-module-button>
       }
     </div>

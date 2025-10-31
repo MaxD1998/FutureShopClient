@@ -1,20 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, defaultIfEmpty, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
-import { FileDataService } from '../../../../core/data-services/file.data-service';
+import { FilePublicDataService } from '../../../../core/public-data-services/file.public-data-service';
 import { UserService } from '../../../auth-module/core/services/user.service';
-import { BasketDataService } from '../data-services/basket.data-service';
 import { BasketItemDto } from '../dtos/basket/basket-item.dto';
 import { BasketItemFormDto } from '../dtos/basket/basket-item.form-dto';
 import { BasketDto } from '../dtos/basket/basket.dto';
 import { BasketRequestFormDto } from '../dtos/basket/basket.request-form-dto';
+import { BasketPublicDataService } from '../public-data-services/basket.public-data-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BasketService {
   private readonly _userService = inject(UserService);
-  private readonly _basketDataService = inject(BasketDataService);
-  private readonly _fileDataService = inject(FileDataService);
+  private readonly _basketDataService = inject(BasketPublicDataService);
+  private readonly _fileDataService = inject(FilePublicDataService);
 
   readonly basket$: BehaviorSubject<BasketDto | undefined> = new BehaviorSubject<BasketDto | undefined>(undefined);
 

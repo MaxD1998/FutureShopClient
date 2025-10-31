@@ -12,7 +12,7 @@ import { InputComponent } from '../../../../../../components/shared/input/input.
 import { ToggleComponent } from '../../../../../../components/shared/toggle/toggle.component';
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
-import { FileDataService } from '../../../../../../core/data-services/file.data-service';
+import { FileDataService } from '../../../../../../core/data-service/file.data-service';
 import { AdCampaignDataService } from '../../../../core/data-services/ad-campaign.data-service';
 import { AdCampaignItemInfoDto } from '../../../../core/dtos/ad-campaign/ad-campaign-item.info-dto';
 import { AdCampaignProductFormDto } from '../../../../core/dtos/ad-campaign/ad-campaign-product.form-dto';

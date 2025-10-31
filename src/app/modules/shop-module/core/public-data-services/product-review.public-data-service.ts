@@ -3,32 +3,33 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
-import { ProductReviewControllerRoute } from '../constants/api-routes/product-review-controller.route';
+import { ProductReviewPublicControllerRoute } from '../constants/public-controllers/product-review-public-controller.route';
 import { ProductReviewRequestFormDto } from '../dtos/product/product-review/product-review.request-form-dto';
 import { ProductReviewResponseFormDto } from '../dtos/product/product-review/product-review.response-form-dto';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductReviewDataService {
+export class ProductReviewPublicDataService {
   private readonly _httpClient = inject(HttpClient);
+
   create(dto: ProductReviewRequestFormDto): Observable<ProductReviewResponseFormDto> {
-    const url = `${ProductReviewControllerRoute.base}`;
+    const url = `${ProductReviewPublicControllerRoute.base}`;
     return this._httpClient.post<ProductReviewResponseFormDto>(url, dto);
   }
 
   delete(id: string): Observable<null> {
-    return this._httpClient.delete<null>(`${ProductReviewControllerRoute.base}${id}`);
+    return this._httpClient.delete<null>(`${ProductReviewPublicControllerRoute.base}${id}`);
   }
 
   getPageByProductId(productId: string, pagination: PaginationDto): Observable<PageDto<ProductReviewResponseFormDto>> {
     const params = new HttpParams().append('pageNumber', pagination.pageNumber).append('pageSize', pagination.pageSize);
-    const url = `${ProductReviewControllerRoute.page}${productId}`;
+    const url = `${ProductReviewPublicControllerRoute.page}${productId}`;
     return this._httpClient.get<PageDto<ProductReviewResponseFormDto>>(url, { params: params });
   }
 
   update(id: string, dto: ProductReviewRequestFormDto): Observable<ProductReviewResponseFormDto> {
-    const url = `${ProductReviewControllerRoute.base}${id}`;
+    const url = `${ProductReviewPublicControllerRoute.base}${id}`;
     return this._httpClient.put<ProductReviewResponseFormDto>(url, dto);
   }
 }

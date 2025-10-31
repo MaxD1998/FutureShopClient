@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../core/constants/client-routes/client.route';
-import { UserType } from '../core/enums/user-type';
-import { authGuard } from '../core/guards/auth.guard';
+import { authEmployeeGuard } from '../core/guards/auth-employee.guard';
 
 export const moduleRoutes: Routes = [
   {
@@ -13,8 +12,7 @@ export const moduleRoutes: Routes = [
     path: ClientRoute.productModule,
     loadComponent: () => import('./product-module/product-module.component').then(x => x.ProductModuleComponent),
     loadChildren: () => import('./product-module/product-module.routes').then(x => x.productModuleRoutes),
-    canActivate: [authGuard],
-    data: { role: UserType.user },
+    canMatch: [authEmployeeGuard],
   },
   {
     path: '',
@@ -25,7 +23,6 @@ export const moduleRoutes: Routes = [
     path: ClientRoute.warehouseModule,
     loadComponent: () => import('./warehouse-module/warehouse-module.component').then(x => x.WarehouseModuleComponent),
     loadChildren: () => import('./warehouse-module/warehouse-module.routes').then(x => x.warehouseModuleRoutes),
-    canActivate: [authGuard],
-    data: { role: UserType.user },
+    canMatch: [authEmployeeGuard],
   },
 ];

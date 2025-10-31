@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { UserService } from '../../../auth-module/core/services/user.service';
-import { PurchaseListDataService } from '../data-services/purchase-list.data-service';
 import { PurchaseListItemFormDto } from '../dtos/purchase-list/purchase-list-item.from-dto';
 import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
 import { PurchaseListRequestFormDto } from '../dtos/purchase-list/purchase-list.request-from-dto';
 import { PurchaseListResponseFormDto } from '../dtos/purchase-list/purchase-list.response-from-dto';
+import { PurchaseListPublicDataService } from '../public-data-services/purchase-list.public-data-service';
 import { BasketService } from './basket.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { BasketService } from './basket.service';
 })
 export class PurchaseListService {
   private readonly _basketService = inject(BasketService);
-  private readonly _purchaseListDataService = inject(PurchaseListDataService);
+  private readonly _purchaseListPublicDataService = inject(PurchaseListPublicDataService);
   private readonly _userService = inject(UserService);
 
   readonly purchaseLists$: BehaviorSubject<PurchaseListDto[]> = new BehaviorSubject<PurchaseListDto[]>([]);
@@ -57,7 +57,7 @@ export class PurchaseListService {
           const resultArray = [addPurchaseList, removePurchaseList].flat();
           const result$ =
             resultArray.length > 0
-              ? forkJoin(resultArray.map(x => this._purchaseListDataService.update(x.id as string, x)))
+              ? forkJoin(resultArray.map(x => this._purchaseListPublicDataService.update(x.id as string, x)))
               : of([]);
 
           return result$;
@@ -102,27 +102,27 @@ export class PurchaseListService {
       take(1),
       switchMap(user => {
         if (user) {
-          return this._purchaseListDataService.getListByUserIdFromJwt().pipe(
+          return this._purchaseListPublicDataService.getListByUserIdFromJwt().pipe(
             switchMap(response => {
               if (response && response.length > 0) {
                 return of(response);
               } else {
-                return this._purchaseListDataService
+                return this._purchaseListPublicDataService
                   .create({
                     isFavourite: true,
                     purchaseListItems: [],
                   })
-                  .pipe(switchMap(() => this._purchaseListDataService.getListByUserIdFromJwt()));
+                  .pipe(switchMap(() => this._purchaseListPublicDataService.getListByUserIdFromJwt()));
               }
             }),
           );
         } else {
           const favouriteId = localStorage.getItem(key);
           const result$ = favouriteId
-            ? this._purchaseListDataService.getById(favouriteId)
-            : this._purchaseListDataService.create({ isFavourite: true, purchaseListItems: [] }).pipe(
+            ? this._purchaseListPublicDataService.getById(favouriteId)
+            : this._purchaseListPublicDataService.create({ isFavourite: true, purchaseListItems: [] }).pipe(
                 switchMap(response =>
-                  this._purchaseListDataService.getById(response.id as string).pipe(
+                  this._purchaseListPublicDataService.getById(response.id as string).pipe(
                     tap(response => {
                       localStorage.setItem(key, response.id as string);
                     }),
@@ -133,9 +133,9 @@ export class PurchaseListService {
             switchMap(response => {
               const result$ = response
                 ? of([response])
-                : this._purchaseListDataService.create({ isFavourite: true, purchaseListItems: [] }).pipe(
+                : this._purchaseListPublicDataService.create({ isFavourite: true, purchaseListItems: [] }).pipe(
                     switchMap(response =>
-                      this._purchaseListDataService.getById(response.id as string).pipe(
+                      this._purchaseListPublicDataService.getById(response.id as string).pipe(
                         tap(response => {
                           localStorage.setItem(key, response.id as string);
                         }),
@@ -159,11 +159,11 @@ export class PurchaseListService {
     list: PurchaseListDto[];
     newValue: PurchaseListDto;
   }> {
-    return this._purchaseListDataService.create(dto).pipe(
+    return this._purchaseListPublicDataService.create(dto).pipe(
       switchMap(response => {
         return forkJoin({
           list: this.purchaseLists$.pipe(take(1)),
-          newValue: this._purchaseListDataService.getById(response.id as string),
+          newValue: this._purchaseListPublicDataService.getById(response.id as string),
         });
       }),
       switchMap(response => {

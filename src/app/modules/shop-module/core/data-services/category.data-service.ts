@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
-import { CategoryControllerRoute } from '../constants/api-routes/category-controller.route';
-import { CategoryListDto } from '../dtos/category/category.list-dto';
+import { CategoryControllerRoute } from '../constants/controllers/category-controller.route';
 import { CategoryPageListDto } from '../dtos/category/category.page-list-dto';
 import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
 import { CategoryResponseFormDto } from '../dtos/category/category.response-form-dto';
@@ -35,11 +34,6 @@ export class CategoryDataService {
     const url = `${CategoryControllerRoute.page}`;
 
     return this._httpClient.get<PageDto<CategoryPageListDto>>(url, { params: params });
-  }
-
-  getList(categoryParentId?: string): Observable<CategoryListDto[]> {
-    const url = `${CategoryControllerRoute.list}${categoryParentId ?? ''}`;
-    return this._httpClient.get<CategoryListDto[]>(url);
   }
 
   update(id: string, dto: CategoryRequestFormDto): Observable<CategoryResponseFormDto> {

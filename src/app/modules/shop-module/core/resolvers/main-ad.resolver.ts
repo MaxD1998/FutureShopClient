@@ -1,15 +1,15 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { forkJoin, map, of, switchMap } from 'rxjs';
-import { FileDataService } from '../../../../core/data-services/file.data-service';
 import { IdFileDto } from '../../../../core/dtos/id-file.dto';
-import { AdCampaignDataService } from '../data-services/ad-campaign.data-service';
+import { FilePublicDataService } from '../../../../core/public-data-services/file.public-data-service';
+import { AdCampaignPublicDataService } from '../public-data-services/ad-campaign.public-data-service';
 
 export const mainAdResolver: ResolveFn<IdFileDto[]> = (route, state) => {
-  const adCampaignDataService = inject(AdCampaignDataService);
-  const fileDataService = inject(FileDataService);
+  const adCampaignPublicDataService = inject(AdCampaignPublicDataService);
+  const fileDataService = inject(FilePublicDataService);
 
-  return adCampaignDataService.getActual().pipe(
+  return adCampaignPublicDataService.getActual().pipe(
     switchMap(values => {
       return values.length > 0
         ? forkJoin(

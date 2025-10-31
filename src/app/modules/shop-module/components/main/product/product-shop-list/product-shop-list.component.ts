@@ -10,10 +10,10 @@ import { InputComponent } from '../../../../../../components/shared/input/input.
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { IdNameDto } from '../../../../../../core/dtos/id-name.dto';
 import { ProductSortType } from '../../../../../../core/enums/product-sort-type';
-import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductShopListDto } from '../../../../core/dtos/product/product-shop.list-dto';
 import { ProductShopLisRequestDto } from '../../../../core/dtos/product/product-shop.list-request-dto';
 import { ProductListModel } from '../../../../core/models/product-shop.list-model';
+import { ProductPublicDataService } from '../../../../core/public-data-services/product.public-data-service';
 import { ProductShopItemComponent } from '../../../shared/product-shop-item/product-shop-item.component';
 
 interface IProductShopListForm {
@@ -40,7 +40,7 @@ interface IProductShopListForm {
 })
 export class ProductShopListComponent extends BaseFormComponent<IProductShopListForm> {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _productDataService = inject(ProductDataService);
+  private readonly _productPublicDataService = inject(ProductPublicDataService);
 
   categoryName = signal<string>('');
   products = signal<ProductListModel[]>([]);
@@ -81,7 +81,7 @@ export class ProductShopListComponent extends BaseFormComponent<IProductShopList
       sortType: Number(sortType),
     };
 
-    this._productDataService
+    this._productPublicDataService
       .getShopListByCategoryId(this._activatedRoute.snapshot.params['categoryId'], request)
       .subscribe({
         next: response => {

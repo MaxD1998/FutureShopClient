@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, map, of, switchMap } from 'rxjs';
-import { FileDataService } from '../../../../../core/data-services/file.data-service';
+import { FileDataService } from '../../../../../core/data-service/file.data-service';
 import { AdCampaignDataService } from '../../data-services/ad-campaign.data-service';
 import { AdCampaignItemInfoDto } from '../../dtos/ad-campaign/ad-campaign-item.info-dto';
 import { AdCampaignRequestFormDto } from '../../dtos/ad-campaign/ad-campaign.request-form-dto';

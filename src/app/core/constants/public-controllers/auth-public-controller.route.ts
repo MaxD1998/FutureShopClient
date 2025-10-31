@@ -1,7 +1,7 @@
 import { environment } from '../../../../environments/environment';
 
-export class AuthControllerRoute {
-  private static readonly _base = `${environment.api}AuthModule/Auth/`;
+export class AuthorizationPublicControllerRoute {
+  private static readonly _base = `${environment.api}AuthModule/AuthorizationPublic/`;
 
   public static readonly login = this._base + 'Login';
   public static readonly logout = this._base + 'Logout';
