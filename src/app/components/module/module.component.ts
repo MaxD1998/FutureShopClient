@@ -32,12 +32,42 @@ export class ModuleComponent {
     this._router.navigateByUrl('');
   }
 
-  canShowModule(moduleType: ModuleType): Observable<boolean> {
+  hasAuthorizationModule(): Observable<boolean> {
     return this.userService.user$.pipe(
       take(1),
       filter(user => !!user),
       map(user => {
-        return user.modules.some(x => x.moduleType == moduleType) || user.roles.some(x => x == UserType.superAdmin);
+        return user.authorizationPermissions.length > 0 || user.roles.some(x => x == UserType.superAdmin);
+      }),
+    );
+  }
+
+  hasProductModule(): Observable<boolean> {
+    return this.userService.user$.pipe(
+      take(1),
+      filter(user => !!user),
+      map(user => {
+        return user.productPermissions.length > 0 || user.roles.some(x => x == UserType.superAdmin);
+      }),
+    );
+  }
+
+  hasShopModule(): Observable<boolean> {
+    return this.userService.user$.pipe(
+      take(1),
+      filter(user => !!user),
+      map(user => {
+        return user.shopPermissions.length > 0 || user.roles.some(x => x == UserType.superAdmin);
+      }),
+    );
+  }
+
+  hasWarehouseModule(): Observable<boolean> {
+    return this.userService.user$.pipe(
+      take(1),
+      filter(user => !!user),
+      map(user => {
+        return user.warehousePermissions.length > 0 || user.roles.some(x => x == UserType.superAdmin);
       }),
     );
   }

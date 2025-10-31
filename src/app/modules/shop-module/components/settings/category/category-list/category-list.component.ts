@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -5,9 +6,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../../core/dtos/page.dto';
+import { ShopPermission } from '../../../../../../core/enums/shop-permission';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
+import { UserService } from '../../../../../auth-module/core/services/user.service';
 import { CategoryPageListDto } from '../../../../core/dtos/category/category.page-list-dto';
 
 @Component({
@@ -15,12 +18,16 @@ import { CategoryPageListDto } from '../../../../core/dtos/category/category.pag
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, TableComponent],
+  imports: [AsyncPipe, TranslateModule, TableComponent],
 })
 export class CategoryListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
+  readonly userService = inject(UserService);
+
+  ShopPermission: typeof ShopPermission = ShopPermission;
 
   categories = signal<CategoryPageListDto[]>([]);
   pagination = signal<PaginationModel>({

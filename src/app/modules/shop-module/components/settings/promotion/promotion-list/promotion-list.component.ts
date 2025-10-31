@@ -1,18 +1,21 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../../core/dtos/page.dto';
+import { ShopPermission } from '../../../../../../core/enums/shop-permission';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
+import { UserService } from '../../../../../auth-module/core/services/user.service';
 import { PromotionDataService } from '../../../../core/data-services/promotion.data-service';
 import { PromotionListDto } from '../../../../core/dtos/promotion/promotion-list.dto';
 
 @Component({
   selector: 'app-promotion-list',
-  imports: [TableComponent],
+  imports: [AsyncPipe, TableComponent],
   templateUrl: './promotion-list.component.html',
   styleUrl: './promotion-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +25,10 @@ export class PromotionListComponent {
   private readonly _promotionDataService = inject(PromotionDataService);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
+  readonly userService = inject(UserService);
+
+  ShopPermission: typeof ShopPermission = ShopPermission;
 
   promotions = signal<PromotionListDto[]>([]);
   pagination = signal<PaginationModel>({

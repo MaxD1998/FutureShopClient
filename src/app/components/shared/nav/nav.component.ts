@@ -95,7 +95,13 @@ export class NavComponent implements OnDestroy {
         },
       ];
 
-      if (user.modules.length > 0 || user.roles.some(x => x == UserType.superAdmin)) {
+      if (
+        user.authorizationPermissions.length > 0 ||
+        user.productPermissions.length > 0 ||
+        user.shopPermissions.length > 0 ||
+        user.warehousePermissions.length > 0 ||
+        user.roles.some(x => x == UserType.superAdmin)
+      ) {
         const module: DropDownListItemModel[] = [
           {
             id: '',

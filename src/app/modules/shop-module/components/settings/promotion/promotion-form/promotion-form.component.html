@@ -68,6 +68,7 @@
           [columns]="columns"
           [header]="'shop-module.promotion-form-component.products'"
           [idName]="'productId'"
+          [isButtonAction]="true"
           [isRemoveAction]="true"
           [items]="form.getRawValue().promotionProducts"
           (onButtonAction)="isDialogActive.set(true)"

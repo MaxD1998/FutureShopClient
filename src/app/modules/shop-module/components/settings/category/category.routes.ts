@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
+import { ShopPermission } from '../../../../../core/enums/shop-permission';
+import { shopPermissionGuard } from '../../../core/guards/shop-permission.guard';
 import { categoryFormResolver } from '../../../core/resolvers/settings/category-form.resolver';
 import { categoryListResolver } from '../../../core/resolvers/settings/category-list.resolver';
 export const categoryRoutes: Routes = [
@@ -14,6 +16,7 @@ export const categoryRoutes: Routes = [
     resolve: {
       form: categoryFormResolver,
     },
+    canMatch: [shopPermissionGuard(ShopPermission.CategoryAddUpdate)],
   },
   {
     path: ClientRoute.list,

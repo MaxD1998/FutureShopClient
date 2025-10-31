@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -5,10 +6,11 @@ import { map, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../core/dtos/page.dto';
-import { ModuleType } from '../../../../../core/enums/module-type';
+import { ProductPermission } from '../../../../../core/enums/product-permission';
 import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../core/models/pagination.model';
+import { UserService } from '../../../../auth-module/core/services/user.service';
 import { CategoryDataService } from '../../../core/data-service/category.data-service';
 import { CategoryListDto } from '../../../core/dtos/category/category.list-dto';
 
@@ -17,7 +19,7 @@ import { CategoryListDto } from '../../../core/dtos/category/category.list-dto';
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, TableComponent],
+  imports: [AsyncPipe, TranslateModule, TableComponent],
 })
 export class CategoryListComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
@@ -25,7 +27,9 @@ export class CategoryListComponent {
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
 
-  ModuleType: typeof ModuleType = ModuleType;
+  readonly userService = inject(UserService);
+
+  ProductPermission: typeof ProductPermission = ProductPermission;
 
   categories = signal<CategoryListDto[]>([]);
   pagination = signal<PaginationModel>({

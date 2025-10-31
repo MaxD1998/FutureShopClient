@@ -1,7 +1,7 @@
 <app-nav [setMenuButton]="true" (onClickMenuButton)="isOpenedMenu.set(true)">
   <app-nav-button [iconName]="IconType.shoppingBag" [routerLink]="ClientRoute.basket"> </app-nav-button>
   <app-nav-button [iconName]="IconType.heart" [routerLink]="ClientRoute.purchaseLists"> </app-nav-button>
-  @if (isLocalAdmin$ | async) {
+  @if (userService.hasRole(UserType.employee) | async) {
     <app-nav-button [iconName]="IconType.cog8Tooth" [routerLink]="ClientRoute.shopModule + '/' + ClientRoute.settings">
     </app-nav-button>
   }

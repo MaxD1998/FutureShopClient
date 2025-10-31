@@ -30,22 +30,15 @@
         </app-input-select>
       </form>
       <div class="flex flex-col gap-4">
-        <div class="flex justify-between items-center h-11">
-          <h2 class="text-xl text-neutral-100 font-semibold">
-            {{ 'product-module.category-form-component.sub-categories' | translate }}
-          </h2>
-          <app-button
-            [isDisabled]="subCategoryItems().length == 0"
-            [label]="'product-module.category-form-component.add-sub-category' | translate"
-            (onClick)="isDialogActive.set(true)">
-          </app-button>
-        </div>
         <app-table
           idName="id"
+          [buttonLabel]="'product-module.category-form-component.add-sub-category'"
           [columns]="columns"
-          [header]="'product-module.category-form-component.add-sub-category'"
+          [header]="'product-module.category-form-component.sub-categories'"
+          [isButtonAction]="subCategoryItems().length == 0"
           [isRemoveAction]="true"
           [items]="form.getRawValue().subCategories"
+          (onButtonAction)="isDialogActive.set(true)"
           (onRemoveAction)="removeSubCategory($event)">
         </app-table>
       </div>

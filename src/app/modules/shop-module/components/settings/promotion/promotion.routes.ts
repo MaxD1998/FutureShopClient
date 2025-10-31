@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
+import { ShopPermission } from '../../../../../core/enums/shop-permission';
+import { shopPermissionGuard } from '../../../core/guards/shop-permission.guard';
 import { promotionFormResolver } from '../../../core/resolvers/settings/promotion-form.resolver';
 import { promotionListResolver } from '../../../core/resolvers/settings/promotion-list.resolver';
 
@@ -27,6 +29,7 @@ export const promotionRoutes: Routes = [
         },
       },
     ],
+    canMatch: [shopPermissionGuard(ShopPermission.ProductAddUpdate)],
   },
   {
     path: `${ClientRoute.list}`,

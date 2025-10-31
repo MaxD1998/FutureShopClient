@@ -28,11 +28,12 @@ import { TablePaginationComponent } from './table-pagination/table-pagination.co
 export class TableComponent {
   buttonLabel = input<string>('');
   columns = input.required<DataTableColumnModel[]>();
-  header = input.required<string>();
+  header = input<string>();
   idName = input.required<string>();
   items = input.required<any[]>();
   page = input<PaginationModel>();
 
+  isButtonAction = input<boolean>(false);
   isDetailAction = input<boolean>(false);
   isEditAction = input<boolean>(false);
   isRemoveAction = input<boolean>(false);

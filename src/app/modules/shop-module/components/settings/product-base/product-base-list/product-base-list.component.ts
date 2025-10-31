@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -5,10 +6,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { TableComponent } from '../../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../../core/dtos/page.dto';
+import { ShopPermission } from '../../../../../../core/enums/shop-permission';
 import { TableTemplate } from '../../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../../core/models/pagination.model';
-import { ProductBaseDataService } from '../../../../core/data-services/product-base.data-service';
+import { UserService } from '../../../../../auth-module/core/services/user.service';
 import { ProductBaseListDto } from '../../../../core/dtos/product-base/product-base.list-dto';
 
 @Component({
@@ -16,13 +18,16 @@ import { ProductBaseListDto } from '../../../../core/dtos/product-base/product-b
   templateUrl: './product-base-list.component.html',
   styleUrl: './product-base-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, TableComponent],
+  imports: [AsyncPipe, TranslateModule, TableComponent],
 })
 export class ProductBaseListComponent implements OnDestroy {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _productBaseDataService = inject(ProductBaseDataService);
   private readonly _router = inject(Router);
   private readonly _unsubscribe: Subject<void> = new Subject<void>();
+
+  readonly userService = inject(UserService);
+
+  ShopPermission: typeof ShopPermission = ShopPermission;
 
   pagination = signal<PaginationModel>({
     currentPage: 1,
