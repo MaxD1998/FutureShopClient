@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { filter, map, Observable, take } from 'rxjs';
 import { ClientRoute } from '../../core/constants/client-routes/client.route';
 import { IconType } from '../../core/enums/icon-type';
-import { ModuleType } from '../../core/enums/module-type';
 import { UserType } from '../../core/enums/user-type';
 import { UserService } from '../../modules/auth-module/core/services/user.service';
 import { NavComponent } from '../shared/nav/nav.component';
@@ -22,7 +21,6 @@ export class ModuleComponent {
 
   readonly userService = inject(UserService);
   IconType: typeof IconType = IconType;
-  ModuleType: typeof ModuleType = ModuleType;
 
   navigateToProductModule(): void {
     this._router.navigateByUrl(ClientRoute.productModule);
