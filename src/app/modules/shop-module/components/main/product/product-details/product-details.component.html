@@ -19,19 +19,19 @@
     <div class="flex flex-col flex-1 gap-4">
       <h1 class="text-xl text-white font-semibold">{{ product().name }}</h1>
       <span class="text-l text-white font-semibold"
-        >{{ 'shop-module.product-details.component.rating' | translate }}:
+        >{{ 'shop-module.product-details-component.rating' | translate }}:
         @if (product().rating > 0) {
           {{ product().rating }}
         } @else {
-          {{ 'shop-module.product-details.component.no-data' | translate }}
+          {{ 'shop-module.product-details-component.no-data' | translate }}
         }
       </span>
       <span class="text-white font-semibold"
-        >{{ 'shop-module.product-details.component.product-feedback' | translate }}:
+        >{{ 'shop-module.product-details-component.product-feedback' | translate }}:
         @if (product().reviewCount > 0) {
           {{ product().reviewCount }}
         } @else {
-          {{ 'shop-module.product-details.component.no-data' | translate }}
+          {{ 'shop-module.product-details-component.no-data' | translate }}
         }
       </span>
       <div class="flex">
@@ -45,7 +45,7 @@
         <div class="flex flex-auto gap-2">
           <app-button
             class="flex-auto"
-            [label]="'shop-module.product-details.component.add-to-basket' | translate"
+            [label]="'shop-module.product-details-component.add-to-basket' | translate"
             (onClick)="addToBasket()">
           </app-button>
           <app-button-icon
@@ -69,7 +69,7 @@
     <app-table
       idName="id"
       [columns]="columns"
-      [header]="'shop-module.product-details.component.specyfication'"
+      [header]="'shop-module.product-details-component.specyfication'"
       [items]="product().productParameters">
     </app-table>
     <app-product-rating [(product)]="product"></app-product-rating>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FileControllerRoute } from '../constants/api-routes/file-controller.route';
+import { FileControllerRoute } from '../constants/controllers/file-controller.route';
 import { FileDto } from '../dtos/file.dto';
 
 @Injectable({
@@ -18,11 +18,6 @@ export class FileDataService {
     });
 
     return this._httpClient.post<string[]>(FileControllerRoute.base, form);
-  }
-
-  getById(id: string): Observable<Blob> {
-    const url = `${FileControllerRoute.base}${id}`;
-    return this._httpClient.get(url, { responseType: 'blob' });
   }
 
   getListInfoByIds(ids: string[]): Observable<FileDto[]> {

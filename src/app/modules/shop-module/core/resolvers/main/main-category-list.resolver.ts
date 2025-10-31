@@ -3,12 +3,12 @@ import { ResolveFn } from '@angular/router';
 import { map } from 'rxjs';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
 import { AsideItemModel } from '../../../../../core/models/aside-item.model';
-import { CategoryDataService } from '../../data-services/category.data-service';
 import { CategoryListDto } from '../../dtos/category/category.list-dto';
+import { CategoryPublicDataService } from '../../public-data-services/category.public-data-service';
 
 export const mainCategoryListResolver: ResolveFn<AsideItemModel[]> = (route, state) => {
-  return inject(CategoryDataService)
-    .getList()
+  return inject(CategoryPublicDataService)
+    .getActiveList()
     .pipe(
       map(response => {
         return response.map(x => mapToModel(x));

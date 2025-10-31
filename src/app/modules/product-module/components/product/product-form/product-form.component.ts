@@ -11,7 +11,7 @@ import { DialogWindowComponent } from '../../../../../components/shared/modals/d
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { FileDataService } from '../../../../../core/data-services/file.data-service';
+import { FileDataService } from '../../../../../core/data-service/file.data-service';
 import { ButtonLayout } from '../../../../../core/enums/button-layout';
 import { TableHeaderFloat } from '../../../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../../../core/enums/table-template';

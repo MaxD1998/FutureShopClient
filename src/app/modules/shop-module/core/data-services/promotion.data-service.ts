@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
-import { PromotionControllerRoute } from '../constants/api-routes/promotion-controller.route';
+import { PromotionControllerRoute } from '../constants/controllers/promotion-controller.route';
 import { PromotionListDto } from '../dtos/promotion/promotion-list.dto';
 import { PromotionRequestFormDto } from '../dtos/promotion/promotion.request-form-dto';
 import { PromotionResponseFormDto } from '../dtos/promotion/promotion.response-form-dto';
@@ -21,11 +21,6 @@ export class PromotionDataService {
 
   delete(id: string): Observable<null> {
     return this._httpClient.delete<null>(`${PromotionControllerRoute.base}${id}`);
-  }
-
-  getActualCodes(): Observable<string[]> {
-    const url = `${PromotionControllerRoute.actualCodes}`;
-    return this._httpClient.get<string[]>(url);
   }
 
   getById(id: string): Observable<PromotionResponseFormDto> {

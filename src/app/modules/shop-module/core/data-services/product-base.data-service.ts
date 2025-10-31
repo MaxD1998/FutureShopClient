@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
-import { ProductBaseControllerRoute } from '../constants/api-routes/product-base-controller.route';
+import { ProductBaseControllerRoute } from '../constants/controllers/product-base-controller.route';
 import { ProductBaseListDto } from '../dtos/product-base/product-base.list-dto';
 import { ProductBaseRequestFormDto } from '../dtos/product-base/product-base.request-form-dto';
 import { ProductBaseResponseFormDto } from '../dtos/product-base/product-base.response-form-dto';

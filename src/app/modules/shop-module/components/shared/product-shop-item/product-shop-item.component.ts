@@ -7,8 +7,8 @@ import { ButtonComponent } from '../../../../../components/shared/button/button.
 import { DropDownComponent } from '../../../../../components/shared/drop-down/drop-down.component';
 import { IconComponent } from '../../../../../components/shared/icon/icon.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
-import { FileDataService } from '../../../../../core/data-services/file.data-service';
 import { IconType } from '../../../../../core/enums/icon-type';
+import { FilePublicDataService } from '../../../../../core/public-data-services/file.public-data-service';
 import { ProductListModel } from '../../../core/models/product-shop.list-model';
 import { BasketService } from '../../../core/services/basket.service';
 import { AddProductToPurchaseListComponent } from '../add-product-to-purchase-list/add-product-to-purchase-list.component';
@@ -23,7 +23,7 @@ import { AddProductToPurchaseListComponent } from '../add-product-to-purchase-li
 export class ProductShopItemComponent {
   private readonly _basketService = inject(BasketService);
   private readonly _injector = inject(Injector);
-  private readonly _fileDataService = inject(FileDataService);
+  private readonly _fileDataService = inject(FilePublicDataService);
   private readonly _router = inject(Router);
 
   IconType: typeof IconType = IconType;

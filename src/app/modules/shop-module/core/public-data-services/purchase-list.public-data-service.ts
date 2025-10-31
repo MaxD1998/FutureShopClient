@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PurchaseListControllerRoute } from '../constants/api-routes/purchase-list-controller.route';
+import { PurchaseListControllerRoute } from '../constants/public-controllers/purchase-list-public-controller.route';
 import { ImportBasketToPurchaseListDto } from '../dtos/basket/import-purchase-list-to-basket.dto';
 import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
 import { PurchaseListRequestFormDto } from '../dtos/purchase-list/purchase-list.request-from-dto';
@@ -10,7 +10,7 @@ import { PurchaseListResponseFormDto } from '../dtos/purchase-list/purchase-list
 @Injectable({
   providedIn: 'root',
 })
-export class PurchaseListDataService {
+export class PurchaseListPublicDataService {
   private readonly _httpClient = inject(HttpClient);
 
   create(dto: PurchaseListRequestFormDto): Observable<PurchaseListResponseFormDto> {
