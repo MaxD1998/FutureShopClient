@@ -12,7 +12,7 @@ import { TranslateTableComponent } from '../../../../../../components/shared/tra
 import { BaseFormComponent } from '../../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../../core/constants/client-routes/client.route';
 import { ButtonLayout } from '../../../../../../core/enums/button-layout';
-import { ShopPermission } from '../../../../../../core/enums/shop-permission';
+import { ShopPermission } from '../../../../../../core/enums/permissions/shop-permission';
 import { CustomValidators } from '../../../../../../core/utils/custom-validators';
 import { ProductDataService } from '../../../../core/data-services/product.data-service';
 import { ProductParameterValueFormDto } from '../../../../core/dtos/product/product-parameter-value.form-dto';

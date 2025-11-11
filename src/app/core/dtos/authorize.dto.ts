@@ -1,8 +1,8 @@
-import { AuthorizationPermission } from '../enums/authorization-permission';
-import { ProductPermission } from '../enums/product-permission';
-import { ShopPermission } from '../enums/shop-permission';
+import { AuthorizationPermission } from '../enums/permissions/authorization-permission';
+import { ProductPermission } from '../enums/permissions/product-permission';
+import { ShopPermission } from '../enums/permissions/shop-permission';
+import { WarehousePermission } from '../enums/permissions/warehouse-permission';
 import { UserType } from '../enums/user-type';
-import { WarehousePermission } from '../enums/warehouse-permission';
 
 export interface AuthorizeDto {
   id: string;

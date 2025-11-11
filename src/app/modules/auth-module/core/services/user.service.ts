@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
 import { AuthorizeDto } from '../../../../core/dtos/authorize.dto';
-import { AuthorizationPermission } from '../../../../core/enums/authorization-permission';
-import { ProductPermission } from '../../../../core/enums/product-permission';
-import { ShopPermission } from '../../../../core/enums/shop-permission';
+import { AuthorizationPermission } from '../../../../core/enums/permissions/authorization-permission';
+import { ProductPermission } from '../../../../core/enums/permissions/product-permission';
+import { ShopPermission } from '../../../../core/enums/permissions/shop-permission';
+import { WarehousePermission } from '../../../../core/enums/permissions/warehouse-permission';
 import { UserType } from '../../../../core/enums/user-type';
-import { WarehousePermission } from '../../../../core/enums/warehouse-permission';
 
 @Injectable({
   providedIn: 'root',

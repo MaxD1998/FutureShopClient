@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
-import { CategoryControllerRoute } from '../constants/controllers/category-controller.route';
+import { CategoryControllerRoute } from '../constants/controller-routes/category-controller.route';
+import { CategoryListDto } from '../dtos/category/category.list-dto';
 import { CategoryPageListDto } from '../dtos/category/category.page-list-dto';
 import { CategoryRequestFormDto } from '../dtos/category/category.request-form-dto';
 import { CategoryResponseFormDto } from '../dtos/category/category.response-form-dto';
@@ -14,6 +15,19 @@ import { CategoryResponseFormDto } from '../dtos/category/category.response-form
 })
 export class CategoryDataService {
   private readonly _httpClient = inject(HttpClient);
+
+  //For public
+  getActiveIdNameById(id: string): Observable<IdNameDto> {
+    const url = `${CategoryControllerRoute.activeIdName}${id}`;
+    return this._httpClient.get<IdNameDto>(url);
+  }
+
+  getActiveList(categoryParentId?: string): Observable<CategoryListDto[]> {
+    const url = `${CategoryControllerRoute.activeList}${categoryParentId ?? ''}`;
+    return this._httpClient.get<CategoryListDto[]>(url);
+  }
+
+  //For Employee
   getById(id: string): Observable<CategoryResponseFormDto> {
     const url = `${CategoryControllerRoute.base}${id}`;
     return this._httpClient.get<CategoryResponseFormDto>(url);

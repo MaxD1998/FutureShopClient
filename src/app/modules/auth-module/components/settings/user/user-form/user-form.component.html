@@ -1,0 +1,62 @@
+<div class="flex flex-col h-full bg-neutral-900 rounded-tl-xl">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">
+      {{ header | translate }}
+    </h1>
+    <app-button [label]="'auth-module.user-form-component.save' | translate" (onClick)="submit()"></app-button>
+  </div>
+  <div class="flex flex-col p-4">
+    <div class="flex flex-row flex-auto gap-4">
+      <form class="flex flex-col flex-1 gap-4" [formGroup]="form">
+        <h2 class="text-xl font-semibold text-white mb-4">
+          {{ 'auth-module.user-form-component.properties' | translate }}
+        </h2>
+        <div class="flex flex-col flex-wrap">
+          <app-input
+            formControlName="firstName"
+            [errorCode]="errorCode('firstName')"
+            [label]="'auth-module.user-form-component.first-name' | translate"
+            [required]="true">
+          </app-input>
+          <app-input
+            formControlName="lastName"
+            [errorCode]="errorCode('lastName')"
+            [label]="'auth-module.user-form-component.last-name' | translate"
+            [required]="true">
+          </app-input>
+          <app-input
+            formControlName="email"
+            [errorCode]="errorCode('email')"
+            [label]="'auth-module.user-form-component.email' | translate"
+            [required]="true">
+          </app-input>
+          @if (!id) {
+            <app-input
+              formControlName="password"
+              [errorCode]="errorCode('password')"
+              [label]="'auth-module.user-form-component.password' | translate"
+              [required]="true">
+            </app-input>
+          }
+          <app-input-date
+            class="w-full"
+            formControlName="dateOfBirth"
+            [errorCode]="errorCode('dateOfBirth')"
+            [label]="'auth-module.user-form-component.date-of-birth' | translate"
+            [required]="true">
+          </app-input-date>
+          <app-input-select
+            formControlName="type"
+            [errorCode]="errorCode('type')"
+            [label]="'auth-module.user-form-component.user-type' | translate"
+            [items]="typeItems"
+            [required]="true">
+          </app-input-select>
+        </div>
+      </form>
+      <div class="flex-1">
+        <app-user-permission-group-table [formGroup]="form"></app-user-permission-group-table>
+      </div>
+    </div>
+  </div>
+</div>

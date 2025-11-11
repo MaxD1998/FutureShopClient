@@ -1,19 +1,19 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { map, switchMap } from 'rxjs';
+import { FileDataService } from '../../../../../core/data-service/file.data-service';
 import { IdFileDto } from '../../../../../core/dtos/id-file.dto';
-import { FilePublicDataService } from '../../../../../core/public-data-services/file.public-data-service';
+import { AdCampaignDataService } from '../../data-services/ad-campaign.data-service';
 import { AdCampaignDto } from '../../dtos/ad-campaign/ad-campaign.dto';
-import { AdCampaignPublicDataService } from '../../public-data-services/ad-campaign.public-data-service';
 
 export const adResolver: ResolveFn<AdCampaignDto & IdFileDto> = (route, state) => {
-  const adCampaignPublicDataService = inject(AdCampaignPublicDataService);
-  const filePublicDataService = inject(FilePublicDataService);
+  const adCampaignDataService = inject(AdCampaignDataService);
+  const fileDataService = inject(FileDataService);
   const id = route.params['id'];
 
-  return adCampaignPublicDataService.getActualById(id).pipe(
+  return adCampaignDataService.getActualById(id).pipe(
     switchMap(value => {
-      return filePublicDataService.getById(value.fileId).pipe(
+      return fileDataService.getById(value.fileId).pipe(
         map(blob => URL.createObjectURL(blob)),
         map(url => {
           return { ...value, file: url };

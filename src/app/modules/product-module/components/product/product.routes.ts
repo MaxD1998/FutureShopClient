@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
-import { ProductPermission } from '../../../../core/enums/product-permission';
+import { ProductPermission } from '../../../../core/enums/permissions/product-permission';
 import { productPermissionGuard } from '../../core/guards/product-permission.guard';
 import { productFormResolver } from '../../core/resolvers/product-form.resolver';
 import { productListResolver } from '../../core/resolvers/product-list.resolver';

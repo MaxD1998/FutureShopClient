@@ -12,6 +12,7 @@ export class ClientRoute {
   public static readonly main = '';
   public static readonly module = 'module';
   public static readonly new = 'new';
+  public static readonly permissionGroup = 'permission-group';
   public static readonly product = 'product';
   public static readonly productModule = 'product-module';
   public static readonly productBase = 'product-base';

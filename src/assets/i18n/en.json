@@ -13,6 +13,24 @@
       "en": "English",
       "pl": "Polish"
     },
+    "permission-names": {
+      "authorization": {
+        "permission-groups": "Permission Groups",
+        "users": "Users"
+      },
+      "product": {
+        "categories": "Categories",
+        "product-bases": "Product Bases",
+        "products": "Products"
+      },
+      "shop": {
+        "categories": "Categories",
+        "product-bases": "Product Bases",
+        "products": "Products",
+        "ad-campaigns": "Ad Campaigns",
+        "promotions": "Promotions"
+      }
+    },
     "table": {
       "no-results": "No results"
     },
@@ -60,6 +78,28 @@
       "sign-in": "Sign in",
       "sign-up": "Sign up"
     },
+    "permission-group-form-component": {
+      "create-permission-group": "Create permission group",
+      "edit-permission-group": "Edit permission group",
+      "name": "Name",
+      "properties": "Properties",
+      "save": "Save"
+    },
+    "permission-group-list-component": {
+      "columns": {
+        "name": "Name"
+      },
+      "create-new-permission-group": "Create new permission group",
+      "permission-groups": "Permission groups"
+    },
+    "permission-group-section-component": {
+      "table-columns": {
+        "add-update": "Add/Update",
+        "delete": "Delete",
+        "name": "Name",
+        "read": "Read"
+      }
+    },
     "register-component": {
       "date-of-birth": "Date of birth",
       "email": "E-mail",
@@ -70,6 +110,48 @@
       "registration": "Registration",
       "repeat-password": "Repeat password",
       "sign-up": "Sign up"
+    },
+    "settings-component": {
+      "items": {
+        "users": "Users",
+        "permission-groups": "Permission groups"
+      },
+      "menu": "Menu"
+    },
+    "set-user-permission-group-component": {
+      "choose-permission-group": "Choose permission group",
+      "save": "Save"
+    },
+    "user-form-component": {
+      "create-user": "Create user",
+      "date-of-birth": "Date of birth",
+      "edit-user": "Edit user",
+      "email": "Email",
+      "first-name": "First name",
+      "last-name": "Last name",
+      "password": "Password",
+      "properties": "Properties",
+      "save": "Save",
+      "types": {
+        "customer": "Customer",
+        "employee": "Employee",
+        "super-admin": "Super Admin"
+      },
+      "user-type": "User type"
+    },
+    "user-list-component": {
+      "columns": {
+        "first-name": "First name",
+        "last-name": "Last name"
+      },
+      "create-new-user": "Create new user",
+      "users": "Users"
+    },
+    "user-permission-group-table-component": {
+      "add": "Add",
+      "table-columns": {
+        "name": "Name"
+      }
     }
   },
   "product-module": {

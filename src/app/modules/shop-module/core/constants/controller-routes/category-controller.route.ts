@@ -1,0 +1,16 @@
+import { environment } from '../../../../../../environments/environment';
+
+export class CategoryControllerRoute {
+  public static readonly base = `${environment.api}ShopModule/Category/`;
+
+  //For public
+  public static readonly activeIdName = this.base + 'Active/IdName/';
+  public static readonly activeList = this.base + 'Active/List/';
+
+  //For Employee
+  public static readonly all = this.base + 'All/';
+  public static readonly availableToBeChild = this.base + 'AvailableToBeChild/';
+  public static readonly availableToBeParent = this.base + 'AvailableToBeParent/';
+  public static readonly idName = this.base + 'IdName/';
+  public static readonly page = this.base + 'Page/';
+}

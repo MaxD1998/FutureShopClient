@@ -6,7 +6,7 @@ import { Subject, switchMap, takeUntil } from 'rxjs';
 import { TableComponent } from '../../../../../components/shared/table/table.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
 import { PageDto } from '../../../../../core/dtos/page.dto';
-import { ProductPermission } from '../../../../../core/enums/product-permission';
+import { ProductPermission } from '../../../../../core/enums/permissions/product-permission';
 import { TableTemplate } from '../../../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../../../core/models/pagination.model';

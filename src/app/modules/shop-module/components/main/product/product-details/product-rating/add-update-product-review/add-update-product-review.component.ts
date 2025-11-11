@@ -13,10 +13,10 @@ import { forkJoin, of, switchMap } from 'rxjs';
 import { ButtonComponent } from '../../../../../../../../components/shared/button/button.component';
 import { InputAreaComponent } from '../../../../../../../../components/shared/input-area/input-area.component';
 import { RatingComponent } from '../../../../../../../../components/shared/rating/rating.component';
+import { ProductReviewDataService } from '../../../../../../core/data-services/product-review.data-service';
+import { ProductDataService } from '../../../../../../core/data-services/product.data-service';
 import { ProductReviewResponseFormDto } from '../../../../../../core/dtos/product/product-review/product-review.response-form-dto';
 import { ProductDto } from '../../../../../../core/dtos/product/product.dto';
-import { ProductReviewPublicDataService } from '../../../../../../core/public-data-services/product-review.public-data-service';
-import { ProductPublicDataService } from '../../../../../../core/public-data-services/product.public-data-service';
 
 @Component({
   selector: 'app-add-update-product-review',
@@ -26,8 +26,8 @@ import { ProductPublicDataService } from '../../../../../../core/public-data-ser
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddUpdateProductReviewComponent {
-  private readonly _productPublicDataService = inject(ProductPublicDataService);
-  private readonly _productReviewDataService = inject(ProductReviewPublicDataService);
+  private readonly _productDataService = inject(ProductDataService);
+  private readonly _productReviewDataService = inject(ProductReviewDataService);
 
   product = model.required<ProductDto>();
   productReviews = model.required<ProductReviewResponseFormDto[]>();
@@ -61,7 +61,7 @@ export class AddUpdateProductReviewComponent {
         .pipe(
           switchMap(response => {
             return forkJoin({
-              product: this._productPublicDataService.getDetailsById(this.product().id),
+              product: this._productDataService.getDetailsById(this.product().id),
               productReview: of(response),
             });
           }),
@@ -85,7 +85,7 @@ export class AddUpdateProductReviewComponent {
         .pipe(
           switchMap(response => {
             return forkJoin({
-              product: this._productPublicDataService.getDetailsById(this.product().id),
+              product: this._productDataService.getDetailsById(this.product().id),
               productReview: of(response),
             });
           }),

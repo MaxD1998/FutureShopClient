@@ -1,11 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
 import { UserService } from '../../../auth-module/core/services/user.service';
-import { ProductControllerRoute } from '../constants/controllers/product-controller.route';
+import { ProductControllerRoute } from '../constants/controller-routes/product-controller.route';
+import { ProductShopListDto } from '../dtos/product/product-shop.list-dto';
+import { ProductShopLisRequestDto } from '../dtos/product/product-shop.list-request-dto';
+import { ProductDto } from '../dtos/product/product.dto';
 import { ProductListDto } from '../dtos/product/product.list-dto';
 import { ProductRequestFormDto } from '../dtos/product/product.request-form-dto';
 import { ProductResponseFormDto } from '../dtos/product/product.response-form-dto';
@@ -20,6 +23,60 @@ export class ProductDataService {
   private readonly _authService = inject(UserService);
   private readonly _httpClient = inject(HttpClient);
 
+  //For public
+  getDetailsById(id: string): Observable<ProductDto> {
+    return this._authService.user$.pipe(
+      take(1),
+      switchMap(user => {
+        const url = `${ProductControllerRoute.details}${id}`;
+        const favouriteId = localStorage.getItem('favouriteId');
+
+        if (!user && favouriteId) {
+          const params = new HttpParams().append('favouriteId', favouriteId);
+          return this._httpClient.get<ProductDto>(url, { params: params });
+        } else {
+          return this._httpClient.get<ProductDto>(url);
+        }
+      }),
+    );
+  }
+
+  getShopListByCategoryId(categoryId: string, request?: ProductShopLisRequestDto): Observable<ProductShopListDto[]> {
+    return this._authService.user$.pipe(
+      take(1),
+      switchMap(user => {
+        const url = `${ProductControllerRoute.shopList}${categoryId}`;
+        const favouriteId = localStorage.getItem('favouriteId');
+        let params = new HttpParams();
+
+        if (!user && favouriteId) {
+          params = params.append('favouriteId', favouriteId);
+        }
+
+        if (request) {
+          if (request.name) {
+            params = params.append('name', request.name);
+          }
+
+          if (request.priceFrom) {
+            params = params.append('priceFrom', request.priceFrom);
+          }
+
+          if (request.priceTo) {
+            params = params.append('priceTo', request.priceTo);
+          }
+
+          if (request.sortType) {
+            params = params.append('sortType', request.sortType);
+          }
+        }
+
+        return this._httpClient.get<ProductShopListDto[]>(url, { params: params });
+      }),
+    );
+  }
+
+  //For Employee
   getById(id: string): Observable<ProductResponseFormDto> {
     const url = `${ProductControllerRoute.base}${id}`;
     return this._httpClient.get<ProductResponseFormDto>(url);

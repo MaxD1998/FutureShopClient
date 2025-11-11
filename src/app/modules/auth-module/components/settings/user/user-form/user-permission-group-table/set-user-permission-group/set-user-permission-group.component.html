@@ -1,0 +1,10 @@
+<form [formGroup]="form" class="flex flex-col gap-2">
+  <app-input-select
+    formControlName="permissionGroupId"
+    [errorCode]="errorCode('permissionGroupId')"
+    [label]="'auth-module.set-user-permission-group-component.choose-permission-group' | translate"
+    [items]="permissionGroups()">
+  </app-input-select>
+  <app-button [label]="'auth-module.set-user-permission-group-component.save' | translate" (onClick)="submit()">
+  </app-button>
+</form>

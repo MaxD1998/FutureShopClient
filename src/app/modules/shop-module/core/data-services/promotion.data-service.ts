@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IdNameDto } from '../../../../core/dtos/id-name.dto';
 import { PageDto } from '../../../../core/dtos/page.dto';
 import { PaginationDto } from '../../../../core/dtos/pagination.dto';
-import { PromotionControllerRoute } from '../constants/controllers/promotion-controller.route';
+import { PromotionControllerRoute } from '../constants/controller-routes/promotion-controller.route';
 import { PromotionListDto } from '../dtos/promotion/promotion-list.dto';
 import { PromotionRequestFormDto } from '../dtos/promotion/promotion.request-form-dto';
 import { PromotionResponseFormDto } from '../dtos/promotion/promotion.response-form-dto';
@@ -15,6 +15,13 @@ import { PromotionResponseFormDto } from '../dtos/promotion/promotion.response-f
 export class PromotionDataService {
   private readonly _httpClient = inject(HttpClient);
 
+  //For public
+  getActualCodes(): Observable<string[]> {
+    const url = `${PromotionControllerRoute.actualCodes}`;
+    return this._httpClient.get<string[]>(url);
+  }
+
+  //For Employee
   create(dto: PromotionRequestFormDto): Observable<PromotionResponseFormDto> {
     return this._httpClient.post<PromotionResponseFormDto>(PromotionControllerRoute.base, dto);
   }

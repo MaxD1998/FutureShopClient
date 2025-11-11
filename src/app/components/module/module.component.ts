@@ -22,6 +22,10 @@ export class ModuleComponent {
   readonly userService = inject(UserService);
   IconType: typeof IconType = IconType;
 
+  navigateToAuthModuleSettings(): void {
+    this._router.navigateByUrl(`${ClientRoute.authModule}/${ClientRoute.settings}`);
+  }
+
   navigateToProductModule(): void {
     this._router.navigateByUrl(ClientRoute.productModule);
   }

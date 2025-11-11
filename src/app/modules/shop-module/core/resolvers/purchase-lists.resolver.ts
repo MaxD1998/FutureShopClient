@@ -1,13 +1,13 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { defaultIfEmpty, forkJoin, Observable, of, switchMap, take } from 'rxjs';
-import { FilePublicDataService } from '../../../../core/public-data-services/file.public-data-service';
+import { FileDataService } from '../../../../core/data-service/file.data-service';
 import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
 import { PurchaseListModel } from '../models/purchase-list.model';
 import { PurchaseListService } from '../services/purchase-list.service';
 
 export const purchaseListsResolver: ResolveFn<PurchaseListModel[]> = (route, state) => {
-  const fileDataService = inject(FilePublicDataService);
+  const fileDataService = inject(FileDataService);
   const purchaseListService = inject(PurchaseListService);
   return purchaseListService.purchaseLists$.pipe(
     take(1),
@@ -17,7 +17,7 @@ export const purchaseListsResolver: ResolveFn<PurchaseListModel[]> = (route, sta
   );
 };
 
-function getPhotos$(fileDataService: FilePublicDataService, dto: PurchaseListDto): Observable<PurchaseListModel> {
+function getPhotos$(fileDataService: FileDataService, dto: PurchaseListDto): Observable<PurchaseListModel> {
   return forkJoin({
     purchaseList: of(dto),
     photos: of(dto.purchaseListItems).pipe(

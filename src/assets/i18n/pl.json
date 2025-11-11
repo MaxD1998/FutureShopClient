@@ -13,6 +13,24 @@
       "en": "Angielski",
       "pl": "Polski"
     },
+    "permission-names": {
+      "authorization": {
+        "permission-groups": "Grupy uprawnień",
+        "users": "Użytkownicy"
+      },
+      "product": {
+        "categories": "Kategorie",
+        "product-bases": "Bazy produktów",
+        "products": "Produkty"
+      },
+      "shop": {
+        "categories": "Kategorie",
+        "product-bases": "Bazy produktów",
+        "products": "Produkty",
+        "ad-campaigns": "Kampania reklamowe",
+        "promotions": "Promocje"
+      }
+    },
     "table": {
       "no-results": "Brak wyników"
     },
@@ -60,6 +78,28 @@
       "sign-in": "Zaloguj się",
       "sign-up": "Zarejestruj się"
     },
+    "permission-group-form-component": {
+      "create-permission-group": "Stwórz grupę uprawnień",
+      "edit-permission-group": "Edytuj grupę uprawnień",
+      "name": "Nazwa",
+      "properties": "Właściwości",
+      "save": "Zapisz"
+    },
+    "permission-group-list-component": {
+      "columns": {
+        "name": "Nazwa"
+      },
+      "create-new-permission-group": "Stwórz nową grupę uprawnień",
+      "permission-groups": "Grupy uprawnień"
+    },
+    "permission-group-section-component": {
+      "table-columns": {
+        "add-update": "Dodawanie/Edycja",
+        "delete": "Usuwanie",
+        "name": "Nazwa",
+        "read": "Do odczytu"
+      }
+    },
     "register-component": {
       "date-of-birth": "Data urodzenia",
       "email": "E-mail",
@@ -70,6 +110,48 @@
       "registration": "Rejestracja",
       "repeat-password": "Powtórz hasło",
       "sign-up": "Zarejestruj się"
+    },
+    "settings-component": {
+      "items": {
+        "users": "Użytkownicy",
+        "permission-groups": "Grupy uprawnień"
+      },
+      "menu": "Menu"
+    },
+    "set-user-permission-group-component": {
+      "choose-permission-group": "Wybierz grupę uprawnień",
+      "save": "Zapisz"
+    },
+    "user-form-component": {
+      "create-user": "Stwórz użytkownika",
+      "date-of-birth": "Data urodzenia",
+      "edit-user": "Edytuj użytkownika",
+      "email": "E-mail",
+      "first-name": "Imię",
+      "last-name": "Nazwisko",
+      "password": "Hasło",
+      "properties": "Właściwości",
+      "save": "Zapisz",
+      "types": {
+        "customer": "Klient",
+        "employee": "Pracownik",
+        "super-admin": "Super Administrator"
+      },
+      "user-type": "Type użytkownika"
+    },
+    "user-list-component": {
+      "columns": {
+        "first-name": "Imię",
+        "last-name": "Nazwisko"
+      },
+      "create-new-user": "Stwórz nowego użytkownika",
+      "users": "Użytkownicy"
+    },
+    "user-permission-group-table-component": {
+      "add": "Dodaj",
+      "table-columns": {
+        "name": "Nazwa"
+      }
     }
   },
   "product-module": {

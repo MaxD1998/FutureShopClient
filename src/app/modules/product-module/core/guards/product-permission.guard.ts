@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanMatchFn } from '@angular/router';
-import { ProductPermission } from '../../../../core/enums/product-permission';
+import { ProductPermission } from '../../../../core/enums/permissions/product-permission';
 import { UserService } from '../../../auth-module/core/services/user.service';
 
 export function productPermissionGuard(permission: ProductPermission): CanMatchFn {

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
-import { ShopPermission } from '../../../../core/enums/shop-permission';
+import { ShopPermission } from '../../../../core/enums/permissions/shop-permission';
 import { shopPermissionGuard } from '../../core/guards/shop-permission.guard';
 
 export const settingsRoutes: Routes = [

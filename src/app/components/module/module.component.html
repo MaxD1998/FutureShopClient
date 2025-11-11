@@ -21,7 +21,10 @@
         <app-module-button [iconName]="IconType.buildingStorefront" [name]="'Magazyny'"></app-module-button>
       }
       @if (hasAuthorizationModule() | async) {
-        <app-module-button [iconName]="IconType.userGroup" [name]="'Użytkownicy'"></app-module-button>
+        <app-module-button
+          [iconName]="IconType.userGroup"
+          [name]="'Użytkownicy'"
+          (onClick)="navigateToAuthModuleSettings()"></app-module-button>
       }
     </div>
   </div>

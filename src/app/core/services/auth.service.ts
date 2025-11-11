@@ -5,13 +5,13 @@ import { UserService } from '../../modules/auth-module/core/services/user.servic
 import { UserInputDto } from '../../modules/shop-module/core/dtos/user-input.dto';
 import { BasketService } from '../../modules/shop-module/core/services/basket.service';
 import { PurchaseListService } from '../../modules/shop-module/core/services/purchase-list.service';
-import { AuthPublicDataService } from '../public-data-services/auth.public-data-service';
+import { AuthDataService } from '../data-service/auth.data-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly _authPublicDataService = inject(AuthPublicDataService);
+  private readonly _authDataService = inject(AuthDataService);
   private readonly _basketService = inject(BasketService);
   private readonly _userService = inject(UserService);
   private readonly _purchaseListService = inject(PurchaseListService);
@@ -19,7 +19,7 @@ export class AuthService {
   private _intervalId?: NodeJS.Timeout;
 
   login(dto: LoginDto, callback?: () => void): void {
-    this._authPublicDataService
+    this._authDataService
       .login(dto)
       .pipe(
         switchMap(user => {
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this._authPublicDataService.logout().subscribe({
+    this._authDataService.logout().subscribe({
       next: () => {
         this._userService.user$.next(undefined);
 
@@ -59,7 +59,7 @@ export class AuthService {
 
   refreshToken(): Promise<boolean> {
     return new Promise(resolve => {
-      return this._authPublicDataService
+      return this._authDataService
         .refreshToken()
         .pipe(
           tap(user => {
@@ -96,7 +96,7 @@ export class AuthService {
 
     const interval = 4 * 60 * 1000;
     const intervalId = setInterval(() => {
-      this._authPublicDataService.refreshToken().subscribe({
+      this._authDataService.refreshToken().subscribe({
         next: response => {
           this._userService.user$.next(response);
         },
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   register(dto: UserInputDto, callback?: () => void): void {
-    this._authPublicDataService.register(dto).subscribe({
+    this._authDataService.register(dto).subscribe({
       next: response => {
         this._userService.user$.next(response);
 

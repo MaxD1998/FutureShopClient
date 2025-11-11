@@ -7,8 +7,8 @@ import { ButtonComponent } from '../../../../../components/shared/button/button.
 import { DialogWindowComponent } from '../../../../../components/shared/modals/dialog-window/dialog-window.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
 import { IconType } from '../../../../../core/enums/icon-type';
+import { PurchaseListDataService } from '../../../core/data-services/purchase-list.data-service';
 import { PurchaseListModel } from '../../../core/models/purchase-list.model';
-import { PurchaseListPublicDataService } from '../../../core/public-data-services/purchase-list.public-data-service';
 import { PurchaseListService } from '../../../core/services/purchase-list.service';
 import { AddPurchaseListComponent } from '../../shared/add-purchase-list/add-purchase-list.component';
 
@@ -28,7 +28,7 @@ import { AddPurchaseListComponent } from '../../shared/add-purchase-list/add-pur
 })
 export class PurchaseListsComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
-  private readonly _purchaseListDataService = inject(PurchaseListPublicDataService);
+  private readonly _purchaseListDataService = inject(PurchaseListDataService);
   private readonly _purchaseListService = inject(PurchaseListService);
 
   isDialogActive = signal<boolean>(false);

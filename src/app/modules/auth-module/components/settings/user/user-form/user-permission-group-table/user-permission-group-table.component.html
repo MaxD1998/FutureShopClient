@@ -1,0 +1,17 @@
+<app-table
+  [buttonLabel]="'auth-module.user-permission-group-table-component.add'"
+  [columns]="columns"
+  [idName]="'permissionGroupId'"
+  [items]="formGroup().getRawValue().userPermissionGroups"
+  [isButtonAction]="true"
+  [isRemoveAction]="true"
+  (onButtonAction)="isDialogActive.set(true)"
+  (onRemoveAction)="remove($event)">
+</app-table>
+<app-dialog-window [(isDialogActive)]="isDialogActive">
+  @if (isDialogActive()) {
+    <app-set-user-permission-group
+      [formGroup]="formGroup()"
+      [(isDialogActive)]="isDialogActive"></app-set-user-permission-group>
+  }
+</app-dialog-window>

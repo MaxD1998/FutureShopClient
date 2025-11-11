@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FileControllerRoute } from '../constants/controllers/file-controller.route';
+import { FileControllerRoute } from '../constants/controllers-routes/file-controller.route';
 import { FileDto } from '../dtos/file.dto';
 
 @Injectable({
@@ -9,6 +9,11 @@ import { FileDto } from '../dtos/file.dto';
 })
 export class FileDataService {
   private readonly _httpClient = inject(HttpClient);
+
+  getById(id: string): Observable<Blob> {
+    const url = `${FileControllerRoute.base}${id}`;
+    return this._httpClient.get(url, { responseType: 'blob' });
+  }
 
   addList(blobs: Blob[]): Observable<string[]> {
     const form = new FormData();

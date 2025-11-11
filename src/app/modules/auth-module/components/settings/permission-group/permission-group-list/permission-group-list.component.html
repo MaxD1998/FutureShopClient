@@ -1,0 +1,16 @@
+<app-table
+  class="block h-[calc(100vh-6rem)] bg-neutral-900 p-4 rounded-tl-xl"
+  [buttonLabel]="'auth-module.permission-group-list-component.create-new-permission-group'"
+  [columns]="columns"
+  [header]="'auth-module.permission-group-list-component.permission-groups'"
+  [idName]="'id'"
+  [items]="permissionGroups()"
+  [isButtonAction]="(userService.hasAuthorizationPermission(AuthorizationPermission.PermissionGroupAddUpdate) | async)!"
+  [isEditAction]="(userService.hasAuthorizationPermission(AuthorizationPermission.PermissionGroupAddUpdate) | async)!"
+  [isRemoveAction]="(userService.hasAuthorizationPermission(AuthorizationPermission.PermissionGroupDelete) | async)!"
+  [page]="pagination()"
+  (onButtonAction)="navigateToCreate()"
+  (onEditAction)="navigateToEdit($event)"
+  (onPageClick)="changePage($event)"
+  (onRemoveAction)="removeRecord($event)">
+</app-table>

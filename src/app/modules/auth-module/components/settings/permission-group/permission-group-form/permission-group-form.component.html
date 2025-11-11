@@ -1,0 +1,31 @@
+<div class="flex flex-col h-workspace bg-neutral-900 rounded-tl-xl overflow-auto">
+  <div class="flex justify-between items-center h-14.5 px-4 py-2">
+    <h1 class="text-xl font-semibold text-white">
+      {{ header | translate }}
+    </h1>
+    <app-button [label]="'auth-module.permission-group-form-component.save' | translate" (onClick)="submit()">
+    </app-button>
+  </div>
+  <div class="flex flex-col p-4">
+    <div class="flex flex-row flex-auto gap-4">
+      <form class="flex flex-col flex-1 gap-4" [formGroup]="form">
+        <h2 class="text-xl font-semibold text-white mb-4">
+          {{ 'auth-module.permission-group-form-component.properties' | translate }}
+        </h2>
+        <div class="flex flex-col flex-wrap">
+          <app-input
+            formControlName="name"
+            [errorCode]="errorCode('name')"
+            [label]="'auth-module.permission-group-form-component.name' | translate"
+            [required]="true">
+          </app-input>
+        </div>
+      </form>
+      <div class="flex-1"></div>
+    </div>
+    <app-permission-group-section [header]="''" [permissionList]="authPermissionList()"></app-permission-group-section>
+    <app-permission-group-section [header]="''" [permissionList]="productPermissionList()">
+    </app-permission-group-section>
+    <app-permission-group-section [header]="''" [permissionList]="shopPermissionList()"></app-permission-group-section>
+  </div>
+</div>

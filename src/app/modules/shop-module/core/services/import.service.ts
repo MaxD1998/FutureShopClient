@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { filter, forkJoin, of, switchMap, take, tap } from 'rxjs';
+import { BasketDataService } from '../data-services/basket.data-service';
+import { PurchaseListDataService } from '../data-services/purchase-list.data-service';
 import { BasketDto } from '../dtos/basket/basket.dto';
 import { PurchaseListDto } from '../dtos/purchase-list/purchase-list.dto';
-import { BasketPublicDataService } from '../public-data-services/basket.public-data-service';
-import { PurchaseListPublicDataService } from '../public-data-services/purchase-list.public-data-service';
 import { BasketService } from './basket.service';
 import { PurchaseListService } from './purchase-list.service';
 
@@ -11,9 +11,9 @@ import { PurchaseListService } from './purchase-list.service';
   providedIn: 'root',
 })
 export class ImportService {
-  private readonly _basketDataService = inject(BasketPublicDataService);
+  private readonly _basketDataService = inject(BasketDataService);
   private readonly _basketService = inject(BasketService);
-  private readonly _purchaseListDataService = inject(PurchaseListPublicDataService);
+  private readonly _purchaseListDataService = inject(PurchaseListDataService);
   private readonly _purchaseListService = inject(PurchaseListService);
 
   importBasketToPurchaseList(name: string): void {
