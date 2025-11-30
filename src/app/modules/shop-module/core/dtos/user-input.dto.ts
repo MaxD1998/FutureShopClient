@@ -1,5 +1,4 @@
 export interface UserInputDto {
-  dateOfBirth: Date;
   email: string;
   firstName: string;
   lastName: string;

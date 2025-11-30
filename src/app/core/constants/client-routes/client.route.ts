@@ -1,4 +1,5 @@
 export class ClientRoute {
+  public static readonly accountSettings = 'account-settings';
   public static readonly ad = 'ad';
   public static readonly adCampaign = 'ad-campaign';
   public static readonly auth = 'auth';
@@ -12,6 +13,7 @@ export class ClientRoute {
   public static readonly main = '';
   public static readonly module = 'module';
   public static readonly new = 'new';
+  public static readonly orderData = 'order-data';
   public static readonly permissionGroup = 'permission-group';
   public static readonly product = 'product';
   public static readonly productModule = 'product-module';
@@ -22,6 +24,7 @@ export class ClientRoute {
   public static readonly settings = 'settings';
   public static readonly shopModule = 'shop-module';
   public static readonly user = 'user';
+  public static readonly userSettings = 'user-settings';
   public static readonly warehouse = 'warehouse';
   public static readonly warehouseModule = 'warehouse-module';
 }

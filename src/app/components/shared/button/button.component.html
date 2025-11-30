@@ -18,7 +18,7 @@
   }
   @case (ButtonLayout.outline) {
     <button
-      class="block w-full p-2.5 bg-white text-sm text-gray-900 font-semibold cursor-pointer rounded-md inset-ring-1 inset-ring-gray-300 hover:bg-gray-100"
+      class="block w-full p-2.5 bg-neutral-900 text-sm text-white font-semibold cursor-pointer rounded-md inset-ring-1 inset-ring-white hover:bg-sky-600 hover:inset-ring-sky-600"
       [disabled]="isDisabled()"
       (click)="onClick.emit($event)">
       {{ label() }}

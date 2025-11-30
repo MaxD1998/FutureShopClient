@@ -20,4 +20,11 @@ export const shopModuleRoutes: Routes = [
     loadChildren: () => import('./components/settings/settings.routes').then(x => x.settingsRoutes),
     canMatch: [authEmployeeGuard],
   },
+  {
+    path: ClientRoute.userSettings,
+    loadComponent: () =>
+      import('./components/user-settings/user-settings.component').then(x => x.UserSettingsComponent),
+    loadChildren: () => import('./components/user-settings/user-settings.routes').then(x => x.userSettingsRoutes),
+    canMatch: [authEmployeeGuard],
+  },
 ];

@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-4 bg-neutral-900">
+  <h2 class="flex text-white font-semibold text-xl">
+    {{ 'auth-module.user-basic-info-component.account-details' | translate }}
+  </h2>
+  <form [formGroup]="form" class="w-full">
+    <app-input
+      formControlName="email"
+      [errorCode]="errorCode('email')"
+      [isDisabled]="true"
+      [label]="'auth-module.user-basic-info-component.email' | translate">
+    </app-input>
+    <app-input
+      formControlName="firstName"
+      [errorCode]="errorCode('firstName')"
+      [label]="'auth-module.user-basic-info-component.first-name' | translate">
+    </app-input>
+    <app-input
+      formControlName="lastName"
+      [errorCode]="errorCode('lastName')"
+      [label]="'auth-module.user-basic-info-component.last-name' | translate">
+    </app-input>
+  </form>
+  <app-button [label]="'Zapisz'" (onClick)="submit()"></app-button>
+</div>

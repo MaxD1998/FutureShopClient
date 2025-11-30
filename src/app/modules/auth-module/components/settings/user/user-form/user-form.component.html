@@ -38,13 +38,6 @@
               [required]="true">
             </app-input>
           }
-          <app-input-date
-            class="w-full"
-            formControlName="dateOfBirth"
-            [errorCode]="errorCode('dateOfBirth')"
-            [label]="'auth-module.user-form-component.date-of-birth' | translate"
-            [required]="true">
-          </app-input-date>
           <app-input-select
             formControlName="type"
             [errorCode]="errorCode('type')"

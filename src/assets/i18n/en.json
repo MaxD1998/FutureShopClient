@@ -122,6 +122,12 @@
       "choose-permission-group": "Choose permission group",
       "save": "Save"
     },
+    "user-basic-info-component": {
+      "account-details": "Account details",
+      "email": "E-mail",
+      "first-name": "First name",
+      "last-name": "Last name"
+    },
     "user-form-component": {
       "create-user": "Create user",
       "date-of-birth": "Date of birth",
@@ -146,6 +152,12 @@
       },
       "create-new-user": "Create new user",
       "users": "Users"
+    },
+    "user-password-component": {
+      "change-password": "Change password",
+      "current-password": "Current password",
+      "new-password": "New password",
+      "repeat-new-password": "Repeat new password"
     },
     "user-permission-group-table-component": {
       "add": "Add",
@@ -505,6 +517,16 @@
         "purchase-lists": "Purchase lists"
       },
       "menu": "Menu"
+    },
+    "user-delivery-address-component": {
+      "add-delivery-address": "Add delivery address",
+      "address-details": "Address details"
+    },
+    "user-settings-component": {
+      "items": {
+        "account-settings": "Account settings",
+        "order-data": "Order data"
+      }
     }
   },
   "warehouse-module": {},

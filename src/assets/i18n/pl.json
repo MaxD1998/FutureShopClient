@@ -122,6 +122,12 @@
       "choose-permission-group": "Wybierz grupę uprawnień",
       "save": "Zapisz"
     },
+    "user-basic-info-component": {
+      "account-details": "Dane konta",
+      "email": "E-mail",
+      "first-name": "Imię",
+      "last-name": "Nazwisko"
+    },
     "user-form-component": {
       "create-user": "Stwórz użytkownika",
       "date-of-birth": "Data urodzenia",
@@ -146,6 +152,12 @@
       },
       "create-new-user": "Stwórz nowego użytkownika",
       "users": "Użytkownicy"
+    },
+    "user-password-component": {
+      "change-password": "Zmień hasło",
+      "current-password": "Obecne hasło",
+      "new-password": "Nowe hasło",
+      "repeat-new-password": "Powtórz nowe hasło"
     },
     "user-permission-group-table-component": {
       "add": "Dodaj",
@@ -505,6 +517,16 @@
         "purchase-lists": "Listy zakupów"
       },
       "menu": "Menu"
+    },
+    "user-delivery-address-component": {
+      "add-delivery-address": "Dodaj adres dostawy",
+      "address-details": "Dane adresowe"
+    },
+    "user-settings-component": {
+      "items": {
+        "account-settings": "Ustawienia konta",
+        "order-data": "Dane do zamówień"
+      }
     }
   },
   "warehouse-module": {},

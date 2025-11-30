@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, output, signal } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnDestroy,
+  output,
+  signal,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil, tap } from 'rxjs';
@@ -32,6 +41,7 @@ export class NavComponent implements OnDestroy {
   IconType: typeof IconType = IconType;
   ButtonLayout: typeof ButtonLayout = ButtonLayout;
 
+  additionalUserItems = input<DropDownListItemModel[]>([]);
   setMenuButton = input<boolean>(false);
 
   onClickMenuButton = output<void>();
@@ -53,7 +63,9 @@ export class NavComponent implements OnDestroy {
   userItems = signal<DropDownListItemModel[]>([]);
 
   constructor() {
-    this._userService.user$.pipe(takeUntil(this._unsubscribe), tap(this.setUserItems.bind(this))).subscribe();
+    afterNextRender(() => {
+      this._userService.user$.pipe(takeUntil(this._unsubscribe), tap(this.setUserItems.bind(this))).subscribe();
+    });
   }
 
   ngOnDestroy(): void {
@@ -125,5 +137,9 @@ export class NavComponent implements OnDestroy {
         },
       ]);
     }
+
+    this.userItems.set(
+      Array.from<DropDownListItemModel>([]).concat(this.additionalUserItems()).concat(this.userItems()),
+    );
   }
 }
