@@ -61,7 +61,7 @@ export class DropDownComponent {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   checkDropdownPosition(): void {
     if (!this.isVisible()) {
       return;

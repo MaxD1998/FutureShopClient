@@ -1,1 +1,39 @@
-<p>user-company-details works!</p>
+<div class="flex flex-col gap-4">
+  <div class="flex justify-between items-center">
+    <h2 class="flex text-white font-semibold text-xl">
+      {{ 'shop-module.user-company-details-component.company-details' | translate }}
+    </h2>
+    <app-button
+      [label]="'shop-module.user-company-details-component.add-company-details' | translate"
+      (onClick)="isDialogActive.set(true)">
+    </app-button>
+  </div>
+  <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-4">
+    @for (item of userCompanyDetails(); track $index) {
+      <div class="flex flex-col gap-4 p-4 bg-neutral-900 border border-neutral-700 rounded-lg">
+        <label class="text-white">
+          {{`shop-module.common.company-identifier-number-type.${item.type}` | translate}}:
+          {{`${item.companyIdentifierNumber}`}}</label
+        >
+        <label class="text-white">{{ `${item.companyName}`}}</label>
+        <label class="text-white">
+          {{ item.apartamentNumber ? `${item.street} ${item.houseNumber}/${item.apartamentNumber}` : `${item.street} ${item.houseNumber}`}}
+        </label>
+        <label class="text-white">{{ `${item.postalCode} ${item.city}`}}</label>
+        <div class="grid grid-cols-2 gap-2">
+          <app-button [label]="'Usuń'" [layout]="ButtonLayout.outline" (onClick)="delete(item.id)"></app-button>
+          <app-button [label]="'Edytuj'" [layout]="ButtonLayout.outline"></app-button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+<app-dialog-window [(isDialogActive)]="isDialogActive">
+  @if (isDialogActive()) {
+    <app-add-user-company-details
+      [(isDialogActive)]="isDialogActive"
+      [(userCompanyDetails)]="userCompanyDetails"
+      [(userCompanyDetailsId)]="userCompanyDetailsId">
+    </app-add-user-company-details>
+  }
+</app-dialog-window>

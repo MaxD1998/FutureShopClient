@@ -251,6 +251,12 @@
     }
   },
   "shop-module": {
+    "common": {
+      "company-identifier-number-type": {
+        "0": "VAT ID",
+        "1": "NIP"
+      }
+    },
     "ad-campaign-form-component": {
       "active": "Aktywny",
       "create-ad-campaign": "Stwórz kampanię reklamową",
@@ -307,6 +313,27 @@
     },
     "add-update-product-review-component": {
       "add-review": "Dodaj recenzję"
+    },
+    "add-user-company-details-component": {
+      "company-name": "Nazwa firmy",
+      "postal-code": "Kod pocztowy",
+      "city": "Miasto",
+      "street": "Ulica",
+      "houseNumber": "Numer domu",
+      "apartament-number": "Numer mieszkania",
+      "save": "Zapisz"
+    },
+    "add-user-delivery-address-component": {
+      "first-name": "Imię",
+      "last-name": "Nazwisko",
+      "email": "Adres e-mail",
+      "phone-number": "Numer telefonu",
+      "postal-code": "Kod pocztowy",
+      "city": "Miasto",
+      "street": "Ulica",
+      "house-number": "Numer domu",
+      "apartament-number": "Numer mieszkania",
+      "save": "Zapisz"
     },
     "basket-component": {
       "basket": "Koszyk",
@@ -517,6 +544,10 @@
         "purchase-lists": "Listy zakupów"
       },
       "menu": "Menu"
+    },
+    "user-company-details-component": {
+      "add-company-details": "Dodaj szczegóły firmy",
+      "company-details": "Szczegóły firmy"
     },
     "user-delivery-address-component": {
       "add-delivery-address": "Dodaj adres dostawy",

@@ -1,7 +1,7 @@
 import { CompanyIdentifierNumberType } from '../../enums/company-identifier-number-type';
 
 export interface UserCompanyDetailsRequestFormDto {
-  apartamentNumber: string;
+  apartamentNumber?: string;
   city: string;
   companyIdentifierNumber: string;
   companyName: string;

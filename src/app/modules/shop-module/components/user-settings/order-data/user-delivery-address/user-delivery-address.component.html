@@ -3,10 +3,12 @@
     <h2 class="flex text-white font-semibold text-xl">
       {{ 'shop-module.user-delivery-address-component.address-details' | translate }}
     </h2>
-    <app-button [label]="'shop-module.user-delivery-address-component.add-delivery-address' | translate"></app-button>
+    <app-button
+      [label]="'shop-module.user-delivery-address-component.add-delivery-address' | translate"
+      (onClick)="isDialogActive.set(true)"></app-button>
   </div>
   <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-4">
-    @for (item of userDeliveryAddresses2(); track $index) {
+    @for (item of userDeliveryAddresses(); track $index) {
       <div class="flex flex-col gap-4 p-4 bg-neutral-900 border border-neutral-700 rounded-lg">
         <label class="text-white">{{ `${item.firstName} ${item.lastName}`}}</label>
         <label class="text-white">
@@ -16,10 +18,19 @@
         <label class="text-white">{{ `${item.phoneNumber}`}}</label>
         <label class="text-white">{{ `${item.email}`}}</label>
         <div class="grid grid-cols-2 gap-2">
-          <app-button [label]="'Usuń'" [layout]="ButtonLayout.outline"></app-button>
+          <app-button [label]="'Usuń'" [layout]="ButtonLayout.outline" (onClick)="delete(item.id)"></app-button>
           <app-button [label]="'Edytuj'" [layout]="ButtonLayout.outline"></app-button>
         </div>
       </div>
     }
   </div>
 </div>
+<app-dialog-window [(isDialogActive)]="isDialogActive">
+  @if (isDialogActive()) {
+    <app-add-user-delivery-address
+      [(isDialogActive)]="isDialogActive"
+      [(userDeliveryAddresses)]="userDeliveryAddresses"
+      [(userDeliveryAddressId)]="userDeliveryAddressId">
+    </app-add-user-delivery-address>
+  }
+</app-dialog-window>
