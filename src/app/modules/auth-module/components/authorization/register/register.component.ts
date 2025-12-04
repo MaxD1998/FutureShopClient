@@ -3,7 +3,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../components/shared/button/button.component';
-import { InputDateComponent } from '../../../../../components/shared/input-date/input-date.component';
 import { InputComponent } from '../../../../../components/shared/input/input.component';
 import { BaseFormComponent } from '../../../../../core/bases/base-form.component';
 import { ClientRoute } from '../../../../../core/constants/client-routes/client.route';
@@ -13,7 +12,6 @@ import { CustomValidators } from '../../../../../core/utils/custom-validators';
 import { UserInputDto } from '../../../../shop-module/core/dtos/user-input.dto';
 
 interface IRegisterForm {
-  dateOfBirth: FormControl<Date | null>;
   email: FormControl<string>;
   firstName: FormControl<string>;
   lastName: FormControl<string>;
@@ -27,7 +25,7 @@ interface IRegisterForm {
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent, InputDateComponent],
+  imports: [ReactiveFormsModule, TranslateModule, InputComponent, ButtonComponent],
 })
 export class RegisterComponent extends BaseFormComponent<IRegisterForm> {
   private readonly _authService = inject(AuthService);
@@ -36,14 +34,13 @@ export class RegisterComponent extends BaseFormComponent<IRegisterForm> {
   InputType: typeof InputType = InputType;
 
   register(): void {
-    if (!this.form.valid) {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     const value = this.form.getRawValue();
     const dto: UserInputDto = {
-      dateOfBirth: value.dateOfBirth!,
       email: value.email,
       firstName: value.firstName,
       lastName: value.lastName,
@@ -58,7 +55,6 @@ export class RegisterComponent extends BaseFormComponent<IRegisterForm> {
 
   protected override setGroup(): FormGroup<IRegisterForm> {
     return this._formBuilder.group<IRegisterForm>({
-      dateOfBirth: new FormControl(null, [Validators.required]),
       email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
       firstName: new FormControl('', {
         nonNullable: true,

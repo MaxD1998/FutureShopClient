@@ -122,6 +122,12 @@
       "choose-permission-group": "Choose permission group",
       "save": "Save"
     },
+    "user-basic-info-component": {
+      "account-details": "Account details",
+      "email": "E-mail",
+      "first-name": "First name",
+      "last-name": "Last name"
+    },
     "user-form-component": {
       "create-user": "Create user",
       "date-of-birth": "Date of birth",
@@ -146,6 +152,12 @@
       },
       "create-new-user": "Create new user",
       "users": "Users"
+    },
+    "user-password-component": {
+      "change-password": "Change password",
+      "current-password": "Current password",
+      "new-password": "New password",
+      "repeat-new-password": "Repeat new password"
     },
     "user-permission-group-table-component": {
       "add": "Add",
@@ -239,6 +251,12 @@
     }
   },
   "shop-module": {
+    "common": {
+      "company-identifier-number-type": {
+        "0": "VAT ID",
+        "1": "NIP"
+      }
+    },
     "ad-campaign-form-component": {
       "active": "Active",
       "create-ad-campaign": "Create ad campaign",
@@ -295,6 +313,27 @@
     },
     "add-update-product-review-component": {
       "add-review": "Add review"
+    },
+    "add-user-company-details-component": {
+      "company-name": "Company name",
+      "postal-code": "Postal code",
+      "city": "City",
+      "street": "Street",
+      "houseNumber": "House number",
+      "apartament-number": "Apartment number",
+      "save": "Save"
+    },
+    "add-user-delivery-address-component": {
+      "first-name": "First name",
+      "last-name": "Last name",
+      "email": "Email address",
+      "phone-number": "Phone number",
+      "postal-code": "Postal code",
+      "city": "City",
+      "street": "Street",
+      "house-number": "House number",
+      "apartament-number": "Apartment number",
+      "save": "Save"
     },
     "basket-component": {
       "basket": "Basket",
@@ -505,6 +544,20 @@
         "purchase-lists": "Purchase lists"
       },
       "menu": "Menu"
+    },
+    "user-company-details-component": {
+      "add-company-details": "Add company details",
+      "company-details": "Company details"
+    },
+    "user-delivery-address-component": {
+      "add-delivery-address": "Add delivery address",
+      "address-details": "Address details"
+    },
+    "user-settings-component": {
+      "items": {
+        "account-settings": "Account settings",
+        "order-data": "Order data"
+      }
     }
   },
   "warehouse-module": {},

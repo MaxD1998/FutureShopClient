@@ -19,8 +19,8 @@ export class PermissionGroupDataService {
     return this._httpClient.post<PermissionGroupResponseFormDto>(PermissionGroupControllerRoute.base, dto);
   }
 
-  delete(id: string): Observable<null> {
-    return this._httpClient.delete<null>(`${PermissionGroupControllerRoute.base}${id}`);
+  delete(id: string): Observable<void> {
+    return this._httpClient.delete<void>(`${PermissionGroupControllerRoute.base}${id}`);
   }
 
   getById(id: string): Observable<PermissionGroupResponseFormDto> {

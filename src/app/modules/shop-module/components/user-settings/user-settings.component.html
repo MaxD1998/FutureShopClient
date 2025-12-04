@@ -1,0 +1,7 @@
+<app-nav></app-nav>
+<div class="flex max-sm:flex-col">
+  <app-aside [header]="'shop-module.settings-component.menu' | translate" [items]="items"></app-aside>
+  <div class="flex-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

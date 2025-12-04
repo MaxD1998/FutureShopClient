@@ -3,7 +3,6 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../../../components/shared/button/button.component';
-import { InputDateComponent } from '../../../../../../components/shared/input-date/input-date.component';
 import { InputSelectComponent } from '../../../../../../components/shared/input-select/input-select.component';
 import { SelectItemModel } from '../../../../../../components/shared/input-select/models/select-item.model';
 import { InputComponent } from '../../../../../../components/shared/input/input.component';
@@ -17,7 +16,6 @@ import { UserService } from '../../../../core/services/user.service';
 import { UserPermissionGroupTableComponent } from './user-permission-group-table/user-permission-group-table.component';
 
 export interface IUserForm {
-  dateOfBirth: FormControl<Date | null>;
   email: FormControl<string>;
   firstName: FormControl<string>;
   lastName: FormControl<string>;
@@ -33,7 +31,6 @@ export interface IUserForm {
     TranslateModule,
     ButtonComponent,
     InputComponent,
-    InputDateComponent,
     InputSelectComponent,
     UserPermissionGroupTableComponent,
   ],
@@ -74,8 +71,8 @@ export class UserFormComponent extends BaseFormComponent<IUserForm> {
     const user = this.user;
 
     if (user) {
-      const { dateOfBirth, email, firstName, lastName, type, userPermissionGroups } = user;
-      this.form.patchValue({ dateOfBirth, email, firstName, lastName, type: type.toString() });
+      const { email, firstName, lastName, type, userPermissionGroups } = user;
+      this.form.patchValue({ email, firstName, lastName, type: type.toString() });
       userPermissionGroups.forEach(x =>
         this.form.controls.userPermissionGroups.push(
           new FormControl<UserPermissionGroupFromDto>(x, { nonNullable: true }),
@@ -101,11 +98,10 @@ export class UserFormComponent extends BaseFormComponent<IUserForm> {
       return;
     }
 
-    const { dateOfBirth, email, firstName, lastName, password, type, userPermissionGroups } = this.form.getRawValue();
+    const { email, firstName, lastName, password, type, userPermissionGroups } = this.form.getRawValue();
     const id = this.id;
     const addOrUpdate = id
       ? this._userDataService.update(id, {
-          dateOfBirth: dateOfBirth!,
           email,
           firstName,
           lastName,
@@ -113,7 +109,6 @@ export class UserFormComponent extends BaseFormComponent<IUserForm> {
           userPermissionGroups,
         })
       : this._userDataService.create({
-          dateOfBirth: dateOfBirth!,
           email,
           firstName,
           lastName,
@@ -132,7 +127,6 @@ export class UserFormComponent extends BaseFormComponent<IUserForm> {
 
   protected override setGroup(): FormGroup<IUserForm> {
     return this._formBuilder.group<IUserForm>({
-      dateOfBirth: new FormControl<Date | null>(null),
       email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
       firstName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       lastName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),

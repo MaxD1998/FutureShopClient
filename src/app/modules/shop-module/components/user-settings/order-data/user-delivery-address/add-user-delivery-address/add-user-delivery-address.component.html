@@ -1,0 +1,56 @@
+<div>
+  <form class="flex gap-4" [formGroup]="form">
+    <div>
+      <app-input
+        formControlName="firstName"
+        [errorCode]="errorCode('firstName')"
+        [label]="'shop-module.add-user-delivery-address-component.first-name' | translate">
+      </app-input>
+      <app-input
+        formControlName="lastName"
+        [errorCode]="errorCode('lastName')"
+        [label]="'shop-module.add-user-delivery-address-component.last-name' | translate">
+      </app-input>
+      <app-input
+        formControlName="email"
+        [errorCode]="errorCode('email')"
+        [label]="'shop-module.add-user-delivery-address-component.email' | translate">
+      </app-input>
+      <app-input
+        formControlName="phoneNumber"
+        [errorCode]="errorCode('phoneNumber')"
+        [label]="'shop-module.add-user-delivery-address-component.phone-number' | translate">
+      </app-input>
+    </div>
+    <div>
+      <app-input
+        formControlName="postalCode"
+        [errorCode]="errorCode('postalCode')"
+        [label]="'shop-module.add-user-delivery-address-component.postal-code' | translate">
+      </app-input>
+      <app-input
+        formControlName="city"
+        [errorCode]="errorCode('city')"
+        [label]="'shop-module.add-user-delivery-address-component.city' | translate">
+      </app-input>
+      <app-input
+        formControlName="street"
+        [errorCode]="errorCode('street')"
+        [label]="'shop-module.add-user-delivery-address-component.street' | translate">
+      </app-input>
+      <app-input
+        formControlName="houseNumber"
+        [errorCode]="errorCode('houseNumber')"
+        [label]="'shop-module.add-user-delivery-address-component.house-number' | translate">
+      </app-input>
+      <app-input
+        formControlName="apartamentNumber"
+        [errorCode]="errorCode('apartamentNumber')"
+        [label]="'shop-module.add-user-delivery-address-component.apartament-number' | translate">
+      </app-input>
+    </div>
+  </form>
+
+  <app-button [label]="'shop-module.add-user-delivery-address-component.save' | translate" (onClick)="submit()">
+  </app-button>
+</div>

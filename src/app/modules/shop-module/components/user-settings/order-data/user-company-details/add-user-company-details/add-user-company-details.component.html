@@ -1,0 +1,42 @@
+<div>
+  <form [formGroup]="form">
+    <app-input
+      formControlName="companyIdentifierNumber"
+      [errorCode]="errorCode('companyIdentifierNumber')"
+      [label]="`shop-module.common.company-identifier-number-type.${this.form.getRawValue().type}` | translate">
+    </app-input>
+    <app-input
+      formControlName="companyName"
+      [errorCode]="errorCode('companyName')"
+      [label]="'shop-module.add-user-company-details-component.company-name' | translate">
+    </app-input>
+    <app-input
+      formControlName="postalCode"
+      [errorCode]="errorCode('postalCode')"
+      [label]="'shop-module.add-user-company-details-component.postal-code' | translate">
+    </app-input>
+    <app-input
+      formControlName="city"
+      [errorCode]="errorCode('city')"
+      [label]="'shop-module.add-user-company-details-component.city' | translate">
+    </app-input>
+    <app-input
+      formControlName="street"
+      [errorCode]="errorCode('street')"
+      [label]="'shop-module.add-user-company-details-component.street' | translate">
+    </app-input>
+    <app-input
+      formControlName="houseNumber"
+      [errorCode]="errorCode('houseNumber')"
+      [label]="'shop-module.add-user-company-details-component.houseNumber' | translate">
+    </app-input>
+    <app-input
+      formControlName="apartamentNumber"
+      [errorCode]="errorCode('apartamentNumber')"
+      [label]="'shop-module.add-user-company-details-component.apartament-number' | translate">
+    </app-input>
+  </form>
+
+  <app-button [label]="'shop-module.add-user-company-details-component.save' | translate" (onClick)="submit()">
+  </app-button>
+</div>

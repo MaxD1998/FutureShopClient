@@ -1,11 +1,12 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NavButtonComponent } from '../../../../components/shared/nav/nav-button/nav-button.component';
 import { NavComponent } from '../../../../components/shared/nav/nav.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { IconType } from '../../../../core/enums/icon-type';
 import { UserType } from '../../../../core/enums/user-type';
+import { DropDownListItemModel } from '../../../../core/models/drop-down-list-item.model';
 import { UserService } from '../../../auth-module/core/services/user.service';
 import { MenuAsideComponent } from './menu-aside/menu-aside.component';
 
@@ -16,6 +17,8 @@ import { MenuAsideComponent } from './menu-aside/menu-aside.component';
   imports: [AsyncPipe, RouterModule, MenuAsideComponent, NavComponent, NavButtonComponent],
 })
 export class MainComponent {
+  private readonly _router = inject(Router);
+
   readonly userService = inject(UserService);
 
   isOpenedMenu = signal<boolean>(false);
@@ -23,4 +26,15 @@ export class MainComponent {
   ClientRoute: typeof ClientRoute = ClientRoute;
   IconType: typeof IconType = IconType;
   UserType: typeof UserType = UserType;
+
+  userItems: DropDownListItemModel[] = [
+    {
+      id: '',
+      value: 'Ustawienia',
+      callback: () => {
+        const array = [ClientRoute.userSettings];
+        this._router.navigate(array);
+      },
+    },
+  ];
 }
