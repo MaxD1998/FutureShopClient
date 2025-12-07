@@ -8,19 +8,19 @@ import { AsideItemModel } from '../../../core/models/aside-item.model';
 import { ButtonSmallIconComponent } from '../button-small-icon/button-small-icon.component';
 
 @Component({
-  selector: 'app-aside',
-  templateUrl: './aside.component.html',
-  styleUrl: './aside.component.css',
+  selector: 'app-aside-menu',
+  templateUrl: './aside-menu.component.html',
+  styleUrl: './aside-menu.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterModule, TranslateModule, ButtonSmallIconComponent],
 })
-export class AsideComponent {
+export class AsideMenuComponent {
   private readonly _injector = inject(Injector);
 
   items = input.required<AsideItemModel[]>();
-  header = input.required<string[]>();
+  header = input.required<string>();
 
-  asideStyle = input<string>('h-[calc(100vh-6rem)]');
+  asideStyle = input<string>('h-workspace');
   setCloseButton = input<boolean>(false);
 
   onCloseMenu = output<void>();

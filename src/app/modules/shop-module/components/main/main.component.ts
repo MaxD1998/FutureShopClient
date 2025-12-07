@@ -8,13 +8,13 @@ import { IconType } from '../../../../core/enums/icon-type';
 import { UserType } from '../../../../core/enums/user-type';
 import { DropDownListItemModel } from '../../../../core/models/drop-down-list-item.model';
 import { UserService } from '../../../auth-module/core/services/user.service';
-import { MenuAsideComponent } from './menu-aside/menu-aside.component';
+import { ShopDrawerMenuComponent } from './shop-drawer-menu/shop-drawer-menucomponent';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
-  imports: [AsyncPipe, RouterModule, MenuAsideComponent, NavComponent, NavButtonComponent],
+  imports: [AsyncPipe, RouterModule, NavComponent, NavButtonComponent, ShopDrawerMenuComponent],
 })
 export class MainComponent {
   private readonly _router = inject(Router);

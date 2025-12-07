@@ -1,6 +1,8 @@
-<app-nav> </app-nav>
+<app-nav></app-nav>
 <div class="flex max-sm:flex-col">
-  <app-aside [header]="'product-module.product-module-component.menu' | translate" [items]="items"></app-aside>
+  <app-aside-menu
+    [header]="'product-module.product-module-component.menu' | translate"
+    [items]="items"></app-aside-menu>
   <div class="flex-auto">
     <router-outlet></router-outlet>
   </div>

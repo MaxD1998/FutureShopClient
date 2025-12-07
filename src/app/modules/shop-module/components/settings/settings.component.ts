@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AsideComponent } from '../../../../components/shared/aside/aside.component';
+import { AsideMenuComponent } from '../../../../components/shared/aside-menu/aside-menu.component';
 import { NavButtonComponent } from '../../../../components/shared/nav/nav-button/nav-button.component';
 import { NavComponent } from '../../../../components/shared/nav/nav.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
@@ -13,7 +13,7 @@ import { UserService } from '../../../auth-module/core/services/user.service';
 
 @Component({
   selector: 'app-settings',
-  imports: [TranslateModule, RouterLink, RouterOutlet, AsyncPipe, AsideComponent, NavComponent, NavButtonComponent],
+  imports: [TranslateModule, RouterLink, RouterOutlet, AsyncPipe, AsideMenuComponent, NavComponent, NavButtonComponent],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
