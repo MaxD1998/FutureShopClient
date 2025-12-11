@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AsideMenuComponent } from '../../components/shared/aside-menu/aside-menu.component';
-import { NavComponent } from '../../components/shared/nav/nav.component';
+import { SettingsLayoutComponent } from '../../components/shared/settings-layout/settings-layout.component';
 import { ClientRoute } from '../../core/constants/client-routes/client.route';
 import { AsideItemModel } from '../../core/models/aside-item.model';
 
 @Component({
   selector: 'app-product-module',
-  imports: [RouterOutlet, TranslateModule, NavComponent, AsideMenuComponent],
+  imports: [TranslateModule, SettingsLayoutComponent],
   templateUrl: './product-module.component.html',
   styleUrl: './product-module.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

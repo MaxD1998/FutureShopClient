@@ -1,5 +1,5 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterModule } from '@angular/router';
 import { NavButtonComponent } from '../../../../components/shared/nav/nav-button/nav-button.component';
 import { NavComponent } from '../../../../components/shared/nav/nav.component';
@@ -14,9 +14,10 @@ import { ShopDrawerMenuComponent } from './shop-drawer-menu/shop-drawer-menucomp
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
-  imports: [AsyncPipe, RouterModule, NavComponent, NavButtonComponent, ShopDrawerMenuComponent],
+  imports: [RouterModule, NavComponent, NavButtonComponent, ShopDrawerMenuComponent],
 })
 export class MainComponent {
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _router = inject(Router);
 
   readonly userService = inject(UserService);
@@ -27,14 +28,24 @@ export class MainComponent {
   IconType: typeof IconType = IconType;
   UserType: typeof UserType = UserType;
 
-  userItems: DropDownListItemModel[] = [
-    {
-      id: '',
-      value: 'Ustawienia',
-      callback: () => {
-        const array = [ClientRoute.userSettings];
-        this._router.navigate(array);
+  userItems = signal<DropDownListItemModel[]>([]);
+
+  constructor() {
+    this.userService.user$.pipe(takeUntilDestroyed(this._destroyRef)).subscribe({
+      next: user => {
+        if (user) {
+          this.userItems.set([
+            {
+              id: '',
+              value: 'Ustawienia',
+              callback: () => {
+                const array = [ClientRoute.userSettings];
+                this._router.navigate(array);
+              },
+            },
+          ]);
+        }
       },
-    },
-  ];
+    });
+  }
 }

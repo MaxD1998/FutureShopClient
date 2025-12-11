@@ -12,7 +12,13 @@ export class WindowSizeService {
   isMobile$ = this._width$.pipe(map(width => width <= this._mobileWidth));
   widthChanges$ = this._width$.asObservable();
 
-  updateWidth(width: number) {
+  constructor() {
+    window.addEventListener('resize', () => {
+      this.updateWidth(window.innerWidth);
+    });
+  }
+
+  private updateWidth(width: number) {
     if (this._width$.value != width) {
       this._width$.next(width);
     }

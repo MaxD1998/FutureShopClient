@@ -4,70 +4,114 @@
       {{ header() ?? '' | translate }}
     </h1>
     @if (isButtonAction()) {
-      <app-button [label]="buttonLabel() | translate" (onClick)="onButtonAction.emit()"></app-button>
+      @if (isMobile$ | async) {
+        <app-button-icon [icon]="IconType.plus" (onClick)="onButtonAction.emit()"></app-button-icon>
+      } @else {
+        <app-button [label]="buttonLabel() | translate" (onClick)="onButtonAction.emit()"></app-button>
+      }
     }
   </div>
-  <div class="flex-1 overflow-auto">
-    <table class="w-full border-separate border-spacing-0">
-      <thead>
-        <tr class="text-left">
-          @for (column of columns(); track column) {
-            @switch (column.template) {
-              @case (TableTemplate.action) {
-                <th class="border-b border-neutral-700 w-29 p-4 text-neutral-100 bg-neutral-900 sticky top-0">
-                  <div class="flex justify-end w-25">
-                    <app-icon [iconName]="IconType.ellipsisHorizontal"></app-icon>
-                  </div>
-                </th>
-              }
-              @default {
-                <th class="border-b border-neutral-700 p-4 text-neutral-100 font-semibold bg-neutral-900 sticky top-0">
-                  {{ column.headerText | translate }}
-                </th>
-              }
-            }
-          }
-        </tr>
-      </thead>
-      <tbody (mouseleave)="rowId = ''">
-        @for (item of items(); track item[idName()]) {
-          <tr class="hover:bg-neutral-800" (mouseover)="rowId = item[idName()]">
+  <div class="flex-1 overflow-y-auto">
+    @if (!(isMobile$ | async)) {
+      <table class="w-full border-separate border-spacing-0">
+        <thead>
+          <tr class="text-left">
             @for (column of columns(); track column) {
               @switch (column.template) {
                 @case (TableTemplate.action) {
-                  <td class="w-29 px-4 text-neutral-100 border-b border-neutral-800">
-                    <div class="flex">
-                      @if (rowId == item[idName()]) {
-                        <app-table-action-field
-                          class="ml-auto"
-                          [id]="item[idName()]"
-                          [isDetailAction]="isDetailAction()"
-                          [isEditAction]="isEditAction()"
-                          [isRemoveAction]="isRemoveAction()"
-                          (onDetailAction)="detailAction($event)"
-                          (onEditAction)="editAction($event)"
-                          (onRemoveAction)="removeAction($event)">
-                        </app-table-action-field>
-                      }
+                  <th class="border-b border-neutral-700 w-29 p-4 text-neutral-100 bg-neutral-900 sticky top-0">
+                    <div class="flex justify-end w-25">
+                      <app-icon [iconName]="IconType.ellipsisHorizontal"></app-icon>
                     </div>
-                  </td>
-                }
-                @case (TableTemplate.boolean) {
-                  <td class="px-4 text-neutral-100 border-b border-neutral-800">
-                    <app-table-boolean-field [value]="item[column.field]"></app-table-boolean-field>
-                  </td>
+                  </th>
                 }
                 @default {
-                  <td class="p-4 text-neutral-100 text-sm font-medium border-b border-neutral-800">
-                    {{ item[column.field] }}
-                  </td>
+                  <th
+                    class="border-b border-neutral-700 p-4 text-neutral-100 font-semibold bg-neutral-900 sticky top-0">
+                    {{ column.headerText | translate }}
+                  </th>
                 }
               }
             }
           </tr>
+        </thead>
+        <tbody (mouseleave)="rowId = ''">
+          @for (item of items(); track item[idName()]) {
+            <tr class="hover:bg-neutral-800" (mouseover)="rowId = item[idName()]">
+              @for (column of columns(); track column) {
+                @switch (column.template) {
+                  @case (TableTemplate.action) {
+                    <td class="w-29 px-4 text-neutral-100 border-b border-neutral-800">
+                      <div class="flex">
+                        @if (rowId == item[idName()]) {
+                          <app-table-action-field
+                            class="ml-auto"
+                            [id]="item[idName()]"
+                            [isDetailAction]="isDetailAction()"
+                            [isEditAction]="isEditAction()"
+                            [isRemoveAction]="isRemoveAction()"
+                            (onDetailAction)="detailAction($event)"
+                            (onEditAction)="editAction($event)"
+                            (onRemoveAction)="removeAction($event)">
+                          </app-table-action-field>
+                        }
+                      </div>
+                    </td>
+                  }
+                  @case (TableTemplate.boolean) {
+                    <td class="px-4 text-neutral-100 border-b border-neutral-800">
+                      <app-table-boolean-field [value]="item[column.field]"></app-table-boolean-field>
+                    </td>
+                  }
+                  @default {
+                    <td class="p-4 text-neutral-100 text-sm font-medium border-b border-neutral-800">
+                      {{ item[column.field] }}
+                    </td>
+                  }
+                }
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="flex flex-col gap-4">
+        @for (item of items(); track $index) {
+          <div class="flex flex-col p-4 bg-neutral-800 border border-neutral-700 rounded-md">
+            @if (hasActionColumn()) {
+              <div class="flex justify-end">
+                <app-table-action-field
+                  class="text-white"
+                  [id]="item[idName()]"
+                  [isDetailAction]="isDetailAction()"
+                  [isEditAction]="isEditAction()"
+                  [isRemoveAction]="isRemoveAction()"
+                  (onDetailAction)="detailAction($event)"
+                  (onEditAction)="editAction($event)"
+                  (onRemoveAction)="removeAction($event)">
+                </app-table-action-field>
+              </div>
+            }
+            <div class="flex flex-col">
+              @for (column of mobileColumns(); track $index) {
+                <div class="grid grid-cols-2 gap-2 border-b border-neutral-700 p-4 hover:bg-neutral-700">
+                  <label class="text-white font-semibold truncate">{{ column.headerText | translate }}</label>
+
+                  @switch (column.template) {
+                    @case (TableTemplate.boolean) {
+                      <app-table-boolean-field [value]="item[column.field]"></app-table-boolean-field>
+                    }
+                    @default {
+                      <label class="text-white font-semibold truncate">{{ item[column.field] }}</label>
+                    }
+                  }
+                </div>
+              }
+            </div>
+          </div>
         }
-      </tbody>
-    </table>
+      </div>
+    }
   </div>
   @if (page() && items().length > 0) {
     <app-table-pagination [page]="pageModel()" (onPageClick)="onPageClick.emit($event)"></app-table-pagination>
