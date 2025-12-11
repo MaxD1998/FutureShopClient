@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AsideComponent } from '../../../../../components/shared/aside/aside.component';
+import { AsideMenuComponent } from '../../../../../components/shared/aside-menu/aside-menu.component';
 import { AsideItemModel } from '../../../../../core/models/aside-item.model';
 
 @Component({
-  selector: 'app-menu-aside',
-  templateUrl: './menu-aside.component.html',
-  styleUrl: './menu-aside.component.css',
+  selector: 'app-shop-drawer-menu',
+  templateUrl: './shop-drawer-menu.component.html',
+  styleUrl: './shop-drawer-menu.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule, AsideComponent],
+  imports: [TranslateModule, AsideMenuComponent],
 })
-export class MenuAsideComponent {
+export class ShopDrawerMenuComponent {
   private readonly _activatedRoute = inject(ActivatedRoute);
 
   onCloseMenu = output<void>();

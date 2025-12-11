@@ -1,0 +1,15 @@
+<app-nav [setMenuButton]="(isMobile$ | async) ?? false" (onClickMenuButton)="isMobileMenuOpen.set(true)">
+  @for (navButton of navButtons(); track $index) {
+    <app-nav-button [iconName]="navButton.iconName" [routerLink]="navButton.routerLink"></app-nav-button>
+  }
+</app-nav>
+<div class="flex max-sm:flex-col">
+  @if (isMobile$ | async) {
+    <app-drawer-menu [header]="asideMenuHeader()" [items]="items()" [(isOpen)]="isMobileMenuOpen"> </app-drawer-menu>
+  } @else {
+    <app-aside-menu class="w-72" [header]="asideMenuHeader()" [items]="items()"> </app-aside-menu>
+  }
+  <div class="flex-auto">
+    <router-outlet></router-outlet>
+  </div>
+</div>

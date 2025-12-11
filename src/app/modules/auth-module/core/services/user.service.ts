@@ -14,16 +14,13 @@ export class UserService {
   readonly user$: BehaviorSubject<AuthorizeDto | undefined> = new BehaviorSubject<AuthorizeDto | undefined>(undefined);
 
   //Roles
-  hasRole(type: UserType): Observable<boolean> {
-    return this.user$.asObservable().pipe(
-      map(user => {
-        if (user) {
-          return user.roles.some(x => x === type) || user.roles.includes(UserType.superAdmin);
-        }
+  hasRole(type: UserType): boolean {
+    const user = this.user$.value;
+    if (user) {
+      return user.roles.some(x => x === type) || user.roles.includes(UserType.superAdmin);
+    }
 
-        return false;
-      }),
-    );
+    return false;
   }
 
   //Modules permissions

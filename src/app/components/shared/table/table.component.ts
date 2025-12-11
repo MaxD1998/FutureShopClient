@@ -1,10 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconType } from '../../../core/enums/icon-type';
 import { TableHeaderFloat } from '../../../core/enums/table-header-float';
 import { TableTemplate } from '../../../core/enums/table-template';
 import { DataTableColumnModel } from '../../../core/models/data-table-column.model';
 import { PaginationModel } from '../../../core/models/pagination.model';
+import { WindowSizeService } from '../../../core/services/window-size.service';
+import { ButtonIconComponent } from '../button-icon/button-icon.component';
 import { ButtonComponent } from '../button/button.component';
 import { IconComponent } from '../icon/icon.component';
 import { TableActionFieldComponent } from './table-field-templates/table-action-field/table-action-field.component';
@@ -17,15 +20,19 @@ import { TablePaginationComponent } from './table-pagination/table-pagination.co
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    AsyncPipe,
     TableActionFieldComponent,
     TableBooleanFieldComponent,
     TranslateModule,
     IconComponent,
     TablePaginationComponent,
     ButtonComponent,
+    ButtonIconComponent,
   ],
 })
 export class TableComponent {
+  private readonly _windowSizeService = inject(WindowSizeService);
+
   buttonLabel = input<string>('');
   columns = input.required<DataTableColumnModel[]>();
   header = input<string>();
@@ -47,7 +54,15 @@ export class TableComponent {
   TableTemplate: typeof TableTemplate = TableTemplate;
   IconType: typeof IconType = IconType;
 
+  isMobile$ = this._windowSizeService.isMobile$;
   rowId: string = '';
+
+  hasActionColumn = computed<boolean>(() => {
+    return this.isDetailAction() || this.isEditAction() || this.isRemoveAction();
+  });
+  mobileColumns = computed<DataTableColumnModel[]>(() => {
+    return this.columns().filter(column => column.template !== TableTemplate.action);
+  });
   pageModel = computed<PaginationModel>(() => {
     return (
       this.page() ?? {

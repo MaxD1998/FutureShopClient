@@ -1,0 +1,6 @@
+@if (isOpen()) {
+  <div class="w-full h-full absolute top-0 left-0 z-10">
+    <app-aside-menu [items]="items()" [header]="header()" [setCloseButton]="true" (onCloseMenu)="isOpen.set(false)">
+    </app-aside-menu>
+  </div>
+}

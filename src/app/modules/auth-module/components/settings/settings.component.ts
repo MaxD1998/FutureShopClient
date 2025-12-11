@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AsideComponent } from '../../../../components/shared/aside/aside.component';
+import { SettingsLayoutComponent } from '../../../../components/shared/settings-layout/settings-layout.component';
 import { ClientRoute } from '../../../../core/constants/client-routes/client.route';
 import { AsideItemModel } from '../../../../core/models/aside-item.model';
 
 @Component({
   selector: 'app-settings',
-  imports: [TranslateModule, AsideComponent, RouterOutlet],
+  imports: [TranslateModule, SettingsLayoutComponent],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
