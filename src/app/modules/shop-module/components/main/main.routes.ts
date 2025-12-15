@@ -30,6 +30,10 @@ export const mainRoutes: Routes = [
     },
   },
   {
+    path: ClientRoute.order,
+    loadComponent: () => import('./order/order.component').then(x => x.OrderComponent),
+  },
+  {
     path: `${ClientRoute.product}/:categoryId`,
     loadComponent: () =>
       import('./product/product-shop-list/product-shop-list.component').then(x => x.ProductShopListComponent),

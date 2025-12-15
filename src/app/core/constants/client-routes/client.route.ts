@@ -13,6 +13,7 @@ export class ClientRoute {
   public static readonly main = '';
   public static readonly module = 'module';
   public static readonly new = 'new';
+  public static readonly order = 'order';
   public static readonly orderData = 'order-data';
   public static readonly permissionGroup = 'permission-group';
   public static readonly product = 'product';
